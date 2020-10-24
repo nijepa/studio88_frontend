@@ -1,138 +1,148 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex"
-          target="_blank"
-          rel="noopener"
-          >vuex</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest"
-          target="_blank"
-          rel="noopener"
-          >unit-jest</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+    <div class="club__title">
+      <h1 class="club">{{ msg }} </h1>
+      <p class="club__type">p i l a t e s</p>
+      <div class="club__login">
+        <transition name="slide-fade" mode="out-in">
+        <p class="club__link" v-if="!loginForm" @click="toggleLoginForm" 
+            href="#" target="_blank" rel="noopener">
+          Log In
+        </p>
+        <log-in v-else></log-in>
+        </transition>
+      </div>
+      
+    </div>
   </div>
 </template>
 
 <script>
+import LogIn from '@/components/LogIn.vue'
 export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  components: {
+    LogIn
+  },
+  data() {
+    return {
+      loginForm: false
+    }
+  },
+  methods: {
+    toggleLoginForm() {
+      this.loginForm = true;
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .hello {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  .club__title {
+    display: grid;
+    justify-items: end;
+    align-content: center;
+  }
+
+  .club {
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: 8em;
+    font-weight: 800;
+    margin-bottom: 0;
+    line-height: .6;
+  }
+
+  .club__type {
+    font-family: 'Itim', cursive;
+    font-weight: 900;
+    font-size: 4em;
+    color: var(--purple-light);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .club__login {
+    display: grid;
+    justify-self: baseline;
+    height: 350px;
+  }
+
+  .club__link {
+    font-family: 'Baloo Tamma 2', cursive;
+    color: var(--purple);
+    justify-self: baseline;
+    align-self: baseline;
+    font-size: 1.5em;
+    font-weight: 900;
+    font-stretch: condensed;
+    margin-top: 3em;
+    padding: 0;
+    text-decoration: underline;
+    display: inline-block;
+    line-height: 0.9;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: ease .8s all;
+  }
+
+  .club__link:hover {
+    color: var(--purple-dark);
+    text-decoration: none;
+    border-bottom: 3px solid var(--purple-light);
+    transform: scale(1.05);
+  }
+
+  h3 {
+    margin: 40px 0 0;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    color: var(--purple-dark);
+    
+  }
+  a:hover {
+    color: var(--purple);
+  }
+
+    /* Enter and leave animations can use different */
+/* durations and timing functions.              */
+  .slide-fade-enter-active {
+    transition: all .8s ease;
+  }
+/*  .slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}  */
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  @media (max-width: 550px) {
+    .club {
+      font-size: 5em;
+    }
+    .club__type {
+      font-size: 2em;
+    }
+  }
 </style>
