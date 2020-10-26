@@ -22,8 +22,9 @@
           </g>
         </g>
       </svg>
-      <p>Dodaj</p> 
+      <p>Novi polaznik</p> 
     </button>
+    <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivan</span></div>
     <div v-for="client in getAllClients" :key="client._id" @click="selectClient(client)" class="clients__list">
       <p class="client__item">{{ client.last_name }} , {{ client.first_name }}</p>
       <p class="client__item">{{ client.email }}</p>
@@ -85,7 +86,7 @@
 
   .clients__list {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 1em;
     justify-content: center;
     justify-items: center;
@@ -118,5 +119,9 @@
   .client__add:hover {
     color: var(--purple-dark);
     border-bottom: 2px solid var(--purple-dark);
+  }
+
+  .client__add:hover svg g {
+    fill: var(--purple-dark);
   }
 </style>

@@ -6,6 +6,7 @@
     <client v-if="getFormType === 'client'"></client>
     </transition>
     <schedule v-if="getFormType === 'schedule'"></schedule>
+    <schedules v-if="getFormType === 'schedules'"></schedules>
   </div>
 </template>
 
@@ -14,13 +15,14 @@
   import Client from "@/components/Client.vue";
   import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
+  import Schedules from "@/components/Schedules.vue";
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'Dashboard',
 
     components: {
-      Navigation, Client, Schedule, Clients
+      Navigation, Client, Schedule, Clients, Schedules
     },
 
     data() {
@@ -36,10 +38,10 @@
     methods: {
       ...mapActions([ 'formTypeChange' ]),
 
-      handleForm(value) {
+/*       handleForm(value) {
         console.log(value)
         this.showForm = value;
-      }
+      } */
     }
   }
 </script>

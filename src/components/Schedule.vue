@@ -1,19 +1,29 @@
 <template>
-  <div class="user__form">
+  <form @submit.prevent="addSchedule()" method="post" class="user__form">
     <label for="name">Naziv</label>
-    <input  type="text" name="name" placeholder="ime termina (npr. I)"
-            class="login_input user_input">
+    <input type="text" name="name" placeholder="ime termina (npr. I)"
+            class="login_input user_input" v-model="scheduleInput.title">
     <label for="day">Dan</label>
-    <input  type="text" name="day" placeholder="dan termina (npr. Subota)"
-            class="login_input user_input">
+    <div class="login_input user_input bloc">
+      <select name="cars" id="cars" size="5" class="day__select"
+              v-model="scheduleInput.weekday" multiple>
+        <option value="Poneđeljak">Poneđeljak</option>
+        <option value="Utorak">Utorak</option>
+        <option value="Srijeda">Srijeda</option>
+        <option value="Četvrtak">Četvrtak</option>
+        <option value="Petak">Petak</option>
+      </select>
+    </div>
+<!--     <input  type="text" name="day" placeholder="dan termina (npr. Subota)"
+            class="login_input user_input"> -->
     <label for="time">Vreme</label>
-    <input  type="time" name="time" placeholder="vreme održavanja termina (npr. I)"
-            class="login_input user_input">
+    <input type="time" name="time" placeholder="vreme održavanja termina (npr. I)"
+            class="login_input user_input" v-model="scheduleInput.startTime">
     <label for="duration">Trajanje</label>
-    <input  type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
-            class="login_input user_input">
+    <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
+            class="login_input user_input" v-model="scheduleInput.duration">
     <div class="action_btns">
-      <button type="submit"  class="action_btn">
+      <button type="submit" class="action_btn">
         <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
               viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
           <g>
@@ -68,7 +78,7 @@
         </svg>
         <p>Sačuvaj</p> 
       </button>
-      <button type="submit"  class="action_btn cancel__btn">
+      <button type="submit" @click.prevent="formTypeChange('schedules')" class="action_btn cancel__btn">
         <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
               viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
           <g>
@@ -105,12 +115,144 @@
         <p>Odustani</p>
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
-    name: 'Schedule'
+    name: 'Schedule',
+
+    data() {
+      return {
+        enterClient: false,
+        scheduleInput: {
+          title: '',
+          weekday: [],
+          startTime: '',
+          duration: '',
+          notes: '',
+          members: []
+        },
+        appeared: false,
+        notificationSystem: {
+        options: {
+          show: {
+            theme: "dark",
+            icon: "icon-person",
+            position: "topCenter",
+            progressBarColor: "rgb(0, 255, 184)",
+            buttons: [
+              [
+                "<button>Ok</button>",
+                function(instance, toast) {
+                  alert("Hello world!");
+                },
+                true
+              ],
+              [
+                "<button>Close</button>",
+                function(instance, toast) {
+                  instance.hide(
+                    {
+                      transitionOut: "fadeOutUp",
+                      onClosing: function(instance, toast, closedBy) {
+                        console.info("closedBy: " + closedBy);
+                      }
+                    },
+                    toast,
+                    "buttonName"
+                  );
+                }
+              ]
+            ],
+            onOpening: function(instance, toast) {
+              console.info("callback abriu!");
+            },
+            onClosing: function(instance, toast, closedBy) {
+              console.info("closedBy: " + closedBy);
+            }
+          },
+          ballon: {
+            balloon: true,
+            position: "bottomCenter"
+          },
+          info: {
+            position: "bottomLeft"
+          },
+          success: {
+            position: "center"
+          },
+          warning: {
+            position: "topLeft"
+          },
+          error: {
+            position: "topRight"
+          },
+          question: {
+            timeout: 20000,
+            close: false,
+            overlay: true,
+            toastOnce: true,
+            id: "question",
+            zindex: 999,
+            position: "center",
+            buttons: [
+              [
+                "<button><b>YES</b></button>",
+                function(instance, toast) {
+                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                },
+                true
+              ],
+              [
+                "<button>NO</button>",
+                function(instance, toast) {
+                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                }
+              ]
+            ],
+            onClosing: function(instance, toast, closedBy) {
+              console.info("Closing | closedBy: " + closedBy);
+            },
+            onClosed: function(instance, toast, closedBy) {
+              console.info("Closed | closedBy: " + closedBy);
+            }
+          }
+        }
+      }
+      }
+    },
+
+    computed: {
+      ...mapGetters([ 'getAllSchedules', 
+                      'getOneSchedule' ]),
+    },
+
+    methods: {
+      ...mapActions([ 'scheduleAdd', 
+                      'scheduleUpdate', 
+                      'scheduleDelete',
+                      'formTypeChange',
+                      'clearErrors' ]),
+      
+      addSchedule() {
+        if (this.getOneSchedule._id) {
+          this.scheduleUpdate(this.scheduleInput);
+        } else {
+          this.scheduleAdd(this.scheduleInput);
+        }
+        this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success)
+        this.formTypeChange('schedules');
+      },
+    },
+
+    created() {
+      if (this.getOneSchedule) {
+        this.scheduleInput = this.getOneSchedule
+      } 
+    },
   }
 </script>
 
@@ -119,4 +261,21 @@
   ::-moz-placeholder { font-size: .8em; } /* firefox 19+ */
   :-ms-input-placeholder { font-size: .8em; } /* ie */
   input:-moz-placeholder { font-size: .8em; }
+
+  .bloc {
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    /* border: solid grey 1px; */
+    height: 120px;
+  }
+
+  .bloc select {
+    padding: 10px;
+    margin: -5px -20px -5px -5px;
+  }
+
+  .day__select {
+    border: none;
+  }
 </style>

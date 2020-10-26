@@ -1,4 +1,5 @@
 <template>
+<div class="">
   <nav>
     <button class="dashboard__btn" @click="navClick('clients')" 
             :class="activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'">
@@ -27,8 +28,8 @@
       </svg> -->
       <p>Korisnici</p> 
     </button>
-    <button class="dashboard__btn" @click="navClick('schedule')"
-            :class="activeLink === 'schedule' ? 'active__link' : 'dashboard__btn_hover'">
+    <button class="dashboard__btn" @click="navClick('schedules')"
+            :class="activeLink === 'schedules' ? 'active__link' : 'dashboard__btn_hover'">
 <!--       <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px" fill="var(--purple)"
           viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
         <g>
@@ -181,6 +182,9 @@
       <p>Plaćanja</p>
     </button>
   </nav>
+  <hr>
+</div>
+  
 </template>
 
 <script>
@@ -195,7 +199,7 @@
       return {
         activeLink: '',
         menuItems: [{id: 'clients', title: 'clients'},
-                    {id: 'schedule', title: 'schedule'},
+                    {id: 'schedules', title: 'schedules'},
                     {id: 'attendance', title: 'attendance'},
                     {id: 'payment', title: 'payment'}]
       }
@@ -261,5 +265,12 @@
     /* fill: var(--purple-dark); */
     /* text-decoration: underline; */
     transform: scale(1.05);
+  }
+
+  hr {
+    margin: .4em;
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(98, 18, 105, 0), rgba(116, 21, 153, 0.75), rgba(98, 19, 134, 0));
   }
 </style>
