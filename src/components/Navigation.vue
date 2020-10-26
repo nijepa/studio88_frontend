@@ -1,6 +1,7 @@
 <template>
   <nav>
-    <button class="dashboard__btn" @click="toggleUser(1)">
+    <button class="dashboard__btn" @click="navClick('clients')" 
+            :class="activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'">
       <img src="../assets/img/1.png" alt="" class="nav__img">
 <!--       <svg version="1.1" id="Capa_1" x="0px" y="0px" fill="var(--purple)"
           width="40px" height="40px" viewBox="0 0 498.306 498.306" style="enable-background:new 0 0 498.306 498.306;"
@@ -26,7 +27,8 @@
       </svg> -->
       <p>Korisnici</p> 
     </button>
-    <button class="dashboard__btn" @click="toggleUser(2)">
+    <button class="dashboard__btn" @click="navClick('schedule')"
+            :class="activeLink === 'schedule' ? 'active__link' : 'dashboard__btn_hover'">
 <!--       <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px" fill="var(--purple)"
           viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
         <g>
@@ -104,7 +106,8 @@
       <img src="../assets/img/2.png" alt="" class="nav__img">
       <p>Termini</p>
     </button>
-    <button class="dashboard__btn">
+    <button class="dashboard__btn" @click="navClick('attendance')"
+            :class="activeLink === 'attendance' ? 'active__link' : 'dashboard__btn_hover'">
       <img src="../assets/img/3.png" alt="" class="nav__img">
 <!--       <svg version="1.1" id="Capa_1" x="0px" y="0px" height="40px" fill="var(--purple)"
           viewBox="0 0 473.193 473.193" style="enable-background:new 0 0 473.193 473.193;" xml:space="preserve">
@@ -150,7 +153,8 @@
       </svg> -->
       <p>Evidencija</p>
     </button>
-    <button class="dashboard__btn">
+    <button class="dashboard__btn" @click="navClick('payment')"
+            :class="activeLink === 'payment' ? 'active__link' : 'dashboard__btn_hover'">
       <img src="../assets/img/4.png" alt="" class="nav__img">
 <!--       <svg version="1.1" id="Capa_1" x="0px" y="0px" height="40px" fill="var(--purple)"
           viewBox="0 0 490.3 490.3" style="enable-background:new 0 0 490.3 490.3;" xml:space="preserve">
@@ -180,12 +184,33 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'Navigation',
     props: {
       method: { type: Function },
     },
+    data() {
+      return {
+        activeLink: '',
+        menuItems: [{id: 'clients', title: 'clients'},
+                    {id: 'schedule', title: 'schedule'},
+                    {id: 'attendance', title: 'attendance'},
+                    {id: 'payment', title: 'payment'}]
+      }
+    },
+    computed: {
+      ...mapGetters([ 'getFormType' ]),
+    },
+
     methods: {
+      ...mapActions([ 'formTypeChange' ]),
+
+      navClick(type) {
+        this.activeLink = type;
+        this.formTypeChange(type)
+      },
       toggleUser(type) {
         this.$emit('toggled-form', type);
       }
@@ -194,6 +219,12 @@
 </script>
 
 <style>
+  .active__link {
+    color: #ffffff !important; 
+    background-image: linear-gradient(to bottom, white,  var(--purple) 80%) !important;
+    cursor: none !important;
+    transform: scale(.9);
+  }
   nav {
     display: flex;
     justify-content: center;
@@ -224,7 +255,7 @@
     transition: ease .8s all;
   }
 
-  .dashboard__btn:hover {
+  .dashboard__btn_hover:hover {
     color: var(--purple-dark);
     border: 2px solid var(--purple-dark);
     /* fill: var(--purple-dark); */

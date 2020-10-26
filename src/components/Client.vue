@@ -20,7 +20,8 @@
             class="login_input user_input" v-model="clientInput.mobile">
     <label for="date_start">Datum upisa</label>
     <input type="date" name="date_start" placeholder="datum upisa"
-            class="login_input user_input" v-model="clientInput.date_started">
+            class="login_input user_input" :value="clientInput.date_started && makeCorrectDate(clientInput.date_started)"
+            @input="clientInput.date_started = $event.target.valueAsDate">
     <label for="notes">Napomene</label>
     <textarea name="notes" id="" cols="20" rows="5" placeholder="napomene"
               class="login_input user_input" v-model="clientInput.notes">
@@ -81,7 +82,7 @@
         </svg>
         <p>Sačuvaj</p> 
       </button>
-      <button type="submit" @click.prevent="newClient()"
+      <button type="submit" @click.prevent="formTypeChange('clients')"
               class="action_btn cancel__btn">
         <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
               viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -123,22 +124,17 @@
 </template>
 
 <script>
+  import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: 'User',
-
-    props: {
-      selectedClient: {
-        type: Object
-      }
-    },
+    name: 'Client',
 
     data() {
       return {
         enterClient: false,
         clientInput: {
-          _id: '',
+          //_id: '',
           first_name: '',
           last_name: '',
           email: '',
@@ -146,9 +142,18 @@
           mobile: '',
           address: '',
           date_started: '',
-          notes: ''
+          notes: '',
+          picture: ''
         },
         appeared: false
+      }
+    },
+
+    filters: {
+      formatDate: function(value) {
+        if (value) {
+          return moment(String(value)).format('YYYY-MM-DD')
+        }
       }
     },
 
@@ -161,25 +166,31 @@
       ...mapActions([ 'clientAdd', 
                       'clientUpdate', 
                       'clientDelete',
+                      'formTypeChange',
                       'clearErrors' ]),
       
       addClient() {
-/*         if (this.selectedClient) {
+        if (this.getOneClient) {
           this.clientUpdate(this.clientInput);
-        } else { */
-          //this.postInput.user = this.loggedUser._id;
+        } else {
           this.clientAdd(this.clientInput);
-        // }
-        this.newClient();
+        }
+        this.formTypeChange('clients');
       },
 
-      newClient() {
-        this.enterClient = !this.enterClient
+      makeCorrectDate(str) {
+          return new Date(str).toISOString().split('T')[0]
       },
       
       onAppeared() {
         this.appeared = true;
       }
+    },
+
+    created() {
+      if (this.getOneClient) {
+        this.clientInput = this.getOneClient
+      } 
     },
 
   }

@@ -1,27 +1,41 @@
 <template>
   <div class="">
-    <navigation @toggled-form="handleForm"></navigation>
-    <user v-if="showForm === 1"></user>
-    <schedule v-if="showForm === 2"></schedule>
+    <navigation></navigation>
+    <transition name="slide-fade" mode="out-in">
+    <clients v-if="getFormType === 'clients'" ></clients>
+    <client v-if="getFormType === 'client'"></client>
+    </transition>
+    <schedule v-if="getFormType === 'schedule'"></schedule>
   </div>
 </template>
 
 <script>
   import Navigation from "@/components/Navigation.vue";
-  import User from "@/components/User.vue";
+  import Client from "@/components/Client.vue";
+  import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'Dashboard',
+
     components: {
-      Navigation, User, Schedule
+      Navigation, Client, Schedule, Clients
     },
+
     data() {
       return {
         showForm: false
       }
     },
+
+    computed: {
+      ...mapGetters([ 'getFormType' ]),
+    },
+
     methods: {
+      ...mapActions([ 'formTypeChange' ]),
+
       handleForm(value) {
         console.log(value)
         this.showForm = value;

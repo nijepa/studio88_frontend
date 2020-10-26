@@ -1,20 +1,20 @@
 import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
 // import apiClient from './api_client';
-import router from '../router';
+//import router from '../router';
 
 
 const  state = {
   client: {},
   clients: [],
-  errors: []
+  formType: ''
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
   getAllClients: state => state.clients,
   getOneClient: state => state.client,
-  getErrors: state => state.errors
+  getFormType: state => state.formType
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -23,9 +23,12 @@ const  mutations = {
 
   setClient: (state, client) => (state.client = client),
 
-/*   updateClient (state, user) {
-    state.user = user
-  }, */
+  clearClient(state) {
+    state.client = {};
+  },
+
+  setFormType: (state, formType) => (state.formType = formType),
+
   addClient(state, text) {
     state.clients = [text, ...state.clients]
   },
@@ -43,20 +46,25 @@ const  mutations = {
       ...state.clients.filter((item) => item._id !== id)
     ];
   },
-
-  setErrors(state, errors) {
-    state.errors = errors;
-  },
 };
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
+  async fetchClients ({ commit }) {
+    const response = await axios.get(URL + "clients");
+    commit('setClients', response.data);
+  },
+
+  async fetchClient ({ commit }, clientData) {
+    const response = await axios.get(URL + "clients/" + clientData._id, clientData);
+    commit('setClient', response.data);
+  },
+
   async clientAdd({commit}, clientData) {
-    console.log('sdgsdgsg')
     await axios.post(URL + 'clients', clientData)
       .then((response) => {
         commit('addClient', response.data.client);
-        router.push("/")
+        //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
@@ -67,21 +75,11 @@ const actions = {
       })
   },
 
-  async fetchClients ({ commit }) {
-    const response = await axios.get(URL + "clients");
-    commit('setClients', response.data);
-  },
-
-  async fetchClient ({ commit }, clientData) {
-    const response = await axios.get(URL + "clients/" + clientData._id, clientData);
-    commit('setClient ', response.data);
-  },
-
   async clientUpdate({commit}, clientData) {
     await axios.put(URL + 'clients/' + clientData._id, clientData)
       .then((response) => {
         commit('updateClient', response.data);
-        router.push("/");
+        //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
@@ -106,8 +104,12 @@ const actions = {
       })
   },
 
-  clearErrors({ commit }) {
-    commit('setErrors', [])
+  async clientClear({commit}) {
+    commit('clearClient');
+  },
+
+  async formTypeChange({commit}, type) {
+    commit('setFormType', type);
   }
 };
 
