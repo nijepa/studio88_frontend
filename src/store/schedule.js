@@ -6,13 +6,15 @@ const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
 
 const  state = {
   schedule: {},
-  schedules: []
+  schedules: [],
+  notClients: []
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
   getAllSchedules: state => state.schedules,
-  getOneSchedule: state => state.schedule
+  getOneSchedule: state => state.schedule,
+  getNotClients: state => state.notClients
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -20,6 +22,8 @@ const  mutations = {
   setSchedules: (state, schedules) => (state.schedules = schedules),
 
   setSchedule: (state, schedule) => (state.schedule = schedule),
+
+  setNotClients: (state, notClients) => (state.notClients = notClients),
 
   clearSchedule(state) {
     state.schedule = {};
@@ -54,6 +58,11 @@ const actions = {
   async fetchSchedule ({ commit }, scheduleData) {
     const response = await axios.get(URL + "schedules/" + scheduleData._id, scheduleData);
     commit('setSchedule', response.data);
+  },
+
+  async fetchNotClients ({ commit }, scheduleData) {
+    const response = await axios.get(URL + "schedules/clientsnot/" + scheduleData._id, scheduleData);
+    commit('setNotClients', response.data);
   },
 
   async scheduleAdd({commit}, scheduleData) {

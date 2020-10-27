@@ -66,7 +66,7 @@
     <!-- <div class="days__list"><span>Grupa</span><span>Dani održavanja</span><span>Vreme početka</span><span>Trajanje (minuti)</span></div> -->
     <div class="schedule__card">
       <div v-for="schedule in getAllSchedules" :key="schedule._id" 
-            class="schedule__items">
+            class="schedule__items" @click="selectSchedule(schedule)">
         <div class="">
           <span class="item__desc">Grupa</span>
           <p class="client__item"> {{ schedule.title }}</p>
@@ -84,11 +84,11 @@
         <div class="">
           <span class="item__desc">Polaznici</span>
           <div class="client__item" >
-            <p v-for="polaznik in schedule.members" :key="polaznik.id" class="week__day">{{ polaznik }}</p>
+            <p v-for="polaznik in schedule.members" :key="polaznik.id" class="week__day">{{ polaznik.client.last_name }}, {{ polaznik.client.first_name }}</p>
           </div>
           <!-- <p class="client__item"> {{ schedule.duration }}</p> -->
         </div>
-        <button type="submit" @click="selectSchedule(schedule)"
+<!--         <button type="submit" @click="selectSchedule(schedule)"
                 class="action_btn client__add schedule__btn">
           <svg version="1.0" fill="var(--purple)"
             width="40px" height="40px" viewBox="0 0 1280.000000 640.000000"
@@ -208,7 +208,7 @@
             </g>
           </svg>
           <p>Polaznici</p> 
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -219,7 +219,7 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: 'Clients',
+    name: 'Schedules',
 
     computed: {
       ...mapGetters([ 'getAllSchedules' ]),
@@ -261,16 +261,23 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1em;
-    
   }
 
   .schedule__items {
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 1em;
-    background: var(--purple-light);
+    /* background: var(--purple-light); */
+    border: 2px solid var(--purple);
     border-radius: 1em;
     padding: 1em;
+    cursor: pointer;
+    transition: ease .7s all;
+    
+  }
+
+  .schedule__items:hover {
+    background: var(--purple-light);
   }
 
   .days__list {

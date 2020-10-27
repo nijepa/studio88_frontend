@@ -24,12 +24,14 @@
       </svg>
       <p>Novi polaznik</p> 
     </button>
-    <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivan</span></div>
-    <div v-for="client in getAllClients" :key="client._id" @click="selectClient(client)" class="clients__list">
-      <p class="client__item">{{ client.last_name }} , {{ client.first_name }}</p>
-      <p class="client__item">{{ client.email }}</p>
-      <p class="client__item">{{ client.mobile }}</p>
-      <p class="client__item">{{ client.date_started | formatDate }}</p>
+    <div class="">
+      <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivan</span></div>
+      <div v-for="client in getAllClients" :key="client._id" @click="selectClient(client)" class="clients__list">
+        <p class="client__item">{{ client.last_name }} , {{ client.first_name }}</p>
+        <p class="client__item">{{ client.email }}</p>
+        <p class="client__item">{{ client.mobile }}</p>
+        <p class="client__item">{{ client.date_started | formatDate }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -96,9 +98,20 @@
     transition: ease .5s all;
   }
 
+  div.clients__list:nth-child(even) {border: 2px solid var(--purple-light);}
+  div.clients__list:nth-child(odd) {
+ /*    background: var(--purple-lighter);
+    border: 2px solid transparent; */
+  }
+
   .clients__list:hover {
     background: var(--purple-light);
   }
+/* 
+  div.clients__list:nth-child(odd):hover {
+    background: transparent;
+    border: 2px solid var(--purple);
+  } */
 
   .client__item {
     /* background: var(--purple-light); */
@@ -106,9 +119,6 @@
     padding: 1em;
     margin: 0;
   }
-
-  div.clients__list:nth-child(even) {background: var(--purple-light);}
-  div.clients__list:nth-child(odd) {background: var(--purple-lighter);}
 
   .client__add {
     margin-bottom: 1em;
