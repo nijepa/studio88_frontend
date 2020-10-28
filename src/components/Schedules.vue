@@ -250,7 +250,7 @@
       }
     },
 
-    async mounted() {
+    async created() {
       await this.fetchSchedules()
     }
   }
@@ -273,7 +273,6 @@
     padding: 1em;
     cursor: pointer;
     transition: ease .7s all;
-    
   }
 
   .schedule__items:hover {
@@ -284,11 +283,12 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
-    border: 2px solid var(--purple-light);
     border-radius: .5em;
     padding: .2em;
-    color: var(--purple-dark);
+    background: var(--purple);
+    color: #fff;
   }
+
   .week__day {
     margin: 0;
   }
@@ -303,6 +303,5 @@
     font-size: .9em;
     padding: .1em;
     background: transparent;
-
   }
 </style>

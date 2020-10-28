@@ -7,22 +7,35 @@
     </transition>
     <schedule v-if="getFormType === 'schedule'"></schedule>
     <schedules v-if="getFormType === 'schedules'"></schedules>
+    <payments v-if="getFormType === 'payments'"></payments>
+    <payment v-if="getFormType === 'payment'"></payment>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
   import Navigation from "@/components/Navigation.vue";
+  import Footer from "@/components/Footer.vue";
   import Client from "@/components/Client.vue";
   import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
   import Schedules from "@/components/Schedules.vue";
+  import Payments from "@/components/Payments.vue";
+  import Payment from "@/components/Payment.vue";
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'Dashboard',
 
     components: {
-      Navigation, Client, Schedule, Clients, Schedules
+      Navigation, 
+      Footer,
+      Client, 
+      Schedule, 
+      Clients, 
+      Schedules, 
+      Payments, 
+      Payment
     },
 
     data() {

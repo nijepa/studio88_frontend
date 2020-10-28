@@ -1,70 +1,59 @@
 <template>
   <div class="schedule__wrapper">
-    <form @submit.prevent="addSchedule()" method="post" class="user__form">
-      <div class="input__group">
-        <div class="input__field">
-          <label for="name">Naziv</label>
-          <input type="text" name="name" placeholder="ime termina (npr. I)"
-                  class="login_input user_input" v-model="scheduleInput.title">
-        </div>
-        <div class="input__field">
-          <label for="day">Dani treninga</label>
-          <div class="login_input user_input bloc">
-            <select name="days" id="days" size="5" class="day__select"
-                    v-model="scheduleInput.weekday" multiple>
-              <option value="Poneđeljak">Poneđeljak</option>
-              <option value="Utorak">Utorak</option>
-              <option value="Srijeda">Srijeda</option>
-              <option value="Četvrtak">Četvrtak</option>
-              <option value="Petak">Petak</option>
-              <option value="Subota">Subota</option>
-            </select>
-          </div>
-        </div>
+    <form @submit.prevent="addPayment()" method="post" class="user__form">
+      <label for="name">Naziv</label>
+      <input type="text" name="name" placeholder="ime termina (npr. I)"
+              class="login_input user_input" v-model="paymentInput.title">
+
+      <label for="day">Mjesec</label>
+      <div class="login_input user_input bloc">
+        <select name="days" id="days" size="5" class="day__select"
+                v-model="paymentInput.payment_period">
+          <option value="Januar">Januar</option>
+          <option value="Februar">Februar</option>
+          <option value="Mart">Mart</option>
+          <option value="April">April</option>
+          <option value="Maj">Maj</option>
+          <option value="Jun">Jun</option>
+          <option value="Jul">Jul</option>
+          <option value="Avgust">Avgust</option>
+          <option value="Septembar">Septembar</option>
+          <option value="Oktobar">Oktobar</option>
+          <option value="Novembar">Novembar</option>
+          <option value="Decembar">Decembar</option>
+        </select>
       </div>
-      
-      <div class="input__group">
-        <div class="input__field">
-          <label for="time">Vreme početka</label>
-          <input type="time" name="time" placeholder="vreme održavanja termina (npr. I)"
-                  class="login_input user_input" v-model="scheduleInput.startTime">
-        </div>
-        <div class="input__field">
-          <label for="duration">Trajanje u minutima</label>
-          <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
-                  class="login_input user_input" v-model="scheduleInput.duration">
-        </div>
-      </div>
-      
+
+      <label for="duration">Cena</label>
+      <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
+              class="login_input user_input" v-model="paymentInput.price">
+
       <div class="members__list">
         <div class="members__items">
-          <label for="members">Vježbačice u grupi</label>
-          <p v-for="member in scheduleInput.members" :key="member._id" name="member"
+          <label for="members">U grupi</label>
+          <p v-for="member in paymentInput.members" :key="member._id" name="member"
               class="login_input user_input members_input" @click="removeMember(member.client)">
-            {{ member.client.last_name }}, {{ member.client.first_name }} 
-            <span class="members__span"> - {{ member.start_date | formatDate }}</span> 
+            {{ member.client.last_name }}, {{ member.client.first_name }} - {{ member.start_date | formatDate }}
           </p>
         </div>
         <div class="members__items">
-          
-          <div class="input__field">
+          <label for="">Dodaj vežbačicu</label>
+          <div class="">
             <label for="date_start">Datum pristupa</label>
             <input type="date" name="date_start" placeholder="datum upisa"
                     class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
           </div>
           
-          <div class="input__field">
-            <label for="">Dodaj vežbačicu</label>
+          <div class="">
             <p v-for="client in notClients" :key="client._id" name="clients"
-                class="login_input user_input members_input members__not" @click="addMember(client)">
-              {{ client.last_name}}, {{ client.first_name}} 
-              <span class="members__span"> - {{ client.mobile }}</span> 
+                class="login_input user_input members_input" @click="addMember(client)">
+              {{ client.last_name}}, {{ client.first_name}} - {{ client.mobile }}
             </p>
           </div>
         </div>
       </div>
-      <hr>
-      <div class="action_btns input__btns">
+
+      <div class="action_btns">
         <button type="submit" class="action_btn">
           <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                 viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -120,7 +109,7 @@
           </svg>
           <p>Sačuvaj</p> 
         </button>
-        <button type="submit" @click.prevent="formTypeChange('schedules')" class="action_btn cancel__btn">
+        <button type="submit" @click.prevent="formTypeChange('payments')" class="action_btn cancel__btn">
           <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                 viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
             <g>
@@ -166,16 +155,13 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: 'Schedule',
+    name: 'Payment',
 
     data() {
       return {
-        enterClient: false,
-        scheduleInput: {
-          title: '',
-          weekday: [],
-          startTime: '',
-          duration: '',
+        paymentInput: {
+          payment_period: '',
+          price: 35,
           notes: '',
           members: []
         },
@@ -272,15 +258,15 @@
     },
 
     computed: {
-      ...mapGetters([ 'getAllSchedules', 
-                      'getOneSchedule',
+      ...mapGetters([ 'getAllPayments', 
+                      'getOnePayment',
                       'getAllClients' ]),
     },
 
     methods: {
-      ...mapActions([ 'scheduleAdd', 
-                      'scheduleUpdate', 
-                      'scheduleDelete',
+      ...mapActions([ 'paymentAdd', 
+                      'paymentUpdate', 
+                      'paymentDelete',
                       'fetchClients',
                       'formTypeChange',
                       'clearErrors' ]),
@@ -288,7 +274,6 @@
       makeCorrectDate(str) {
           return new Date(str).toISOString().split('T')[0]
       },
-
       addSchedule() {
         if (this.getOneSchedule._id) {
           this.scheduleUpdate(this.scheduleInput);
@@ -313,7 +298,7 @@
       },
 
       mapMembers() {
-        return this.scheduleInput.members.map(item => {
+        return this.payment.members.map(item => {
             let container = {};
             container = item.client;
             return container;
@@ -330,12 +315,11 @@
     },
 
     async mounted() {
-      if (this.getOneSchedule) {
-        this.scheduleInput = this.getOneSchedule;
+      if (this.getOnePayment) {
+        this.paymentInput = this.getOnePayment;
         await this.fetchClients();
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-        
-        let today = moment().format('YYYY-MM-DD');
+        var today = moment().format('YYYY-MM-DD');
         document.getElementById("datePicker").value = today;
         this.selectedDate = today
       } 
@@ -385,25 +369,13 @@
     cursor: pointer;
     padding: 0;
     margin: 0;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
   }
 
   .members__items {
     margin-right: 2em;
   }
 
-  .member__date {
+  .memeber__date {
     margin: 0;
-  }
-
-  .members__span {
-    justify-self: end;
-    font-size: .7em;
-  }
-
-  .members__not {
-    font-size: 1em;
   }
 </style>

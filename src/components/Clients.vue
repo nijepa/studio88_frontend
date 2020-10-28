@@ -22,15 +22,16 @@
           </g>
         </g>
       </svg>
-      <p>Novi polaznik</p> 
+      <p>Nova vježbačica</p> 
     </button>
     <div class="">
-      <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivan</span></div>
+      <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivna</span></div>
       <div v-for="client in getAllClients" :key="client._id" @click="selectClient(client)" class="clients__list">
         <p class="client__item">{{ client.last_name }} , {{ client.first_name }}</p>
         <p class="client__item">{{ client.email }}</p>
         <p class="client__item">{{ client.mobile }}</p>
-        <p class="client__item">{{ client.date_started | formatDate }}</p>
+        <!-- <p class="client__item">{{ client.active }}</p> -->
+        <p class="client__item"><input type="checkbox" class="" v-model="client.active"></p>
       </div>
     </div>
   </div>
@@ -100,7 +101,7 @@
 
   div.clients__list:nth-child(even) {border: 2px solid var(--purple-light);}
   div.clients__list:nth-child(odd) {
- /*    background: var(--purple-lighter);
+/*    background: var(--purple-lighter);
     border: 2px solid transparent; */
   }
 
