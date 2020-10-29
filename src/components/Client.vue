@@ -231,10 +231,10 @@
             position: "center"
           },
           warning: {
-            position: "topLeft"
+            position: "center"
           },
           error: {
-            position: "topRight"
+            position: "center"
           },
           question: {
             timeout: 20000,
@@ -292,13 +292,18 @@
                       'clearErrors' ]),
       
       addClient() {
-        if (this.getOneClient._id) {
-          this.clientUpdate(this.clientInput);
-        } else {
-          this.clientAdd(this.clientInput);
+        try {
+          if (this.getOneClient._id) {
+            this.clientUpdate(this.clientInput);
+          } else {
+            this.clientAdd(this.clientInput);
+          }
+          this.$toast.success('Uspešno sačuvano!', 'OK', this.notificationSystem.options.success)
+          this.formTypeChange('clients');
+        } catch(error) {
+          this.$toast.success('Greška!', 'OK', this.notificationSystem.options.error)
         }
-        this.$toast.success('Successfully inserted record!', 'OK', this.notificationSystem.options.success)
-        this.formTypeChange('clients');
+        
       },
 
       makeCorrectDate(str) {

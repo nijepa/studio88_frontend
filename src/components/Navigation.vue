@@ -107,8 +107,8 @@
         <img src="../assets/img/2.png" alt="" class="nav__img">
         <p>Termini</p>
       </button>
-      <button class="dashboard__btn" @click="navClick('attendance')"
-              :class="activeLink === 'attendance' ? 'active__link' : 'dashboard__btn_hover'">
+      <button class="dashboard__btn" @click="navClick('attendances')"
+              :class="activeLink === 'attendances' ? 'active__link' : 'dashboard__btn_hover'">
         <img src="../assets/img/3.png" alt="" class="nav__img">
   <!--       <svg version="1.1" id="Capa_1" x="0px" y="0px" height="40px" fill="var(--purple)"
             viewBox="0 0 473.193 473.193" style="enable-background:new 0 0 473.193 473.193;" xml:space="preserve">

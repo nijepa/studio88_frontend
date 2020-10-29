@@ -9,6 +9,8 @@
     <schedules v-if="getFormType === 'schedules'"></schedules>
     <payments v-if="getFormType === 'payments'"></payments>
     <payment v-if="getFormType === 'payment'"></payment>
+    <attendances v-if="getFormType === 'attendances'"></attendances>
+    <attendance v-if="getFormType === 'attendance'"></attendance>
     <Footer></Footer>
   </div>
 </template>
@@ -22,6 +24,8 @@
   import Schedules from "@/components/Schedules.vue";
   import Payments from "@/components/Payments.vue";
   import Payment from "@/components/Payment.vue";
+  import Attendances from "@/components/Attendances.vue";
+  import Attendance from "@/components/Attendance.vue";
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
@@ -35,7 +39,9 @@
       Clients, 
       Schedules, 
       Payments, 
-      Payment
+      Payment,
+      Attendances,
+      Attendance
     },
 
     data() {

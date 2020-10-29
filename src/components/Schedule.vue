@@ -25,14 +25,14 @@
       
       <div class="input__group">
         <div class="input__field">
-          <label for="time">Vreme početka</label>
+          <label for="time">Vrijeme početka</label>
           <input type="time" name="time" placeholder="vreme održavanja termina (npr. I)"
                   class="login_input user_input" v-model="scheduleInput.startTime">
         </div>
         <div class="input__field">
           <label for="duration">Trajanje u minutima</label>
           <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
-                  class="login_input user_input" v-model="scheduleInput.duration">
+                  class="login_input user_input" v-model="scheduleInput.duration" value="60">
         </div>
       </div>
       
@@ -330,15 +330,16 @@
     },
 
     async mounted() {
-      if (this.getOneSchedule) {
+      await this.fetchClients();
+      if (this.getOneSchedule._id) {
         this.scheduleInput = this.getOneSchedule;
-        await this.fetchClients();
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-        
-        let today = moment().format('YYYY-MM-DD');
-        document.getElementById("datePicker").value = today;
-        this.selectedDate = today
-      } 
+      } else {
+        this.notClients = this.getAllClients;
+      }
+      let today = moment().format('YYYY-MM-DD');
+      document.getElementById("datePicker").value = today;
+      this.selectedDate = today
     },
   }
 </script>
@@ -387,7 +388,7 @@
     margin: 0;
     display: grid;
     grid-template-columns: auto 1fr;
-    align-items: center;
+    align-items: baseline;
   }
 
   .members__items {

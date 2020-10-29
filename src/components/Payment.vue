@@ -1,59 +1,78 @@
 <template>
   <div class="schedule__wrapper">
     <form @submit.prevent="addPayment()" method="post" class="user__form">
-      <label for="name">Naziv</label>
-      <input type="text" name="name" placeholder="ime termina (npr. I)"
-              class="login_input user_input" v-model="paymentInput.title">
-
-      <label for="day">Mjesec</label>
-      <div class="login_input user_input bloc">
-        <select name="days" id="days" size="5" class="day__select"
-                v-model="paymentInput.payment_period">
-          <option value="Januar">Januar</option>
-          <option value="Februar">Februar</option>
-          <option value="Mart">Mart</option>
-          <option value="April">April</option>
-          <option value="Maj">Maj</option>
-          <option value="Jun">Jun</option>
-          <option value="Jul">Jul</option>
-          <option value="Avgust">Avgust</option>
-          <option value="Septembar">Septembar</option>
-          <option value="Oktobar">Oktobar</option>
-          <option value="Novembar">Novembar</option>
-          <option value="Decembar">Decembar</option>
-        </select>
+      <div class="input__group ">
+        <div class="input__field">
+          <label for="name">Godina</label>
+          <input type="number" name="name" placeholder="ime termina (npr. I)"
+                  class="login_input user_input" v-model="paymentInput.payment_year">
+        </div>
+        <div class="input__field">
+          <label for="days">Mjesec</label>
+          <div class="login_input user_input ">
+            <select name="days" id="days"  class=""
+                    v-model="paymentInput.payment_month" 
+                    :value="paymentInput.payment_month" required>
+              <option value="Januar">Januar</option>
+              <option value="Februar">Februar</option>
+              <option value="Mart">Mart</option>
+              <option value="April">April</option>
+              <option value="Maj">Maj</option>
+              <option value="Jun">Jun</option>
+              <option value="Jul">Jul</option>
+              <option value="Avgust">Avgust</option>
+              <option value="Septembar">Septembar</option>
+              <option value="Oktobar">Oktobar</option>
+              <option value="Novembar">Novembar</option>
+              <option value="Decembar">Decembar</option>
+            </select>
+          </div>
+        </div>
+        <div class="input__field">
+          <label for="price">Cijena</label>
+          <input type="number" id="price" placeholder="cijena" value="35"
+                  class="login_input user_input" v-model="paymentInput.price">
+        </div>
+        <div class="input__field">
+          <label for="datePicker">Datum plaćanja</label>
+          <input type="date" name="date_start" placeholder="datum upisa"
+                  class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
+        </div>
       </div>
-
-      <label for="duration">Cena</label>
-      <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
-              class="login_input user_input" v-model="paymentInput.price">
-
+      
       <div class="members__list">
         <div class="members__items">
-          <label for="members">U grupi</label>
-          <p v-for="member in paymentInput.members" :key="member._id" name="member"
-              class="login_input user_input members_input" @click="removeMember(member.client)">
-            {{ member.client.last_name }}, {{ member.client.first_name }} - {{ member.start_date | formatDate }}
-          </p>
-        </div>
-        <div class="members__items">
-          <label for="">Dodaj vežbačicu</label>
-          <div class="">
-            <label for="date_start">Datum pristupa</label>
-            <input type="date" name="date_start" placeholder="datum upisa"
-                    class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
-          </div>
           
           <div class="">
+            <div class="days__list payment__list"><span>Vježbačica</span><span>Dana</span><span>Iznos</span><span>Napomena</span></div>
+            <div v-for="member in paymentInput.members" :key="member._id" name="member"
+                class="members_input ">
+              <div @click="removeMember(member.client)" class="login_input user_input select__month">
+                {{ member.client.last_name }}, {{ member.client.first_name }}
+              </div>
+              <input type="date"  class="login_input user_input"
+                      :value="member.payment_date && makeCorrectDate(member.payment_date)"
+                      @input="member.payment_date = $event.target.valueAsDate">
+              <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price">
+              <input type="text" v-model="member.note" class="login_input user_input">
+            </div>
+          </div>
+        </div>
+<!--         <div class="members__items">
+          
+          <div class="input__field">
+            <label for="">Dodaj vežbačicu - 
+              <span @click="addAllmembers()" class="all__clients_btn"> Sve</span>
+            </label>
             <p v-for="client in notClients" :key="client._id" name="clients"
-                class="login_input user_input members_input" @click="addMember(client)">
+                class="login_input user_input members_input members__not" @click="addMember(client)">
               {{ client.last_name}}, {{ client.first_name}} - {{ client.mobile }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
 
-      <div class="action_btns">
+      <div class="action_btns input__btns">
         <button type="submit" class="action_btn">
           <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                 viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -160,11 +179,13 @@
     data() {
       return {
         paymentInput: {
-          payment_period: '',
+          payment_year: moment(String(new Date())).format('YYYY'),
+          payment_month: '',
           price: 35,
           notes: '',
           members: []
         },
+        year: 0,
         notClients: [],
         selectedDate: '',
         appeared: false,
@@ -220,7 +241,7 @@
             position: "topLeft"
           },
           error: {
-            position: "topRight"
+            position: "center"
           },
           question: {
             timeout: 20000,
@@ -260,7 +281,8 @@
     computed: {
       ...mapGetters([ 'getAllPayments', 
                       'getOnePayment',
-                      'getAllClients' ]),
+                      'getAllClients',
+                      'getErrors' ]),
     },
 
     methods: {
@@ -272,33 +294,60 @@
                       'clearErrors' ]),
 
       makeCorrectDate(str) {
-          return new Date(str).toISOString().split('T')[0]
+        return new Date(str).toISOString().split('T')[0]
       },
-      addSchedule() {
-        if (this.getOneSchedule._id) {
-          this.scheduleUpdate(this.scheduleInput);
+
+      addPayment() {
+        if (this.getOnePayment._id) {
+          this.paymentUpdate(this.paymentInput);
         } else {
-          this.scheduleAdd(this.scheduleInput);
+          this.paymentAdd(this.paymentInput);
         }
-        this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success)
-        this.formTypeChange('schedules');
+        if (this.getErrors.length) {
+          this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
+          this.clearErrors();
+        } else {
+          this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success);
+          this.formTypeChange('payments');
+        }
+      },
+
+      addAllmembers() {
+        for (let i = 0; i < this.getAllClients.length; i++) {
+          this.paymentInput.members.push({
+            'client':this.getAllClients[i], 
+            'payment_date':this.selectedDate, 
+            'payment_amount': this.paymentInput.price, 
+            'note': ''
+          })
+        }
+        this.notClients = [];
       },
 
       addMember(client) {
-        let member = this.scheduleInput.members.find(x => x.client._id === client._id);
-        if (!member ) {
-          this.scheduleInput.members.push({'client':client, 'start_date':this.selectedDate});
-          this.notClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
+        try {
+          let member = this.paymentInput.members.find(x => x.client._id === client._id);
+          if (!member) {
+            this.paymentInput.members.push({
+              'client':client, 
+              'payment_date':this.selectedDate,
+              'payment_amount': this.paymentInput.price, 
+              'note': ''
+            });
+            this.notClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
+          }
+        } catch(e) {
+          this.$toast.error('Greška! ' + e, 'OK', this.notificationSystem.options.error)
         }
       },
 
       removeMember(client) {
-        this.scheduleInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
+        this.paymentInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
         this.notClients.push(client);
       },
 
       mapMembers() {
-        return this.payment.members.map(item => {
+        return this.paymentInput.members.map(item => {
             let container = {};
             container = item.client;
             return container;
@@ -315,14 +364,21 @@
     },
 
     async mounted() {
-      if (this.getOnePayment) {
+      let currentYear = new Date();
+      currentYear = moment().format('YYYY');
+      this.year = currentYear;
+      let today = moment().format('YYYY-MM-DD');
+      document.getElementById("datePicker").value = today;
+      this.selectedDate = today;
+      await this.fetchClients();
+      if (this.getOnePayment._id) {
         this.paymentInput = this.getOnePayment;
-        await this.fetchClients();
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-        var today = moment().format('YYYY-MM-DD');
-        document.getElementById("datePicker").value = today;
-        this.selectedDate = today
-      } 
+        //document.getElementById("price").defaultValue = "35";
+      } else {
+        this.notClients = this.getAllClients;
+        this.addAllmembers()
+      }
     },
   }
 </script>
@@ -369,6 +425,10 @@
     cursor: pointer;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: 1fr repeat(3, auto);
+    align-items: center;
+    grid-column-gap: 1em;
   }
 
   .members__items {
@@ -377,5 +437,28 @@
 
   .memeber__date {
     margin: 0;
+  }
+
+  .all__clients_btn {
+    cursor: pointer;
+    border: 2px solid var(--purple);
+    border-radius: .5em;
+    padding: .1em;
+  }
+
+  .input__payment {
+    grid-template-columns: 1fr 1fr ;
+  }
+
+  .payment__list {
+    justify-items: left;
+  }
+
+  .select__month {
+    font-family: 'Itim', cursive;
+  }
+
+  .payment__price {
+    width: 3.3em;
   }
 </style>

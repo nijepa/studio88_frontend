@@ -86,9 +86,10 @@
       <p>Novo plaćanje</p> 
     </button>
     <div class="">
-      <div class="days__list"><span>Period</span><span>Cijena</span></div>
+      <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Cijena</span></div>
       <div v-for="payment in getAllPayments" :key="payment._id" @click="selectPayment(payment)" class="clients__list">
-        <p class="client__item">{{ payment.payment_period }}</p>
+        <p class="client__item">{{ payment.payment_year }}</p>
+        <p class="client__item">{{ payment.payment_month }}</p>
         <p class="client__item">{{ payment.price }}</p>
       </div>
     </div>
