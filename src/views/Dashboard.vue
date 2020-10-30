@@ -2,15 +2,16 @@
   <div class="">
     <navigation></navigation>
     <transition name="slide-fade" mode="out-in">
-    <clients v-if="getFormType === 'clients'" ></clients>
-    <client v-if="getFormType === 'client'"></client>
+    <clients v-if="getFormType === 'clients'" key="clients"></clients>
     </transition>
-    <schedule v-if="getFormType === 'schedule'"></schedule>
-    <schedules v-if="getFormType === 'schedules'"></schedules>
-    <payments v-if="getFormType === 'payments'"></payments>
-    <payment v-if="getFormType === 'payment'"></payment>
-    <attendances v-if="getFormType === 'attendances'"></attendances>
-    <attendance v-if="getFormType === 'attendance'"></attendance>
+    <client v-if="getFormType === 'client'" key='client'></client>
+    <schedule v-if="getFormType === 'schedule'" key="schedule"></schedule>
+    <schedules v-if="getFormType === 'schedules'" key="schedules"></schedules>
+    <payments v-if="getFormType === 'payments'" key="payments"></payments>
+    <payment v-if="getFormType === 'payment'" key="payment"></payment>
+    <attendances v-if="getFormType === 'attendances'" key="attendances"></attendances>
+    <attendance v-if="getFormType === 'attendance'" key="attendance"></attendance>
+    
     <Footer></Footer>
   </div>
 </template>

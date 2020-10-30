@@ -73,8 +73,8 @@ const actions = {
     }
   },
 
-  setLoadingState({commit}) {
-    commit('changeLoadingState', false);
+  setLoadingState({commit}, loading) {
+    commit('changeLoadingState', loading);
   },
 
   signType({commit}, typeData) {

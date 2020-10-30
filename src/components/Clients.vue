@@ -1,7 +1,9 @@
 <template>
   <div class="">
+    <transition name="slide-fade" mode="out-in">
     <div v-if="loadingState" class="">
       <img src="../assets/img/loading1.gif" alt="" class="loading">
+      loading ...
     </div>
     <div v-else class="client__wrapper">
       <button type="submit" @click="newClient()" class="action_btn client__add">
@@ -39,6 +41,7 @@
         </div>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -50,7 +53,8 @@
     name: 'Clients',
 
     computed: {
-      ...mapGetters([ 'getAllClients', 'loadingState' ]),
+      ...mapGetters([ 'getAllClients', 
+                      'loadingState' ]),
     },
 
     methods: {
@@ -61,11 +65,13 @@
                       'setLoadingState' ]),
 
       async newClient() {
+        this.setLoadingState(true);
         this.formTypeChange('client');
         await this.clientClear();
       },
 
       async selectClient(client) {
+        this.setLoadingState(true);
         await this.fetchClient(client);
         this.formTypeChange('client');
         //this.$emit('toggled-form', 3);
@@ -82,7 +88,7 @@
 
     async mounted() {
       await this.fetchClients();
-      this.setLoadingState();
+      this.setLoadingState(false);
     }
   }
 </script>

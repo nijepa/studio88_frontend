@@ -208,11 +208,13 @@
     },
 
     methods: {
-      ...mapActions([ 'formTypeChange' ]),
+      ...mapActions([ 'formTypeChange',
+                      'setLoadingState' ]),
 
       navClick(type) {
+        this.setLoadingState(true);
         this.activeLink = type;
-        this.formTypeChange(type)
+        this.formTypeChange(type);
       },
       toggleUser(type) {
         this.$emit('toggled-form', type);
