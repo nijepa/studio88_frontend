@@ -4,14 +4,14 @@
       <div class="input__group">
         <div class="input__field">
           <label for="name">Naziv</label>
-          <input type="text" name="name" placeholder="ime termina (npr. I)"
+          <input type="text" name="name" placeholder="ime termina (npr. I)" required
                   class="login_input user_input" v-model="scheduleInput.title">
         </div>
         <div class="input__field">
           <label for="day">Dani treninga</label>
           <div class="login_input user_input bloc">
             <select name="days" id="days" size="5" class="day__select"
-                    v-model="scheduleInput.weekday" multiple>
+                    v-model="scheduleInput.weekday" multiple required>
               <option value="Poneđeljak">Poneđeljak</option>
               <option value="Utorak">Utorak</option>
               <option value="Srijeda">Srijeda</option>
@@ -26,8 +26,8 @@
       <div class="input__group">
         <div class="input__field">
           <label for="time">Vrijeme početka</label>
-          <input type="time" name="time" placeholder="vreme održavanja termina (npr. I)"
-                  class="login_input user_input" v-model="scheduleInput.startTime">
+          <input type="time" name="time" placeholder="vreme održavanja termina (npr. 10:00:AM)"
+                  class="login_input user_input" v-model="scheduleInput.startTime" required>
         </div>
         <div class="input__field">
           <label for="duration">Trajanje u minutima</label>
@@ -50,13 +50,15 @@
           <div class="input__field">
             <label for="date_start">Datum pristupa</label>
             <input type="date" name="date_start" placeholder="datum upisa"
-                    class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
+                    class="login_input user_input memeber__date" id="datePicker" 
+                    v-model="selectedDate">
           </div>
           
           <div class="input__field">
             <label for="">Dodaj vežbačicu</label>
             <p v-for="client in notClients" :key="client._id" name="clients"
-                class="login_input user_input members_input members__not" @click="addMember(client)">
+                class="login_input user_input members_input members__not" 
+                @click="addMember(client)">
               {{ client.last_name}}, {{ client.first_name}} 
               <span class="members__span"> - {{ client.mobile }}</span> 
             </p>
@@ -120,7 +122,8 @@
           </svg>
           <p>Sačuvaj</p> 
         </button>
-        <button type="submit" @click.prevent="formTypeChange('schedules')" class="action_btn cancel__btn">
+        <button type="submit" @click.prevent="formTypeChange('schedules')" 
+                class="action_btn cancel__btn">
           <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                 viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
             <g>
@@ -274,7 +277,8 @@
     computed: {
       ...mapGetters([ 'getAllSchedules', 
                       'getOneSchedule',
-                      'getAllClients' ]),
+                      'getAllClients',
+                      'getErrors' ]),
     },
 
     methods: {
@@ -289,14 +293,19 @@
           return new Date(str).toISOString().split('T')[0]
       },
 
-      addSchedule() {
+      async addSchedule() {
         if (this.getOneSchedule._id) {
-          this.scheduleUpdate(this.scheduleInput);
+          await this.scheduleUpdate(this.scheduleInput);
         } else {
-          this.scheduleAdd(this.scheduleInput);
+          await this.scheduleAdd(this.scheduleInput);
         }
-        this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success)
-        this.formTypeChange('schedules');
+        if (this.getErrors.length) {
+          this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error)
+          this.clearErrors();
+        } else {
+          this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success)
+          this.formTypeChange('schedules');
+        }
       },
 
       addMember(client) {
@@ -329,7 +338,7 @@
       }
     },
 
-    async mounted() {
+    async created() {
       await this.fetchClients();
       if (this.getOneSchedule._id) {
         this.scheduleInput = this.getOneSchedule;
@@ -359,7 +368,6 @@
     display: inline-block;
     vertical-align: top;
     overflow: hidden;
-    /* border: solid grey 1px; */
     height: 140px;
   }
 
@@ -377,7 +385,6 @@
   .members__list {
     display: flex;
     text-align: left;
-    /* margin-top: 1em; */
     align-items: baseline;
     font-size: 1em;
   }

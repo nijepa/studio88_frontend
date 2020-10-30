@@ -9,7 +9,7 @@
         </div>
         <div class="input__field">
           <label for="date_start">Datum upisa</label>
-          <input type="date" name="date_start" placeholder="datum upisa"
+          <input type="date" id="date_start" placeholder="datum upisa"
                   class="login_input user_input" :value="clientInput.date_started && makeCorrectDate(clientInput.date_started)"
                   @input="clientInput.date_started = $event.target.valueAsDate">
         </div>
@@ -23,7 +23,7 @@
         </div>
         <div class="input__field">
           <label for="last_name">Prezime</label>
-          <input type="text" name="last_name" placeholder="prezime" required
+          <input type="text" id="last_name" placeholder="prezime" required
                   class="login_input user_input" v-model="clientInput.last_name">
         </div>
       </div>
@@ -31,7 +31,7 @@
       <div class="input__group">
         <div class="input__field">
           <label for="email">E-mail</label>
-          <input type="email" name="email" placeholder="e-mail" required
+          <input type="email" id="email" placeholder="e-mail" required
                   class="login_input user_input" v-model="clientInput.email">
         </div>
 <!--         <div class="input__field">
@@ -46,7 +46,7 @@
         </div> -->
         <div class="input__field">
           <label for="mobile">Mobilni</label>
-          <input type="tel" name="mobile" placeholder="mobilni"
+          <input type="tel" id="mobile" placeholder="mobilni"
                   class="login_input user_input" v-model="clientInput.mobile">
         </div>
       </div>
@@ -281,7 +281,8 @@
 
     computed: {
       ...mapGetters([ 'getAllClients', 
-                      'getOneClient' ]),
+                      'getOneClient',
+                      'getErrors' ]),
     },
 
     methods: {
@@ -292,22 +293,22 @@
                       'clearErrors' ]),
       
       addClient() {
-        try {
-          if (this.getOneClient._id) {
-            this.clientUpdate(this.clientInput);
-          } else {
-            this.clientAdd(this.clientInput);
-          }
-          this.$toast.success('Uspešno sačuvano!', 'OK', this.notificationSystem.options.success)
-          this.formTypeChange('clients');
-        } catch(error) {
-          this.$toast.success('Greška!', 'OK', this.notificationSystem.options.error)
+        if (this.getOneClient._id) {
+          this.clientUpdate(this.clientInput);
+        } else {
+          this.clientAdd(this.clientInput);
         }
-        
+        if (this.getErrors.length) {
+          this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
+          this.clearErrors();
+        } else {
+          this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success);
+          this.formTypeChange('clients');
+        }
       },
 
       makeCorrectDate(str) {
-          return new Date(str).toISOString().split('T')[0]
+        return new Date(str).toISOString().split('T')[0]
       },
       
       onAppeared() {
@@ -345,7 +346,6 @@
     grid-column-gap: 1em;
     align-items: center;
     background: white;
-    /* padding: .5em; */
     margin-right: 1em;
     margin-top: 1em;
     cursor: pointer;
@@ -398,10 +398,4 @@
   .input__btns {
     justify-self: center;
   }
-/*   .user_input:hover, .user_input:focus {
-    color: #4b515d;
-    background: #fff;
-    border-bottom: 1px solid var(--purple);
-    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
-  } */
 </style>

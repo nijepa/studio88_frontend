@@ -4,7 +4,7 @@
       <div class="input__group ">
         <div class="input__field">
           <label for="name">Godina</label>
-          <input type="number" name="name" placeholder="ime termina (npr. I)"
+          <input type="number" name="name" placeholder="ime termina (npr. I)" 
                   class="login_input user_input" v-model="paymentInput.payment_year">
         </div>
         <div class="input__field">
@@ -12,7 +12,7 @@
           <div class="login_input user_input ">
             <select name="days" id="days"  class=""
                     v-model="paymentInput.payment_month" 
-                    :value="paymentInput.payment_month" required>
+                    :value="paymentInput.payment_month" >
               <option value="Januar">Januar</option>
               <option value="Februar">Februar</option>
               <option value="Mart">Mart</option>
@@ -30,24 +30,25 @@
         </div>
         <div class="input__field">
           <label for="price">Cijena</label>
-          <input type="number" id="price" placeholder="cijena" value="35"
+          <input type="number" id="price" placeholder="cijena" value="35" required
                   class="login_input user_input" v-model="paymentInput.price">
         </div>
         <div class="input__field">
           <label for="datePicker">Datum plaćanja</label>
-          <input type="date" name="date_start" placeholder="datum upisa"
+          <input type="date" name="date_start" placeholder="datum upisa" required
                   class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
         </div>
       </div>
       
       <div class="members__list">
         <div class="members__items">
-          
           <div class="">
-            <div class="days__list payment__list"><span>Vježbačica</span><span>Dana</span><span>Iznos</span><span>Napomena</span></div>
+            <div class="days__list payment__list">
+              <span>Vježbačica</span><span>Dana</span><span>Iznos</span><span>Napomena</span>
+            </div>
             <div v-for="member in paymentInput.members" :key="member._id" name="member"
                 class="members_input ">
-              <div @click="removeMember(member.client)" class="login_input user_input select__month">
+              <div class="login_input user_input select__month">
                 {{ member.client.last_name }}, {{ member.client.first_name }}
               </div>
               <input type="date"  class="login_input user_input"
@@ -297,11 +298,11 @@
         return new Date(str).toISOString().split('T')[0]
       },
 
-      addPayment() {
+      async addPayment() {
         if (this.getOnePayment._id) {
-          this.paymentUpdate(this.paymentInput);
+          await this.paymentUpdate(this.paymentInput);
         } else {
-          this.paymentAdd(this.paymentInput);
+          await this.paymentAdd(this.paymentInput);
         }
         if (this.getErrors.length) {
           this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
@@ -324,7 +325,7 @@
         this.notClients = [];
       },
 
-      addMember(client) {
+/*       addMember(client) {
         try {
           let member = this.paymentInput.members.find(x => x.client._id === client._id);
           if (!member) {
@@ -339,12 +340,12 @@
         } catch(e) {
           this.$toast.error('Greška! ' + e, 'OK', this.notificationSystem.options.error)
         }
-      },
+      }, */
 
-      removeMember(client) {
+/*       removeMember(client) {
         this.paymentInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
         this.notClients.push(client);
-      },
+      }, */
 
       mapMembers() {
         return this.paymentInput.members.map(item => {
