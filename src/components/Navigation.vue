@@ -1,6 +1,20 @@
 <template>
   <div class="">
+    <div class="user__logout">
+      &#10022; {{loggedUser.name}} &#10022;
+      <a @click="logout(loggedUser)" href="#" class="logout">Log Out</a>
+    </div>
+
     <nav>
+  <!--     <div class="dashboard__btn home__btn">
+        <img src="../assets/img/studio881.png" alt="" class="logo__small">
+      </div> -->
+      <button class="dashboard__btn " @click="navClick('home')" 
+              :class="activeLink === 'home' ? 'active__link' : 'dashboard__btn_hover'">
+        <img src="../assets/img/studio881.png" alt="" class="logo__small">
+        <!-- <img src="../assets/img/all.png" alt="" class="nav__img_home">   -->
+        <!-- <p>Početna</p>  -->
+      </button>
       <button class="dashboard__btn" @click="navClick('clients')" 
               :class="activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'">
         <img src="../assets/img/1.png" alt="" class="nav__img">
@@ -196,19 +210,23 @@
     },
     data() {
       return {
-        activeLink: '',
-        menuItems: [{id: 'clients', title: 'clients'},
+        activeLink: 'home',
+        menuItems: [{id: 'home', title: 'home'},
+                    {id: 'clients', title: 'clients'},
                     {id: 'schedules', title: 'schedules'},
                     {id: 'attendance', title: 'attendance'},
                     {id: 'payments', title: 'payments'}]
       }
     },
     computed: {
-      ...mapGetters([ 'getFormType' ]),
+      ...mapGetters([ 'loggedUser',
+                      'getFormType' ]),
     },
 
     methods: {
-      ...mapActions([ 'formTypeChange',
+      ...mapActions([ 'initialState',
+                      'logout',
+                      'formTypeChange',
                       'setLoadingState' ]),
 
       navClick(type) {
@@ -216,9 +234,15 @@
         this.activeLink = type;
         this.formTypeChange(type);
       },
+
       toggleUser(type) {
         this.$emit('toggled-form', type);
       }
+    },
+
+    created() {
+      this.initialState();
+      this.navClick('home');
     }
   }
 </script>
@@ -228,7 +252,7 @@
     color: #ffffff !important; 
     background-image: linear-gradient(to bottom, white,  var(--purple) 80%) !important;
     cursor: none !important;
-    transform: scale(.9);
+    transform: scale(1.05);
   }
   nav {
     display: flex;
@@ -237,6 +261,14 @@
 
   .nav__img {
     width: 30px;
+  }
+
+  .nav__img_home {
+    height: 50px;
+  }
+
+  .home__btn {
+    display: block !important;
   }
 
   .dashboard__btn {
@@ -265,7 +297,7 @@
     border: 2px solid var(--purple-dark);
     /* fill: var(--purple-dark); */
     /* text-decoration: underline; */
-    transform: scale(1.05);
+    transform: scale(.95);
   }
 
   hr {
@@ -273,5 +305,13 @@
     border: 0;
     height: 2px;
     background-image: linear-gradient(to right, rgba(98, 18, 105, 0), rgba(116, 21, 153, 0.75), rgba(98, 19, 134, 0));
+  }
+
+  .user__logout {
+    margin-top: 1em;
+  }
+
+  .logo__small {
+    height: 70px;
   }
 </style>

@@ -1,21 +1,96 @@
 <template>
-  <div class="login__wrapper">
-    <label for="username">User name</label>
-    <input type="text" name="username" class="login_input">
-    <label for="pass">Password</label>
-    <input type="password" name="pass" class="login_input">
-    <button type="submit" @click="logIn" class="login_btn">Log In</button>
+  <div class="d">
+    <form @submit.prevent="logIn()" 
+          method="post" class="login__wrapper">
+      <label for="username">User name</label>
+      <input type="text" name="username" class="login_input" required
+              @focus="clearErrors" v-model="loginInput.email">
+
+      <label for="pass">Password</label>
+      <input type="password" name="pass" class="login_input" required
+              @focus="clearErrors" v-model="loginInput.password">
+
+      <!-- <button type="submit" @click="logIn" class="login_btn"> -->
+      <button type="submit" class="login_btn">
+        Log In
+      </button>
+    </form>
+    <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
   </div>
 </template>
 
 <script>
-  import router from '../router';
+  import { mapGetters, mapActions } from 'vuex';
+  //import router from '../router';
   export default {
     name: 'LogIn',
     
+    data() {
+      return {
+        type: 'login',        
+        loginInput: {
+          email: '',
+          password: ''
+        },
+        user: {},
+        notificationSystem: {
+          options: {
+            show: {
+              theme: "dark",
+              icon: "icon-person",
+              position: "topCenter",
+              progressBarColor: "rgb(0, 255, 184)",
+            },
+            ballon: {
+              balloon: true,
+              position: "bottomCenter"
+            },
+            info: {
+              position: "bottomLeft"
+            },
+            success: {
+              position: "center"
+            },
+            warning: {
+              position: "topLeft"
+            },
+            error: {
+              position: "center"
+            },
+            question: {
+              timeout: 20000,
+              close: false,
+              overlay: true,
+              toastOnce: true,
+              id: "question",
+              zindex: 999,
+              position: "center",
+            }
+          }
+        }
+      }
+    },
+
+    computed: {
+      ...mapGetters([ 'getInputType', 
+                      'loggedUser', 
+                      'getErrors',
+                      'isLogged' ]),
+    },
+
     methods: {
+      ...mapActions([ 'login', 
+                      'logout',
+                      'signType',
+                      'clearErrors' ]),
+
       logIn() {
-        router.push("/dashboard")
+        this.login(this.loginInput);
+        //router.push("/dashboard");
+        if (this.getErrors.length) {
+          this.$toast.error('Greška! Pogrešan e-mail ili password ' + this.getErrors, 'OK', this.notificationSystem.options.error);
+          this.clearErrors();
+        } 
       }
     }
   }
@@ -70,5 +145,9 @@
     color: var(--purple-dark);
     border-bottom: 2px solid var(--purple-dark);
     transform: scale(1.05);
+  }
+
+  .err {
+    color: var(--red);
   }
 </style>

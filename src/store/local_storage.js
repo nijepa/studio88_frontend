@@ -1,19 +1,19 @@
 function saveToken(token) {
-	localStorage.setItem('odinbook_user', JSON.stringify(token));
+	localStorage.setItem('studio88_user', JSON.stringify(token));
 }
 
 function getToken() {
-	return JSON.parse(localStorage.getItem('odinbook_user'));
+	return JSON.parse(localStorage.getItem('studio88_user'));
 }
 
 function removeToken() {
-	localStorage.removeItem('odinbook_user');
+	localStorage.removeItem('studio88_user');
 }
 
 function updateToken(data) {
-	const savedCred = JSON.parse(localStorage.getItem('odinbook_user'));
+	const savedCred = JSON.parse(localStorage.getItem('studio88_user'));
 	savedCred.user = data;
-	localStorage.setItem('odinbook_user', JSON.stringify(savedCred));
+	localStorage.setItem('studio88_user', JSON.stringify(savedCred));
 }
 
 export {

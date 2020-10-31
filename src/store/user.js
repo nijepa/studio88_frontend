@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL;
+const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
 import apiClient from './api_client';
 import * as ls from './local_storage';
 import router from '../router';
@@ -105,6 +105,7 @@ const actions = {
         commit('setUser', response.data.user);
         commit('setToken', response.data.token);
         commit('setLogged', true);
+        router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {

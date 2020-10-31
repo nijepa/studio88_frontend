@@ -1,6 +1,8 @@
 <template>
   <div class="">
     <navigation></navigation>
+
+    <dash v-if="getFormType === 'home'" key="home"></dash>
     <transition name="slide-fade" mode="out-in">
     <clients v-if="getFormType === 'clients'" key="clients"></clients>
     </transition>
@@ -19,6 +21,7 @@
 <script>
   import Navigation from "@/components/Navigation.vue";
   import Footer from "@/components/Footer.vue";
+  import Dash from "@/components/Dashboard.vue";
   import Client from "@/components/Client.vue";
   import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
@@ -35,6 +38,7 @@
     components: {
       Navigation, 
       Footer,
+      Dash,
       Client, 
       Schedule, 
       Clients, 
@@ -56,13 +60,18 @@
     },
 
     methods: {
-      ...mapActions([ 'formTypeChange' ]),
+      ...mapActions([ 'initialState',
+                      'formTypeChange' ]),
 
 /*       handleForm(value) {
         console.log(value)
         this.showForm = value;
       } */
-    }
+    },
+
+/*     created() {
+      this.initialState();
+    } */
   }
 </script>
 

@@ -1,8 +1,9 @@
 <template>
   <div class="hello">
     <div class="club__title">
-      <h1 class="club">{{ msg }} </h1>
-      <p class="club__type">p i l a t e s</p>
+      <img src="../assets/img/studio881.png" alt="" class="">
+<!--       <h1 class="club">{{ msg }} </h1>
+      <p class="club__type">p i l a t e s</p> -->
       <div class="club__login">
         <transition name="slide-fade" mode="out-in">
         <p class="club__link" v-if="!loginForm" @click="toggleLoginForm" 
