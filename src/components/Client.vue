@@ -309,7 +309,7 @@
           this.clientAdd(this.clientInput);
         }
         this.setLoadingState(false);
-        if (this.getErrors.length) {
+        if (Array.isArray(this.getErrors) && this.getErrors.length) {
           this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
           this.clearErrors();
         } else {

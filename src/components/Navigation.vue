@@ -249,11 +249,12 @@
 
 <style>
   .active__link {
-    color: #ffffff !important; 
+    color: var(--gold) !important; 
     background-image: linear-gradient(to bottom, white,  var(--purple) 80%) !important;
     cursor: none !important;
     transform: scale(1.05);
   }
+  
   nav {
     display: flex;
     justify-content: center;

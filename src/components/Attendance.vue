@@ -279,7 +279,7 @@
           await this.attendanceAdd(this.attendanceInput);
         }
         this.setLoadingState(false);
-        if (this.getErrors) {
+        if (Array.isArray(this.getErrors) && this.getErrors.length) {
           this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
           this.clearErrors();
         } else {
