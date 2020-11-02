@@ -9,8 +9,8 @@
   <!--     <div class="dashboard__btn home__btn">
         <img src="../assets/img/studio881.png" alt="" class="logo__small">
       </div> -->
-      <button class="dashboard__btn " @click="navClick('home')" 
-              :class="activeLink === 'home' ? 'active__link' : 'dashboard__btn_hover'">
+      <button class="dashboard__btn" @click="navClick('home')" 
+              :class="activeLink === 'home' ? 'home__btn' : 'dashboard__btn_hover'">
         <img src="../assets/img/studio881.png" alt="" class="logo__small">
         <!-- <img src="../assets/img/all.png" alt="" class="nav__img_home">   -->
         <!-- <p>Početna</p>  -->
@@ -249,7 +249,7 @@
 
 <style>
   .active__link {
-    color: var(--gold) !important; 
+    color: var(--gold-light) !important; 
     background-image: linear-gradient(to bottom, white,  var(--purple) 80%) !important;
     cursor: none !important;
     transform: scale(1.05);
@@ -314,5 +314,12 @@
 
   .logo__small {
     height: 70px;
+  }
+
+  .home__btn {
+    color: var(--gold-light) !important; 
+    background-image: linear-gradient(to bottom, white,  var(--gold-light) 80%) !important;
+    cursor: none !important;
+    transform: scale(1.05);
   }
 </style>

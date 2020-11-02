@@ -1,8 +1,7 @@
 <template>
   <div class="">
     <navigation></navigation>
-
-    <dash v-if="getFormType === 'home'" key="home"></dash>
+    <Dash v-if="getFormType === 'home'" key="home"></Dash>
     <transition name="slide-fade" mode="out-in">
     <clients v-if="getFormType === 'clients'" key="clients"></clients>
     </transition>

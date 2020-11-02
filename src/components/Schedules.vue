@@ -298,7 +298,7 @@
     border-radius: .5em;
     padding: .2em;
     background: var(--purple);
-    color: var(--gold);
+    color: var(--gold-light);
   }
 
   .week__day {

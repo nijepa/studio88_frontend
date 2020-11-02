@@ -1,25 +1,43 @@
 <template>
-  <div class="schedule__card">
-    <img src="../assets/img/studio881.png" alt="" class="loading">
-    <div class="schedule__items">
-      <p class="dash__text">Ukupno aktivnih klijenata : </p>
-      <h1>{{ activeClients.length }}</h1>
+  <div class="">
+    <div v-if="loadingState" class="">
+      <img src="../assets/img/loading1.gif" alt="" class="loading">
+      loading ...
     </div>
-    <div class="schedule__items">
-      <p class="dash__text">Ukupno plaćeno : </p>
-      <h1 v-for="tot in totalPayments" :key="tot.payment_month">{{ tot.payment_month }} {{ tot.payment_year }} - {{ tot.total_amount }}</h1>
-    </div>
-    <div class="schedule__items">
-      <p class="dash__text">Ukupno dolasci : </p>
-      <h1 v-for="tota in totalAttendances" :key="tota.attend_date">{{ tota.attend_date | formatDate }} - {{ tota.total_amount }}</h1>
+    <div v-else class="dash__wrapper">
+      <div class="">
+        <img src="../assets/img/studio881.png" alt="" class="loading">
+      </div>
+      <div class="dash__items">
+        <p class="dash__text">Ukupno aktivnih klijenata : </p>
+        <h1>{{ activeClients.length }}</h1>
+      </div>
+      <div class="dash__items">
+        <p class="dash__text">Ukupno plaćeno : </p>
+        <Charto v-if="loaded" :chartdata="totalPayments" :chartlabel="paymentLabels"></Charto>
+    <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
+          <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
+          <span>{{ tot.total_amount }}</span>
+        </h1> -->
+      </div>
+      <div class="dash__items">
+        <p class="dash__text">Ukupno dolasci : </p>
+        <Charto2 v-if="loaded" :chartdata="totalAttendances" :chartlabel="attendanceLabels"></Charto2>
+  <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
+          <span>{{ tota.attend_date | formatDate }} : </span>
+          <span>{{ tota.total_amount }}</span>
+        </h1> -->
+      </div>
     </div>
   </div>
-  
 </template>
 
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Charto from './utils/AreaChart';
+  import Charto2 from './utils/AreaChartLine';
+
   export default {
     name: ' Dash',
 
@@ -27,9 +45,14 @@
       return {
         activeClients: [],
         totalPayments: [],
-        totalAttendances: []
+        paymentLabels: [],
+        totalAttendances: [],
+        attendanceLabels: [],
+        loaded: false
       }
     },
+
+    components: { Charto, Charto2 },
 
     filters: {
       formatDate: function(value) {
@@ -71,7 +94,11 @@
             return e.present == true;
           }) */
         }));
-      }
+      },
+
+      makeCorrectDate(str) {
+        return new Date(str).toISOString().split('T')[0]
+      },
     },
 
     async mounted() {
@@ -81,14 +108,47 @@
       this.activeClients = this.getAllClients.filter(function (e) {
         return e.active == true;
       });
-      this.totalPayments = this.mapPayments();
+   /*    let arr = this.mapPayments().map(d=>({
+          period : d.payment_month + ' ' +d.payment_year,
+          amount : d.total_amount
+        })); */
+      let arro = this.mapPayments()
+      let arr = arro.map(item => item.total_amount);
+      let arr1 = arro.map(item => item.payment_month);
+      this.totalPayments = arr;
+      this.paymentLabels = arr1;
+
       this.totalAttendances = this.mapAttendances();
+      let arra = this.mapAttendances();
+      let arra1 = arra.map(item => item.total_amount);
+      let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
+      this.totalAttendances = arra1;
+      this.attendanceLabels = arra2;
+      
       this.setLoadingState(false);
+
+      this.loaded = true;
     }
   }
 </script>
 
 <style>
+  .dash__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+    margin: 1em;
+  }
+
+  .dash__item {
+
+  }
+
+  .dash__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
   .dash__text {
     color: var(--gold);
     font-variant: small-caps;
