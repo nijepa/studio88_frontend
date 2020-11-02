@@ -23,8 +23,8 @@ export default {
       .getContext("2d")
       .createLinearGradient(0, 0, 0, 450);
 
-    this.gradient.addColorStop(0, "rgba(155, 42, 231)");
-    this.gradient.addColorStop(0.5, "rgba(59, 5, 109, 0.25)");
+    this.gradient.addColorStop(0, "rgba(92, 71, 133)");
+    this.gradient.addColorStop(0.5, "rgba(92, 71, 133, 0.25)");
     this.gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
 
     this.renderChart(
@@ -43,9 +43,9 @@ export default {
           {
             label: "Dolazaka",
             borderColor: "#856727",
-            pointBackgroundColor: "purple",
+            pointBackgroundColor: "#5c4885",
             borderWidth: 1,
-            pointBorderColor: "purple",
+            pointBorderColor: "#856727",
             backgroundColor: this.gradient,
             data: this.chartdata,
           },
@@ -61,6 +61,6 @@ export default {
     color: rgba(59, 5, 109, 0.5);
     color:rgba(59, 5, 109, 0.25);
     color: rgba(255, 0, 0, 0);
-    color: #FC2525;
+    color: rgb(92, 71, 133);
   }
 </style>

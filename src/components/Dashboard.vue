@@ -5,16 +5,17 @@
       loading ...
     </div>
     <div v-else class="dash__wrapper">
-      <div class="">
+      <div class="dash__items">
         <img src="../assets/img/studio881.png" alt="" class="loading">
       </div>
-      <div class="dash__items">
+      <div class="dash__items active__clients">
         <p class="dash__text">Ukupno aktivnih klijenata : </p>
-        <h1>{{ activeClients.length }}</h1>
+        <h1 class="active__nr">{{ activeClients.length }}</h1>
       </div>
       <div class="dash__items">
         <p class="dash__text">Ukupno plaćeno : </p>
-        <Charto v-if="loaded" :chartdata="totalPayments" :chartlabel="paymentLabels"></Charto>
+        <Charto v-if="loaded" :chartdata="totalPayments" :chartlabel="paymentLabels"
+                class="charts"></Charto>
     <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
           <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
           <span>{{ tot.total_amount }}</span>
@@ -22,7 +23,8 @@
       </div>
       <div class="dash__items">
         <p class="dash__text">Ukupno dolasci : </p>
-        <Charto2 v-if="loaded" :chartdata="totalAttendances" :chartlabel="attendanceLabels"></Charto2>
+        <Charto2 v-if="loaded" :chartdata="totalAttendances" :chartlabel="attendanceLabels"
+                  class="charts"></Charto2>
   <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
           <span>{{ tota.attend_date | formatDate }} : </span>
           <span>{{ tota.total_amount }}</span>
@@ -90,9 +92,6 @@
         return this.getAllAttendances.map(d=>({
           attend_date : d.attend_date,
           total_amount : d.members.reduce((a,b)=>a.present+b.present)
-   /*        total_amount : d.members.filter(function (e) {
-            return e.present == true;
-          }) */
         }));
       },
 
@@ -108,10 +107,7 @@
       this.activeClients = this.getAllClients.filter(function (e) {
         return e.active == true;
       });
-   /*    let arr = this.mapPayments().map(d=>({
-          period : d.payment_month + ' ' +d.payment_year,
-          amount : d.total_amount
-        })); */
+
       let arro = this.mapPayments()
       let arr = arro.map(item => item.total_amount);
       let arr1 = arro.map(item => item.payment_month);
@@ -135,13 +131,23 @@
 <style>
   .dash__wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
     grid-gap: 1em;
     margin: 1em;
   }
 
-  .dash__item {
+  .active__clients {
+    align-self: center;
+  }
 
+  .active__nr {
+    font-size: 3em;
+    color: var(--purple-dark)
+  }
+
+  .dash__items {
+    justify-self: center;
   }
 
   .dash__item {
@@ -153,5 +159,10 @@
     color: var(--gold);
     font-variant: small-caps;
     font-size: 1.5em;
+  }
+
+  .charts {
+    max-width: 450px;
+    max-height: 250px;
   }
 </style>

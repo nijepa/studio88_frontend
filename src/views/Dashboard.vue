@@ -2,6 +2,8 @@
   <div class="">
     <navigation></navigation>
     <Dash v-if="getFormType === 'home'" key="home"></Dash>
+    <Signup v-if="getFormType === 'signup'" key="signup"></Signup>
+    
     <transition name="slide-fade" mode="out-in">
     <clients v-if="getFormType === 'clients'" key="clients"></clients>
     </transition>
@@ -20,6 +22,7 @@
 <script>
   import Navigation from "@/components/Navigation.vue";
   import Footer from "@/components/Footer.vue";
+  import Signup from "@/components/SignUp.vue";
   import Dash from "@/components/Dashboard.vue";
   import Client from "@/components/Client.vue";
   import Clients from "@/components/Clients.vue";
@@ -37,6 +40,7 @@
     components: {
       Navigation, 
       Footer,
+      Signup,
       Dash,
       Client, 
       Schedule, 

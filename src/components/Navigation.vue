@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="user__logout">
-      &#10022; {{loggedUser.name}} &#10022;
+      &#10022; <a @click="navClick('signup')" href="#">{{loggedUser.name}}</a> &#10022;
       <a @click="logout(loggedUser)" href="#" class="logout">Log Out</a>
     </div>
 
@@ -212,6 +212,7 @@
       return {
         activeLink: 'home',
         menuItems: [{id: 'home', title: 'home'},
+                    {id: 'signup', title: 'signup'},
                     {id: 'clients', title: 'clients'},
                     {id: 'schedules', title: 'schedules'},
                     {id: 'attendance', title: 'attendance'},

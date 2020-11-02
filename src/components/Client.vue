@@ -15,7 +15,7 @@
           <div class="input__field">
             <label for="date_start">Datum upisa</label>
             <input type="date" id="date_start" placeholder="datum upisa"
-                    class="login_input user_input" :value="clientInput.date_started && makeCorrectDate(clientInput.date_started)"
+                    class="login_input user_input" :value="clientInput.date_started && makeCorrectDate(clientInput.date_started) | formatDate"
                     @input="clientInput.date_started = $event.target.valueAsDate">
           </div>
         </div>
@@ -53,6 +53,19 @@
             <label for="mobile">Mobilni</label>
             <input type="tel" id="mobile" placeholder="mobilni"
                     class="login_input user_input" v-model="clientInput.mobile">
+          </div>
+        </div>
+
+        <div class="input__group">
+          <div class="input__field">
+            <label for="instagram">Instagram</label>
+            <input type="text" name="instagram" placeholder="instagram profil" required id="instagram"
+                    class="login_input user_input" v-model="clientInput.instagram">
+          </div>
+          <div class="input__field">
+            <label for="facebook">Facebook</label>
+            <input type="text" id="facebook" placeholder="facebook profil" required
+                    class="login_input user_input" v-model="clientInput.facebook">
           </div>
         </div>
         

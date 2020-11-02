@@ -42,10 +42,10 @@ export default {
         datasets: [
           {
             label: "Plaćanja",
-            borderColor: "#3b056d",
-            pointBackgroundColor: "purple",
+            borderColor: "#5c4885",
+            pointBackgroundColor: "#5c4885",
             borderWidth: 1,
-            pointBorderColor: "purple",
+            pointBorderColor: "#5c4885",
             backgroundColor: this.gradient,
             data: this.chartdata,
             scales: {
