@@ -91,11 +91,11 @@
         <p>Novo plaćanje</p> 
       </button>
       <div class="">
-        <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Cijena</span></div>
+        <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Iznos</span></div>
         <div v-for="payment in getAllPayments" :key="payment._id" @click="selectPayment(payment)" class="clients__list">
           <p class="client__item">{{ payment.payment_year }}</p>
           <p class="client__item">{{ payment.payment_month }}</p>
-          <p class="client__item">{{ payment.price }}</p>
+          <p class="client__item">{{ mapPayments(payment) }}</p>
         </div>
       </div>
     </div>
@@ -130,7 +130,11 @@
         this.setLoadingState(true);
         await this.fetchPayment(payment);
         this.formTypeChange('payment');
-      }
+      },
+
+      mapPayments(payment) {
+        return payment.members.reduce((a, {payment_amount}) => a + payment_amount, 0);
+      },
     },
 
     async mounted() {

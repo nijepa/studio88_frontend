@@ -48,13 +48,20 @@ export default {
             pointBorderColor: "#5c4885",
             backgroundColor: this.gradient,
             data: this.chartdata,
-            scales: {
+            //odje bilo scales
+          },
+        ],
+        
+      },
+      {
+          scales: {
               yAxes: [{
                 ticks: {
-                  beginAtZero: true
+                  beginAtZero: true,
+                  min: 0
                 },
                 gridLines: {
-                  display: true
+                  display: false
                 }
               }],
               xAxes: [ {
@@ -63,9 +70,7 @@ export default {
                 }
               }]
             },
-          },
-        ]
-      },
+        },
       { responsive: true, maintainAspectRatio: false }
     );
   }

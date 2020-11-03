@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    <div class="user__logout">
-      &#10022; <a @click="navClick('signup')" href="#">{{loggedUser.name}}</a> &#10022;
-      <a @click="logout(loggedUser)" href="#" class="logout">Log Out</a>
+    <div class="user__logged">
+      &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
+      <a @click="logout(loggedUser)" href="#" class="user__logout">Log Out</a>
     </div>
 
     <nav>
@@ -262,7 +262,7 @@
   }
 
   .nav__img {
-    width: 30px;
+    max-width: 30px;
   }
 
   .nav__img_home {
@@ -309,8 +309,16 @@
     background-image: linear-gradient(to right, rgba(98, 18, 105, 0), rgba(116, 21, 153, 0.75), rgba(98, 19, 134, 0));
   }
 
-  .user__logout {
+  .user__logged {
     margin-top: 1em;
+  }
+
+  .user__logout {
+    color: var(--red);
+  }
+
+  .user__logout:hover {
+    color: var(--red-dark);
   }
 
   .logo__small {
@@ -322,5 +330,13 @@
     background-image: linear-gradient(to bottom, white,  var(--gold-light) 80%) !important;
     cursor: none !important;
     transform: scale(1.05);
+  }
+
+  .profile__link {
+    color: var(--gold);
+  }
+
+  .profile__link:hover {
+    color: var(--gold-light);
   }
 </style>

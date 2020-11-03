@@ -188,9 +188,10 @@
         <p>Nova prisustva</p> 
       </button>
       <div class="">
-        <div class="days__list"><span>Datum</span><span>Napomena</span></div>
+        <div class="days__list"><span>Datum</span><span>Prisustvovali</span><span>Napomena</span></div>
         <div v-for="attendance in getAllAttendances" :key="attendance._id" @click="selectAttendance(attendance)" class="clients__list">
           <p class="client__item">{{ attendance.attend_date | formatDate }}</p>
+          <p class="client__item">{{ mapAttendances(attendance) }}</p>
           <p class="client__item">{{ attendance.notes }}</p>
         </div>
       </div>
@@ -226,7 +227,11 @@
         this.setLoadingState(true);
         await this.fetchAttendance(attendance);
         this.formTypeChange('attendance');
-      }
+      },
+
+      mapAttendances(attendance) {
+        return attendance.members.reduce((a, {present}) => a + present, 0);
+      },
     },
 
     filters: {
