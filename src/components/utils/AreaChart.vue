@@ -54,24 +54,27 @@ export default {
         
       },
       {
-          scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  min: 0
-                },
-                gridLines: {
-                  display: false
-                }
-              }],
-              xAxes: [ {
-                gridLines: {
-                  display: false
-                }
-              }]
-            },
+        scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                min: 0
+              },
+              gridLines: {
+                display: false
+              }
+            }],
+            xAxes: [ {
+              gridLines: {
+                display: false
+              }
+            }],
+            maintainAspectRatio: false,
+            responsive: true,
+            height:300
         },
-      { responsive: true, maintainAspectRatio: false }
+      },
+      //{ responsive: true, maintainAspectRatio: false }
     );
   }
 };

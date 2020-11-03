@@ -189,13 +189,14 @@
       </button>
       <div class="">
         <div class="days__list"><span>Datum</span><span>Prisustvovali</span><span>Napomena</span></div>
-        <div v-for="attendance in getAllAttendances" :key="attendance._id" @click="selectAttendance(attendance)" class="clients__list">
+        <div v-for="attendance in pageOfItems" :key="attendance._id" @click="selectAttendance(attendance)" class="clients__list">
           <p class="client__item">{{ attendance.attend_date | formatDate }}</p>
           <p class="client__item">{{ mapAttendances(attendance) }}</p>
           <p class="client__item">{{ attendance.notes }}</p>
         </div>
       </div>
     </div>
+    <jw-pagination :items="getAllAttendances" @changePage="onChangePage"></jw-pagination>
   </div>
 </template>
 
@@ -204,6 +205,12 @@
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'Attendances',
+
+    data() {
+      return {
+        pageOfItems: []
+      }
+    },
 
     computed: {
       ...mapGetters([ 'getAllAttendances',
@@ -216,6 +223,11 @@
                       'attendanceClear',
                       'formTypeChange',
                       'setLoadingState' ]),
+
+      onChangePage(pageOfItems) {
+        // update page of items
+        this.pageOfItems = pageOfItems;
+      },
 
       async newAttendance() {
         this.setLoadingState(true);

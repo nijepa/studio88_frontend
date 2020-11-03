@@ -149,7 +149,7 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: 'Payment',
+    name: 'Attendance',
 
     data() {
       return {
@@ -279,7 +279,7 @@
           await this.attendanceAdd(this.attendanceInput);
         }
         this.setLoadingState(false);
-        if (Array.isArray(this.getErrors) && this.getErrors.length) {
+        if (this.getErrors.length) {
           this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error);
           this.clearErrors();
         } else {

@@ -195,6 +195,11 @@
         </svg> -->
         <p>Plaćanja</p>
       </button>
+      <button class="dashboard__btn" @click="navClick('expenses')"
+              :class="activeLink === 'expenses' ? 'active__link' : 'dashboard__btn_hover'">
+        <img src="../assets/img/5.png" alt="" class="nav__img">
+        <p>Troškovi</p>
+      </button>
     </nav>
     <hr>
   </div>
@@ -216,7 +221,8 @@
                     {id: 'clients', title: 'clients'},
                     {id: 'schedules', title: 'schedules'},
                     {id: 'attendance', title: 'attendance'},
-                    {id: 'payments', title: 'payments'}]
+                    {id: 'payments', title: 'payments'},
+                    {id: 'expenses', title: 'expenses'}]
       }
     },
     computed: {
@@ -251,13 +257,14 @@
 <style>
   .active__link {
     color: var(--gold-light) !important; 
-    background-image: linear-gradient(to bottom, white,  var(--purple) 80%) !important;
+    background-image: linear-gradient(to bottom, white, var(--purple) 80%) !important;
     cursor: none !important;
     transform: scale(1.05);
   }
   
   nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
     justify-content: center;
   }
 
@@ -326,8 +333,8 @@
   }
 
   .home__btn {
-    color: var(--gold-light) !important; 
-    background-image: linear-gradient(to bottom, white,  var(--gold-light) 80%) !important;
+    color: white !important; 
+    background-image: linear-gradient(to bottom, white,  var(--gold) ) !important;
     cursor: none !important;
     transform: scale(1.05);
   }
@@ -338,5 +345,11 @@
 
   .profile__link:hover {
     color: var(--gold-light);
+  }
+
+  @media (max-width: 760px) {
+    nav {
+      grid-template-columns: auto;
+    }
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <navigation></navigation>
-    <Dash v-if="getFormType === 'home'" key="home"></Dash>
+    <summaryc v-if="getFormType === 'home'" key="home"></summaryc>
     <Signup v-if="getFormType === 'signup'" key="signup"></Signup>
     
     <transition name="slide-fade" mode="out-in">
@@ -23,7 +23,7 @@
   import Navigation from "@/components/Navigation.vue";
   import Footer from "@/components/Footer.vue";
   import Signup from "@/components/SignUp.vue";
-  import Dash from "@/components/Dashboard.vue";
+  import Summaryc from "@/components/Summary.vue";
   import Client from "@/components/Client.vue";
   import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
@@ -41,7 +41,7 @@
       Navigation, 
       Footer,
       Signup,
-      Dash,
+      Summaryc,
       Client, 
       Schedule, 
       Clients, 

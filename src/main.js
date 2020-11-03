@@ -8,6 +8,10 @@ import "izitoast/dist/css/iziToast.css";
 
 Vue.use(VueIziToast);
 
+// register jw pagination component globally
+import JwPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JwPagination);
+
 Vue.config.productionTip = false;
 
 new Vue({

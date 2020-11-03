@@ -32,7 +32,7 @@
       </button>
       <div class="">
         <div class="days__list"><span>Ime</span><span>E-mail</span><span>Mobilni</span><span>Aktivna</span></div>
-        <div v-for="client in getAllClients" :key="client._id" @click="selectClient(client)" class="clients__list">
+        <div v-for="client in pageOfItems" :key="client._id" @click="selectClient(client)" class="clients__list">
           <p class="client__item">{{ client.last_name }} , {{ client.first_name }}</p>
           <p class="client__item">{{ client.email }}</p>
           <p class="client__item">{{ client.mobile }}</p>
@@ -42,6 +42,7 @@
       </div>
     </div>
     </transition>
+    <jw-pagination :items="getAllClients" @changePage="onChangePage" :labels="customLabels" :styles="customStyles"></jw-pagination>
   </div>
 </template>
 
@@ -49,8 +50,36 @@
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
 
+  const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+  };
+
+  const customStyles = {
+    ul: {
+        //border: '2px solid red'
+    },
+    li: {
+        display: 'inline-block',
+        //border: '2px dotted green'
+    },
+    a: {
+        color: 'var(--purple)'
+    }
+  };
+
   export default {
     name: 'Clients',
+
+    data() {
+      return {
+        pageOfItems: [],
+        customLabels,
+        customStyles
+      }
+    },
 
     computed: {
       ...mapGetters([ 'getAllClients', 
@@ -64,6 +93,11 @@
                       'formTypeChange',
                       'setLoadingState' ]),
 
+      onChangePage(pageOfItems) {
+        // update page of items
+        this.pageOfItems = pageOfItems;
+      },
+      
       async newClient() {
         this.setLoadingState(true);
         this.formTypeChange('client');

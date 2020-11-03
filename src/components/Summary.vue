@@ -7,7 +7,7 @@
 
     <div v-else class="dash__wrapper">
       <div class="dash__items">
-        <img src="../assets/img/studio881.png" alt="" class="loading">
+        <img src="../assets/img/studio881.png" alt="" class="logo">
       </div>
 
       <div class="dash__items active__clients">
@@ -17,17 +17,17 @@
 
       <div class="dash__items">
         <div class="dash__text">Plaćeno u 
-          <select name="years" id="years">
-            <option :value="year" v-for="year in createYears()" :key="year"
-                    @click="selectYear(year)">
+          <select name="years" id="years" v-model="yearSelected" @change="selectYear(yearSelected)">
+            <option :value="year" v-for="year in createYears()" :key="year">
               {{ year }}
             </option>
           </select>
           godini
         </div>
         
-        <Charto v-if="loaded" :chartdata="totalPayments" :chartlabel="paymentLabels"
-                class="charts"></Charto>
+        <Charto v-if="loadedPayment" :chartdata="totalPayments" 
+                :chartlabel="paymentLabels" class="charts">
+        </Charto>
     <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
           <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
           <span>{{ tot.total_amount }}</span>
@@ -35,17 +35,15 @@
       </div>
 
       <div class="dash__items">
-        <div class="dash__text">Dolasci u
-          <select name="years" id="years">
-            <option :value="year" v-for="year in createYears()" :key="year"
-                    @click="selectYear(year)">
-              {{ year }}
-            </option>
-          </select>
-          mjesecu
+        <div class="dash__text">Dolasci od 
+          <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value)">
+          do 
+          <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)">
         </div>
-        <Charto2 v-if="loaded" :chartdata="totalAttendances" :chartlabel="attendanceLabels"
-                  class="charts"></Charto2>
+
+        <Charto2 v-if="loadedAttend" :chartdata="totalAttendances" 
+                  :chartlabel="attendanceLabels" class="charts">
+        </Charto2>
   <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
           <span>{{ tota.attend_date | formatDate }} : </span>
           <span>{{ tota.total_amount }}</span>
@@ -62,7 +60,7 @@
   import Charto2 from './utils/AreaChartLine';
 
   export default {
-    name: ' Dash',
+    name: ' Summary',
 
     data() {
       return {
@@ -71,8 +69,11 @@
         paymentLabels: [],
         totalAttendances: [],
         attendanceLabels: [],
-        yearSelected: '',
-        loaded: false
+        yearSelected: (new Date()).getFullYear(),
+        dateFrom: this.getPreviousMonday(),
+        dateTill: new Date().toISOString().slice(0,10),
+        loadedPayment: false,
+        loadedAttend: false
       }
     },
 
@@ -117,26 +118,62 @@
         }));
       },
 
-      createYears() {
-        const year = (new Date()).getFullYear();
-        return Array.from(new Array(20),( val, index) => index + year);
+      currYear() {
+        return (new Date()).getFullYear();
       },
 
-/*       selectYear(year) {
-        const result = this.totalPayments.filter(payment_year => payment_year == year);
-      }, */
+      createYears() {
+        return Array.from(new Array(10),( val, index) => index + 2020);
+      },
+
+      getPreviousMonday() {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 2);
+        return new Date(firstDay).toISOString().slice(0,10);
+      },
+
+      async selectYear() {
+        this.loadedPayment = false;
+        await this.selectPayments();
+        this.loadedPayment = true;
+      },
+
+      async selectPeriod() {
+        this.loadedAttend = false;
+        await this.selectAttendances();
+        this.loadedAttend = true;
+      },
 
       makeCorrectDate(str) {
         return new Date(str).toISOString().split('T')[0]
       },
 
       selectPayments() {
-        let arro = this.mapPayments()
+        let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected)
         let arr = arro.map(item => item.total_amount);
         let arr1 = arro.map(item => item.payment_month);
 
         this.totalPayments = arr;
         this.paymentLabels = arr1;
+      },
+
+      selectAttendances(value) {
+        console.log(value)
+        //this.dateTill = value;
+        let arra = this.mapAttendances().filter(year => year.attend_date >= this.dateFrom && year.attend_date <= this.dateTill);
+        let arra1 = arra.map(item => item.total_amount);
+        let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
+        this.totalAttendances = arra1;
+        this.attendanceLabels = arra2;
+      }
+    },
+
+    watch: {
+      dateFrom: function () {
+        this.selectPeriod() 
+      },
+      dateTill: function () {
+        this.selectPeriod()
       }
     },
 
@@ -149,23 +186,13 @@
       });
 
       this.selectPayments();
-  /*     let arro = this.mapPayments()
-      let arr = arro.map(item => item.total_amount);
-      let arr1 = arro.map(item => item.payment_month);
 
-      this.totalPayments = arr;
-      this.paymentLabels = arr1; */
-
-      //this.totalAttendances = this.mapAttendances();
-      let arra = this.mapAttendances();
-      let arra1 = arra.map(item => item.total_amount);
-      let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
-      this.totalAttendances = arra1;
-      this.attendanceLabels = arra2;
+      this.selectAttendances(this.dateTill);
       
       this.setLoadingState(false);
 
-      this.loaded = true;
+      this.loadedPayment = true;
+      this.loadedAttend = true;
     }
   }
 </script>
@@ -177,6 +204,10 @@
     justify-content: space-evenly;
     grid-gap: 1em;
     margin: 1em;
+  }
+
+  .logo {
+    max-width: 350px;
   }
 
   .active__clients {
@@ -208,8 +239,8 @@
     /* max-height: 250px; */
   }
 
-/*   .chartjs-render-monitor {
-    max-height: 250px;
-    max-width: 450px;
-  } */
+  .chartjs-render-monitor {
+    max-height: 350px;
+    max-width: 350px;
+  }
 </style>

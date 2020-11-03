@@ -92,13 +92,14 @@
       </button>
       <div class="">
         <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Iznos</span></div>
-        <div v-for="payment in getAllPayments" :key="payment._id" @click="selectPayment(payment)" class="clients__list">
+        <div v-for="payment in pageOfItems" :key="payment._id" @click="selectPayment(payment)" class="clients__list">
           <p class="client__item">{{ payment.payment_year }}</p>
           <p class="client__item">{{ payment.payment_month }}</p>
           <p class="client__item">{{ mapPayments(payment) }}</p>
         </div>
       </div>
     </div>
+    <jw-pagination :items="getAllPayments" @changePage="onChangePage"></jw-pagination>
   </div>
 </template>
 
@@ -107,6 +108,12 @@
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'Payments',
+
+    data() {
+      return {
+        pageOfItems: []
+      }
+    },
 
     computed: {
       ...mapGetters([ 'getAllPayments',
@@ -120,6 +127,11 @@
                       'formTypeChange',
                       'setLoadingState' ]),
 
+      onChangePage(pageOfItems) {
+        // update page of items
+        this.pageOfItems = pageOfItems;
+      },
+      
       async newPayment() {
         this.setLoadingState(true);
         this.formTypeChange('payment');
