@@ -60,7 +60,7 @@
   import Charto2 from './utils/AreaChartLine';
 
   export default {
-    name: ' Summary',
+    name: 'Summaries',
 
     data() {
       return {

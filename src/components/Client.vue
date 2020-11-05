@@ -73,7 +73,7 @@
           <div class="input__field">
             <label for="notes">Napomene</label>
             <textarea name="notes" id="notes" cols="20" rows="5" placeholder="napomene"
-                      class="login_input user_input" v-model="clientInput.notes">fd
+                      class="login_input user_input" v-model="clientInput.notes">
             </textarea>
           </div>
           <div v-if="getOneClient._id" class="">

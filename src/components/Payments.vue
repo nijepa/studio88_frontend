@@ -91,8 +91,13 @@
         <p>Novo plaćanje</p> 
       </button>
       <div class="">
-        <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Iznos</span></div>
-        <div v-for="payment in pageOfItems" :key="payment._id" @click="selectPayment(payment)" class="clients__list">
+        <div class="days__list payment__heading">
+          <span>Godina</span>
+          <span>Mjesec</span>
+          <span>Iznos</span>
+        </div>
+        <div v-for="payment in pageOfItems" :key="payment._id" 
+              @click="selectPayment(payment)" class="clients__list payment__list">
           <p class="client__item">{{ payment.payment_year }}</p>
           <p class="client__item">{{ payment.payment_month }}</p>
           <p class="client__item">{{ mapPayments(payment) }}</p>
@@ -179,5 +184,11 @@
 </script>
 
 <style>
+  .payment__list {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
 
+  .payment__heading {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
 </style>
