@@ -7,7 +7,7 @@
 
     <div v-else class="dash__wrapper">
       <div class="dash__items">
-        <img src="../assets/img/studio881.png" alt="" class="logo">
+        <img src="../assets/img/studio881.png" alt="" class="logo responsive">
       </div>
 
       <div class="dash__items active__clients">
@@ -145,11 +145,11 @@
       },
 
       makeCorrectDate(str) {
-        return new Date(str).toISOString().split('T')[0]
+        return new Date(str).toISOString().split('T')[0];
       },
 
       selectPayments() {
-        let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected)
+        let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
         let arr = arro.map(item => item.total_amount);
         let arr1 = arro.map(item => item.payment_month);
 
@@ -234,9 +234,14 @@
     font-size: 1.5em;
   }
 
+  canvas {
+    justify-self: center;
+  }
+
   .charts {
     /* max-width: 750px; */
     /* max-height: 250px; */
+    display: grid;
   }
 
   .chartjs-render-monitor {

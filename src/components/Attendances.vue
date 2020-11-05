@@ -188,7 +188,7 @@
         <p>Nova prisustva</p> 
       </button>
       <div class="">
-        <div class="days__list"><span>Datum</span><span>Prisustvovali</span><span>Napomena</span></div>
+        <div class="days__list"><span>Datum</span><span>Prisustvovale</span><span>Napomena</span></div>
         <div v-for="attendance in pageOfItems" :key="attendance._id" @click="selectAttendance(attendance)" class="clients__list">
           <p class="client__item">{{ attendance.attend_date | formatDate }}</p>
           <p class="client__item">{{ mapAttendances(attendance) }}</p>
@@ -196,11 +196,31 @@
         </div>
       </div>
     </div>
-    <jw-pagination :items="getAllAttendances" @changePage="onChangePage"></jw-pagination>
+    <jw-pagination :items="getAllAttendances" @changePage="onChangePage" :labels="customLabels" :styles="customStyles"></jw-pagination>
   </div>
 </template>
 
 <script>
+  const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+  };
+
+  const customStyles = {
+    ul: {
+        //border: '2px solid red'
+    },
+    li: {
+        display: 'inline-block',
+        //border: '2px dotted green'
+    },
+    a: {
+        color: 'var(--purple-dark)'
+    }
+  };
+
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   export default {
@@ -208,7 +228,9 @@
 
     data() {
       return {
-        pageOfItems: []
+        pageOfItems: [],
+        customLabels,
+        customStyles
       }
     },
 
@@ -262,5 +284,15 @@
 </script>
 
 <style>
-
+  ul.pagination {
+    margin-top: 1em !important;
+  }
+  li.active {
+    background: var(--gold);
+    border-radius: 1em;
+  }
+  li:hover {
+    background: var(--gold-light);
+    border-radius: 1em;
+  }
 </style>

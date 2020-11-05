@@ -8,6 +8,7 @@
     <clients v-if="getFormType === 'clients'" key="clients"></clients>
     </transition>
     <client v-if="getFormType === 'client'" key='client'></client>
+    <client-activity v-if="getFormType === 'clientactivity'" key='clientactivity'></client-activity>
     <schedule v-if="getFormType === 'schedule'" key="schedule"></schedule>
     <schedules v-if="getFormType === 'schedules'" key="schedules"></schedules>
     <payments v-if="getFormType === 'payments'" key="payments"></payments>
@@ -25,6 +26,7 @@
   import Signup from "@/components/SignUp.vue";
   import Summaryc from "@/components/Summary.vue";
   import Client from "@/components/Client.vue";
+  import ClientActivity from "@/components/ClientActivity.vue";
   import Clients from "@/components/Clients.vue";
   import Schedule from "@/components/Schedule.vue";
   import Schedules from "@/components/Schedules.vue";
@@ -49,7 +51,8 @@
       Payments, 
       Payment,
       Attendances,
-      Attendance
+      Attendance,
+      ClientActivity
     },
 
     data() {

@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="user__logged">
-      &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
+      <a href="#">Profil</a> &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
       <a @click="logout(loggedUser)" href="#" class="user__logout">Log Out</a>
     </div>
 
@@ -347,9 +347,21 @@
     color: var(--gold-light);
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 1078px) {
     nav {
-      grid-template-columns: auto;
+      grid-template-columns: repeat(3, auto);
+    }
+  }
+
+  @media (max-width: 728px) {
+    .dash__wrapper {
+      grid-template-columns: auto !important;
+    }
+  }
+
+  @media (max-width: 599px) {
+    nav {
+      grid-template-columns: repeat(2, auto);
     }
   }
 </style>

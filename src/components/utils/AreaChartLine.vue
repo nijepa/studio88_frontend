@@ -66,7 +66,10 @@ export default {
                 gridLines: {
                   display: false
                 }
-              }]
+              }],
+              responsive: true,
+              maintainAspectRatio: false,
+              height:300
             },
         },
       { responsive: true, maintainAspectRatio: false }

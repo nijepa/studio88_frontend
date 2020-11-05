@@ -99,11 +99,31 @@
         </div>
       </div>
     </div>
-    <jw-pagination :items="getAllPayments" @changePage="onChangePage"></jw-pagination>
+    <jw-pagination :items="getAllPayments" @changePage="onChangePage" :labels="customLabels" :styles="customStyles"></jw-pagination>
   </div>
 </template>
 
 <script>
+  const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+  };
+
+  const customStyles = {
+    ul: {
+        //border: '2px solid red'
+    },
+    li: {
+        display: 'inline-block',
+        //border: '2px dotted green'
+    },
+    a: {
+        color: 'var(--purple-dark)'
+    }
+  };
+
   //import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   export default {
@@ -111,7 +131,9 @@
 
     data() {
       return {
-        pageOfItems: []
+        pageOfItems: [],
+        customLabels,
+        customStyles
       }
     },
 

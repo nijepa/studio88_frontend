@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="club__title">
-      <img src="../assets/img/studio881.png" alt="" class="">
+      <img src="../assets/img/studio881.png" alt="" class="responsive">
 <!--       <h1 class="club">{{ msg }} </h1>
       <p class="club__type">p i l a t e s</p> -->
       <div class="club__login">
@@ -49,6 +49,11 @@ export default {
     justify-content: center;
     align-content: center;
     align-items: center;
+  }
+
+  .responsive {
+    width: 100%;
+    height: auto;
   }
 
   .club__title {
@@ -126,7 +131,7 @@ export default {
 
     /* Enter and leave animations can use different */
 /* durations and timing functions.              */
-  .slide-fade-enter-active {
+  .slide-fade-enter-active, .slide-fade-leave-active  {
     transition: all 2.8s ease;
   }
 /*  .slide-fade-leave-active {
