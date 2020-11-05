@@ -7,7 +7,7 @@
     </div>
     
     <div v-else class="client__wrapper">
-      <div class="">
+      <div class="activities__header">
         <button type="submit" @click="selectClient()" class="action_btn client__add">
           <svg version="1.1" id="Layer_1"  x="0px" y="0px" height="40px"
                 viewBox="0 0 408.761 408.761" style="enable-background:new 0 0 408.761 408.761;" xml:space="preserve">
@@ -43,32 +43,39 @@
           </svg>
           <p>Nazad</p> 
         </button>
-      </div>
-
-      <div class="">
         <h1>{{ getOneClient.name }}</h1>
       </div>
 
       <div class="activities__wrapper">
         <div class="">
-          <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Iznos</span></div>
-          <div v-for="client in clientPayments" :key="client._id" class="activities__list">
+          <h3 class="activities__title">Plaćanja - <span>ukupno : {{ totalPayments() }}</span></h3>
+          <div class="payments__head days__list ">
+            <span>Godina</span>
+            <span>Mjesec</span>
+            <span>Datum</span>
+            <span>Iznos</span>
+            <span>Napomena</span>
+          </div>
+          <div v-for="client in clientPayments" :key="client._id" class="activities__list payments">
             <p class="activities__item">{{ client.year }}</p>
             <p class="activities__item">{{ client.month }}</p>
-            <p class="activities__item">{{ client.date }}</p>
+            <p class="activities__item">{{ client.date | formatDate }}</p>
             <p class="activities__item">{{ client.amount }}</p>
-            <!-- <p class="client__item">{{ client.active }}</p> -->
+            <p class="activities__item">{{ client.note }}</p>
           </div>
         </div>
 
         <div class="">
-          <div class="days__list"><span>Godina</span><span>Mjesec</span><span>Iznos</span></div>
-          <div v-for="client in clientPayments" :key="client._id" class="activities__list">
-            <p class="activities__item">{{ client.year }}</p>
-            <p class="activities__item">{{ client.month }}</p>
-            <p class="activities__item">{{ client.date }}</p>
-            <p class="activities__item">{{ client.amount }}</p>
-            <!-- <p class="client__item">{{ client.active }}</p> -->
+          <h3 class="activities__title">Prisustva - <span>ukupno : {{ totalAttendances() }} od {{ clientAttendances.length }}</span></h3>
+          <div class="days__list attendances__head">
+            <span>Datum</span>
+            <span>Prisutna</span>
+            <span>Napomena</span>
+          </div>
+          <div v-for="client in clientAttendances" :key="client._id" class="activities__list attendances">
+            <p class="activities__item">{{ client.date | formatDate }}</p>
+            <input type="checkbox" class="activities__item" v-model="client.present" disabled>
+            <p class="activities__item">{{ client.note }}</p>
           </div>
         </div>
       </div>
@@ -109,6 +116,7 @@
     data() {
       return {
         clientPayments: [],
+        clientAttendances: [],
         pageOfItems: [],
         customLabels,
         customStyles,
@@ -119,6 +127,7 @@
 
     computed: {
       ...mapGetters([ 'getOneClient',
+                      'getAllAttendances',
                       'getAllPayments',
                       'loadingState' ]),
 
@@ -133,6 +142,7 @@
     methods: {
       ...mapActions([ 'fetchClient',
                       'fetchPayments',
+                      'fetchAttendances',
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
@@ -155,9 +165,8 @@
         //this.$emit('toggled-form', 3);
       },
 
-      mapCli() {
-        let obj
-        let arr = []
+      mapPayments() {
+        let obj, arr = []
         for (let i=0; i<this.getAllPayments.length; i++) {
           for(let j =0; j<this.getAllPayments[i].members.length; j++) {
             obj = {
@@ -165,12 +174,37 @@
               "month": this.getAllPayments[i].payment_month,
               "amount": this.getAllPayments[i].members[j].payment_amount,
               "date": this.getAllPayments[i].members[j].payment_date,
-              "client": this.getAllPayments[i].members[j].client
+              "client": this.getAllPayments[i].members[j].client,
+              "note": this.getAllPayments[i].members[j].note
             }
             arr.push(obj)
           }
         }
         return arr
+      },
+
+      mapAttendances() {
+        let obj, arr = []
+        for (let i=0; i<this.getAllAttendances.length; i++) {
+          for(let j =0; j<this.getAllAttendances[i].members.length; j++) {
+            obj = {
+              "date": this.getAllAttendances[i].attend_date,
+              "present": this.getAllAttendances[i].members[j].present,
+              "note": this.getAllAttendances[i].members[j].note,
+              "client": this.getAllAttendances[i].members[j].client
+            }
+            arr.push(obj)
+          }
+        }
+        return arr
+      },
+
+      totalPayments() {
+        return this.clientPayments.reduce((n, {amount}) => n + amount, 0)
+      },
+
+      totalAttendances() {
+        return this.clientAttendances.reduce((n, {present}) => n + present, 0)
       },
 
       onAppeared() {
@@ -189,10 +223,13 @@
     async mounted() {
       //await this.fetchClients();
       await this.fetchPayments();
-      this.clientPayments = this.mapCli().filter(post => {
-          return post.client._id == this.getOneClient._id
-        })
-
+      await this.fetchAttendances();
+      this.clientPayments = this.mapPayments().filter(post => {
+        return post.client._id == this.getOneClient._id
+      });
+      this.clientAttendances = this.mapAttendances().filter(post => {
+        return post.client._id == this.getOneClient._id
+      });
       this.setLoadingState(false);
     }
   }
@@ -203,6 +240,18 @@
     display: grid;
     grid-template-columns: auto auto;
     grid-gap: 1em;
+    margin: 0 1em;
+  }
+
+  .activities__title {
+    font-variant: small-caps;
+  }
+
+  .activities__header {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 7fr;
+    margin: 0 1em;
   }
 
   .activities__list {
@@ -211,12 +260,29 @@
     grid-column-gap: 1em;
     justify-content: center;
     justify-items: center;
+    align-items: center;
     margin-top: .1em;
     border-radius: 1em;
     transition: ease .5s all;
   }
 
-  div.activities__list:nth-child(odd) {background: var(--purple-light);}
+  .payments {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .payments__head {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+  .attendances {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .attendances__head {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  div.activities__list:nth-child(even) {background: var(--purple-lighter);}
 
   .activities__item {
     padding: .1em;
