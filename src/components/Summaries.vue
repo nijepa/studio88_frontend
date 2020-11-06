@@ -109,17 +109,17 @@
                       'setLoadingState' ]),
 
       mapPayments() {
-        return this.getAllPayments.map(d=>({
+        return this.getAllPayments.map(d => ({
           payment_month : d.payment_month,
           payment_year : d.payment_year,
-          total_amount : d.members.reduce((a,b)=>a+b.payment_amount, 0)
+          total_amount : d.members.reduce((a, b) => a + b.payment_amount, 0)
         }));
       },
 
       mapAttendances() {
-        return this.getAllAttendances.map(d=>({
+        return this.getAllAttendances.map(d => ({
           attend_date : d.attend_date,
-          total_amount : d.members.reduce((a,b)=>a.present+b.present)
+          total_amount : d.members.reduce((a, b) => a + b.present, 0)
         }));
       },
 

@@ -16,7 +16,8 @@
             <div class="input__field">
               <label for="date_start">Datum upisa</label>
               <input type="date" id="date_start" placeholder="datum upisa"
-                      class="login_input user_input" :value="clientInput.date_started && makeCorrectDate(clientInput.date_started) | formatDate"
+                      class="login_input user_input" 
+                      :value="clientInput.date_started && makeCorrectDate(clientInput.date_started)"
                       @input="clientInput.date_started = $event.target.valueAsDate">
             </div>
           </div>
