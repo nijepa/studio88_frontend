@@ -9,8 +9,34 @@
         <form @submit.prevent="addExpense()" method="post" class="user__form">
           <div class="input__group ">
             <div class="input__field">
+              <label for="name">Godina</label>
+              <input type="number" name="name" placeholder="godina" 
+                      class="login_input user_input" v-model="expenseInput.expense_year">
+            </div>
+            <div class="input__field">
+              <label for="days">Mjesec</label>
+              <div class="login_input user_input ">
+                <select name="days" id="days"  class="" required
+                        v-model="expenseInput.expense_month" 
+                        :value="expenseInput.expense_month" >
+                  <option value="Januar">Januar</option>
+                  <option value="Februar">Februar</option>
+                  <option value="Mart">Mart</option>
+                  <option value="April">April</option>
+                  <option value="Maj">Maj</option>
+                  <option value="Jun">Jun</option>
+                  <option value="Jul">Jul</option>
+                  <option value="Avgust">Avgust</option>
+                  <option value="Septembar">Septembar</option>
+                  <option value="Oktobar">Oktobar</option>
+                  <option value="Novembar">Novembar</option>
+                  <option value="Decembar">Decembar</option>
+                </select>
+              </div>
+            </div>
+            <div class="input__field">
               <label for="title">Naziv troška</label>
-              <input type="text" name="title" placeholder="naziv troška" 
+              <input type="text" name="title" placeholder="naziv troška" required
                       class="login_input user_input" v-model="expenseInput.expense_title">
             </div>
             <div class="input__field">
@@ -38,7 +64,7 @@
           </div>
 
           <div class="action_btns input__btns">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
                 <g>
@@ -147,6 +173,8 @@
       return {
         expenseInput: {
           expense_date: moment(String(new Date())).format('YYYY-MM-DD'),
+          expense_month: '',
+          expense_year: moment(String(new Date())).format('YYYY'),
           expense_amount: 0,
           notes: ''
         },

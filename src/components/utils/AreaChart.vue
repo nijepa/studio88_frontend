@@ -13,6 +13,10 @@ export default {
       type: Array,
       default: null
     },
+    chartdata2: {
+      type: Array,
+      default: null
+    },
     chartlabel: {
       type: Array,
       default: null
@@ -50,10 +54,10 @@ export default {
         datasets: [
           {
             label: "Plaćanja",
-            borderColor: "#5c4885",
+            borderColor: "#856727",
             pointBackgroundColor: " #856727",
             borderWidth: 1,
-            pointBorderColor: "#5c4885",
+            pointBorderColor: "#856727",
             backgroundColor: this.gradient,
             data: this.chartdata,
             //odje bilo scales
@@ -65,7 +69,7 @@ export default {
             borderWidth: 1,
             pointBorderColor: "#5c4885",
             backgroundColor: this.gradient2,
-            data: [20,30,50,60,30,60,50,55,50,25,60,30],
+            data: this.chartdata2,
             //odje bilo scales
           },
         ],

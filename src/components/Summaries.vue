@@ -26,7 +26,7 @@
             godini
           </div>
           
-          <Charto v-if="loadedPayment" :chartdata="totalPayments" 
+          <Charto v-if="loadedPayment" :chartdata="totalPayments" :chartdata2="totalExpenses"
                   :chartlabel="paymentLabels" class="charts">
           </Charto>
       <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
@@ -72,7 +72,6 @@
         totalAttendances: [],
         attendanceLabels: [],
         totalExpenses: [],
-        expensesLabels: [],
         yearSelected: (new Date()).getFullYear(),
         dateFrom: this.getPreviousMonday(),
         dateTill: new Date().toISOString().slice(0,10),
@@ -113,7 +112,7 @@
         return this.getAllPayments.map(d=>({
           payment_month : d.payment_month,
           payment_year : d.payment_year,
-          total_amount : d.members.reduce((a,b)=>a.payment_amount+b.payment_amount)
+          total_amount : d.members.reduce((a,b)=>a+b.payment_amount, 0)
         }));
       },
 
@@ -122,6 +121,28 @@
           attend_date : d.attend_date,
           total_amount : d.members.reduce((a,b)=>a.present+b.present)
         }));
+      },
+
+      mapExpenses() {
+        let helper = {};
+        return this.getAllExpenses.reduce(function(r, o) {
+          var key = o.expense_month + '-' + o.expense_year;
+          
+          if(!helper[key]) {
+            helper[key] = Object.assign({}, o); // create a copy of o
+            r.push(helper[key]);
+          } else {
+            helper[key].expense_amount += o.expense_amount;
+          }
+
+          return r;
+        }, []);
+        
+/*         return this.getAllExpenses.map(d=>({
+          expense_month : d.expense_month,
+          expense_year : d.expense_year,
+          total_amount : d.this.getAllExpenses.reduce((a, expense_amount) => a + expense_amount, 0)
+        })); */
       },
 
       currYear() {
@@ -141,6 +162,7 @@
       async selectYear() {
         this.loadedPayment = false;
         await this.selectPayments();
+        await this.selectExpenses();
         this.loadedPayment = true;
       },
 
@@ -158,13 +180,13 @@
         let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
         let arr = arro.map(item => item.total_amount);
         let arr1 = arro.map(item => item.payment_month);
-
+console.log(this.mapPayments())
         this.totalPayments = arr;
         this.paymentLabels = arr1;
       },
 
-      selectAttendances(value) {
-        console.log(value)
+      selectAttendances() {
+        //console.log(value)
         //this.dateTill = value;
         let arra = this.mapAttendances().filter(year => year.attend_date >= this.dateFrom && year.attend_date <= this.dateTill);
         let arra1 = arra.map(item => item.total_amount);
@@ -175,12 +197,17 @@
       },
 
       selectExpenses() {
-        this.totalExpenses = this.getAllExpenses.reduce(function(acc, obj) {
+        let expenses = this.mapExpenses()
+                          .filter(year => year.expense_year == this.yearSelected)
+                          .map(item => item.expense_amount);
+
+        this.totalExpenses = expenses;
+/*         this.totalExpenses = this.getAllExpenses.reduce(function(acc, obj) {
           var key = obj.expense_date.substr(0,7);
           acc[key] = (acc[key] || 0) + +obj.expense_amount;
           return acc;
-        }, Object.create(null));
-      }
+        }, Object.create(null));*/
+      } 
     },
 
     watch: {

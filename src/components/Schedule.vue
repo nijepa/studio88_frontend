@@ -13,9 +13,13 @@
               <input type="text" name="name" placeholder="ime termina (npr. I)" required
                       class="login_input user_input" v-model="scheduleInput.title">
             </div>
-            <div class="input__field">
+            <div class="input__field dani">
               <label for="day">Dani treninga</label>
-              <div class="login_input user_input bloc">
+              <div v-for="day in days" :key="day.id">
+                <label class="dan">{{day}}</label>
+                <input type="checkbox" v-model="scheduleInput.weekday" :value="day"/>
+              </div>
+              <!-- <div class="login_input user_input bloc">
                 <select name="days" id="days" size="5" class="day__select"
                         v-model="scheduleInput.weekday" multiple required>
                   <option value="Poneđeljak">Poneđeljak</option>
@@ -25,7 +29,7 @@
                   <option value="Petak">Petak</option>
                   <option value="Subota">Subota</option>
                 </select>
-              </div>
+              </div> -->
             </div>
           </div>
           
@@ -73,7 +77,7 @@
           </div>
           <hr>
           <div class="action_btns input__btns">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
                 <g>
@@ -190,6 +194,14 @@
           notes: '',
           members: []
         },
+        days: [
+            'Poneđeljak',
+            'Utorak',
+            'Srijeda',
+            'Četvrtak',
+            'Petak',
+            'Subota'
+        ],
         notClients: [],
         selectedDate: new Date().toISOString().slice(0,10),
         appeared: false,
@@ -395,6 +407,14 @@
     font-family: 'Itim', cursive;
   }
 
+  .dani {
+    margin-bottom: 1em;
+  }
+
+  .dan {
+    font-size: 1.3em;
+  }
+
   .members__list {
     display: flex;
     text-align: left;
@@ -426,5 +446,17 @@
 
   .members__not {
     font-size: 1em;
+  }
+
+  @media (max-width: 599px) {
+    .input__group {
+      grid-template-columns: auto !important;
+      justify-content: center;
+      
+    }
+    .members__list {
+      display: grid !important;
+      justify-content: center;
+    }
   }
 </style>

@@ -132,7 +132,7 @@ export default {
     /* Enter and leave animations can use different */
 /* durations and timing functions.              */
   .slide-fade-enter-active, .slide-fade-leave-active  {
-    transition: all 2.8s ease;
+    transition: all .8s ease;
   }
 /*  .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);

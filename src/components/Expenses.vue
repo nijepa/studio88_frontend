@@ -105,7 +105,9 @@
           <p>Novi trošak</p> 
         </button>
         <div class="">
-          <div class="days__list">
+          <div class="days__list expenses__header">
+            <span>Godina</span>
+            <span>Mjesec</span>
             <span>Trošak</span>
             <span>Datum</span>
             <span>Iznos</span>
@@ -113,6 +115,8 @@
           </div>
           <div v-for="expense in pageOfItems" :key="expense._id" 
                 @click="selectExpense(expense)" class="clients__list expense__list">
+            <p class="client__item">{{ expense.expense_year }}</p>
+            <p class="client__item">{{ expense.expense_month }}</p>
             <p class="client__item">{{ expense.expense_title }}</p>
             <p class="client__item">{{ expense.expense_date | formatDate }}</p>
             <p class="client__item">{{ expense.expense_amount }}</p>
@@ -210,6 +214,9 @@
 
 <style>
   .expense__list {
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+  .expenses__header {
+    grid-template-columns: repeat(6, 1fr) !important;
   }
 </style>

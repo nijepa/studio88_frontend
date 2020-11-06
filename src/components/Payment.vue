@@ -10,13 +10,13 @@
           <div class="input__group ">
             <div class="input__field">
               <label for="name">Godina</label>
-              <input type="number" name="name" placeholder="ime termina (npr. I)" 
+              <input type="number" name="name" placeholder="godina" 
                       class="login_input user_input" v-model="paymentInput.payment_year">
             </div>
             <div class="input__field">
               <label for="days">Mjesec</label>
               <div class="login_input user_input ">
-                <select name="days" id="days"  class=""
+                <select name="days" id="days" class="" required
                         v-model="paymentInput.payment_month" 
                         :value="paymentInput.payment_month" >
                   <option value="Januar">Januar</option>
@@ -42,7 +42,9 @@
             <div class="input__field">
               <label for="datePicker">Datum plaćanja</label>
               <input type="date" name="date_start" placeholder="datum upisa" required
-                      class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
+                      class="login_input user_input memeber__date" id="datePicker" 
+                      :value="paymentInput.payment_date && makeCorrectDate(paymentInput.payment_date)"
+                      @input="paymentInput.payment_date = $event.target.valueAsDate">
             </div>
           </div>
           
@@ -80,7 +82,7 @@
           </div>
 
           <div class="action_btns input__btns">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
                 <g>
@@ -190,6 +192,7 @@
         paymentInput: {
           payment_year: moment(String(new Date())).format('YYYY'),
           payment_month: '',
+          payment_date: moment(String(new Date())).format('YYYY-MM-DD'),
           price: 35,
           notes: '',
           members: []

@@ -21,7 +21,9 @@
             <div class="members__items">
               <div class="">
                 <div class="days__list">
-                  <span>Vježbačica</span><span>Prisutna</span><span>Napomena</span>
+                  <span>Vježbačica</span>
+                  <span>Prisutna</span>
+                  <span>Napomena</span>
                 </div>
                 <div v-for="member in attendanceInput.members" :key="member._id" name="member"
                     class="members_input ">
@@ -48,7 +50,7 @@
           </div>
 
           <div class="action_btns input__btns">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
                 <g>
@@ -345,6 +347,34 @@
   :-ms-input-placeholder { font-size: .8em; } /* ie */
   input:-moz-placeholder { font-size: .8em; }
 
+  @media only screen and (max-width: 599px) {
+    .days__list {
+      font-size: 80%;
+      grid-template-columns: repeat(2 ,auto) !important;
+    }
+    .user_input {
+      font-size: 80%;
+    }
+    .members_input  {
+      grid-template-columns: repeat(2 ,auto) !important;
+    }
+    .expenses__header {
+      grid-template-columns: repeat(3 ,auto) !important;
+    }
+    .expense__list {
+      grid-template-columns: repeat(3 ,auto) !important;
+    }
+    .clients__list {
+      grid-template-columns: repeat(2 ,auto) !important;
+    }
+    .activities__list {
+      grid-template-columns: repeat(2 ,auto) !important;
+    }
+    .activities__wrapper {
+      grid-template-columns: auto !important;
+    }
+  }
+
   .schedule__wrapper {
     display: flex;
     justify-content: center;
@@ -417,4 +447,6 @@
   .payment__price {
     width: 3.3em;
   }
+
+  
 </style>

@@ -1,6 +1,6 @@
 <template>
 <transition name="rise" mode="out-in">
-  <div class="">
+  <div class="" :key="1">
     <hr>
     <div class="footer_group">
       <span class="footer__text">Studio 88 @ 2020</span>

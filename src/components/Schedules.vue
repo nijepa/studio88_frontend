@@ -5,7 +5,7 @@
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
-      <div v-else class="client__wrapper" key="2">
+      <div v-else class="client__wrapper schedule_mobile" key="2">
         <button type="submit" @click="newSchedule()" class="action_btn client__add">
           <svg version="1.0" fill="var(--purple)"
             width="50px" height="50px" viewBox="0 0 1280.000000 640.000000"
@@ -318,4 +318,19 @@
     padding: .1em;
     background: transparent;
   }
+
+  @media (max-width: 728px) {
+    .schedule__card {
+      grid-template-columns: auto auto !important;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .schedule__card {
+      grid-template-columns: auto !important;
+    }
+  }
+  
+
+  
 </style>

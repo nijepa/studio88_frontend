@@ -8,7 +8,7 @@
       
       <div v-else class="client__wrapper" key="2">
         <div class="activities__header">
-          <button type="submit" @click="selectClient()" class="action_btn client__add">
+          <button type="submit" @click="selectClient()" class="action_btn client__add for_mobile">
             <svg version="1.1" id="Layer_1"  x="0px" y="0px" height="40px"
                   viewBox="0 0 408.761 408.761" style="enable-background:new 0 0 408.761 408.761;" xml:space="preserve">
                 <g>
@@ -251,7 +251,7 @@
   .activities__header {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 7fr;
+    grid-template-columns: 1fr 8fr;
     margin: 0 1em;
   }
 
@@ -288,5 +288,9 @@
   .activities__item {
     padding: .1em;
     margin: .1em
+  }
+
+  .for_mobile {
+    min-width: 120px;
   }
 </style>

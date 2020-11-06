@@ -1,6 +1,6 @@
 <template>
 <transition name="rise" mode="out-in">
-  <div class="">
+  <div class="" key="1">
     <div class="user__logged">
       <a href="#">Profil</a> &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
       <a @click="logout(loggedUser)" href="#" class="user__logout">Log Out</a>

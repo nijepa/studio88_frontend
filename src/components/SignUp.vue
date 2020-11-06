@@ -88,7 +88,7 @@
         <!-- </div> -->
         <div class="input__btns">
           <div class="action_btns">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
                 <g>
