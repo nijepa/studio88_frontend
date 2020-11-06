@@ -1,55 +1,57 @@
 <template>
   <div class="">
-    <div v-if="loadingState" class="">
-      <img src="../assets/img/loading1.gif" alt="" class="loading">
-      loading ...
-    </div>
-
-    <div v-else class="dash__wrapper">
-      <div class="dash__items">
-        <img src="../assets/img/studio881.png" alt="" class="logo responsive">
+    <transition name="fall" mode="out-in">
+      <div v-if="loadingState" class="" key="1">
+        <img src="../assets/img/loading1.gif" alt="" class="loading">
+        loading ...
       </div>
 
-      <div class="dash__items active__clients">
-        <p class="dash__text">Aktivnih klijenata</p>
-        <h1 class="active__nr">{{ activeClients.length }}</h1>
-      </div>
-
-      <div class="dash__items">
-        <div class="dash__text">Plaćeno u 
-          <select name="years" id="years" v-model="yearSelected" @change="selectYear(yearSelected)">
-            <option :value="year" v-for="year in createYears()" :key="year">
-              {{ year }}
-            </option>
-          </select>
-          godini
-        </div>
-        
-        <Charto v-if="loadedPayment" :chartdata="totalPayments" 
-                :chartlabel="paymentLabels" class="charts">
-        </Charto>
-    <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
-          <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
-          <span>{{ tot.total_amount }}</span>
-        </h1> -->
-      </div>
-
-      <div class="dash__items">
-        <div class="dash__text">Dolasci od 
-          <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value)">
-          do 
-          <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)">
+      <div v-else class="dash__wrapper" key="2">
+        <div class="dash__items">
+          <img src="../assets/img/studio881.png" alt="" class="logo responsive">
         </div>
 
-        <Charto2 v-if="loadedAttend" :chartdata="totalAttendances" 
-                  :chartlabel="attendanceLabels" class="charts">
-        </Charto2>
-  <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
-          <span>{{ tota.attend_date | formatDate }} : </span>
-          <span>{{ tota.total_amount }}</span>
-        </h1> -->
+        <div class="dash__items active__clients">
+          <p class="dash__text">Aktivnih klijenata</p>
+          <h1 class="active__nr">{{ activeClients.length }}</h1>
+        </div>
+
+        <div class="dash__items">
+          <div class="dash__text">Plaćeno u 
+            <select name="years" id="years" v-model="yearSelected" @change="selectYear(yearSelected)">
+              <option :value="year" v-for="year in createYears()" :key="year">
+                {{ year }}
+              </option>
+            </select>
+            godini
+          </div>
+          
+          <Charto v-if="loadedPayment" :chartdata="totalPayments" 
+                  :chartlabel="paymentLabels" class="charts">
+          </Charto>
+      <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
+            <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
+            <span>{{ tot.total_amount }}</span>
+          </h1> -->
+        </div>
+
+        <div class="dash__items">
+          <div class="dash__text">Dolasci od 
+            <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value)">
+            do 
+            <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)">
+          </div>
+
+          <Charto2 v-if="loadedAttend" :chartdata="totalAttendances" 
+                    :chartlabel="attendanceLabels" class="charts">
+          </Charto2>
+    <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
+            <span>{{ tota.attend_date | formatDate }} : </span>
+            <span>{{ tota.total_amount }}</span>
+          </h1> -->
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -69,6 +71,8 @@
         paymentLabels: [],
         totalAttendances: [],
         attendanceLabels: [],
+        totalExpenses: [],
+        expensesLabels: [],
         yearSelected: (new Date()).getFullYear(),
         dateFrom: this.getPreviousMonday(),
         dateTill: new Date().toISOString().slice(0,10),
@@ -91,6 +95,7 @@
       ...mapGetters([ 'getAllClients', 
                       'getAllPayments',
                       'getAllAttendances',
+                      'getAllExpenses',
                       'loadingState' ]),
     },
 
@@ -99,6 +104,7 @@
                       'fetchClient',
                       'fetchPayments',
                       'fetchAttendances',
+                      'fetchExpenses',
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
@@ -163,8 +169,17 @@
         let arra = this.mapAttendances().filter(year => year.attend_date >= this.dateFrom && year.attend_date <= this.dateTill);
         let arra1 = arra.map(item => item.total_amount);
         let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
+
         this.totalAttendances = arra1;
         this.attendanceLabels = arra2;
+      },
+
+      selectExpenses() {
+        this.totalExpenses = this.getAllExpenses.reduce(function(acc, obj) {
+          var key = obj.expense_date.substr(0,7);
+          acc[key] = (acc[key] || 0) + +obj.expense_amount;
+          return acc;
+        }, Object.create(null));
       }
     },
 
@@ -181,6 +196,7 @@
       await this.fetchClients();
       await this.fetchPayments();
       await this.fetchAttendances();
+      await this.fetchExpenses();
       this.activeClients = this.getAllClients.filter(function (e) {
         return e.active == true;
       });
@@ -188,6 +204,8 @@
       this.selectPayments();
 
       this.selectAttendances(this.dateTill);
+
+      this.selectExpenses();
       
       this.setLoadingState(false);
 

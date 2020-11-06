@@ -1,8 +1,8 @@
 <script>
-import { Bar } from "vue-chartjs";
+import { Line } from "vue-chartjs";
 
 export default {
-  extends: Bar,
+  extends: Line,
   data() {
     return {
       gradient: null
@@ -23,9 +23,17 @@ export default {
       .getContext("2d")
       .createLinearGradient(0, 0, 0, 450);
 
-    this.gradient.addColorStop(0, "rgba(133, 103, 39, 0.5)");
+    this.gradient.addColorStop(0, "rgba(133, 103, 39, 0.75)");
     this.gradient.addColorStop(0.5, "rgba(133, 103, 39, 0.25)");
     this.gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+
+    this.gradient2 = this.$refs.canvas
+      .getContext("2d")
+      .createLinearGradient(0, 0, 0, 450);
+
+    this.gradient2.addColorStop(0, "rgba(92, 72, 133, 0.75)");
+    this.gradient2.addColorStop(0.5, "rgba(92, 72, 133, 0.25)");
+    this.gradient2.addColorStop(1, "rgba(255, 0, 0, 0)");
 
     this.renderChart(
       {
@@ -43,11 +51,21 @@ export default {
           {
             label: "Plaćanja",
             borderColor: "#5c4885",
-            pointBackgroundColor: "#5c4885",
+            pointBackgroundColor: " #856727",
             borderWidth: 1,
             pointBorderColor: "#5c4885",
             backgroundColor: this.gradient,
             data: this.chartdata,
+            //odje bilo scales
+          },
+          {
+            label: "Troškovi",
+            borderColor: "#5c4885",
+            pointBackgroundColor: "#5c4885",
+            borderWidth: 1,
+            pointBorderColor: "#5c4885",
+            backgroundColor: this.gradient2,
+            data: [20,30,50,60,30,60,50,55,50,25,60,30],
             //odje bilo scales
           },
         ],
@@ -81,9 +99,9 @@ export default {
 </script>
 <style >
   .kk {
-    color: rgba(133, 103, 39, 0.5);
+    color:rgb(92, 72, 133);
     color:rgba(133, 103, 39, 0.25);
     color: rgba(255, 0, 0, 0);
-    color: #FC2525;
+    color:#5c4885;
   }
 </style>

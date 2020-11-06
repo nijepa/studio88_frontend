@@ -1,4 +1,5 @@
 <template>
+<transition name="rise" mode="out-in">
   <div class="">
     <div class="user__logged">
       <a href="#">Profil</a> &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
@@ -201,8 +202,10 @@
         <p>Troškovi</p>
       </button>
     </nav>
+
     <hr>
   </div>
+  </transition>
 </template>
 
 <script>

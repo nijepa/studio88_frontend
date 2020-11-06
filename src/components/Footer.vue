@@ -1,4 +1,5 @@
 <template>
+<transition name="rise" mode="out-in">
   <div class="">
     <hr>
     <div class="footer_group">
@@ -29,6 +30,7 @@
       </svg>
     </a>
   </div>
+</transition>
 </template>
 
 <script>
