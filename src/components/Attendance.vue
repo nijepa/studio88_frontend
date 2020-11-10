@@ -1,12 +1,17 @@
 <template>
   <div class="">
+
     <transition name="fall" mode="out-in">
+
       <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
+
       <div v-else class="schedule__wrapper" key="2">
+
         <form @submit.prevent="addAttendance()" method="post" class="user__form">
+
           <div class="input__group ">
             <div class="input__field">
               <label for="datePicker">Datum</label>
@@ -18,13 +23,16 @@
           </div>
           
           <div class="members__list">
+
             <div class="members__items">
+
               <div class="">
                 <div class="days__list">
                   <span>Vježbačica</span>
                   <span>Prisutna</span>
                   <span>Napomena</span>
                 </div>
+
                 <div v-for="member in attendanceInput.members" :key="member._id" name="member"
                     class="members_input ">
                   <div class="login_input user_input select__month">
@@ -33,6 +41,7 @@
                   <input type="checkbox" v-model="member.present" class="login_input user_input payment__price">
                   <input type="text" v-model="member.note" class="login_input user_input">
                 </div>
+
               </div>
             </div>
     <!--         <div class="members__items">
@@ -50,6 +59,7 @@
           </div>
 
           <div class="action_btns input__btns">
+
             <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -105,6 +115,7 @@
               </svg>
               <p>Sačuvaj</p> 
             </button>
+
             <button type="submit" @click.prevent="formTypeChange('attendances')" class="action_btn cancel__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -142,9 +153,13 @@
               <p>Odustani</p>
             </button>
           </div>
+
         </form>
+
       </div>
+      
     </transition>
+
   </div>
 </template>
 
@@ -349,11 +364,11 @@
 
   @media only screen and (max-width: 599px) {
     .days__list {
-      font-size: 80%;
+      /* font-size: 80%; */
       grid-template-columns: repeat(2 ,auto) !important;
     }
     .user_input {
-      font-size: 80%;
+      /* font-size: 80%; */
     }
     .members_input  {
       grid-template-columns: repeat(2 ,auto) !important;
@@ -365,13 +380,22 @@
       grid-template-columns: repeat(3 ,auto) !important;
     }
     .clients__list {
-      grid-template-columns: repeat(2 ,auto) !important;
+      grid-template-columns: repeat(2 ,auto) ;
     }
     .activities__list {
       grid-template-columns: repeat(2 ,auto) !important;
     }
     .activities__wrapper {
       grid-template-columns: auto !important;
+    }
+    .attend__heading {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .attend__list {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .payment__heading {
+      grid-template-columns: repeat(3, 1fr) !important;
     }
   }
 

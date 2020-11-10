@@ -1,13 +1,16 @@
 <template>
   <div class="" >
     <transition name="fall" mode="out-in">
+
       <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
     
       <div v-else class="client__wrapper" key="2">
+
         <div class="">
+
           <button type="submit" @click="newClient()" class="action_btn client__add">
             <svg version="1.1" id="Capa_1" x="0px" y="0px" fill="var(--purple)"
                 width="40px" height="40px" viewBox="0 0 498.306 498.306" style="enable-background:new 0 0 498.306 498.306;">
@@ -44,12 +47,14 @@
                   l54.6,54.601c13.044,13.043,13.044,34.19,0,47.234c-13.042,13.043-34.19,13.043-47.234,0L186.271,233.504z"/>
               </g>
             </svg>
-            <input type="text" name="search" id="search" 
+            <input type="text" name="search" id="search" @keyup="searchClients()"
                     v-model="search" class="login_input search_input">
           </div>
+
         </div>
 
         <div class="">
+
           <div class="clients__heading days__list">
             <span>Ime</span>
             <span>E-mail</span>
@@ -58,7 +63,7 @@
             <span>Aktivnosti</span>
           </div>
 
-          <div v-for="client in filteredList" :key="client._id" class="clients__list">
+          <div v-for="client in pageOfItems" :key="client._id" class="clients__list">
             <p class="client__item" 
                 @click="selectClient(client)">{{ client.last_name }} , {{ client.first_name }}
             </p>
@@ -81,12 +86,16 @@
               </svg> -->
             </button>
           </div>
+
         </div>
       </div>
+
     </transition>
-    <jw-pagination :items="getAllClients" @changePage="onChangePage" 
+
+    <jw-pagination :items="filteredClients" @changePage="onChangePage" 
                     :labels="customLabels" :styles="customStyles">
     </jw-pagination>
+
   </div>
 </template>
 
@@ -120,6 +129,7 @@
     data() {
       return {
         pageOfItems: [],
+        filteredClients: [],
         customLabels,
         customStyles,
         search: '',
@@ -131,19 +141,19 @@
       ...mapGetters([ 'getAllClients', 
                       'loadingState' ]),
 
-      filteredList() {
+      // filteredList() {
 /*         this.getAllClients.filter(post => {
           return post.name.toLowerCase().includes(this.search.toLowerCase())
         })  */
         
-        let mu = this.pageOfItems.filter(post => {
+/*         let mu = this.pageOfItems.filter(post => {
           return post.name.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.email.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.mobile.includes(this.search)
-        })
+        }) */
         //this.pageOfItems = mu
-        return mu
-      }
+        // return mu
+      // }
     },
 
     methods: {
@@ -158,6 +168,16 @@
         this.pageOfItems = pageOfItems;
       },
       
+      searchClients() {
+        console.log('iiiii')
+        let mu = this.getAllClients.filter(post => {
+          return post.name.toLowerCase().includes(this.search.toLowerCase()) || 
+                  post.email.toLowerCase().includes(this.search.toLowerCase()) || 
+                  post.mobile.includes(this.search)
+        })
+        this.filteredClients = mu
+      },
+
       async newClient() {
         this.setLoadingState(true);
         this.formTypeChange('client');
@@ -168,7 +188,6 @@
         this.setLoadingState(true);
         await this.fetchClient(client);
         this.formTypeChange('client');
-        //this.$emit('toggled-form', 3);
       },
 
       async clientActivities(client) {
@@ -192,6 +211,7 @@
 
     async mounted() {
       await this.fetchClients();
+      this.filteredClients = this.getAllClients;
       this.setLoadingState(false);
     }
   }

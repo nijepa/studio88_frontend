@@ -1,22 +1,28 @@
 <template>
   <div class="">
     <transition name="fall" mode="out-in">
+
       <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
+
       <div v-else class="schedule__wrapper" key="2">
+
         <form @submit.prevent="addSchedule()" method="post" class="user__form">
+
           <div class="input__group">
+
             <div class="input__field">
               <label for="name">Naziv</label>
               <input type="text" name="name" placeholder="ime termina (npr. I)" required
                       class="login_input user_input" v-model="scheduleInput.title">
             </div>
+
             <div class="input__field dani">
               <label for="day">Dani treninga</label>
               <div v-for="day in days" :key="day.id">
-                <label class="dan">{{day}}</label>
+                <span class="dan">{{day}}</span>
                 <input type="checkbox" v-model="scheduleInput.weekday" :value="day"/>
               </div>
               <!-- <div class="login_input user_input bloc">
@@ -31,22 +37,27 @@
                 </select>
               </div> -->
             </div>
+
           </div>
           
           <div class="input__group">
+
             <div class="input__field">
               <label for="time">Vrijeme početka</label>
               <input type="time" name="time" placeholder="vreme održavanja termina (npr. 10:00:AM)"
                       class="login_input user_input" v-model="scheduleInput.startTime" required>
             </div>
+
             <div class="input__field">
               <label for="duration">Trajanje u minutima</label>
               <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
                       class="login_input user_input" v-model="scheduleInput.duration" value="60">
             </div>
+
           </div>
           
           <div class="members__list">
+
             <div class="members__items">
               <label for="members">Vježbačice u grupi</label>
               <p v-for="member in scheduleInput.members" :key="member._id" name="member"
@@ -55,8 +66,9 @@
                 <span class="members__span"> - {{ member.start_date | formatDate }}</span> 
               </p>
             </div>
+
             <div class="members__items">
-              
+
               <div class="input__field">
                 <label for="date_start">Datum pristupa</label>
                 <input type="date" name="date_start" placeholder="datum upisa"
@@ -73,9 +85,12 @@
                   <span class="members__span"> - {{ client.mobile }}</span> 
                 </p>
               </div>
+              
             </div>
           </div>
+
           <hr>
+
           <div class="action_btns input__btns">
             <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
@@ -170,6 +185,7 @@
               <p>Odustani</p>
             </button>
           </div>
+
         </form>
       </div>
     </transition>

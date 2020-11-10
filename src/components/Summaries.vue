@@ -37,7 +37,7 @@
 
         <div class="dash__items">
           <div class="dash__text">Dolasci od 
-            <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value)">
+            <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value) | formatDate">
             do 
             <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)">
           </div>
@@ -173,14 +173,14 @@
       },
 
       makeCorrectDate(str) {
-        return new Date(str).toISOString().split('T')[0];
+        return new Date(str).toISOString().split('T')[0] ;
       },
 
       selectPayments() {
         let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
         let arr = arro.map(item => item.total_amount);
         let arr1 = arro.map(item => item.payment_month);
-console.log(this.mapPayments())
+
         this.totalPayments = arr;
         this.paymentLabels = arr1;
       },
@@ -229,9 +229,7 @@ console.log(this.mapPayments())
       });
 
       this.selectPayments();
-
       this.selectAttendances(this.dateTill);
-
       this.selectExpenses();
       
       this.setLoadingState(false);

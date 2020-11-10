@@ -1,11 +1,15 @@
 <template>
   <div class="">
+
     <transition name="fall" mode="out-in">
+
       <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
+
       <div v-else class="client__wrapper" key="2">
+
         <button type="submit" @click="newPayment()" class="action_btn client__add">
           <svg version="1.1" id="Layer_1" x="0px" y="0px" fill="var(--purple)" width="50px" height="50px"
               viewBox="0 0 1718.107 1659.385" enable-background="new 0 0 1718.107 1659.385" xml:space="preserve">
@@ -91,12 +95,15 @@
           </svg>
           <p>Novo plaćanje</p> 
         </button>
+
         <div class="">
+
           <div class="days__list payment__heading">
             <span>Godina</span>
             <span>Mjesec</span>
             <span>Iznos</span>
           </div>
+
           <div v-for="payment in pageOfItems" :key="payment._id" 
                 @click="selectPayment(payment)" class="clients__list payment__list">
             <p class="client__item">{{ payment.payment_year }}</p>
@@ -105,8 +112,12 @@
           </div>
         </div>
       </div>
+
     </transition>
-    <jw-pagination :items="getAllPayments" @changePage="onChangePage" :labels="customLabels" :styles="customStyles"></jw-pagination>
+
+    <jw-pagination :items="getAllPayments" @changePage="onChangePage" 
+                    :labels="customLabels" :styles="customStyles">
+    </jw-pagination>
   </div>
 </template>
 
@@ -120,18 +131,15 @@
 
   const customStyles = {
     ul: {
-        //border: '2px solid red'
     },
     li: {
         display: 'inline-block',
-        //border: '2px dotted green'
     },
     a: {
         color: 'var(--purple-dark)'
     }
   };
 
-  //import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'Payments',
@@ -157,7 +165,6 @@
                       'setLoadingState' ]),
 
       onChangePage(pageOfItems) {
-        // update page of items
         this.pageOfItems = pageOfItems;
       },
       

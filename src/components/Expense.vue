@@ -1,18 +1,25 @@
 <template>
   <div class="">
+
     <transition name="fall" mode="out-in">
+
       <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
       </div>
+
       <div v-else class="schedule__wrapper" key="2">
+
         <form @submit.prevent="addExpense()" method="post" class="user__form">
+
           <div class="input__group ">
+
             <div class="input__field">
               <label for="name">Godina</label>
               <input type="number" name="name" placeholder="godina" 
                       class="login_input user_input" v-model="expenseInput.expense_year">
             </div>
+
             <div class="input__field">
               <label for="days">Mjesec</label>
               <div class="login_input user_input ">
@@ -34,36 +41,36 @@
                 </select>
               </div>
             </div>
+
             <div class="input__field">
               <label for="title">Naziv troška</label>
               <input type="text" name="title" placeholder="naziv troška" required
                       class="login_input user_input" v-model="expenseInput.expense_title">
             </div>
+
             <div class="input__field">
               <label for="name">Datum</label>
               <input type="date" name="name" class="login_input user_input" 
                       :value="expenseInput.expense_date && makeCorrectDate(expenseInput.expense_date)"
                       @input="expenseInput.expense_date = $event.target.valueAsDate">
             </div>
+
             <div class="input__field">
               <label for="price">Iznos</label>
               <input type="number" id="price" placeholder="iznos" value="0" required
                       class="login_input user_input" v-model="expenseInput.expense_amount">
             </div>
+
             <div class="input__field">
               <label for="notes">Napomene</label>
               <textarea name="notes" id="notes" cols="20" rows="5" placeholder="napomene"
                         class="login_input user_input" v-model="expenseInput.notes">
               </textarea>
             </div>
-  <!--          <div class="input__field">
-              <label for="datePicker">Datum plaćanja</label>
-              <input type="date" name="date_start" placeholder="datum upisa" required
-                      class="login_input user_input memeber__date" id="datePicker" v-model="selectedDate">
-            </div> -->
           </div>
 
           <div class="action_btns input__btns">
+
             <button type="submit" class="action_btn save__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -119,6 +126,7 @@
               </svg>
               <p>Sačuvaj</p> 
             </button>
+
             <button type="submit" @click.prevent="formTypeChange('expenses')" class="action_btn cancel__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
                     viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
@@ -156,9 +164,13 @@
               <p>Odustani</p>
             </button>
           </div>
+
         </form>
+
       </div>
+
     </transition>
+
   </div>
 </template>
 
@@ -325,10 +337,6 @@
         this.expenseInput = this.getOneExpense;
       } 
       this.setLoadingState(false);
-      //let today = moment().format('YYYY-MM-DD');
-      //document.getElementById("datePicker").value = today;
-      //this.selectedDate = today;
-
     },
   }
 </script>
@@ -348,7 +356,6 @@
     display: inline-block;
     vertical-align: top;
     overflow: hidden;
-    /* border: solid grey 1px; */
     height: 140px;
   }
 
@@ -366,7 +373,6 @@
   .members__list {
     display: flex;
     text-align: left;
-    /* margin-top: 1em; */
     align-items: baseline;
     font-size: 1em;
   }

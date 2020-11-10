@@ -53,24 +53,28 @@
                   class="login_input user_input"
                   type="text" name="username" id="username" required>
         </div>
+
         <div class="input__field">
           <label for="first_name">First name</label>
           <input @focus="clearErrors" v-model="signupInput.first_name"
                   class="login_input user_input"
                   type="text" name="first_name" id="first_name">
         </div>
+
         <div class="input__field">
           <label for="last_name">First name</label>
           <input @focus="clearErrors" v-model="signupInput.last_name"
                   class="login_input user_input"
                   type="text" name="last_name" id="last_name">
         </div>
+
         <div class="input__field">
           <label for="email">E-mail</label>
           <input @focus="clearErrors" v-model="signupInput.email"
                   class="login_input user_input"
                   type="email" name="email" id="email">
         </div>
+
         <div class="input__field">
           <label for="password">Password</label>
           <input @focus="clearErrors" v-model="signupInput.password"
@@ -270,14 +274,12 @@
   }
 
   .user__profile_selected {
-    /* background-color: var(--yellow); */
     background-image: linear-gradient(to top,var(--orange) 5%, white);
     border-radius: 20px;
     padding: 1rem;
     margin: .5rem;
     box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
     text-align: left;
-    /* display: grid; */
     grid-template-columns: auto auto;
     align-items: center;
     justify-items: center;

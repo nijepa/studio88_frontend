@@ -7,7 +7,7 @@
       </div>
       <div v-else class="schedule__wrapper" key="2">
         <form @submit.prevent="addClient()" method="post" class="user__form">
-          <div class="input__group">
+          <div class="input__group active__date">
             <div class="input__field">
               <label for="active">Aktivna</label>
               <input type="checkbox" name="active" placeholder="ime" checked="checked" id="active"
@@ -28,6 +28,7 @@
               <input type="text" name="first_name" placeholder="ime" required id="first_name"
                       class="login_input user_input" v-model="clientInput.first_name">
             </div>
+
             <div class="input__field">
               <label for="last_name">Prezime</label>
               <input type="text" id="last_name" placeholder="prezime" required
@@ -64,6 +65,7 @@
               <input type="text" name="instagram" placeholder="instagram profil" id="instagram"
                       class="login_input user_input" v-model="clientInput.instagram">
             </div>
+
             <div class="input__field">
               <label for="facebook">Facebook</label>
               <input type="text" id="facebook" placeholder="facebook profil" 
@@ -216,7 +218,7 @@
           phone: '',
           mobile: '',
           address: '',
-          date_started: '',
+          date_started: moment(String(new Date())).format('YYYY-MM-DD'),
           notes: '',
           picture: '',
           active: ''
@@ -458,5 +460,18 @@
 
   .input__btns {
     justify-self: center;
+  }
+
+  label {
+    color: var(--grey-light);
+  }
+
+  @media (max-width: 599px) {
+    .active__date {
+      justify-self: baseline;
+    }
+    .attendances {
+      justify-content: space-between;
+    }
   }
 </style>

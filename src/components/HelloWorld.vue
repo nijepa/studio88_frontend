@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
+
     <div class="club__title">
+
       <img src="../assets/img/studio881.png" alt="" class="responsive">
 <!--       <h1 class="club">{{ msg }} </h1>
       <p class="club__type">p i l a t e s</p> -->
@@ -19,26 +21,30 @@
 </template>
 
 <script>
-import LogIn from '@/components/LogIn.vue'
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  },
-  components: {
-    LogIn
-  },
-  data() {
-    return {
-      loginForm: false
+  import LogIn from '@/components/LogIn.vue'
+  export default {
+    name: "HelloWorld",
+
+    props: {
+      msg: String
+    },
+
+    components: {
+      LogIn
+    },
+
+    data() {
+      return {
+        loginForm: false
+      }
+    },
+
+    methods: {
+      toggleLoginForm() {
+        this.loginForm = true;
+      }
     }
-  },
-  methods: {
-    toggleLoginForm() {
-      this.loginForm = true;
-    }
-  }
-};
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -129,16 +135,15 @@ export default {
     color: var(--purple);
   }
 
-    /* Enter and leave animations can use different */
-/* durations and timing functions.              */
   .slide-fade-enter-active, .slide-fade-leave-active  {
     transition: all .8s ease;
   }
+  
 /*  .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }  */
-  .slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
+
+  .slide-fade-enter, .slide-fade-leave-to {
     transform: translateY(20px);
     opacity: 0;
   }

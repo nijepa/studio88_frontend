@@ -21,7 +21,6 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  //import router from '../router';
   export default {
     name: 'LogIn',
     
@@ -86,7 +85,6 @@
 
       logIn() {
         this.login(this.loginInput);
-        //router.push("/dashboard");
         if (this.getErrors.length) {
           this.$toast.error('Greška! Pogrešan e-mail ili password ' + this.getErrors, 'OK', this.notificationSystem.options.error);
           this.clearErrors();
@@ -107,7 +105,6 @@
     margin-bottom: 1em;
     background: #fff;
     color: var(--black);
-    /* border-radius: 4px; */
     border: 1px solid transparent;
     border-bottom: 1px solid #d1d1d1;
     box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
