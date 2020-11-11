@@ -17,6 +17,7 @@
     <attendance v-if="getFormType === 'attendance'" key="attendance"></attendance>
     <expenses v-if="getFormType === 'expenses'" key="expenses"></expenses>
     <expense v-if="getFormType === 'expense'" key="expense"></expense>
+    <general v-if="getFormType === 'general'" key="general"></general>
     
     <Footer></Footer>
   </div>
@@ -38,6 +39,7 @@
   import Attendance from "@/components/Attendance.vue";
   import Expenses from "@/components/Expenses.vue";
   import Expense from "@/components/Expense.vue";
+  import General from "@/components/General.vue";
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
@@ -58,7 +60,8 @@
       Attendance,
       Expenses,
       Expense,
-      ClientActivity
+      ClientActivity,
+      General
     },
 
     data() {

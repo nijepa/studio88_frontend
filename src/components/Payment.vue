@@ -62,12 +62,15 @@
 
               <div class="">
                 <div class="days__list payments__list">
-                  <span>Vježbačica</span><span>Dana</span><span>Iznos</span><span>Napomena</span>
+                  <span>Vježbačica</span>
+                  <span>Dana</span>
+                  <span>Iznos</span>
+                  <span>Napomena</span>
                 </div>
 
                 <div v-for="member in paymentInput.members" :key="member._id" name="member"
                     class="members_input ">
-                  <div class="login_input user_input select__month">
+                  <div class="login_input user_input select__month for__payment_list">
                     {{ member.client.last_name }}, {{ member.client.first_name }}
                   </div>
                   <input type="date"  class="login_input user_input"
@@ -487,5 +490,9 @@
 
   .payment__price {
     width: 3.3em;
+  }
+
+  .for__payment_list {
+    cursor: none;
   }
 </style>

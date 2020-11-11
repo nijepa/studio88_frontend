@@ -4,7 +4,8 @@
     <div class="" key="1">
 
       <div class="user__logged">
-        <a href="#">Profil</a> &#10022; <a @click="navClick('signup')" href="#" class="profile__link">{{loggedUser.name}}</a> &#10022;
+        <a @click="navClick('general')" href="#" class="profile__link">Profil</a> &#10022; 
+        <a @click="navClick('signup')" href="#" class="user__link">{{loggedUser.name}}</a> &#10022;
         <a @click="logout(loggedUser)" href="#" class="user__logout">Log Out</a>
       </div>
 
@@ -71,7 +72,8 @@
                     {id: 'schedules', title: 'schedules'},
                     {id: 'attendance', title: 'attendance'},
                     {id: 'payments', title: 'payments'},
-                    {id: 'expenses', title: 'expenses'}]
+                    {id: 'expenses', title: 'expenses'},
+                    {id: 'general', title: 'general'}]
       }
     },
     computed: {
@@ -167,11 +169,11 @@
   }
 
   .user__logout {
-    color: var(--red);
+    color: var(--red-dark);
   }
 
   .user__logout:hover {
-    color: var(--red-dark);
+    color: var(--red);
   }
 
   .logo__small {
@@ -185,12 +187,20 @@
     transform: scale(1.05);
   }
 
-  .profile__link {
+  .user__link {
     color: var(--gold);
   }
 
-  .profile__link:hover {
+  .user__link:hover {
     color: var(--gold-light);
+  }
+
+  .profile__link {
+    color: var(--purple);
+  }
+
+  .profile__link:hover {
+    color: var(--purple-light);
   }
 
   @media (max-width: 1078px) {

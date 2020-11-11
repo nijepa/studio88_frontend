@@ -3,83 +3,81 @@
   <div class="schedule__wrapper">
     <transition name="fall">
 
- <!--      <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
-            class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
-        <div class="profile__group personal__data">
-          <div class="">
-          <p>
-            <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                class="info__img">
-          </p>
-          </div>
-          <div class="input__group">
-            <div class="input__field">
-              <span class="info__label">Username : </span>
-              <p class="login_input user_input">{{ signupInput.username }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">E-mail : </span>
-              <p class="login_input user_input">{{ signupInput.email }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">First name : </span>
-              <p class="login_input user_input">{{ signupInput.first_name }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">Last name : </span
-              ><p class="login_input user_input">{{ signupInput.last_name }}</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="profile__group">
-          <div class="">
-            <span class="info__label">About : </span>
-            <p class="info__input" v-html="signupInput.user_about"></p>
-          </div>
-        </div>
-      
-      </div> -->
-
-      <form @submit.prevent="userUpdate(signupInput)" action=""
+      <form @submit.prevent="changeGeneral()" action="" 
             v-on:load="onAppeared" v-show="appeared" class="user__form">
 <!--         <div class="input__field">
           <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                 class="info__img">
         </div> -->
         <div class="input__field">
-          <label for="username">User name</label>
-          <input @focus="clearErrors" v-model="signupInput.username"
+          <label for="title">Naziv firme</label>
+          <input @focus="clearErrors" v-model="generalInput.general_title"
                   class="login_input user_input"
-                  type="text" name="username" id="username" required>
+                  type="text" name="title" id="title" required>
         </div>
 
         <div class="input__field">
-          <label for="first_name">First name</label>
-          <input @focus="clearErrors" v-model="signupInput.first_name"
+          <label for="address">Adresa</label>
+          <input @focus="clearErrors" v-model="generalInput.general_address"
                   class="login_input user_input"
-                  type="text" name="first_name" id="first_name">
+                  type="text" name="address" id="address">
         </div>
 
         <div class="input__field">
-          <label for="last_name">First name</label>
-          <input @focus="clearErrors" v-model="signupInput.last_name"
+          <label for="site">Web site</label>
+          <input @focus="clearErrors" v-model="generalInput.general_site"
                   class="login_input user_input"
-                  type="text" name="last_name" id="last_name">
+                  type="text" name="site" id="site">
         </div>
 
         <div class="input__field">
           <label for="email">E-mail</label>
-          <input @focus="clearErrors" v-model="signupInput.email"
+          <input @focus="clearErrors" v-model="generalInput.general_email"
                   class="login_input user_input"
                   type="email" name="email" id="email">
         </div>
 
         <div class="input__field">
-          <label for="password">Password</label>
-          <input @focus="clearErrors" v-model="signupInput.password"
+          <label for="mobile">Mobilni</label>
+          <input @focus="clearErrors" v-model="generalInput.general_mobile"
                   class="login_input user_input"
-                  type="password" name="password" id="password">
+                  type="text" name="mobile" id="mobile">
+        </div>
+
+        <div class="input__field">
+          <label for="instagram">Instagram</label>
+          <input @focus="clearErrors" v-model="generalInput.general_instagram"
+                  class="login_input user_input"
+                  type="text" name="instagram" id="instagram">
+        </div>
+
+        <div class="input__field">
+          <label for="facebook">Facebook</label>
+          <input @focus="clearErrors" v-model="generalInput.general_facebook"
+                  class="login_input user_input"
+                  type="text" name="facebook" id="facebook">
+        </div>
+
+        <div class="input__field">
+              <label for="datePicker">Datum osnivanja</label>
+              <input type="date" name="date_start" placeholder="datum upisa" required
+                      class="login_input user_input memeber__date" id="datePicker" 
+                      :value="generalInput.general_date && makeCorrectDate(generalInput.general_date)"
+                      @input="generalInput.general_date = $event.target.valueAsDate">
+        </div>
+
+        <div class="prices">
+          <div class="price" v-for="price in generalInput.prices" :key="price._id">
+            <div class="input__field">
+          <label for="facebook">Facebook</label>
+          <input @focus="clearErrors" v-model="generalInput.general_facebook"
+                  class="login_input user_input"
+                  type="text" name="facebook" id="facebook">
+        </div>
+            <p>{{ price.price_date }}</p>
+            <p>{{ price.price_amount }}</p>
+            <p>{{ price.note }}</p>
+          </div>
         </div>
 <!--         <div class="input__field">
           <label for="about">About</label> -->
@@ -201,7 +199,7 @@
 
   export default {
 
-    name: 'Profile',
+    name: 'General',
 
     components: {
         //ckeditor:CKEditor.component
@@ -210,34 +208,49 @@
     data() {
       return {
         //editor: ClassicEditor,
-        signupInput: {
-          _id: '',
-          email: '',
-          password: '',
-          username: '',
-          first_name: '',
-          last_name: '',
-          user_about: '',
-          picture: ''
+        generalInput: {
+          general_email: '',
+          general_site: '',
+          general_title: '',
+          general_address: '',
+          general_mobile: '',
+          general_date: '',
+          general_instagram: '',
+          general_facebook: '',
+          logo: '',
+          prices: []
         },
-        user: {},
+        general: {},
         appeared: false
       }
     },
 
     computed: {
-      ...mapGetters([ 'loggedUser',
-                      'getSelectedUser',
+      ...mapGetters([ 'getGeneral',
                       'getErrors' ]),
     },
 
     methods: {
-      ...mapActions([ 'signup',
-                      'fetchSelectedUser',
-                      'userUpdate',
+      ...mapActions([ 'fetchGenerals',
+                      'generalAdd',
+                      'generalUpdate',
+                      'createPrice',
                       'formTypeChange',
                       'clearErrors' ]),
       
+      changeGeneral() {
+        if (this.getGeneral._id) {
+          this.generalUpdate(this.generalInput);
+        } else {
+          this.generalAdd(this.generalInput);
+        }
+        this.formTypeChange('home');
+      },
+
+      makeCorrectDate(str) {
+        return new Date(str).toISOString().split('T')[0]
+      },
+
       selectFriends(selectedUser) {
         this.fetchSelectedUser(selectedUser);
         this.$router.push({ name: 'UsersFriends' });
@@ -252,11 +265,10 @@
       }
     },
 
-    created() {
-      if (this.getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id) {
-        this.signupInput = this.getSelectedUser;
-      } else {
-        this.signupInput = this.loggedUser;
+    async created() {
+      await this.fetchGenerals();
+      if (this.getGeneral) {
+        this.generalInput = this.getGeneral;
       }
     },
 
@@ -265,89 +277,3 @@
     }
   }
 </script>
-
-<style>
-  .user__profile {
-    display: grid;
-    justify-content: center;
-    justify-items: left;
-  }
-
-  .user__profile_selected {
-    background-image: linear-gradient(to top,var(--orange) 5%, white);
-    border-radius: 20px;
-    padding: 1rem;
-    margin: .5rem;
-    box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
-    text-align: left;
-    grid-template-columns: auto auto;
-    align-items: center;
-    justify-items: center;
-    grid-column-gap: 1em;
-  }
-
-  .profile__group {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    align-items: center;
-    justify-items: center;
-  }
-
-  .personal__data {
-    grid-template-columns: 1fr 3fr;
-  }
-
-  .info__input {
-    font-size: 1.3em;
-    justify-self: left;
-    align-self: baseline;
-    margin: .3em;
-  }
-
-  .info__input .info__label {
-    font-size: .8em;
-  }
-
-  .info__label {
-    color: var(--blue-dark);
-    font-style: italic;
-  }
-
-  .info__img {
-    justify-self: left;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-  }
-
-  .info__friends {
-    cursor: pointer;
-    justify-self: left;
-    color: var(--blue);
-    align-self: baseline;
-    font-size: 2em;
-  }
-
-  .info__friends:hover {
-    color: black;
-    text-decoration: underline;
-  }
-
-  .fall-enter-active {
-    transition: all 1s ease;
-  }
-
-  .fall-enter, .fall-leave-to {
-    transform: translateY(-2em);
-    opacity: 0;
-  }
-
-  .rise-enter-active {
-    transition: all 1s ease;
-  }
-
-  .rise-enter, .rise-leave-to {
-    transform: translateY(-2em);
-    opacity: 0;
-  }
-</style>
