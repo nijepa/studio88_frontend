@@ -406,7 +406,6 @@
       if (this.getOnePayment._id) {
         this.paymentInput = this.getOnePayment;
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-        //document.getElementById("price").defaultValue = "35";
       } else {
         this.notClients = this.getAllClients;
         this.paymentInput.price = this.getPrice;

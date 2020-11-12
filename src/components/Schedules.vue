@@ -100,7 +100,6 @@
               <div class="client__item" >
                 <p v-for="polaznik in schedule.members" :key="polaznik.id" class="week__day">{{ polaznik.client.last_name }}, {{ polaznik.client.first_name }}</p>
               </div>
-              <!-- <p class="client__item"> {{ schedule.duration }}</p> -->
             </div>
           </div>
         </div>

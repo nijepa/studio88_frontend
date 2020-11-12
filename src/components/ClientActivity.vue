@@ -82,8 +82,6 @@
         
       </div>
     </transition>
-    
-    <!-- <jw-pagination :items="clientPayments" @changePage="onChangePage" :labels="customLabels" :styles="customStyles"></jw-pagination> -->
   </div>
 </template>
 
@@ -131,13 +129,6 @@
                       'getAllAttendances',
                       'getAllPayments',
                       'loadingState' ]),
-
- /*      filteredList() {
-        return this.pageOfItems.filter(post => {
-          return post.name.toLowerCase().includes(this.search.toLowerCase())
-        })
-        
-      } */
     },
 
     methods: {
@@ -161,9 +152,7 @@
 
       async selectClient() {
         this.setLoadingState(true);
-        //await this.fetchClient(client);
         this.formTypeChange('client');
-        //this.$emit('toggled-form', 3);
       },
 
       mapPayments() {
@@ -222,7 +211,6 @@
     },
 
     async mounted() {
-      //await this.fetchClients();
       await this.fetchPayments();
       await this.fetchAttendances();
       this.clientPayments = this.mapPayments().filter(post => {

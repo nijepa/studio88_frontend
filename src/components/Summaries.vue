@@ -137,12 +137,6 @@
 
           return r;
         }, []);
-        
-/*         return this.getAllExpenses.map(d=>({
-          expense_month : d.expense_month,
-          expense_year : d.expense_year,
-          total_amount : d.this.getAllExpenses.reduce((a, expense_amount) => a + expense_amount, 0)
-        })); */
       },
 
       currYear() {
@@ -186,8 +180,6 @@
       },
 
       selectAttendances() {
-        //console.log(value)
-        //this.dateTill = value;
         let arra = this.mapAttendances().filter(year => year.attend_date >= this.dateFrom && year.attend_date <= this.dateTill);
         let arra1 = arra.map(item => item.total_amount);
         let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
@@ -202,11 +194,6 @@
                           .map(item => item.expense_amount);
 
         this.totalExpenses = expenses;
-/*         this.totalExpenses = this.getAllExpenses.reduce(function(acc, obj) {
-          var key = obj.expense_date.substr(0,7);
-          acc[key] = (acc[key] || 0) + +obj.expense_amount;
-          return acc;
-        }, Object.create(null));*/
       } 
     },
 
@@ -282,8 +269,6 @@
   }
 
   .charts {
-    /* max-width: 750px; */
-    /* max-height: 250px; */
     display: grid;
   }
 

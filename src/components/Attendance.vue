@@ -44,18 +44,6 @@
 
               </div>
             </div>
-    <!--         <div class="members__items">
-              
-              <div class="input__field">
-                <label for="">Dodaj vežbačicu - 
-                  <span @click="addAllmembers()" class="all__clients_btn"> Sve</span>
-                </label>
-                <p v-for="client in notClients" :key="client._id" name="clients"
-                    class="login_input user_input members_input members__not" @click="addMember(client)">
-                  {{ client.last_name}}, {{ client.first_name}} - {{ client.mobile }}
-                </p>
-              </div>
-            </div> -->
           </div>
 
           <div class="action_btns input__btns">
@@ -367,9 +355,6 @@
       /* font-size: 80%; */
       grid-template-columns: repeat(2 ,auto) !important;
     }
-    .user_input {
-      /* font-size: 80%; */
-    }
     .members_input  {
       grid-template-columns: repeat(2 ,auto) !important;
     }
@@ -408,7 +393,6 @@
     display: inline-block;
     vertical-align: top;
     overflow: hidden;
-    /* border: solid grey 1px; */
     height: 140px;
   }
 
@@ -426,7 +410,6 @@
   .members__list {
     display: flex;
     text-align: left;
-    /* margin-top: 1em; */
     align-items: baseline;
     font-size: 1em;
   }
@@ -471,6 +454,4 @@
   .payment__price {
     width: 3.3em;
   }
-
-  
 </style>

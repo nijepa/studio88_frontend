@@ -25,17 +25,6 @@
                 <span class="dan">{{day}}</span>
                 <input type="checkbox" v-model="scheduleInput.weekday" :value="day"/>
               </div>
-              <!-- <div class="login_input user_input bloc">
-                <select name="days" id="days" size="5" class="day__select"
-                        v-model="scheduleInput.weekday" multiple required>
-                  <option value="Poneđeljak">Poneđeljak</option>
-                  <option value="Utorak">Utorak</option>
-                  <option value="Srijeda">Srijeda</option>
-                  <option value="Četvrtak">Četvrtak</option>
-                  <option value="Petak">Petak</option>
-                  <option value="Subota">Subota</option>
-                </select>
-              </div> -->
             </div>
 
           </div>
@@ -387,9 +376,6 @@
         this.notClients = this.getAllClients;
       }
       this.setLoadingState(false);
-/*       let today = moment().format('YYYY-MM-DD');
-      document.getElementById("datePicker").value = today;
-      this.selectedDate = today; */
     },
   }
 </script>

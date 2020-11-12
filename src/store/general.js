@@ -5,25 +5,17 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 
 
 const  state = {
-  general: {},
-  //expenses: []
+  general: {}
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
-  //getAllExpenses: state => state.expenses,
   getGeneral: state => state.general
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
 const  mutations = {
-  //setExpenses: (state, expenses) => (state.expenses = expenses),
-
   setGeneral: (state, general) => (state.general = general[0]),
-
-/*   clearExpense(state) {
-    state.expense = {};
-  }, */
 
   addGeneral(state, text) {
     state.general = text;
@@ -31,12 +23,6 @@ const  mutations = {
 
   updateGeneral(state, general) {
     state.general =  {...general}
-    
-/*     state.general = [
-      ...state.general.map(item => 
-          item._id !== expense._id ? item : {...item, ...expense}
-      )
-    ]  */
   },
 
   addPrice (state, price) {
@@ -55,11 +41,6 @@ const  mutations = {
 const actions = {
   async fetchGenerals ({ commit }) {
     const response = await axios.get(URL + "generals");
-    commit('setGeneral', response.data);
-  },
-
-  async fetchGeneral ({ commit }, generalData) {
-    const response = await axios.get(URL + "generals/" + generalData._id, generalData);
     commit('setGeneral', response.data);
   },
 
@@ -91,19 +72,6 @@ const actions = {
       })
   },
 
-  async createPrice({ commit }, priceData) {
-    await axios.put(URL + 'generals/price/' + priceData._id, priceData)
-      .then((response) => {
-        commit('addPrice', response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          commit('setErrors', error.response.data.error);
-        } else {
-          commit('setErrors', error);
-        }
-      })
-  },
 
 /*   async expenseDelete({commit}, expenseData) {
     await axios.delete(URL + 'expenses/' + expenseData._id, expenseData)
@@ -119,9 +87,6 @@ const actions = {
       })
   }, */
 
-/*   async expenseClear({commit}) {
-    commit('clearExpense');
-  } */
 };
 
 export default {

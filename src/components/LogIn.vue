@@ -10,7 +10,6 @@
       <input type="password" name="pass" class="login_input" required
               @focus="clearErrors" v-model="loginInput.password">
 
-      <!-- <button type="submit" @click="logIn" class="login_btn"> -->
       <button type="submit" class="login_btn">
         Log In
       </button>

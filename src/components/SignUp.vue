@@ -147,6 +147,7 @@
               </svg>
               <p>Sačuvaj</p> 
             </button>
+            
             <button type="submit" @click.prevent="formTypeChange('home')"
                     class="action_btn cancel__btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
@@ -185,7 +186,6 @@
               <p>Odustani</p>
             </button>
           </div>
-          <!-- <button type="submit" class="action_btn">Save</button> -->
         </div>
       </form>
 
