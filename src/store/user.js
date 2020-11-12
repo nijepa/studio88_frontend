@@ -13,6 +13,7 @@ const  state = {
   logged: false,
   loading: true,
   inputType: '',
+  price: 0,
   errors: []
 };
 
@@ -25,7 +26,8 @@ const  getters = {
   isLogged: state => state.logged,
   getInputType: state => state.inputType,
   getErrors: state => state.errors,
-  getSelectedUser: state => state.selectedUser
+  getSelectedUser: state => state.selectedUser,
+  getPrice: state => state.price
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -37,6 +39,8 @@ const  mutations = {
   setUser: (state, user) => (state.user = user),
 
   setSelectedUser: (state, selectedUser) => (state.selectedUser = selectedUser),
+
+  setPrice: (state, price) => (state.price = price),
 
   clearSelectedUser: (state) => (state.selectedUser = {}),
 
@@ -63,12 +67,13 @@ const  mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  initialState({commit}) {
+  initialState({commit}, price) {
     const localAuth = ls.getToken();
     if (localAuth) {
       commit('setToken', localAuth.token);
       commit('setUser', localAuth.user);
       commit('setLogged', true);
+      commit('setPrice', price)
       commit('changeLoadingState', false);
     }
   },

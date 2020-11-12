@@ -92,7 +92,7 @@ const actions = {
   },
 
   async createPrice({ commit }, priceData) {
-    await axios.post(URL + 'generals/price', priceData)
+    await axios.put(URL + 'generals/price/' + priceData._id, priceData)
       .then((response) => {
         commit('addPrice', response.data);
       })

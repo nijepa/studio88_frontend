@@ -313,6 +313,7 @@
                       'getOnePayment',
                       'getAllClients',
                       'getErrors',
+                      'getPrice',
                       'loadingState' ]),
     },
 
@@ -408,6 +409,7 @@
         //document.getElementById("price").defaultValue = "35";
       } else {
         this.notClients = this.getAllClients;
+        this.paymentInput.price = this.getPrice;
         this.addAllmembers()
       }
       this.setLoadingState(false);

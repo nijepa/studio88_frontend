@@ -78,6 +78,7 @@
     },
     computed: {
       ...mapGetters([ 'loggedUser',
+                      'getGeneral',
                       'getFormType' ]),
     },
 
@@ -85,6 +86,7 @@
       ...mapActions([ 'initialState',
                       'logout',
                       'formTypeChange',
+                      'fetchGenerals',
                       'setLoadingState' ]),
 
       navClick(type) {
@@ -98,8 +100,13 @@
       }
     },
 
-    created() {
-      this.initialState();
+    async created() {
+      await this.fetchGenerals();
+      let price;
+      if (this.getGeneral) {
+        price = this.getGeneral.prices[0].price_amount
+      }
+      this.initialState(price);
       this.navClick('home');
     }
   }
