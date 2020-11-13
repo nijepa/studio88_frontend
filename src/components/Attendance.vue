@@ -39,7 +39,7 @@
                     {{ member.client.last_name }}, {{ member.client.first_name }}
                   </div>
                   <input type="checkbox" v-model="member.present" class="login_input user_input payment__price">
-                  <input type="text" v-model="member.note" class="login_input user_input">
+                  <input type="text" v-model="member.note" class="login_input user_input payment__note">
                 </div>
 
               </div>
@@ -422,10 +422,6 @@
     grid-template-columns: 1fr repeat(3, auto);
     align-items: center;
     grid-column-gap: 1em;
-  }
-
-  .members__items {
-    margin-right: 2em;
   }
 
   .memeber__date {

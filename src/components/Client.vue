@@ -379,7 +379,7 @@
     justify-content: center;
     justify-items: baseline;
     margin: 1em;
-    padding: 1em;
+    padding: .5em;
     border: 2px solid var(--purple);
     border-radius: 1em;
   }

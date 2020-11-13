@@ -60,7 +60,7 @@
 
             <div class="members__items">
 
-              <div class="">
+              <!-- <div class=""> -->
                 <div class="days__list payments__list">
                   <span>Vježbačica</span>
                   <span>Dana</span>
@@ -77,9 +77,9 @@
                           :value="member.payment_date && makeCorrectDate(member.payment_date)"
                           @input="member.payment_date = $event.target.valueAsDate">
                   <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price">
-                  <input type="text" v-model="member.note" class="login_input user_input">
+                  <input type="text" v-model="member.note" class="login_input user_input payment__note">
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
     <!--         <div class="members__items">
               
@@ -462,10 +462,6 @@
     grid-column-gap: 1em;
   }
 
-  .members__items {
-    margin-right: 2em;
-  }
-
   .memeber__date {
     margin: 0;
   }
@@ -482,7 +478,8 @@
   }
 
   .payments__list {
-    justify-items: left;
+    justify-items: center;
+    margin-top: 1;
   }
 
   .select__month {
@@ -491,6 +488,10 @@
 
   .payment__price {
     width: 3.3em;
+  }
+
+  .payment__note {
+    width: 10em;
   }
 
   .for__payment_list {

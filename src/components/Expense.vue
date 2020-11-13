@@ -387,10 +387,6 @@
     grid-column-gap: 1em;
   }
 
-  .members__items {
-    margin-right: 2em;
-  }
-
   .memeber__date {
     margin: 0;
   }

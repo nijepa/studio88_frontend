@@ -185,6 +185,7 @@
     justify-items: center;
     border-radius: .5em;
     padding: .2em;
+    margin-top: 1em;
     background: var(--purple);
     color: var(--gold-light);
   }

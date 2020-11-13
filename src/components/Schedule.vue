@@ -58,14 +58,14 @@
 
             <div class="members__items">
 
-              <div class="input__field">
+              <div class="input__field clients__add_list">
                 <label for="date_start">Datum pristupa</label>
                 <input type="date" name="date_start" placeholder="datum upisa"
                         class="login_input user_input memeber__date" id="datePicker" 
                         v-model="selectedDate">
               </div>
               
-              <div class="input__field">
+              <div class="input__field ">
                 <label for="">Dodaj vežbačicu</label>
                 <p v-for="client in notClients" :key="client._id" name="clients"
                     class="login_input user_input members_input members__not" 
@@ -434,7 +434,7 @@
   }
 
   .members__items {
-    margin-right: 2em;
+    margin-right: 1em;
   }
 
   .member__date {
@@ -448,6 +448,10 @@
 
   .members__not {
     font-size: 1em;
+  }
+
+  .clients__add_list {
+    margin-top: 1em;
   }
 
   @media (max-width: 599px) {

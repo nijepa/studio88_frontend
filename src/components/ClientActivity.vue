@@ -265,6 +265,7 @@
 
   .attendances {
     grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
   }
 
   .attendances__head {
