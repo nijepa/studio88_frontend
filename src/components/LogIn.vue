@@ -1,20 +1,27 @@
 <template>
   <div class="d">
-    <form @submit.prevent="logIn()" 
-          method="post" class="login__wrapper">
-      <label for="username">User name</label>
-      <input type="text" name="username" class="login_input" required
-              @focus="clearErrors" v-model="loginInput.email">
+    <div v-if="isLog" class="" key="1">
+      <img src="../assets/img/loading1.gif" alt="" class="loading">
+      loading ...
+    </div>
+    <div v-else class="">
+      <form @submit.prevent="logIn()" 
+            method="post" class="login__wrapper">
+        <label for="username">User name</label>
+        <input type="text" name="username" class="login_input" required
+                @focus="clearErrors" v-model="loginInput.email">
 
-      <label for="pass">Password</label>
-      <input type="password" name="pass" class="login_input" required
-              @focus="clearErrors" v-model="loginInput.password">
+        <label for="pass">Password</label>
+        <input type="password" name="pass" class="login_input" required
+                @focus="clearErrors" v-model="loginInput.password">
 
-      <button type="submit" class="login_btn">
-        Log In
-      </button>
-    </form>
-    <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
+        <button type="submit" class="login_btn">
+          Log In
+        </button>
+      </form>
+      <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
+    </div>
+    
   </div>
 </template>
 
@@ -25,7 +32,8 @@
     
     data() {
       return {
-        type: 'login',        
+        type: 'login',  
+        isLog: false,      
         loginInput: {
           email: '',
           password: ''
@@ -82,12 +90,14 @@
                       'signType',
                       'clearErrors' ]),
 
-      logIn() {
-        this.login(this.loginInput);
+      async logIn() {
+        this.isLog = true;
+        await this.login(this.loginInput);
         if (this.getErrors.length) {
           this.$toast.error('Greška! Pogrešan e-mail ili password ' + this.getErrors, 'OK', this.notificationSystem.options.error);
           this.clearErrors();
         } 
+        this.isLog = false;
       }
     }
   }
