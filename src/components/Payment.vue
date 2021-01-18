@@ -49,10 +49,15 @@
 
             <div class="input__field">
               <label for="datePicker">Datum plaćanja</label>
-              <input type="date" name="date_start" placeholder="datum upisa" required
+              <datepicker v-model="paymentInput.payment_date" 
+                          placeholder="datum plaćanja" 
+                          class="login_input user_input"
+                          :language="sr">
+              </datepicker>
+              <!-- <input type="date" name="date_start" placeholder="datum upisa" required
                       class="login_input user_input memeber__date" id="datePicker" 
                       :value="paymentInput.payment_date && makeCorrectDate(paymentInput.payment_date)"
-                      @input="paymentInput.payment_date = $event.target.valueAsDate">
+                      @input="paymentInput.payment_date = $event.target.valueAsDate"> -->
             </div>
           </div>
           
@@ -73,10 +78,15 @@
                   <div class="login_input user_input select__month for__payment_list">
                     {{ member.client.last_name }}, {{ member.client.first_name }}
                   </div>
-                  <input type="date"  class="login_input user_input"
+                  <datepicker v-model="member.payment_date" 
+                          placeholder="datum plaćanja" 
+                          class="login_input user_input"
+                          :language="sr">
+                  </datepicker>
+                  <!-- <input type="date"  class="login_input user_input"
                           :value="member.payment_date && makeCorrectDate(member.payment_date)"
                           @input="member.payment_date = $event.target.valueAsDate">
-                  <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price">
+                  <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price"> -->
                   <input type="text" v-model="member.note" class="login_input user_input payment__note">
                 </div>
               <!-- </div> -->
@@ -201,23 +211,30 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'Payment',
 
+    components: {
+      Datepicker
+    },
+
     data() {
       return {
+        sr: sr,
         paymentInput: {
           payment_year: moment(String(new Date())).format('YYYY'),
           payment_month: '',
-          payment_date: moment(String(new Date())).format('YYYY-MM-DD'),
+          payment_date: new Date,
           price: 35,
           notes: '',
           members: []
         },
         year: 0,
         notClients: [],
-        selectedDate: new Date().toISOString().slice(0,10),
+        selectedDate: new Date,
         appeared: false,
         notificationSystem: {
         options: {
@@ -326,9 +343,9 @@
                       'clearErrors',
                       'setLoadingState' ]),
 
-      makeCorrectDate(str) {
+/*       makeCorrectDate(str) {
         return new Date(str).toISOString().split('T')[0]
-      },
+      }, */
 
       async addPayment() {
         this.setLoadingState(true);
@@ -390,13 +407,13 @@
       }
     },
 
-    filters: {
+/*     filters: {
       formatDate: function(value) {
         if (value) {
           return moment(String(value)).format('MM/DD/YYYY')
         }
       }
-    },
+    }, */
 
     async mounted() {
       let currentYear = new Date();

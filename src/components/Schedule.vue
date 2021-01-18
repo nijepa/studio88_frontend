@@ -60,9 +60,14 @@
 
               <div class="input__field clients__add_list">
                 <label for="date_start">Datum pristupa</label>
-                <input type="date" name="date_start" placeholder="datum upisa"
+                <datepicker v-model="selectedDate" 
+                          placeholder="datum pristupa" 
+                          class="login_input user_input"
+                          :language="sr">
+                </datepicker>
+                <!-- <input type="date" name="date_start" placeholder="datum upisa"
                         class="login_input user_input memeber__date" id="datePicker" 
-                        v-model="selectedDate">
+                        v-model="selectedDate"> -->
               </div>
               
               <div class="input__field ">
@@ -184,13 +189,20 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'Schedule',
 
+    components: {
+      Datepicker
+    },
+
     data() {
       return {
         enterClient: false,
+        sr: sr,
         scheduleInput: {
           title: '',
           weekday: [],
@@ -362,7 +374,7 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('MM/DD/YYYY')
+          return moment(String(value)).format('DD/MM/YYYY')
         }
       }
     },

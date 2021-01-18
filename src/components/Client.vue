@@ -576,6 +576,21 @@
     margin: 0;
   }
 
+  .vdp-datepicker, input {
+    font-family: 'Itim', cursive ;
+    font-size: 1.1em ;
+    border: none;
+    border-bottom: 1px solid #d1d1d1;
+    box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
+    width: 110px;
+  }
+
+  select {
+    font-family: 'Itim', cursive ;
+    font-size: 1em ;
+    margin: 0 .5em;
+  }
+
   @media (max-width: 599px) {
     .active__date {
       justify-self: baseline;

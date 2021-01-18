@@ -50,9 +50,14 @@
 
             <div class="input__field">
               <label for="name">Datum</label>
-              <input type="date" name="name" class="login_input user_input" 
+              <datepicker v-model="expenseInput.expense_date" 
+                          placeholder="datum pristupa" 
+                          class="login_input user_input"
+                          :language="sr">
+              </datepicker>
+              <!-- <input type="date" name="name" class="login_input user_input" 
                       :value="expenseInput.expense_date && makeCorrectDate(expenseInput.expense_date)"
-                      @input="expenseInput.expense_date = $event.target.valueAsDate">
+                      @input="expenseInput.expense_date = $event.target.valueAsDate"> -->
             </div>
 
             <div class="input__field">
@@ -177,21 +182,28 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'Expense',
 
+    components: {
+      Datepicker
+    },
+
     data() {
       return {
+        sr: sr,
         expenseInput: {
-          expense_date: moment(String(new Date())).format('YYYY-MM-DD'),
+          expense_date: new Date,
           expense_month: '',
           expense_year: moment(String(new Date())).format('YYYY'),
           expense_amount: 0,
           notes: ''
         },
         year: 0,
-        selectedDate: new Date().toISOString().slice(0,10),
+        selectedDate: new Date,
         appeared: false,
         notificationSystem: {
         options: {
@@ -298,10 +310,6 @@
                       'clearErrors',
                       'setLoadingState' ]),
 
-      makeCorrectDate(str) {
-        return new Date(str).toISOString().split('T')[0]
-      },
-
       async addExpense() {
         this.setLoadingState(true);
         if (this.getOneExpense._id) {
@@ -319,14 +327,6 @@
         }
       },
 
-    },
-
-    filters: {
-      formatDate: function(value) {
-        if (value) {
-          return moment(String(value)).format('MM/DD/YYYY')
-        }
-      }
     },
 
     async mounted() {

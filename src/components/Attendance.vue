@@ -15,10 +15,15 @@
           <div class="input__group ">
             <div class="input__field">
               <label for="datePicker">Datum</label>
-              <input type="date" name="date_start" placeholder="datum upisa" required
+              <datepicker v-model="attendanceInput.attend_date" 
+                          placeholder="datum upisa" 
+                          class="login_input user_input"
+                          :language="sr">
+              </datepicker>
+              <!-- <input type="date" name="date_start" placeholder="datum upisa" required
                       :value="attendanceInput.attend_date && makeCorrectDate(attendanceInput.attend_date)"
                       @input="attendanceInput.attend_date = $event.target.valueAsDate"
-                      class="login_input user_input memeber__date" id="datePicker" >
+                      class="login_input user_input memeber__date" id="datePicker" > -->
             </div>
           </div>
           
@@ -154,19 +159,26 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'Attendance',
 
+    components: {
+      Datepicker
+    },
+
     data() {
       return {
+        sr: sr,
         attendanceInput: {
-          attend_date: moment(String(new Date())).format('YYYY-MM-DD'),
+          attend_date: new Date,
           notes: '',
           members: []
         },
         notClients: [],
-        selectedDate: new Date().toISOString().slice(0,10),
+        selectedDate: new Date,
         appeared: false,
         notificationSystem: {
         options: {
@@ -273,10 +285,6 @@
                       'formTypeChange',
                       'clearErrors',
                       'setLoadingState' ]),
-
-      makeCorrectDate(str) {
-        return new Date(str).toISOString().split('T')[0]
-      },
 
       async addAttendance() {
         this.setLoadingState(true);

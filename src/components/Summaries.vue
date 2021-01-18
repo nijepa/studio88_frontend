@@ -37,9 +37,23 @@
 
         <div class="dash__items">
           <div class="dash__text">Dolasci od 
-            <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value) | formatDate">
+            <!-- <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value) | formatDate"> -->
+            <datepicker v-model="dateFrom" 
+                          placeholder="datum upisa" 
+                          class="login_input user_input datepicker"
+                          :language="sr"
+                          :format="customFormatter"
+                          @input="selectAttendances()">
+            </datepicker> 
             do 
-            <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)">
+            <datepicker v-model="dateTill" 
+                          placeholder="datum upisa" 
+                          class="login_input user_input datepicker"
+                          :language="sr"
+                          :format="customFormatter"
+                          @input="selectAttendances()">
+            </datepicker>
+            <!-- <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)"> -->
           </div>
 
           <Charto2 v-if="loadedAttend" :chartdata="totalAttendances" 
@@ -60,12 +74,15 @@
   import { mapGetters, mapActions } from 'vuex';
   import Charto from './utils/AreaChart';
   import Charto2 from './utils/AreaChartLine';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'Summaries',
 
     data() {
       return {
+        sr: sr,
         activeClients: [],
         totalPayments: [],
         paymentLabels: [],
@@ -80,7 +97,7 @@
       }
     },
 
-    components: { Charto, Charto2 },
+    components: { Charto, Charto2, Datepicker },
 
     filters: {
       formatDate: function(value) {
@@ -107,6 +124,10 @@
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
+
+      customFormatter(date) {
+        return moment(date).format('DD-MMM-YYYY');
+      },
 
       mapPayments() {
         return this.getAllPayments.map(d => ({
@@ -180,9 +201,12 @@
       },
 
       selectAttendances() {
-        let arra = this.mapAttendances().filter(year => year.attend_date >= this.dateFrom && year.attend_date <= this.dateTill);
+        let arra = this.mapAttendances().filter(year => 
+                    year.attend_date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    year.attend_date <= moment(this.dateTill).format('YYYY-MM-DD'));
         let arra1 = arra.map(item => item.total_amount);
-        let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
+        //let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
+        let arra2 = arra.map(item => item.attend_date);
 
         this.totalAttendances = arra1;
         this.attendanceLabels = arra2;
@@ -262,6 +286,8 @@
     color: var(--gold);
     font-variant: small-caps;
     font-size: 1.5em;
+    display: flex;
+    align-items: baseline;
   }
 
   canvas {
@@ -275,5 +301,10 @@
   .chartjs-render-monitor {
     max-height: 350px;
     max-width: 350px;
+  }
+
+  .datepicker {
+    font-size: .6em !important;
+    margin: 0 .5em;
   }
 </style>
