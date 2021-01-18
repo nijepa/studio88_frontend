@@ -1,6 +1,6 @@
 <template>
   <div class="d">
-    <div v-if="isLog" class="" key="1">
+    <div v-if="isLog" class="app-load" key="1">
       <img src="../assets/img/loading1.gif" alt="" class="loading">
       loading ...
     </div>

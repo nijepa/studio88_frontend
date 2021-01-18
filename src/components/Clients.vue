@@ -87,7 +87,7 @@
 
     </transition>
 
-    <jw-pagination :items="filteredClients" @changePage="onChangePage" 
+    <jw-pagination :items="filteredClients" @changePage="onChangePage" :initialPage="initialPage"
                     :labels="customLabels" :styles="customStyles">
     </jw-pagination>
 
@@ -125,6 +125,7 @@
       return {
         pageOfItems: [],
         filteredClients: [],
+        initialPage: 1,
         customLabels,
         customStyles,
         search: '',
@@ -134,12 +135,14 @@
 
     computed: {
       ...mapGetters([ 'getAllClients', 
+                      'getClientsPage',
                       'loadingState' ]),
     },
 
     methods: {
       ...mapActions([ 'fetchClients', 
                       'fetchClient',
+                      'fetchClientsPage',
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
@@ -150,7 +153,6 @@
       },
       
       searchClients() {
-        console.log('iiiii')
         let mu = this.getAllClients.filter(post => {
           return post.name.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.email.toLowerCase().includes(this.search.toLowerCase()) || 
@@ -168,6 +170,8 @@
       async selectClient(client) {
         this.setLoadingState(true);
         await this.fetchClient(client);
+        const element = document.querySelector('ul.pagination > li.active');
+        if (element) await this.fetchClientsPage(Number(element.innerText));
         this.formTypeChange('client');
       },
 
@@ -192,7 +196,12 @@
 
     async mounted() {
       await this.fetchClients();
-      this.filteredClients = this.getAllClients;
+      this.filteredClients = this.getAllClients.sort((a, b) => 
+                              (a.last_name.toLowerCase() > b.last_name.toLowerCase() ? 1 : -1));
+      //await this.fetchClientsPage();
+      if (this.getClientsPage !== 1) {
+        this.initialPage = this.getClientsPage;
+      } 
       this.setLoadingState(false);
     }
   }

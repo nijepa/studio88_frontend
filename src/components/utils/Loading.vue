@@ -14,6 +14,8 @@
 <style>
   .loading {
     height: 250px;
+    width: 300px;
+    margin: 0 auto;
   }
 
   .loading__text {

@@ -7,14 +7,16 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 const  state = {
   client: {},
   clients: [],
-  formType: ''
+  formType: '',
+  clientsPage: 1
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
   getAllClients: state => state.clients,
   getOneClient: state => state.client,
-  getFormType: state => state.formType
+  getFormType: state => state.formType,
+  getClientsPage: state => state.clientsPage,
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -22,6 +24,8 @@ const  mutations = {
   setClients: (state, clients) => (state.clients = clients),
 
   setClient: (state, client) => (state.client = client),
+
+  setClientsPage: (state, clientsPage) => (state.clientsPage = clientsPage),
 
   clearClient(state) {
     state.client = {};
@@ -58,6 +62,10 @@ const actions = {
   async fetchClient ({ commit }, clientData) {
     const response = await axios.get(URL + "clients/" + clientData._id, clientData);
     commit('setClient', response.data);
+  },
+
+  async fetchClientsPage ({ commit }, page) {
+    commit('setClientsPage', page);
   },
 
   async clientAdd({commit}, clientData) {
