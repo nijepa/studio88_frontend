@@ -126,7 +126,7 @@
                       'setLoadingState' ]),
 
       customFormatter(date) {
-        return moment(date).format('DD-MMM-YYYY');
+        return moment(date).format('DD MMM YYYY');
       },
 
       mapPayments() {
@@ -206,7 +206,7 @@
                     year.attend_date <= moment(this.dateTill).format('YYYY-MM-DD'));
         let arra1 = arra.map(item => item.total_amount);
         //let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
-        let arra2 = arra.map(item => item.attend_date);
+        let arra2 = arra.map(item => moment(item.attend_date).format('DD MMM YYYY'));
 
         this.totalAttendances = arra1;
         this.attendanceLabels = arra2;
@@ -306,5 +306,10 @@
   .datepicker {
     font-size: .6em !important;
     margin: 0 .5em;
+    width: 110px;
+  }
+
+  .datepicker  input {
+    width: 110px;
   }
 </style>

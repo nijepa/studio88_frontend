@@ -59,7 +59,7 @@
             <div v-for="client in clientPayments" :key="client._id" class="activities__list payments">
               <p class="activities__item">{{ client.year }}</p>
               <p class="activities__item">{{ client.month }}</p>
-              <p class="activities__item">{{ client.date | formatDate }}</p>
+              <p class="activities__item">{{ client.date | formatDate1 }}</p>
               <p class="activities__item">{{ client.amount }}</p>
               <p class="activities__item">{{ client.note }}</p>
             </div>
@@ -205,7 +205,14 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('dddd, LL')
+          moment.locale('sr');
+          return moment(String(value)).format('dddd, ll')
+        }
+      },
+      formatDate1: function(value) {
+        if (value) {
+          moment.locale('sr');
+          return moment(String(value)).format('DD MMM YYYY')
         }
       }
     },

@@ -85,8 +85,8 @@
                   </datepicker>
                   <!-- <input type="date"  class="login_input user_input"
                           :value="member.payment_date && makeCorrectDate(member.payment_date)"
-                          @input="member.payment_date = $event.target.valueAsDate">
-                  <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price"> -->
+                          @input="member.payment_date = $event.target.valueAsDate"> -->
+                  <input type="number" v-model="member.payment_amount" class="login_input user_input payment__price"> 
                   <input type="text" v-model="member.note" class="login_input user_input payment__note">
                 </div>
               <!-- </div> -->

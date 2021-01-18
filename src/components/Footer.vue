@@ -3,7 +3,7 @@
   <div class="" :key="1">
     <hr>
     <div class="footer_group">
-      <span class="footer__text">Studio 88 @ 2020</span>
+      <span class="footer__text">Studio 88 @ 2021</span>
     </div>
     <a href="https://www.instagram.com/studio88pilates/" target="blank">
         <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 333333 333333" shape-rendering="geometricPrecision" 

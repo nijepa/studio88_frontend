@@ -61,10 +61,15 @@
 
           <div class="input__field">
                 <label for="datePicker">Datum osnivanja</label>
-                <input type="date" name="date_start" placeholder="datum upisa" required
+                <datepicker v-model="generalInput.general_date" 
+                          placeholder="datum upisa" 
+                          class="login_input user_input"
+                          :language="sr">
+                </datepicker>
+                <!-- <input type="date" name="date_start" placeholder="datum upisa" required
                         class="login_input user_input memeber__date" id="datePicker" 
                         :value="generalInput.general_date && makeCorrectDate(generalInput.general_date)"
-                        @input="generalInput.general_date = $event.target.valueAsDate">
+                        @input="generalInput.general_date = $event.target.valueAsDate"> -->
           </div>
         </div>
 
@@ -110,10 +115,15 @@
 
             <div class="input__field">
               <label for="datePrice">Datum važenja</label>
-              <input type="date" name="datePrice" 
+              <datepicker v-model="price.price_date" 
+                          placeholder="datum upisa" 
+                          class="login_input user_input"
+                          :language="sr">
+              </datepicker>
+              <!-- <input type="date" name="datePrice" 
                       class="login_input user_input memeber__date" id="datePrice" 
                       :value="price.price_date && makeCorrectDate(price.price_date)"
-                      @input="price.price_date = $event.target.valueAsDate">
+                      @input="price.price_date = $event.target.valueAsDate"> -->
             </div>
 
             <div class="input__field for__note">
@@ -232,13 +242,20 @@
 <script>
   import { mapGetters, mapActions } from 'vuex';
   import moment from 'moment';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
 
     name: 'General',
 
+    components: {
+      Datepicker
+    },
+
     data() {
       return {
+        sr: sr,
         generalInput: {
           general_email: '',
           general_site: '',

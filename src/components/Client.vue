@@ -580,15 +580,17 @@
     font-family: 'Itim', cursive ;
     font-size: 1.1em ;
     border: none;
-    border-bottom: 1px solid #d1d1d1;
+    border-bottom: 1px solid transparent;
     box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
-    width: 110px;
   }
 
   select {
     font-family: 'Itim', cursive ;
     font-size: 1em ;
     margin: 0 .5em;
+    border: none;
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
   }
 
   @media (max-width: 599px) {
