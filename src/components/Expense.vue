@@ -3,10 +3,7 @@
 
     <transition name="fall" mode="out-in">
 
-      <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div>
+      <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="schedule__wrapper" key="2">
 
@@ -55,9 +52,6 @@
                           class="login_input user_input"
                           :language="sr">
               </datepicker>
-              <!-- <input type="date" name="name" class="login_input user_input" 
-                      :value="expenseInput.expense_date && makeCorrectDate(expenseInput.expense_date)"
-                      @input="expenseInput.expense_date = $event.target.valueAsDate"> -->
             </div>
 
             <div class="input__field">
@@ -184,12 +178,13 @@
   import { mapGetters, mapActions } from 'vuex';
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
+  import Loading from '@/components/utils/Loading.vue';
 
   export default {
     name: 'Expense',
 
     components: {
-      Datepicker
+      Loading, Datepicker
     },
 
     data() {

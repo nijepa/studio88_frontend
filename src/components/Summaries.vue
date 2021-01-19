@@ -1,10 +1,11 @@
 <template>
   <div class="">
     <transition name="fall" mode="out-in">
-      <div v-if="loadingState" class="" key="1">
+      <!-- <div v-if="loadingState" class="" key="1">
         <img src="../assets/img/loading1.gif" alt="" class="loading">
         loading ...
-      </div>
+      </div> -->
+      <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="dash__wrapper" key="2">
         <div class="dash__items">
@@ -76,6 +77,7 @@
   import Charto2 from './utils/AreaChartLine';
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
+  import Loading from '@/components/utils/Loading.vue';
 
   export default {
     name: 'Summaries',
@@ -97,7 +99,7 @@
       }
     },
 
-    components: { Charto, Charto2, Datepicker },
+    components: { Loading, Charto, Charto2, Datepicker },
 
     filters: {
       formatDate: function(value) {

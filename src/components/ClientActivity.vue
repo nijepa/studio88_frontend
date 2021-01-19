@@ -1,12 +1,11 @@
 <template>
   <div class="">
     <transition name="fall" mode="out-in">
-      <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div>
+
+      <loading pic="loading1" v-if="loadingState" key="1" />
       
       <div v-else class="client__wrapper" key="2">
+
         <div class="activities__header">
           <button type="submit" @click="selectClient()" class="action_btn client__add for_mobile">
             <svg version="1.1" id="Layer_1"  x="0px" y="0px" height="40px"
@@ -88,6 +87,7 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Loading from '@/components/utils/Loading.vue';
 
   const customLabels = {
     first: '<<',
@@ -111,6 +111,10 @@
 
   export default {
     name: 'ClientActivity',
+
+    components: {
+      Loading
+    },
 
     data() {
       return {
@@ -140,7 +144,6 @@
                       'setLoadingState' ]),
 
       onChangePage(pageOfItems) {
-        // update page of items
         this.pageOfItems = pageOfItems;
       },
       

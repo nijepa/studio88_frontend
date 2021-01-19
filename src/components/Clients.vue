@@ -2,10 +2,7 @@
   <div class="" >
     <transition name="fall" mode="out-in">
 
-      <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div>
+      <loading pic="loading1" v-if="loadingState" key="1" />
     
       <div v-else class="client__wrapper" key="2">
 
@@ -69,7 +66,6 @@
             </div>
           </div>
           
-
         </div>
 
         <div class="">
@@ -106,8 +102,9 @@
 
     </transition>
 
-    <jw-pagination :items="filteredClients" @changePage="onChangePage" :initialPage="initialPage"
-                    :pageSize="pageSize" :labels="customLabels" :styles="customStyles">
+    <jw-pagination :items="filteredClients" @changePage="onChangePage" 
+                    :initialPage="initialPage" :pageSize="pageSize" 
+                    :labels="customLabels" :styles="customStyles">
     </jw-pagination>
 
   </div>
@@ -116,6 +113,7 @@
 <script>
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+  import Loading from '@/components/utils/Loading.vue';
 
   const customLabels = {
     first: '<<',
@@ -139,6 +137,10 @@
 
   export default {
     name: 'Clients',
+
+    components: {
+      Loading
+    },
 
     data() {
       return {

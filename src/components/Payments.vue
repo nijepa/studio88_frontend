@@ -3,10 +3,7 @@
 
     <transition name="fall" mode="out-in">
 
-      <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div>
+      <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
 
@@ -141,8 +138,14 @@
   };
 
   import { mapGetters, mapActions } from 'vuex';
+  import Loading from '@/components/utils/Loading.vue';
+
   export default {
     name: 'Payments',
+
+    components: {
+      Loading
+    },
 
     data() {
       return {

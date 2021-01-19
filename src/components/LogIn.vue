@@ -1,9 +1,11 @@
 <template>
   <div class="d">
-    <div v-if="isLog" class="app-load" key="1">
+    <!-- <div v-if="isLog" class="app-load" key="1">
       <img src="../assets/img/loading1.gif" alt="" class="loading">
       loading ...
-    </div>
+    </div> -->
+    <loading pic="loading1" v-if="isLog" key="1" class="app-load" />
+    
     <div v-else class="">
       <form @submit.prevent="logIn()" 
             method="post" class="login__wrapper">
@@ -27,8 +29,14 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import Loading from '@/components/utils/Loading.vue';
+
   export default {
     name: 'LogIn',
+
+    components: {
+      Loading
+    },
     
     data() {
       return {
@@ -155,5 +163,9 @@
 
   .err {
     color: var(--red);
+  }
+
+  .app-load {
+    margin: 0 auto;
   }
 </style>
