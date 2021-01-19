@@ -198,7 +198,7 @@
         expenseInput: {
           expense_date: new Date,
           expense_month: '',
-          expense_year: moment(String(new Date())).format('YYYY'),
+          expense_year: moment(new Date).format('YYYY'),
           expense_amount: 0,
           notes: ''
         },

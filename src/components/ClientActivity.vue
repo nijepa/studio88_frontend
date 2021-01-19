@@ -253,7 +253,7 @@
   .activities__list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 1em;
+    grid-column-gap: .2em;
     justify-content: center;
     justify-items: center;
     align-items: center;

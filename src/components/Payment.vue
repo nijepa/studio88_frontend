@@ -76,6 +76,7 @@
                 <div v-for="member in paymentInput.members" :key="member._id" name="member"
                     class="members_input ">
                   <div class="login_input user_input select__month for__payment_list">
+                    {{ paymentInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
                     {{ member.client.last_name }}, {{ member.client.first_name }}
                   </div>
                   <datepicker v-model="member.payment_date" 
@@ -225,7 +226,7 @@
       return {
         sr: sr,
         paymentInput: {
-          payment_year: moment(String(new Date())).format('YYYY'),
+          payment_year: moment(new Date).format('YYYY'),
           payment_month: '',
           payment_date: new Date,
           price: 35,

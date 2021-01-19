@@ -157,6 +157,7 @@
 
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'Attendances',
 

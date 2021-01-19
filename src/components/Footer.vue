@@ -1,6 +1,6 @@
 <template>
 <transition name="rise" mode="out-in">
-  <div class="" :key="1">
+  <div class="footer" :key="1">
     <hr>
     <div class="footer_group">
       <span class="footer__text">Studio 88 @ 2021</span>
@@ -40,6 +40,10 @@
 </script>
 
 <style>
+  .footer {
+    margin-bottom: 1em;
+  }
+
   .footer_group {
     display: flex;
     justify-content: center;

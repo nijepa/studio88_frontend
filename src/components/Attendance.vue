@@ -41,6 +41,7 @@
                 <div v-for="member in attendanceInput.members" :key="member._id" name="member"
                     class="members_input ">
                   <div class="login_input user_input select__month">
+                    {{ attendanceInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
                     {{ member.client.last_name }}, {{ member.client.first_name }}
                   </div>
                   <input type="checkbox" v-model="member.present" class="login_input user_input payment__price">
@@ -150,7 +151,7 @@
         </form>
 
       </div>
-      
+
     </transition>
 
   </div>
@@ -361,7 +362,7 @@
   @media only screen and (max-width: 599px) {
     .days__list {
       /* font-size: 80%; */
-      grid-template-columns: repeat(2 ,auto) !important;
+      /* grid-template-columns: repeat(2 ,auto) !important; */
     }
     .members_input  {
       grid-template-columns: repeat(2 ,auto) !important;
@@ -376,7 +377,7 @@
       grid-template-columns: repeat(2 ,auto) ;
     }
     .activities__list {
-      grid-template-columns: repeat(2 ,auto) !important;
+      /* grid-template-columns: repeat(2 ,auto) !important; */
     }
     .activities__wrapper {
       grid-template-columns: auto !important;

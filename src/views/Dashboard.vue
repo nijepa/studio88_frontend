@@ -20,6 +20,8 @@
     <general v-if="getFormType === 'general'" key="general"></general>
     
     <Footer></Footer>
+
+    <to-top-button />
   </div>
 </template>
 
@@ -40,6 +42,7 @@
   import Expenses from "@/components/Expenses.vue";
   import Expense from "@/components/Expense.vue";
   import General from "@/components/General.vue";
+  import ToTopButton from "@/components/utils/ToTopButton.vue";
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
@@ -61,7 +64,8 @@
       Expenses,
       Expense,
       ClientActivity,
-      General
+      General,
+      ToTopButton
     },
 
     data() {

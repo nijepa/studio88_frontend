@@ -51,7 +51,8 @@
               <label for="members">Vježbačice u grupi</label>
               <p v-for="member in scheduleInput.members" :key="member._id" name="member"
                   class="login_input user_input members_input" @click="removeMember(member.client)">
-                {{ member.client.last_name }}, {{ member.client.first_name }} 
+                  {{ scheduleInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
+                  {{ member.client.last_name }}, {{ member.client.first_name }} 
                 <span class="members__span"> - {{ member.start_date | formatDate }}</span> 
               </p>
             </div>
@@ -374,7 +375,7 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('DD/MM/YYYY')
+          return moment(String(value)).format('DD MMM YYYY')
         }
       }
     },

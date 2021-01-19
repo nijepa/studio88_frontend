@@ -98,7 +98,12 @@
             <div class="">
               <span class="item__desc">Polaznice</span>
               <div class="client__item" >
-                <p v-for="polaznik in schedule.members" :key="polaznik.id" class="week__day">{{ polaznik.client.last_name }}, {{ polaznik.client.first_name }}</p>
+                <p v-for="polaznik in schedule.members" 
+                    :key="polaznik.id" 
+                    class="week__day">
+                    {{ schedule.members.map(item => item.client._id).indexOf(polaznik.client._id) + 1 }}
+                    {{ polaznik.client.last_name }}, {{ polaznik.client.first_name }}
+                </p>
               </div>
             </div>
           </div>
