@@ -8,7 +8,8 @@ const  state = {
   client: {},
   clients: [],
   formType: '',
-  clientsPage: 1
+  clientsPage: 1,
+  clientsPageSize: 10
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
@@ -17,6 +18,7 @@ const getters = {
   getOneClient: state => state.client,
   getFormType: state => state.formType,
   getClientsPage: state => state.clientsPage,
+  getClientsPageSize: state => state.clientsPageSize,
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -26,6 +28,8 @@ const  mutations = {
   setClient: (state, client) => (state.client = client),
 
   setClientsPage: (state, clientsPage) => (state.clientsPage = clientsPage),
+
+  setClientsPageSize: (state, clientsPageSize) => (state.clientsPageSize = clientsPageSize),
 
   clearClient(state) {
     state.client = {};
@@ -66,6 +70,10 @@ const actions = {
 
   async fetchClientsPage ({ commit }, page) {
     commit('setClientsPage', page);
+  },
+
+  async fetchClientsPageSize ({ commit }, page) {
+    commit('setClientsPageSize', page);
   },
 
   async clientAdd({commit}, clientData) {

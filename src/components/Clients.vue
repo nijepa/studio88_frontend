@@ -54,10 +54,11 @@
 
             <div class="page__size">
               <label for="days">Na stranici</label>
-              <div class="login_input user_input ">
+              <div class="login_input user_input">
                 <select name="days" id="days" class=""
                         v-model="pageSize" 
-                        :value="pageSize" >
+                        :value="pageSize" 
+                        @change="setPageSize()">
                   <option :value="Number(10)">10</option>
                   <option :value="Number(20)">20</option>
                   <option :value="Number(50)">50</option>
@@ -155,6 +156,7 @@
     computed: {
       ...mapGetters([ 'getAllClients', 
                       'getClientsPage',
+                      'getClientsPageSize',
                       'loadingState' ]),
     },
 
@@ -166,6 +168,7 @@
       ...mapActions([ 'fetchClients', 
                       'fetchClient',
                       'fetchClientsPage',
+                      'fetchClientsPageSize',
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
@@ -173,6 +176,10 @@
       onChangePage(pageOfItems) {
         // update page of items
         this.pageOfItems = pageOfItems;
+      },
+
+      setPageSize() {
+        this.fetchClientsPageSize(this.pageSize);
       },
       
       searchClients() {
@@ -213,9 +220,8 @@
         this.filteredClients = this.getAllClients.sort((a, b) => 
                                 (a.last_name.toLowerCase() > b.last_name.toLowerCase() ? 1 : -1));
         //await this.fetchClientsPage();
-        if (this.getClientsPage !== 1) {
-          this.initialPage = this.getClientsPage;
-        } 
+        if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
+        if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
     },
 
@@ -237,6 +243,7 @@
 <style>
   .clients__manipulate {
     width: 100%;
+    overflow: hidden;
   }
 
   .clients__ss {
@@ -268,10 +275,10 @@
   }
 
   div.clients__list:nth-child(even) {border: 2px solid var(--purple-light);}
-  div.clients__list:nth-child(odd) {
-/*    background: var(--purple-lighter);
-    border: 2px solid transparent; */
-  }
+/*   div.clients__list:nth-child(odd) {
+    background: var(--purple-lighter);
+    border: 2px solid transparent; 
+  } */
 
   .clients__list:hover {
     background: var(--purple-light);
@@ -356,5 +363,14 @@
 
   .loading {
     height: 250px;
+  }
+
+  @media only screen and (max-width: 599px) {
+    #search {
+      width: 7em;
+    }
+    .page__size {
+      font-size: .8em;
+    }
   }
 </style>
