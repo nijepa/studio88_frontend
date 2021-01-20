@@ -33,7 +33,7 @@
             <p>Nova vježbačica</p> 
           </button>
 
-          <div class="clients__ss">
+          <div class="clients__ss search_group">
             <div class="search__bar">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="30px" viewBox="0 0 297.888 297.888">
                 <g>
@@ -51,7 +51,7 @@
 
             <div class="page__size">
               <label for="days">Na stranici</label>
-              <div class="login_input user_input">
+              <div class="login_input user_input nr_clients">
                 <select name="days" id="days" class=""
                         v-model="pageSize" 
                         :value="pageSize" 
@@ -62,7 +62,7 @@
                   <option :value="Number(1000)">sve</option>
                 </select>
               </div>
-              vježbačica
+              <label for="days">vježbačica</label>
             </div>
           </div>
         </div>

@@ -21,6 +21,39 @@
         <div class="members__list">
           <div class="members__items">
 
+          <div class="clients__ss search_group">
+            <div class="search__bar">
+              <svg version="1.1" id="Layer_1" x="0px" y="0px" height="30px" viewBox="0 0 297.888 297.888">
+                <g>
+                  <path class="svg__parts" style="fill:var(--purple);" d="M218.971,187.618c8.659,8.658,8.659,22.695,0,31.354c-8.657,8.658-22.694,8.657-31.352,0
+                    l-50.096-50.096c-8.657-8.658-8.659-22.695-0.001-31.353c8.659-8.659,22.696-8.658,31.355,0L218.971,187.618z"/>
+                  <circle class="svg__parts" style="fill:var(--purple);" cx="100.697" cy="100.697" r="100.697"/>
+                  <circle class="svg__parts" style="fill:var(--purple-light);" cx="100.697" cy="100.697" r="64.794"/>
+                  <path class="svg__parts" style="fill:var(--purple);" d="M186.271,233.504c-13.044-13.042-13.044-34.191,0-47.234c13.043-13.044,34.19-13.043,47.234,0
+                    l54.6,54.601c13.044,13.043,13.044,34.19,0,47.234c-13.042,13.043-34.19,13.043-47.234,0L186.271,233.504z"/>
+                </g>
+              </svg>
+              <input type="text" name="search" id="search" @keyup="searchClients()"
+                      v-model="search" class="login_input search_input">
+            </div>
+
+            <div class="page__size">
+              <label for="days">Prikaži</label>
+              <div class="login_input user_input nr_clients">
+                <select name="days" id="days" class=""
+                        v-model="pageSize" 
+                        :value="pageSize" 
+                        @change="setPageSize()">
+                  <option :value="Number(10)">10</option>
+                  <option :value="Number(20)">20</option>
+                  <option :value="Number(50)">50</option>
+                  <option :value="Number(1000)">sve</option>
+                </select>
+              </div>
+              <label for="days">vježbačica</label>
+            </div>
+          </div>
+
             <div class="">
               <div class="days__list attendance__list_header">
                 <span>Vježbačica</span>
@@ -29,12 +62,12 @@
               </div>
 
               <div v-for="member in pageOfItems" :key="member._id" name="member"
-                  class="members_input ">
-                <div class="login_input user_input select__month">
+                  class="members_input att_members">
+                <div class="att_member">
                   {{ attendanceInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
                   {{ member.client.last_name }}, {{ member.client.first_name }}
                 </div>
-                <input type="checkbox" v-model="member.present" class="login_input user_input payment__price">
+                <input type="checkbox" v-model="member.present" class="login_input user_input payment__price check">
                 <input type="text" v-model="member.note" class="login_input user_input payment__note">
               </div>
 
@@ -42,7 +75,7 @@
           </div>
         </div>
 
-        <jw-pagination :items="attendanceInput.members" @changePage="onChangePage" 
+        <jw-pagination :items="filteredClients" @changePage="onChangePage" 
                         :initialPage="initialPage" :pageSize="pageSize" 
                         :labels="customLabels" :styles="customStyles"
                         class="pagine">
@@ -76,6 +109,8 @@
     data() {
       return {
         sr: sr,
+        search: '',
+        filteredClients: [],
         pageOfItems: [],
         initialPage: 1,
         pageSize: 10,
@@ -90,91 +125,98 @@
         selectedDate: new Date,
         appeared: false,
         notificationSystem: {
-        options: {
-          show: {
-            theme: "dark",
-            icon: "icon-person",
-            position: "topCenter",
-            progressBarColor: "rgb(0, 255, 184)",
-            /* buttons: [
-              [
-                "<button>Ok</button>",
-                function(instance, toast) {
-                  alert("Hello world!");
-                },
-                true
+          options: {
+            show: {
+              theme: "dark",
+              icon: "icon-person",
+              position: "topCenter",
+              progressBarColor: "rgb(0, 255, 184)",
+              /* buttons: [
+                [
+                  "<button>Ok</button>",
+                  function(instance, toast) {
+                    alert("Hello world!");
+                  },
+                  true
+                ],
+                [
+                  "<button>Close</button>",
+                  function(instance, toast) {
+                    instance.hide(
+                      {
+                        transitionOut: "fadeOutUp",
+                        onClosing: function(instance, toast, closedBy) {
+                          console.info("closedBy: " + closedBy);
+                        }
+                      },
+                      toast,
+                      "buttonName"
+                    );
+                  }
+                ]
               ],
-              [
-                "<button>Close</button>",
-                function(instance, toast) {
-                  instance.hide(
-                    {
-                      transitionOut: "fadeOutUp",
-                      onClosing: function(instance, toast, closedBy) {
-                        console.info("closedBy: " + closedBy);
-                      }
-                    },
-                    toast,
-                    "buttonName"
-                  );
-                }
-              ]
-            ],
-            onOpening: function(instance, toast) {
-              console.info("callback abriu!");
+              onOpening: function(instance, toast) {
+                console.info("callback abriu!");
+              },
+              onClosing: function(instance, toast, closedBy) {
+                console.info("closedBy: " + closedBy);
+              } */
             },
-            onClosing: function(instance, toast, closedBy) {
-              console.info("closedBy: " + closedBy);
-            } */
-          },
-          ballon: {
-            balloon: true,
-            position: "bottomCenter"
-          },
-          info: {
-            position: "bottomLeft"
-          },
-          success: {
-            position: "center"
-          },
-          warning: {
-            position: "topLeft"
-          },
-          error: {
-            position: "center"
-          },
-          question: {
-            timeout: 20000,
-            close: false,
-            overlay: true,
-            toastOnce: true,
-            id: "question",
-            zindex: 999,
-            position: "center",
-            /* buttons: [
-              [
-                "<button><b>YES</b></button>",
-                function(instance, toast) {
-                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                },
-                true
+            ballon: {
+              balloon: true,
+              position: "bottomCenter"
+            },
+            info: {
+              position: "bottomLeft"
+            },
+            success: {
+              position: "center"
+            },
+            warning: {
+              position: "topLeft"
+            },
+            error: {
+              position: "center"
+            },
+            question: {
+              timeout: 20000,
+              close: false,
+              overlay: true,
+              toastOnce: true,
+              id: "question",
+              zindex: 999,
+              position: "center",
+              /* buttons: [
+                [
+                  "<button><b>YES</b></button>",
+                  function(instance, toast) {
+                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                  },
+                  true
+                ],
+                [
+                  "<button>NO</button>",
+                  function(instance, toast) {
+                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                  }
+                ]
               ],
-              [
-                "<button>NO</button>",
-                function(instance, toast) {
-                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                }
-              ]
-            ],
-            onClosing: function(instance, toast, closedBy) {
-              console.info("Closing | closedBy: " + closedBy);
-            },
-            onClosed: function(instance, toast, closedBy) {
-              console.info("Closed | closedBy: " + closedBy);
-            } */
+              onClosing: function(instance, toast, closedBy) {
+                console.info("Closing | closedBy: " + closedBy);
+              },
+              onClosed: function(instance, toast, closedBy) {
+                console.info("Closed | closedBy: " + closedBy);
+              } */
+            }
           }
         }
       }
+    },
+
+    watch: {
+      pageSize() { 
+        this.initClients() 
+        this.filteredClients = this.attendanceInput.members;
       }
     },
 
@@ -182,6 +224,7 @@
       ...mapGetters([ 'getAllAttendances', 
                       'getOneAttendance',
                       'getAllClients',
+                      'getClientsPageSize',
                       'getErrors',
                       'loadingState' ]),
     },
@@ -191,12 +234,27 @@
                       'attendanceUpdate', 
                       'attendanceDelete',
                       'fetchClients',
+                      'fetchClientsPageSize',
                       'formTypeChange',
                       'clearErrors',
                       'setLoadingState' ]),
 
       onChangePage(pageOfItems) {
         this.pageOfItems = pageOfItems;
+      },
+
+      setPageSize() {
+        this.fetchClientsPageSize(this.pageSize);
+      },
+
+      searchClients() {
+        this.initClients();
+        let mu = this.attendanceInput.members.filter(post => {
+          return post.client.first_name.toLowerCase().includes(this.search.toLowerCase()) || 
+                  post.client.last_name.toLowerCase().includes(this.search.toLowerCase()) || 
+                  post.client.mobile.includes(this.search)
+        });
+        this.filteredClients = mu;
       },
 
       async addAttendance() {
@@ -233,6 +291,20 @@
             container = item.client;
             return container;
         });
+      },
+
+      async initClients() {
+        await this.fetchClients();
+        if (this.getOneAttendance._id) {
+          console.log(this.getOneAttendance)
+          this.attendanceInput = this.getOneAttendance;
+          this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
+        } else {
+          this.notClients = this.getAllClients.filter(active => active.active === true);
+          this.attendanceInput.members = [];
+          this.addAllmembers()
+        }
+        if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
     },
 
@@ -248,14 +320,16 @@
       let currentYear = new Date();
       currentYear = moment().format('YYYY');
       this.year = currentYear;
-      await this.fetchClients();
-      if (this.getOneAttendance._id) {
+      
+      await this.initClients();
+      this.filteredClients = this.attendanceInput.members;
+/*       if (this.getOneAttendance._id) {
         this.attendanceInput = this.getOneAttendance;
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
       } else {
         this.notClients = this.getAllClients.filter(active => active.active === true);
         this.addAllmembers()
-      }
+      } */
       this.setLoadingState(false);
     },
   }
@@ -371,6 +445,42 @@
 
   .pagine {
     margin: .5em auto !important;
+  }
+
+  .search_group {
+    background: var(--gold);
+    border-radius: .5em;
+    padding: 0 .5em;
+  }
+
+  .search_group label {
+    color: var(--black);
+  }
+
+  .search_group select {
+    margin: 0 .2em;
+  }
+
+  select {
+    cursor: pointer;
+  }
+
+  .nr_clients {
+    margin: 0 .2em;
+    padding: 0;
+  }
+
+  .att_members {
+    cursor: default;
+  }
+
+  .att_member {
+    margin-left: .3em;
+    font-size: 1.2em;
+  }
+
+  .check {
+    cursor: pointer;
   }
 
 </style>
