@@ -124,7 +124,7 @@
     </transition>
 
     <jw-pagination :items="getAllAttendances" @changePage="onChangePage" 
-                    :labels="customLabels" :styles="customStyles">
+                    :labels="customLabels" :styles="customStyles" class="pagine">
     </jw-pagination>
 
   </div>

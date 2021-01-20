@@ -512,7 +512,7 @@
     align-items: center;
     background: white;
     margin-right: 1em;
-    margin-top: 1em;
+    margin-top: .3em;
     cursor: pointer;
     color: var(--green);
     font-size: 1.2em;

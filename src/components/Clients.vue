@@ -100,7 +100,7 @@
 
     <jw-pagination :items="filteredClients" @changePage="onChangePage" 
                     :initialPage="initialPage" :pageSize="pageSize" 
-                    :labels="customLabels" :styles="customStyles">
+                    :labels="customLabels" :styles="customStyles" class="pagine">
     </jw-pagination>
 
   </div>
@@ -159,7 +159,7 @@
     },
 
     watch: {
-      pageSize() { this.initClients()}
+      pageSize() { this.initClients() }
     },
 
     methods: {
@@ -185,8 +185,8 @@
           return post.name.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.email.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.mobile.includes(this.search)
-        })
-        this.filteredClients = mu
+        });
+        this.filteredClients = mu;
       },
 
       async newClient() {
@@ -259,12 +259,12 @@
     grid-column-gap: 1em;
     justify-content: center;
     justify-items: center;
-    margin-top: 1em;
+    margin-top: .2em;
     border-radius: 1em;
     transition: ease .5s all;
   }
 
-  div.clients__list:nth-child(even) {border: 2px solid var(--purple-light);}
+  div.clients__list:nth-child(odd) {border: 2px solid var(--purple-light);}
 /*   div.clients__list:nth-child(odd) {
     background: var(--purple-lighter);
     border: 2px solid transparent; 
@@ -288,7 +288,7 @@
   }
 
   .client__add {
-    margin-bottom: 1em;
+    margin-bottom: .3em;
     color: var(--purple);
     border-bottom: 2px solid var(--purple);
   }

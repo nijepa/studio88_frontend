@@ -4,6 +4,7 @@
     <loading pic="loading" v-if="loadingState" key="1" />
 
     <div v-else class="schedule__wrapper" key="2">
+
       <form @submit.prevent="addAttendance()" method="post" class="user__form">
 
         <div class="input__group ">
@@ -27,7 +28,7 @@
                 <span>Napomena</span>
               </div>
 
-              <div v-for="member in attendanceInput.members" :key="member._id" name="member"
+              <div v-for="member in pageOfItems" :key="member._id" name="member"
                   class="members_input ">
                 <div class="login_input user_input select__month">
                   {{ attendanceInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
@@ -40,6 +41,12 @@
             </div>
           </div>
         </div>
+
+        <jw-pagination :items="attendanceInput.members" @changePage="onChangePage" 
+                        :initialPage="initialPage" :pageSize="pageSize" 
+                        :labels="customLabels" :styles="customStyles"
+                        class="pagine">
+        </jw-pagination>
 
         <action-buttons toForm='attendances' />
 
@@ -55,6 +62,7 @@
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Attendance',
@@ -68,6 +76,11 @@
     data() {
       return {
         sr: sr,
+        pageOfItems: [],
+        initialPage: 1,
+        pageSize: 10,
+        customLabels,
+        customStyles,
         attendanceInput: {
           attend_date: new Date,
           notes: '',
@@ -181,6 +194,10 @@
                       'formTypeChange',
                       'clearErrors',
                       'setLoadingState' ]),
+
+      onChangePage(pageOfItems) {
+        this.pageOfItems = pageOfItems;
+      },
 
       async addAttendance() {
         this.setLoadingState(true);
@@ -350,6 +367,10 @@
 
   .payment__list {
     justify-items: left;
+  }
+
+  .pagine {
+    margin: .5em auto !important;
   }
 
 </style>

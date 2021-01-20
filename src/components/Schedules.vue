@@ -179,7 +179,7 @@
     justify-items: center;
     border-radius: .5em;
     padding: .2em;
-    margin-top: 1em;
+    margin-top: .5em;
     background: var(--purple);
     color: var(--gold-light);
   }

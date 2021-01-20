@@ -63,7 +63,7 @@
                 <span>Napomena</span>
               </div>
 
-              <div v-for="member in paymentInput.members" :key="member._id" name="member"
+              <div v-for="member in pageOfItems" :key="member._id" name="member"
                   class="members_input ">
                 <div class="login_input user_input select__month for__payment_list">
                   {{ paymentInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
@@ -92,6 +92,11 @@
           </div> -->
         </div>
 
+        <jw-pagination :items="paymentInput.members" @changePage="onChangePage" 
+                        :initialPage="initialPage" :pageSize="pageSize" 
+                        :labels="customLabels" :styles="customStyles" class="pagine">
+        </jw-pagination>
+
         <action-buttons toForm='payments' />
 
       </form>
@@ -107,6 +112,7 @@
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Payment',
@@ -120,6 +126,11 @@
     data() {
       return {
         sr: sr,
+        pageOfItems: [],
+        initialPage: 1,
+        pageSize: 10,
+        customLabels,
+        customStyles,
         paymentInput: {
           payment_year: moment(new Date).format('YYYY'),
           payment_month: '',
@@ -238,6 +249,10 @@
                       'formTypeChange',
                       'clearErrors',
                       'setLoadingState' ]),
+
+      onChangePage(pageOfItems) {
+        this.pageOfItems = pageOfItems;
+      },
 
       async addPayment() {
         this.setLoadingState(true);
