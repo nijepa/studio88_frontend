@@ -29,7 +29,7 @@
             <div class="members__items">
 
               <div class="">
-                <div class="days__list">
+                <div class="days__list attendance__list_header">
                   <span>Vježbačica</span>
                   <span>Prisutna</span>
                   <span>Napomena</span>
@@ -360,7 +360,7 @@
   @media only screen and (max-width: 599px) {
     .days__list {
       /* font-size: 80%; */
-      /* grid-template-columns: repeat(2 ,auto) !important; */
+      grid-template-columns: repeat(2 ,auto) !important; 
     }
     .members_input  {
       grid-template-columns: repeat(2 ,auto) !important;
@@ -414,6 +414,10 @@
     font-family: 'Itim', cursive;
   }
 
+  .attendance__list_header {
+    grid-template-columns: repeat(3, auto);
+  }
+
   .members__list {
     display: flex;
     text-align: left;
@@ -429,6 +433,11 @@
     grid-template-columns: 1fr repeat(3, auto);
     align-items: center;
     grid-column-gap: 1em;
+  }
+
+  .members__items .members_input:nth-child(odd) {
+    background-color: var(--purple-lighter);
+    border-radius: .5em;
   }
 
   .memeber__date {

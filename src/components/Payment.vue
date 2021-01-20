@@ -438,12 +438,12 @@
   :-ms-input-placeholder { font-size: .8em; } /* ie */
   input:-moz-placeholder { font-size: .8em; }
 
-  .schedule__wrapper {
+ /*  .schedule__wrapper {
     display: flex;
     justify-content: center;
-  }
+  } */
 
-  .bloc {
+ /*  .bloc {
     display: inline-block;
     vertical-align: top;
     overflow: hidden;
@@ -459,9 +459,9 @@
     border: none;
     height: 140px;
     font-family: 'Itim', cursive;
-  }
+  } */
 
-  .members__list {
+  /* .members__list {
     display: flex;
     text-align: left;
     align-items: baseline;
@@ -476,9 +476,9 @@
     grid-template-columns: 1fr repeat(3, auto);
     align-items: center;
     grid-column-gap: 1em;
-  }
+  } */
 
-  .memeber__date {
+  /* .memeber__date {
     margin: 0;
   }
 
@@ -491,21 +491,21 @@
 
   .input__payment {
     grid-template-columns: 1fr 1fr ;
-  }
+  } */
 
   .payments__list {
     justify-items: center;
     margin-top: 1;
   }
 
-  .select__month {
+  /* .select__month {
     font-family: 'Itim', cursive;
   }
 
   .payment__price {
     width: 3.3em;
   }
-
+ */
   .payment__note {
     width: 10em;
   }

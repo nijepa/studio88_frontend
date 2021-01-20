@@ -119,7 +119,7 @@
   }
 
   .login_input {
-    margin-bottom: 1em;
+    margin-bottom: .1em;
     background: #fff;
     color: var(--black);
     border: 1px solid transparent;
@@ -130,6 +130,7 @@
     line-height: 1.45;
     outline: none;
     padding: 0.6em 1.45em 0.7em;
+    background: transparent;
     -webkit-transition: .18s ease-out;
     -moz-transition: .18s ease-out;
     -o-transition: .18s ease-out;
