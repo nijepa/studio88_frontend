@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <img :src="getPngUrl(pic)" alt="" class="loading">
+    <img :src="getPngUrl()" alt="" class="loading">
     <p class="loading__text">loading ...</p> 
   </div>
 </template>
@@ -14,8 +14,7 @@
     },
 
     methods: {
-      getPngUrl(pic) {
-        console.log(pic)
+      getPngUrl() {
         return require('../../assets/img/loading' + Math.floor(Math.random() * 4) + '.gif')
       },
     }

@@ -57,27 +57,10 @@
 </template>
 
 <script>
-  const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
-  };
-
-  const customStyles = {
-    ul: {
-    },
-    li: {
-        display: 'inline-block',
-    },
-    a: {
-        color: 'var(--purple-dark)'
-    }
-  };
-
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Expenses',
@@ -102,7 +85,8 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('DD/MM/YYYY')
+          moment.locale('sr');
+          return moment(String(value)).format('DD MMM YYYY')
         }
       }
     },

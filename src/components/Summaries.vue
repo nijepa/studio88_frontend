@@ -101,14 +101,6 @@
 
     components: { Loading, Charto, Charto2, Datepicker },
 
-    filters: {
-      formatDate: function(value) {
-        if (value) {
-          return moment(String(value)).format('DD/MM/YYYY')
-        }
-      }
-    },
-
     computed: {
       ...mapGetters([ 'getAllClients', 
                       'getAllPayments',
@@ -189,9 +181,9 @@
         this.loadedAttend = true;
       },
 
-      makeCorrectDate(str) {
+/*       makeCorrectDate(str) {
         return new Date(str).toISOString().split('T')[0] ;
-      },
+      }, */
 
       selectPayments() {
         let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);

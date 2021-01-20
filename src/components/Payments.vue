@@ -119,26 +119,9 @@
 </template>
 
 <script>
-  const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
-  };
-
-  const customStyles = {
-    ul: {
-    },
-    li: {
-        display: 'inline-block',
-    },
-    a: {
-        color: 'var(--purple-dark)'
-    }
-  };
-
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Payments',

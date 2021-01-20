@@ -1,12 +1,7 @@
 <template>
   <div class="">
-
     <transition name="fall" mode="out-in">
 
-      <!-- <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div> -->
       <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
@@ -113,7 +108,6 @@
         </button>
 
         <div class="">
-
           <div class="days__list attend__heading">
             <span>Datum</span>
             <span>Prisustvovale</span>
@@ -127,7 +121,6 @@
           </div>
         </div>
       </div>
-
     </transition>
 
     <jw-pagination :items="getAllAttendances" @changePage="onChangePage" 
@@ -138,27 +131,10 @@
 </template>
 
 <script>
-  const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
-  };
-
-  const customStyles = {
-    ul: {
-    },
-    li: {
-        display: 'inline-block',
-    },
-    a: {
-        color: 'var(--purple-dark)'
-    }
-  };
-
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Attendances',
@@ -211,7 +187,8 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('dddd, LL')
+          moment.locale('sr');
+          return moment(String(value)).format('dddd, ll')
         }
       }
     },

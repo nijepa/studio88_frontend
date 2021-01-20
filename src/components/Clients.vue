@@ -65,11 +65,9 @@
               vježbačica
             </div>
           </div>
-          
         </div>
 
         <div class="">
-
           <div class="clients__heading days__list">
             <span>Ime</span>
             <span>E-mail</span>
@@ -96,10 +94,8 @@
               </svg>
             </button>
           </div>
-
         </div>
       </div>
-
     </transition>
 
     <jw-pagination :items="filteredClients" @changePage="onChangePage" 
@@ -111,11 +107,11 @@
 </template>
 
 <script>
-  import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
-  const customLabels = {
+/*   const customLabels = {
     first: '<<',
     last: '>>',
     previous: '<',
@@ -133,7 +129,7 @@
     a: {
         color: 'var(--purple-dark)'
     }
-  };
+  }; */
 
   export default {
     name: 'Clients',
@@ -224,14 +220,6 @@
         //await this.fetchClientsPage();
         if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
-      }
-    },
-
-    filters: {
-      formatDate: function(value) {
-        if (value) {
-          return moment(String(value)).format('dddd, LL')
-        }
       }
     },
 
@@ -352,8 +340,9 @@
   }
 
   .search__bar:hover svg g {
-      fill: var(--gold) !important;
-    }
+    fill: var(--gold) !important;
+  }
+  
   .svg__parts:hover {
     fill: var(--gold) !important;
   }
