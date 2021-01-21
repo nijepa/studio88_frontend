@@ -215,8 +215,7 @@
 
     watch: {
       pageSize() { 
-        this.initClients() 
-        this.filteredClients = this.attendanceInput.members;
+        this.searchClients();
       }
     },
 
@@ -293,10 +292,9 @@
         });
       },
 
-      async initClients() {
-        await this.fetchClients();
+      initClients() {
         if (this.getOneAttendance._id) {
-          console.log(this.getOneAttendance)
+          //console.log(this.getOneAttendance)
           this.attendanceInput = this.getOneAttendance;
           this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
         } else {
@@ -320,7 +318,7 @@
       let currentYear = new Date();
       currentYear = moment().format('YYYY');
       this.year = currentYear;
-      
+      await this.fetchClients();
       await this.initClients();
       this.filteredClients = this.attendanceInput.members;
 /*       if (this.getOneAttendance._id) {
@@ -451,6 +449,7 @@
     background: var(--gold);
     border-radius: .5em;
     padding: 0 .5em;
+    margin-top: .5em;
   }
 
   .search_group label {
