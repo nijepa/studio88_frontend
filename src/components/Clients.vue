@@ -46,11 +46,11 @@
                 </g>
               </svg>
               <input type="text" name="search" id="search" @keyup="searchClients()"
-                      v-model="search" class="login_input search_input">
+                      v-model="search" class="login_input search_input" placeholder="traži (ime, prezime, tel.)">
             </div>
 
             <div class="page__size">
-              <label for="days">Na stranici</label>
+              <label for="days">Prikaži</label>
               <div class="login_input user_input nr_clients">
                 <select name="days" id="days" class=""
                         v-model="pageSize" 

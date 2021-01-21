@@ -326,9 +326,9 @@
 
   .filter_bar {
     justify-self: center;
-    background: var(--gold);
+    background: var(--gold-lighter);
     border-radius: .5em;
-    color: var(--gold-light);
+    color: var(--black);
     padding: 0 .5em;
     margin: .5em 0;
   }

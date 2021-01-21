@@ -305,9 +305,9 @@
     align-items: baseline;
   }
 
-  .members__items {
+ /*  .members__items {
     margin-right: 1em;
-  }
+  } */
 
   .members__span {
     justify-self: end;
@@ -325,7 +325,7 @@
   @media (max-width: 599px) {
     .input__group {
       grid-template-columns: auto !important;
-      justify-content: center;
+      justify-content: left;
       
     }
     .members__list {

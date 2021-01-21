@@ -39,7 +39,7 @@
                 </g>
               </svg>
               <input type="text" name="search" id="search" @keyup="searchClients()"
-                      v-model="search" class="login_input search_input">
+                      v-model="search" class="login_input search_input" placeholder="traži (ime, prezime, tel.)">
             </div>
 
             <div class="page__size">
@@ -368,7 +368,7 @@
       grid-template-columns: repeat(2 ,auto) ;
     }
     .activities__list {
-      /* grid-template-columns: repeat(2 ,auto) !important; */
+      grid-template-columns: repeat(2 ,1fr) !important;
     }
     .activities__wrapper {
       grid-template-columns: auto !important;
@@ -457,7 +457,7 @@
   }
 
   .search_group {
-    background: var(--gold);
+    background: var(--gold-lighter);
     border-radius: .5em;
     padding: 0 .5em;
     margin-top: .5em;
@@ -495,6 +495,10 @@
 
   .att_totals {
     text-align: right;
+    border-radius: .5em;
+    border: 2px solid var(--gold);
+    padding: .2em;
+    justify-self: end;
   }
 
 </style>

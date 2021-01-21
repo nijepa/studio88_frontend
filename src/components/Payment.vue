@@ -74,7 +74,7 @@
                 </g>
               </svg>
               <input type="text" name="search" id="search" @keyup="searchClients()"
-                      v-model="search" class="login_input search_input">
+                      v-model="search" class="login_input search_input" placeholder="traži (ime, prezime, tel.)">
             </div>
 
             <div class="page__size">
@@ -96,7 +96,7 @@
 
             <div class="days__list payments__list">
               <span>Vježbačica</span>
-              <span>Dana</span>
+              <span>Datum</span>
               <span>Iznos</span>
               <span>Napomena</span>
             </div>

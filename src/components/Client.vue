@@ -610,7 +610,7 @@
     border: none;
     border-bottom: 1px solid transparent;
     box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
-    max-width: 7em;
+    /* max-width: 7em; */
     padding: 0;
     margin: .2em;
     background: transparent;
@@ -621,6 +621,7 @@
   .vdp-datepicker input {
     cursor: pointer;
     border-bottom: 1px solid #d1d1d1;
+    max-width: 7em;
   }
 
   .vdp-datepicker input:hover {
