@@ -16,6 +16,11 @@
                         :language="sr">
             </datepicker>
           </div>
+
+          <div class="att_totals">
+            <h4>Ukupno: {{ attendanceInput.members.length }}</h4>
+            <h4>Prisustvovalo: {{ presentClients() }}</h4>
+          </div>
         </div>
         
         <div class="members__list">
@@ -256,6 +261,12 @@
         this.filteredClients = mu;
       },
 
+      presentClients() {
+        return this.attendanceInput.members.filter(a => {
+          return a.present === true
+        }).length
+      },
+
       async addAttendance() {
         this.setLoadingState(true);
         if (this.getOneAttendance._id) {
@@ -480,6 +491,10 @@
 
   .check {
     cursor: pointer;
+  }
+
+  .att_totals {
+    text-align: right;
   }
 
 </style>

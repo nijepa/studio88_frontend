@@ -614,7 +614,17 @@
     padding: 0;
     margin: .2em;
     background: transparent;
-  
+    
+  }
+
+
+  .vdp-datepicker input {
+    cursor: pointer;
+    border-bottom: 1px solid #d1d1d1;
+  }
+
+  .vdp-datepicker input:hover {
+    border-bottom: 1px solid transparent;
   }
 
   select {

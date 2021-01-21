@@ -50,6 +50,11 @@
                         :language="sr">
             </datepicker>
           </div>
+
+          <div class="att_totals">
+            <h4>Ukupno: {{ totalToPay() }}</h4>
+            <h4>Plaćeno: {{ totalPayed() }}</h4>
+          </div>
         </div>
         
         <div class="members__list">
@@ -310,6 +315,14 @@
                   post.client.mobile.includes(this.search)
         });
         this.filteredClients = mu;
+      },
+
+      totalToPay() {
+        return this.paymentInput.members.length * this.paymentInput.price
+      },
+
+      totalPayed() {
+        return this.paymentInput.members.reduce((a, {payment_amount}) => a + Number(payment_amount), 0)
       },
 
       async addPayment() {

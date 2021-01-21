@@ -99,7 +99,12 @@
       }
     },
 
-    components: { Loading, Charto, Charto2, Datepicker },
+    components: { 
+      Loading, 
+      Charto, 
+      Charto2, 
+      Datepicker 
+    },
 
     computed: {
       ...mapGetters([ 'getAllClients', 

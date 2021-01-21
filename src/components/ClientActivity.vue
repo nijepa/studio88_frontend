@@ -44,6 +44,24 @@
         <h1>{{ getOneClient.name }}</h1>
       </div>
 
+      <div class="dash__text filter_bar">Period od 
+        <datepicker v-model="dateFrom" 
+                      placeholder="datum upisa" 
+                      class="login_input user_input datepicker"
+                      :language="sr"
+                      :format="customFormatter"
+                      @input="selectPeriod()">
+        </datepicker> 
+        do 
+        <datepicker v-model="dateTill" 
+                      placeholder="datum upisa" 
+                      class="login_input user_input datepicker"
+                      :language="sr"
+                      :format="customFormatter"
+                      @input="selectPeriod()">
+        </datepicker>
+      </div>
+
       <div class="activities__wrapper">
         <div class="">
           <h3 class="activities__title">Plaćanja - <span>ukupno : {{ totalPayments() }}</span></h3>
@@ -87,22 +105,28 @@
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+  import Datepicker from 'vuejs-datepicker';
+  import {sr} from 'vuejs-datepicker/dist/locale';
 
   export default {
     name: 'ClientActivity',
 
     components: {
-      Loading
+      Loading,
+      Datepicker
     },
 
     data() {
       return {
+        sr: sr,
         clientPayments: [],
         clientAttendances: [],
         pageOfItems: [],
         customLabels,
         customStyles,
         search: '',
+        dateFrom: this.getPreviousMonday(),
+        dateTill: new Date().toISOString().slice(0,10),
         appeared: false
       }
     },
@@ -125,6 +149,17 @@
       onChangePage(pageOfItems) {
         this.pageOfItems = pageOfItems;
       },
+
+      customFormatter(date) {
+        return moment(date).format('DD MMM YYYY');
+      },
+
+      getPreviousMonday() {
+        let firstDay = new Date(new Date().getFullYear(), 0, 2);
+        // let date = new Date();
+        // let firstDay = new Date(date.getFullYear(), date.getMonth(), 2);
+        return new Date(firstDay).toISOString().slice(0,10);
+      },
       
       async newClient() {
         this.setLoadingState(true);
@@ -135,6 +170,21 @@
       async selectClient() {
         this.setLoadingState(true);
         this.formTypeChange('client');
+      },
+
+      selectPeriod() {
+        this.clientAttendances = this.mapAttendances().filter(post => {
+            return post.client._id == this.getOneClient._id
+          })
+          .filter(year => 
+                    year.date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    year.date <= moment(this.dateTill).format('YYYY-MM-DD'));
+        this.clientPayments = this.mapPayments().filter(post => {
+            return post.client._id == this.getOneClient._id
+          })
+          .filter(year => 
+                    year.date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    year.date <= moment(this.dateTill).format('YYYY-MM-DD'));
       },
 
       mapPayments() {
@@ -208,6 +258,7 @@
       this.clientAttendances = this.mapAttendances().filter(post => {
         return post.client._id == this.getOneClient._id
       });
+      this.selectPeriod();
       this.setLoadingState(false);
     }
   }
@@ -219,6 +270,7 @@
     grid-template-columns: auto auto;
     grid-gap: 1em;
     margin: 0 1em;
+    justify-self: center;
   }
 
   .activities__title {
@@ -270,5 +322,14 @@
 
   .for_mobile {
     min-width: 120px;
+  }
+
+  .filter_bar {
+    justify-self: center;
+    background: var(--gold);
+    border-radius: .5em;
+    color: var(--gold-light);
+    padding: 0 .5em;
+    margin: .5em 0;
   }
 </style>
