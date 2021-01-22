@@ -13,7 +13,8 @@
             <datepicker v-model="attendanceInput.attend_date" 
                         placeholder="datum upisa" 
                         class="login_input user_input"
-                        :language="sr">
+                        :language="sr"
+                        @input="selectDate()">
             </datepicker>
           </div>
 
@@ -69,7 +70,7 @@
               <div v-for="member in pageOfItems" :key="member._id" name="member"
                   class="members_input att_members">
                 <div class="att_member">
-                  {{ attendanceInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
+                  {{ filteredClients.map(item => item.client._id).indexOf(member.client._id) + 1 }}
                   {{ member.client.last_name }}, {{ member.client.first_name }}
                 </div>
                 <input type="checkbox" v-model="member.present" class="login_input user_input payment__price check">
@@ -127,7 +128,6 @@
           members: []
         },
         notClients: [],
-        selectedDate: new Date,
         appeared: false,
         notificationSystem: {
           options: {
@@ -228,6 +228,7 @@
       ...mapGetters([ 'getAllAttendances', 
                       'getOneAttendance',
                       'getAllClients',
+                      'getAllSchedules',
                       'getClientsPageSize',
                       'getErrors',
                       'loadingState' ]),
@@ -238,6 +239,7 @@
                       'attendanceUpdate', 
                       'attendanceDelete',
                       'fetchClients',
+                      'fetchSchedules',
                       'fetchClientsPageSize',
                       'formTypeChange',
                       'clearErrors',
@@ -265,6 +267,25 @@
         return this.attendanceInput.members.filter(a => {
           return a.present === true
         }).length
+      },
+
+      async selectDate() {
+        if (!this.getOneAttendance._id) {
+          await this.fetchSchedules();
+          const selDate = this.attendanceInput.attend_date.getDay();
+          const cgDays = ['Neđelja', 'Poneđeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'];
+          const cgDay = cgDays[selDate];
+          const filteredSchedules = this.getAllSchedules.filter((a) => {
+            return a.weekday.includes(cgDay)
+          }).map(item => {
+              let container = {};
+              container = item.members;
+              return container;
+          })
+          const merged = [].concat.apply([], filteredSchedules);
+          this.filteredClients = merged;
+        }
+        console.log(this.attendanceInput.members)
       },
 
       async addAttendance() {
@@ -311,7 +332,7 @@
         } else {
           this.notClients = this.getAllClients.filter(active => active.active === true);
           this.attendanceInput.members = [];
-          this.addAllmembers()
+          this.addAllmembers();
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }

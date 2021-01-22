@@ -18,8 +18,10 @@
           <div class="input__field dani">
             <label for="day">Dani treninga</label>
             <div v-for="day in days" :key="day.id">
-              <span class="dan">{{day}}</span>
-              <input type="checkbox" v-model="scheduleInput.weekday" :value="day"/>
+              <label for="dan" class="dan">{{day}}</label>
+              <input id="dan" type="checkbox" class="dan_input"
+                      v-model="scheduleInput.weekday" 
+                      :value="day"/>
             </div>
           </div>
 
@@ -298,6 +300,12 @@
 
   .dan {
     font-size: 1.3em;
+    color: var(--black);
+    cursor: pointer;
+  }
+
+  .dan_input {
+    cursor: pointer;
   }
 
   .members_input {

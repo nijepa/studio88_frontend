@@ -70,21 +70,24 @@
         <div class="">
           <div class="clients__heading days__list">
             <span>Ime</span>
-            <span>E-mail</span>
+            <span>Grupa</span>
             <span>Mobilni</span>
             <span>Aktivna</span>
             <span>Aktivnosti</span>
           </div>
 
-          <div v-for="client in pageOfItems" :key="client._id" class="clients__list">
+          <div v-for="client in pageOfItems" :key="client._id" class="clients__list" 
+              :class="setClientSchedule(client._id) === '' ? 'not_schedule' : ''">
             <p class="client__item" 
                 @click="selectClient(client)">{{ client.last_name }} , {{ client.first_name }}
             </p>
-            <p class="client__item" @click="selectClient(client)">{{ client.email }}</p>
+            <!-- <p class="client__item" @click="selectClient(client)">{{ client.email }}</p> -->
+            <p class="client__item" @click="selectClient(client)">{{ setClientSchedule(client._id) }}</p>
             <p class="client__item" @click="selectClient(client)">{{ client.mobile }}</p>
             <p class="client__item" @click="selectClient(client)">
               <input type="checkbox" class="" v-model="client.active">
             </p>
+            <!-- <p>{{ setClientSchedule(client._id) }}</p> -->
 
             <button type="submit" @click="clientActivities(client)" class="activities_btn">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 1964.601 1689.422" 
@@ -153,6 +156,7 @@
 
     computed: {
       ...mapGetters([ 'getAllClients', 
+                      'getAllSchedules',
                       'getClientsPage',
                       'getClientsPageSize',
                       'loadingState' ]),
@@ -168,6 +172,7 @@
                       'fetchClientsPage',
                       'fetchClientsPageSize',
                       'clientClear',
+                      'fetchSchedules',
                       'formTypeChange',
                       'setLoadingState' ]),
 
@@ -209,6 +214,29 @@
         this.formTypeChange('clientactivity');
       },
 
+      mapSchedules() {
+        let obj, arr = []
+        for (let i=0; i<this.getAllSchedules.length; i++) {
+          for(let j =0; j<this.getAllSchedules[i].members.length; j++) {
+            obj = {
+              "title": this.getAllSchedules[i].title,
+              "startTime": this.getAllSchedules[i].startTime,
+              "client": this.getAllSchedules[i].members[j].client
+            }
+            arr.push(obj)
+          }
+        }
+        return arr
+      },
+
+      setClientSchedule(id) {
+        let sche = '';
+        sche = this.mapSchedules().filter(post => {
+          return post.client._id == id
+        });
+        return sche[0] ? sche[0].title : '';
+      },
+
       onAppeared() {
         this.appeared = true;
       },
@@ -220,6 +248,7 @@
         //await this.fetchClientsPage();
         if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
+        await this.fetchSchedules();
       }
     },
 
@@ -350,6 +379,10 @@
   .search_input {
     margin-bottom: .1em;
     padding: 0.2em .2em .2em;
+  }
+
+  .not_schedule {
+    color: red;
   }
 
   .loading {
