@@ -116,18 +116,6 @@
               <input type="text" v-model="member.note" class="login_input user_input payment__note">
             </div>
           </div>
-  <!--         <div class="members__items">
-            
-            <div class="input__field">
-              <label for="">Dodaj vežbačicu - 
-                <span @click="addAllmembers()" class="all__clients_btn"> Sve</span>
-              </label>
-              <p v-for="client in notClients" :key="client._id" name="clients"
-                  class="login_input user_input members_input members__not" @click="addMember(client)">
-                {{ client.last_name}}, {{ client.first_name}} - {{ client.mobile }}
-              </p>
-            </div>
-          </div> -->
         </div>
 
         <jw-pagination :items="filteredClients" @changePage="onChangePage" 
@@ -136,6 +124,34 @@
         </jw-pagination>
 
         <action-buttons toForm='payments' />
+
+        <button type="submit" @click.prevent="delClient()"
+                class="action_btn delete__btn">
+          <svg version="1.1" id="Layer_1" x="0px" y="0px" height="25px" 
+              viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+            <rect x="114.402" y="220.724" style="fill:#CEE8FA;" width="274.813" height="276.96"/>
+            <g>
+              <path style="fill:var(--red-dark);" d="M182.746,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313
+                c7.905,0,14.313,6.409,14.313,14.313v91.604C197.06,415.895,190.652,422.305,182.746,422.305z"/>
+              <path style="fill:var(--red-dark);" d="M251.808,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313
+                c7.905,0,14.313,6.409,14.313,14.313v91.604C266.121,415.895,259.713,422.305,251.808,422.305z"/>
+              <path style="fill:var(--red-dark);" d="M320.869,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313
+                c7.905,0,14.313,6.409,14.313,14.313v91.604C335.182,415.895,328.774,422.305,320.869,422.305z"/>
+              <path style="fill:var(--red-dark);" d="M434.571,135.961c-8.435-13.251-21.524-22.423-36.856-25.828
+                c-7.712-1.722-15.362,3.152-17.076,10.869c-1.713,7.718,3.153,15.361,10.869,17.076c7.869,1.749,14.585,6.455,18.913,13.255
+                c4.328,6.8,5.75,14.879,4.002,22.748l-7.423,33.418L99.603,139.224l7.423-33.42c3.608-16.243,19.754-26.519,36.002-22.917
+                l145.2,32.249c7.713,1.713,15.361-3.153,17.076-10.869c1.713-7.718-3.153-15.361-10.869-17.076l-82.44-18.309l8.327-37.493
+                l122.96,27.308l-11.431,51.467c-1.713,7.718,3.153,15.361,10.869,17.076c1.045,0.232,2.088,0.344,3.116,0.344
+                c6.563,0,12.478-4.542,13.96-11.213l14.534-65.44c0.823-3.706,0.14-7.587-1.898-10.789c-2.038-3.202-5.266-5.463-8.972-6.286
+                L212.555,0.342c-7.713-1.709-15.362,3.152-17.076,10.869l-11.43,51.466l-34.815-7.732C117.579,47.909,86.11,67.948,79.079,99.6
+                l-10.526,47.391c-1.713,7.718,3.153,15.361,10.869,17.076l190.666,42.347H114.402c-7.905,0-14.313,6.409-14.313,14.313v276.96
+                c0,7.904,6.408,14.313,14.313,14.313h274.81c7.905,0,14.313-6.409,14.313-14.313V236.049l11.243,2.498
+                c1.026,0.229,2.067,0.341,3.103,0.341c2.701,0,5.37-0.764,7.686-2.239c3.202-2.038,5.463-5.266,6.288-8.972l10.526-47.391
+                C445.776,164.954,443.006,149.212,434.571,135.961z M374.9,483.374H128.716V235.04H374.9V483.374z"/>
+            </g>
+          </svg>
+          <p>Obriši</p>
+        </button>
 
       </form>
 
@@ -150,6 +166,7 @@
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
+  import actionsNotify from '../mixins/actionsNotify';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
@@ -160,6 +177,8 @@
       Datepicker, 
       ActionButtons,
     },
+
+    mixins: [actionsNotify],
 
     data() {
       return {
@@ -183,99 +202,12 @@
         notClients: [],
         selectedDate: new Date,
         appeared: false,
-        notificationSystem: {
-          options: {
-            show: {
-              theme: "dark",
-              icon: "icon-person",
-              position: "topCenter",
-              progressBarColor: "rgb(0, 255, 184)",
-              /* buttons: [
-                [
-                  "<button>Ok</button>",
-                  function(instance, toast) {
-                    alert("Hello world!");
-                  },
-                  true
-                ],
-                [
-                  "<button>Close</button>",
-                  function(instance, toast) {
-                    instance.hide(
-                      {
-                        transitionOut: "fadeOutUp",
-                        onClosing: function(instance, toast, closedBy) {
-                          console.info("closedBy: " + closedBy);
-                        }
-                      },
-                      toast,
-                      "buttonName"
-                    );
-                  }
-                ]
-              ],
-              onOpening: function(instance, toast) {
-                console.info("callback abriu!");
-              },
-              onClosing: function(instance, toast, closedBy) {
-                console.info("closedBy: " + closedBy);
-              } */
-            },
-            ballon: {
-              balloon: true,
-              position: "bottomCenter"
-            },
-            info: {
-              position: "bottomLeft"
-            },
-            success: {
-              position: "center"
-            },
-            warning: {
-              position: "topLeft"
-            },
-            error: {
-              position: "center"
-            },
-            question: {
-              timeout: 20000,
-              close: false,
-              overlay: true,
-              toastOnce: true,
-              id: "question",
-              zindex: 999,
-              position: "center",
-              /* buttons: [
-                [
-                  "<button><b>YES</b></button>",
-                  function(instance, toast) {
-                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                  },
-                  true
-                ],
-                [
-                  "<button>NO</button>",
-                  function(instance, toast) {
-                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                  }
-                ]
-              ],
-              onClosing: function(instance, toast, closedBy) {
-                console.info("Closing | closedBy: " + closedBy);
-              },
-              onClosed: function(instance, toast, closedBy) {
-                console.info("Closed | closedBy: " + closedBy);
-              } */
-            }
-          }
-        }
       }
     },
 
     watch: {
       pageSize() { 
         this.searchClients() 
-        //this.filteredClients = this.paymentInput.members;
       }
     },
 
@@ -354,34 +286,17 @@
         this.notClients = [];
       },
 
-/*       addMember(client) {
-        try {
-          let member = this.paymentInput.members.find(x => x.client._id === client._id);
-          if (!member) {
-            this.paymentInput.members.push({
-              'client':client, 
-              'payment_date':this.selectedDate,
-              'payment_amount': this.paymentInput.price, 
-              'note': ''
-            });
-            this.notClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
-          }
-        } catch(e) {
-          this.$toast.error('Greška! ' + e, 'OK', this.notificationSystem.options.error)
-        }
-      }, */
-
-/*       removeMember(client) {
-        this.paymentInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
-        this.notClients.push(client);
-      }, */
-
       mapMembers() {
         return this.paymentInput.members.map(item => {
             let container = {};
             container = item.client;
             return container;
         });
+      },
+
+      async delEx() {
+        await this.paymentDelete(this.getOnePayment);
+        this.formTypeChange('payments');
       },
 
       initClients() {
@@ -403,17 +318,8 @@
       currentYear = moment().format('YYYY');
       this.year = currentYear;
       await this.fetchClients();
-      await this.initClients();
+      this.initClients();
       this.filteredClients = this.paymentInput.members;
-      /* await this.fetchClients();
-      if (this.getOnePayment._id) {
-        this.paymentInput = this.getOnePayment;
-        this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-      } else {
-        this.notClients = this.getAllClients.filter(active => active.active !== false);
-        this.paymentInput.price = this.getPrice;
-        this.addAllmembers()
-      } */
       this.setLoadingState(false);
     },
   }

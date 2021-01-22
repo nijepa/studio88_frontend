@@ -271,13 +271,18 @@
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
+  import actionsNotify from '../mixins/actionsNotify';
 
   export default {
     name: 'Client',
 
     components: {
-      Loading, Datepicker, ActionButtons
+      Loading, 
+      Datepicker, 
+      ActionButtons
     },
+
+    mixins: [actionsNotify],
 
     data() {
       return {
@@ -299,92 +304,6 @@
           active: ''
         },
         appeared: false,
-        notificationSystem: {
-          options: {
-            show: {
-              theme: "dark",
-              icon: "icon-person",
-              position: "topCenter",
-              progressBarColor: "rgb(0, 255, 184)",
-          /*    buttons: [
-                [
-                  "<button>Ok</button>",
-                  function(instance, toast) {
-                    alert("Hello world!");
-                  },
-                  true
-                ],
-                [
-                  "<button>Close</button>",
-                  function(instance, toast) {
-                    instance.hide(
-                      {
-                        transitionOut: "fadeOutUp",
-                        onClosing: function(instance, toast, closedBy) {
-                          console.info("closedBy: " + closedBy);
-                        }
-                      },
-                      toast,
-                      "buttonName"
-                    );
-                  }
-                ]
-              ],
-              onOpening: function(instance, toast) {
-                console.info("callback abriu!");
-              },
-              onClosing: function(instance, toast, closedBy) {
-                console.info("closedBy: " + closedBy);
-              } */
-            },
-            ballon: {
-              balloon: true,
-              position: "bottomCenter"
-            },
-            info: {
-              position: "bottomLeft"
-            },
-            success: {
-              position: "center"
-            },
-            warning: {
-              position: "center"
-            },
-            error: {
-              position: "center"
-            },
-            question: {
-              timeout: 20000,
-              close: false,
-              overlay: true,
-              toastOnce: true,
-              id: "question",
-              zindex: 999,
-              position: "center",
-              buttons: [
-                [
-                  "<button><b>YES</b></button>",
-                  function(instance, toast) {
-                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                  },
-                  true
-                ],
-                [
-                  "<button>NO</button>",
-                  function(instance, toast) {
-                    instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                  }
-                ]
-              ],
-              onClosing: function(instance, toast, closedBy) {
-                console.info("Closing | closedBy: " + closedBy);
-              },
-              onClosed: function(instance, toast, closedBy) {
-                console.info("Closed | closedBy: " + closedBy);
-              }
-            }
-          }
-        }
       }
     },
 
@@ -424,9 +343,8 @@
         }
       },
 
-      async delClient() {
+      async delEx() {
         await this.clientDelete(this.getOneClient);
-        this.$toast.success('Uspješno obrisano!', 'OK', this.notificationSystem.options.success);
         this.formTypeChange('clients');
       },
 
@@ -553,6 +471,7 @@
     border-bottom: 2px solid var(--red);
     font-size: .8em;
     grid-column-gap: .2em;
+    justify-self: end;
   }
 
   .delete__btn:hover {
