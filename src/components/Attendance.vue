@@ -8,7 +8,7 @@
       <form @submit.prevent="addAttendance()" method="post" class="user__form">
 
         <div class="input__group ">
-          <div class="input__field">
+          <div class="input__field att_date">
             <label for="datePicker">Datum</label>
             <datepicker v-model="attendanceInput.attend_date" 
                         placeholder="datum upisa" 
@@ -16,12 +16,15 @@
                         :language="sr"
                         @input="selectDate()">
             </datepicker>
+            <h3 class="weekday">{{ attendanceInput.attend_date | formatDate }}</h3>
           </div>
 
           <div class="att_totals">
-            <h4>Ukupno: {{ attendanceInput.members.length }}</h4>
+            <h4>Ukupno: {{ filteredClients.length }}</h4>
             <h4>Prisustvovalo: {{ presentClients() }}</h4>
           </div>
+
+          
         </div>
         
         <div class="members__list">
@@ -70,7 +73,7 @@
               <div v-for="member in pageOfItems" :key="member._id" name="member"
                   class="members_input att_members">
                 <div class="att_member">
-                  {{ filteredClients.map(item => item.client._id).indexOf(member.client._id) + 1 }}
+                  {{ attendanceInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
                   {{ member.client.last_name }}, {{ member.client.first_name }}
                 </div>
                 <input type="checkbox" v-model="member.present" class="login_input user_input payment__price check">
@@ -252,9 +255,9 @@
       setPageSize() {
         this.fetchClientsPageSize(this.pageSize);
       },
-
-      searchClients() {
-        this.initClients();
+        
+      async searchClients() {
+        await this.initClients();
         let mu = this.attendanceInput.members.filter(post => {
           return post.client.first_name.toLowerCase().includes(this.search.toLowerCase()) || 
                   post.client.last_name.toLowerCase().includes(this.search.toLowerCase()) || 
@@ -264,12 +267,13 @@
       },
 
       presentClients() {
-        return this.attendanceInput.members.filter(a => {
+        return this.filteredClients.filter(a => {
           return a.present === true
         }).length
       },
 
       async selectDate() {
+        console.log('000')
         if (!this.getOneAttendance._id) {
           await this.fetchSchedules();
           const selDate = this.attendanceInput.attend_date.getDay();
@@ -283,7 +287,10 @@
               return container;
           })
           const merged = [].concat.apply([], filteredSchedules);
-          this.filteredClients = merged;
+          //this.filteredClients = merged;
+          this.attendanceInput.members = [];
+          this.filteredClients = [];
+          this.addAllmembers(merged)
         }
         console.log(this.attendanceInput.members)
       },
@@ -305,14 +312,15 @@
         }
       },
 
-      addAllmembers() {
-        for (let i = 0; i < this.getAllClients.filter(active => active.active !== false).length; i++) {
+      addAllmembers(cli) {
+        for (let i = 0; i < cli.filter(active => active.client.active !== false).length; i++) {
           this.attendanceInput.members.push({
             'client':this.getAllClients.filter(active => active.active !== false)[i], 
             'present':true, 
             'note': ''
           })
         }
+        this.filteredClients = this.attendanceInput.members
         this.notClients = [];
       },
 
@@ -324,15 +332,17 @@
         });
       },
 
-      initClients() {
+      async initClients() {
         if (this.getOneAttendance._id) {
           //console.log(this.getOneAttendance)
           this.attendanceInput = this.getOneAttendance;
           this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
+          this.filteredClients = this.attendanceInput.members;
         } else {
           this.notClients = this.getAllClients.filter(active => active.active === true);
-          this.attendanceInput.members = [];
-          this.addAllmembers();
+          await this.selectDate();
+          //this.filteredClients = this.attendanceInput.members;
+          //this.addAllmembers();
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
@@ -341,7 +351,7 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('MM/DD/YYYY')
+          return moment(String(value)).format('dddd')
         }
       }
     },
@@ -352,7 +362,7 @@
       this.year = currentYear;
       await this.fetchClients();
       await this.initClients();
-      this.filteredClients = this.attendanceInput.members;
+      //this.filteredClients = this.attendanceInput.members;
 /*       if (this.getOneAttendance._id) {
         this.attendanceInput = this.getOneAttendance;
         this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
@@ -520,6 +530,17 @@
     border: 2px solid var(--gold);
     padding: .2em;
     justify-self: end;
+    align-self: baseline;
+  }
+
+  .att_date {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .weekday {
+    justify-self: left;
+    margin-left: .5em;
   }
 
 </style>

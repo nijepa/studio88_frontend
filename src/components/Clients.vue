@@ -234,7 +234,7 @@
         sche = this.mapSchedules().filter(post => {
           return post.client._id == id
         });
-        return sche[0] ? sche[0].title : '';
+        return sche[0] ? sche[0].title + '/' + sche[0].startTime : '';
       },
 
       onAppeared() {
@@ -382,7 +382,7 @@
   }
 
   .not_schedule {
-    color: red;
+    color: var(--red);
   }
 
   .loading {

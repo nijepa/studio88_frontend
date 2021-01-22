@@ -318,11 +318,11 @@
       },
 
       totalToPay() {
-        return this.paymentInput.members.length * this.paymentInput.price
+        return this.filteredClients.length * this.paymentInput.price
       },
 
       totalPayed() {
-        return this.paymentInput.members.reduce((a, {payment_amount}) => a + Number(payment_amount), 0)
+        return this.filteredClients.reduce((a, {payment_amount}) => a + Number(payment_amount), 0)
       },
 
       async addPayment() {
@@ -391,7 +391,8 @@
         } else {
           this.notClients = this.getAllClients.filter(active => active.active !== false);
           this.paymentInput.price = this.getPrice;
-          this.addAllmembers()
+          this.paymentInput.members = [];
+          this.addAllmembers();
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
