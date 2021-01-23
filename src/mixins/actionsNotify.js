@@ -111,7 +111,7 @@ export default
 
   methods: {
     delClient() {
-      this.$toast.question('Sigurna ?', 'Brisanje', this.notificationSystem.options.question)
+      this.$toast.warning('Sigurna ?', 'Brisanje', this.notificationSystem.options.question)
     },
   }
 }

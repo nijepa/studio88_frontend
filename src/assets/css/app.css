@@ -15,7 +15,7 @@
   --yellow-light:   #f0ee80;
   --red:            #e03030;
   --red-dark:       #af1313;
-  --red-light:      #ff4949;
+  --red-light:      #ff7979;
   --green:          #35af05;
   --green-dark:     #1c6300;
   --green-light:    #8bdd6b;
@@ -26,6 +26,7 @@
   --gold:           #856727;
   --gold-light:     #f8bc3b;
   --gold-lighter:   #e9dcc2;
+  --purple-lightest:#e7e4ec;
 }
 
 html {
