@@ -177,11 +177,17 @@
         await this.clientClear();
       },
 
+      setPageNr() {
+        const element = document.querySelector('ul.pagination > li.active');
+        if (element) this.fetchClientsPage(Number(element.innerText));
+      },
+
       async selectClient(client) {
         this.setLoadingState(true);
         await this.fetchClient(client);
-        const element = document.querySelector('ul.pagination > li.active');
-        if (element) await this.fetchClientsPage(Number(element.innerText));
+        this.setPageNr();
+        //const element = document.querySelector('ul.pagination > li.active');
+        //if (element) await this.fetchClientsPage(Number(element.innerText));
         this.formTypeChange('client');
       },
 
@@ -189,6 +195,7 @@
         this.setLoadingState(true);
         await this.fetchClient(client);
         this.fetchFromForm('clients');
+        this.setPageNr();
         this.formTypeChange('clientactivity');
       },
 
