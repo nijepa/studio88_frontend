@@ -55,31 +55,9 @@
               position: "topCenter",
               progressBarColor: "rgb(0, 255, 184)",
             },
-            ballon: {
-              balloon: true,
-              position: "bottomCenter"
-            },
-            info: {
-              position: "bottomLeft"
-            },
-            success: {
-              position: "center"
-            },
-            warning: {
-              position: "topLeft"
-            },
             error: {
               position: "center"
             },
-            question: {
-              timeout: 20000,
-              close: false,
-              overlay: true,
-              toastOnce: true,
-              id: "question",
-              zindex: 999,
-              position: "center",
-            }
           }
         }
       }

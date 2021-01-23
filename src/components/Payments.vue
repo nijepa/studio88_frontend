@@ -122,6 +122,7 @@
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+  import navigation from '../mixins/navigation';
 
   export default {
     name: 'Payments',
@@ -130,9 +131,12 @@
       Loading
     },
 
+    mixins: [
+      navigation
+    ],
+
     data() {
       return {
-        pageOfItems: [],
         customLabels,
         customStyles
       }
@@ -149,10 +153,6 @@
                       'paymentClear',
                       'formTypeChange',
                       'setLoadingState' ]),
-
-      onChangePage(pageOfItems) {
-        this.pageOfItems = pageOfItems;
-      },
       
       async newPayment() {
         this.setLoadingState(true);

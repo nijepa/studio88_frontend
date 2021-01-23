@@ -61,6 +61,7 @@
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+  import navigation from '../mixins/navigation';
 
   export default {
     name: 'Expenses',
@@ -69,9 +70,12 @@
       Loading
     },
 
+    mixins: [
+      navigation
+    ],
+
     data() {
       return {
-        pageOfItems: [],
         customLabels,
         customStyles
       }
@@ -97,10 +101,6 @@
                       'expenseClear',
                       'formTypeChange',
                       'setLoadingState' ]),
-
-      onChangePage(pageOfItems) {
-        this.pageOfItems = pageOfItems;
-      },
       
       async newExpense() {
         this.setLoadingState(true);

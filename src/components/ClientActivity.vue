@@ -107,6 +107,7 @@
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
+  import navigation from '../mixins/navigation';
 
   export default {
     name: 'ClientActivity',
@@ -116,12 +117,15 @@
       Datepicker
     },
 
+    mixins: [
+      navigation
+    ],
+
     data() {
       return {
         sr: sr,
         clientPayments: [],
         clientAttendances: [],
-        pageOfItems: [],
         customLabels,
         customStyles,
         search: '',
@@ -145,10 +149,6 @@
                       'clientClear',
                       'formTypeChange',
                       'setLoadingState' ]),
-
-      onChangePage(pageOfItems) {
-        this.pageOfItems = pageOfItems;
-      },
 
       customFormatter(date) {
         return moment(date).format('DD MMM YYYY');

@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <div class="">
+        <div class="list__container">
           <div class="clients__heading days__list">
             <span>Ime</span>
             <span>Grupa</span>
@@ -113,26 +113,8 @@
   import { mapGetters, mapActions } from 'vuex';
   import Loading from '@/components/utils/Loading.vue';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
-
-/*   const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
-  };
-
-  const customStyles = {
-    ul: {
-        //border: '2px solid red'
-    },
-    li: {
-        display: 'inline-block',
-        //border: '2px dotted green'
-    },
-    a: {
-        color: 'var(--purple-dark)'
-    }
-  }; */
+  import navigation from '../mixins/navigation';
+  import navigationSearch from '../mixins/navigationSearch';
 
   export default {
     name: 'Clients',
@@ -143,16 +125,15 @@
 
     data() {
       return {
-        pageOfItems: [],
-        filteredClients: [],
-        initialPage: 1,
-        pageSize: 10,
         customLabels,
         customStyles,
-        search: '',
-        appeared: false
       }
     },
+
+    mixins: [
+      navigation,
+      navigationSearch
+    ],
 
     computed: {
       ...mapGetters([ 'getAllClients', 
@@ -175,11 +156,6 @@
                       'fetchSchedules',
                       'formTypeChange',
                       'setLoadingState' ]),
-
-      onChangePage(pageOfItems) {
-        // update page of items
-        this.pageOfItems = pageOfItems;
-      },
 
       setPageSize() {
         this.fetchClientsPageSize(this.pageSize);
@@ -237,10 +213,6 @@
         return sche[0] ? sche[0].title + '/' + sche[0].startTime : '';
       },
 
-      onAppeared() {
-        this.appeared = true;
-      },
-
       async initClients() {
         await this.fetchClients();
         this.filteredClients = this.getAllClients.sort((a, b) => 
@@ -280,6 +252,10 @@
     display: grid;
     justify-content: center;
     justify-items: left;
+  }
+
+  .list__container {
+    justify-self: center;
   }
 
   .clients__list {
