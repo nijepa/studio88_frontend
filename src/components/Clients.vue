@@ -152,6 +152,7 @@
                       'fetchClient',
                       'fetchClientsPage',
                       'fetchClientsPageSize',
+                      'fetchFromForm',
                       'clientClear',
                       'fetchSchedules',
                       'formTypeChange',
@@ -187,6 +188,7 @@
       async clientActivities(client) {
         this.setLoadingState(true);
         await this.fetchClient(client);
+        this.fetchFromForm('clients');
         this.formTypeChange('clientactivity');
       },
 

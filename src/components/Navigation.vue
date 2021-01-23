@@ -120,6 +120,9 @@
     transform: scale(1.05);
   }
   
+  button:focus {
+    outline: none;
+  }
   nav {
     display: grid;
     grid-template-columns: repeat(6, auto);

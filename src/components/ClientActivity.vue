@@ -41,7 +41,7 @@
           </svg>
           <p>Nazad</p> 
         </button>
-        <h1>{{ getOneClient.name }}</h1>
+        <h1 class="cient__name">{{ getOneClient.name }}</h1>
       </div>
 
       <div class="dash__text filter_bar">Period od 
@@ -139,6 +139,7 @@
       ...mapGetters([ 'getOneClient',
                       'getAllAttendances',
                       'getAllPayments',
+                      'getFromForm',
                       'loadingState' ]),
     },
 
@@ -169,7 +170,7 @@
 
       async selectClient() {
         this.setLoadingState(true);
-        this.formTypeChange('client');
+        this.formTypeChange(this.getFromForm);
       },
 
       selectPeriod() {
@@ -280,8 +281,9 @@
   .activities__header {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 8fr;
+    grid-template-columns: auto 1fr;
     margin: 0 1em;
+    justify-self: stretch
   }
 
   .activities__list {
@@ -326,10 +328,16 @@
 
   .filter_bar {
     justify-self: center;
-    background: var(--gold-lighter);
+    /* background: var(--gold-lighter); */
     border-radius: .5em;
-    color: var(--black);
+    /* color: var(--black); */
     padding: 0 .5em;
     margin: .5em 0;
+  }
+
+  .cient__name {
+    justify-self: center;
+    color: var(--gold);
+    font-size: 2em;
   }
 </style>
