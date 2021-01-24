@@ -33,7 +33,12 @@
             <p>Nova vježbačica</p> 
           </button>
 
-          <div class="clients__ss search_group">
+          <search-bar :searchStr="search" 
+                      :pageSizeNr="pageSize"
+                      @changed="setPageSize"
+                      @typed="searchClients" />
+
+  <!--         <div class="clients__ss search_group">
             <div class="search__bar">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="30px" viewBox="0 0 297.888 297.888">
                 <g>
@@ -64,7 +69,7 @@
               </div>
               <label for="days">vježbačica</label>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="list__container">
@@ -115,12 +120,14 @@
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
   import navigation from '../mixins/navigation';
   import navigationSearch from '../mixins/navigationSearch';
+  import SearchBar from '@/components/utils/SearchBar.vue';
 
   export default {
     name: 'Clients',
 
     components: {
-      Loading
+      Loading,
+      SearchBar
     },
 
     data() {
@@ -144,7 +151,7 @@
     },
 
     watch: {
-      pageSize() { this.initClients() }
+      pageSize() { this.searchClients() }
     },
 
     methods: {
@@ -158,15 +165,17 @@
                       'formTypeChange',
                       'setLoadingState' ]),
 
-      setPageSize() {
-        this.fetchClientsPageSize(this.pageSize);
+      setPageSize(val) {
+        this.pageSize = val;
+        this.fetchClientsPageSize(val);
       },
       
-      searchClients() {
+      async searchClients(val = '') {
+        await this.initClients();
         let mu = this.getAllClients.filter(post => {
-          return post.name.toLowerCase().includes(this.search.toLowerCase()) || 
-                  post.email.toLowerCase().includes(this.search.toLowerCase()) || 
-                  post.mobile.includes(this.search)
+          return post.name.toLowerCase().includes(val.toLowerCase()) || 
+                  post.email.toLowerCase().includes(val.toLowerCase()) || 
+                  post.mobile.includes(val)
         });
         this.filteredClients = mu;
       },

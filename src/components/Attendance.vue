@@ -55,7 +55,11 @@
         <div class="members__list">
           <div class="members__items">
 
-          <div class="clients__ss search_group">
+          <search-bar :searchStr="search" 
+                      :pageSizeNr="pageSize"
+                      @changed="setPageSize"
+                      @typed="searchClients" />
+   <!--        <div class="clients__ss search_group">
             <div class="search__bar">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" height="30px" viewBox="0 0 297.888 297.888">
                 <g>
@@ -86,7 +90,7 @@
               </div>
               <label for="days">vježbačica</label>
             </div>
-          </div>
+          </div> -->
 
             <div class="">
               <div class="days__list attendance__list_header">
@@ -131,6 +135,7 @@
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
+  import SearchBar from '@/components/utils/SearchBar.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
   import DeleteButton from '@/components/utils/DeleteButton.vue';
   import actionsNotify from '../mixins/actionsNotify';
@@ -144,6 +149,7 @@
     components: {
       Loading, 
       Datepicker, 
+      SearchBar,
       ActionButtons,
       DeleteButton
     },
@@ -157,12 +163,6 @@
     data() {
       return {
         sr: sr,
-/*         search: '',
-        filteredClients: [],
-        pageOfItems: [],
-        initialPage: 1,
-        pageSize: 10,
-        appeared: false, */
         customLabels,
         customStyles,
         attendanceInput: {
@@ -201,20 +201,17 @@
                       'clearErrors',
                       'setLoadingState' ]),
 
-/*       onChangePage(pageOfItems) {
-        this.pageOfItems = pageOfItems;
-      }, */
-
-      setPageSize() {
-        this.fetchClientsPageSize(this.pageSize);
+      setPageSize(val) {
+        this.pageSize = val;
+        this.fetchClientsPageSize(val);
       },
         
-      async searchClients() {
+      async searchClients(val = '') {
         await this.initClients();
         let mu = this.attendanceInput.members.filter(post => {
-          return post.client.first_name.toLowerCase().includes(this.search.toLowerCase()) || 
-                  post.client.last_name.toLowerCase().includes(this.search.toLowerCase()) || 
-                  post.client.mobile.includes(this.search)
+          return post.client.first_name.toLowerCase().includes(val.toLowerCase()) || 
+                  post.client.last_name.toLowerCase().includes(val.toLowerCase()) || 
+                  post.client.mobile.includes(val)
         });
         this.filteredClients = mu;
       },
@@ -303,14 +300,14 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format('dddd')
+          return moment(String(value)).format("dddd")
         }
       }
     },
 
     async mounted() {
       let currentYear = new Date();
-      currentYear = moment().format('YYYY');
+      currentYear = moment().format("YYYY");
       this.year = currentYear;
       await this.fetchClients();
       await this.initClients();

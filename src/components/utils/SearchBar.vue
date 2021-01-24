@@ -11,7 +11,7 @@
             l54.6,54.601c13.044,13.043,13.044,34.19,0,47.234c-13.042,13.043-34.19,13.043-47.234,0L186.271,233.504z"/>
         </g>
       </svg>
-      <input type="text" name="search" id="search" @keyup="searchClients()"
+      <input type="text" name="search" id="search" @keyup="typed()"
               v-model="search" class="login_input search_input">
     </div>
 
@@ -21,7 +21,7 @@
         <select name="days" id="days" class=""
                 v-model="pageSize" 
                 :value="pageSize" 
-                @change="setPageSize()">
+                @change="changed()">
           <option :value="Number(10)">10</option>
           <option :value="Number(20)">20</option>
           <option :value="Number(50)">50</option>
@@ -40,15 +40,29 @@
     props: {
       searchStr: String,
       pageSizeNr: Number,
-      searchClients: Function,
-      setPageSize: Function
+
     },
 
     data() {
       return {
-        search: this.searchStr,
-        pageSize: this.pageSizeNr
+        search: '',
+        pageSize: 10
       }
+    },
+
+    methods: {
+      changed() {
+        this.$emit('changed', this.pageSize);
+      },
+
+      typed() {
+        this.$emit('typed', this.search);
+      }
+    },
+
+    created() {
+      this.search = this.searchStr;
+      this.pageSize = this.pageSizeNr;
     }
 
   }
