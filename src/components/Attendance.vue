@@ -226,7 +226,15 @@
         if (!this.getOneAttendance._id) {
           await this.fetchSchedules();
           const selDate = this.attendanceInput.attend_date.getDay();
-          const cgDays = ['Neđelja', 'Poneđeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'];
+          const cgDays = [
+            'Neđelja', 
+            'Poneđeljak', 
+            'Utorak', 
+            'Srijeda', 
+            'Četvrtak', 
+            'Petak', 
+            'Subota'
+          ];
           const cgDay = cgDays[selDate];
           const filteredSchedules = this.getAllSchedules.filter((a) => {
             return a.weekday.includes(cgDay)
@@ -287,10 +295,13 @@
       async initClients() {
         if (this.getOneAttendance._id) {
           this.attendanceInput = this.getOneAttendance;
-          this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
+          this.notClients = this.getAllClients
+            .filter((elem) => !this.mapMembers()
+            .find(({ _id }) => elem._id === _id));
           this.filteredClients = this.attendanceInput.members;
         } else {
-          this.notClients = this.getAllClients.filter(active => active.active === true);
+          this.notClients = this.getAllClients
+            .filter(active => active.active === true);
           await this.selectDate();
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
@@ -300,7 +311,7 @@
     filters: {
       formatDate: function(value) {
         if (value) {
-          return moment(String(value)).format("dddd")
+          return moment(value).format("dddd")
         }
       }
     },
@@ -433,21 +444,6 @@
     margin: .5em auto !important;
   }
 
-  .search_group {
-    background: var(--gold-lighter);
-    border-radius: .5em;
-    padding: 0 .5em;
-    margin-top: .5em;
-  }
-
-  .search_group label {
-    color: var(--black);
-  }
-
-  .search_group select {
-    margin: 0 .2em;
-  }
-
   select {
     cursor: pointer;
   }
@@ -500,36 +496,36 @@
   }
 
   .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: var(--purple-dark);
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--purple-dark);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
 
 </style>

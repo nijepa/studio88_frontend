@@ -101,6 +101,7 @@
     background: #fff;
     color: var(--black);
     border: 1px solid transparent;
+    border-radius: .2em;
     border-bottom: 1px solid #d1d1d1;
     box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
     font-family: inherit;

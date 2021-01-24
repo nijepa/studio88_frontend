@@ -352,29 +352,6 @@
     fill: var(--gold-light);
   }
 
-  .search__bar {
-    display: flex;
-    align-content: center;
-    align-items: center;
-  }
-
-  .search__bar svg {
-    cursor: pointer;
-  }
-
-  .search__bar:hover svg g {
-    fill: var(--gold) !important;
-  }
-  
-  .svg__parts:hover {
-    fill: var(--gold) !important;
-  }
-
-  .search_input {
-    margin-bottom: .1em;
-    padding: 0.2em .2em .2em;
-  }
-
   .not_schedule {
     color: var(--red);
   }

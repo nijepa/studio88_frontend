@@ -12,7 +12,7 @@
         </g>
       </svg>
       <input type="text" name="search" id="search" @keyup="typed()"
-              v-model="search" class="login_input search_input">
+              v-model="search" class="login_input search_input" placeholder="traži (ime, prezime, tel.)">
     </div>
 
     <div class="page__size">
@@ -69,5 +69,43 @@
 </script>
 
 <style>
+  .search_group {
+    background: var(--purple-lightest);
+    border-radius: .5em;
+    padding: 0 .5em;
+    margin-top: .5em;
+    border: 1px solid var(--purple-light);
+  }
 
+  .search_group label {
+    color: var(--gold);
+  }
+
+  .search_group select {
+    margin: 0 .2em;
+    color: var(--gold);
+  }
+
+  .search__bar {
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+
+  .search__bar svg {
+    cursor: pointer;
+  }
+
+  .search__bar:hover svg g {
+    fill: var(--gold) !important;
+  }
+  
+  .svg__parts:hover {
+    fill: var(--gold) !important;
+  }
+
+  .search_input {
+    margin-bottom: .1em;
+    padding: 0.2em .2em .2em;
+  }
 </style>

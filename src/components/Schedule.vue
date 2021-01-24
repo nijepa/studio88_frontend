@@ -57,7 +57,7 @@
             </p>
           </div>
 
-          <div class="members__items">
+          <div class="members__items notclients__container">
 
             <div class="input__field clients__add_list">
               <label for="date_start">Datum pristupa</label>
@@ -68,15 +68,28 @@
               </datepicker>
             </div>
             
-            <div class="input__field ">
-              <label for="">Dodaj vežbačicu</label>
-              <p v-for="client in notClients" :key="client._id" name="clients"
+            <div class="input__field notclients__list">
+              <label for="">Dodaj vježbačicu</label>
+
+              <search-bar :searchStr="search" 
+                          :pageSizeNr="pageSize"
+                          @changed="setPageSize"
+                          @typed="searchClients"
+                          class="schedule__search" />
+
+              <p v-for="client in pageOfItems" :key="client._id" name="clients"
                   class="login_input user_input members_input members__not" 
                   @click="addMember(client)">
                 {{ client.last_name}}, {{ client.first_name}} 
                 <span class="members__span"> - {{ client.mobile }}</span> 
               </p>
             </div>
+
+            <jw-pagination :items="filteredClients" @changePage="onChangePage" 
+                          :initialPage="initialPage" :pageSize="pageSize" 
+                          :labels="customLabels" :styles="customStyles"
+                          class="pagine">
+            </jw-pagination>
             
           </div>
         </div>
@@ -99,9 +112,13 @@
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
+  import SearchBar from '@/components/utils/SearchBar.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
   import DeleteButton from '@/components/utils/DeleteButton.vue';
   import actionsNotify from '../mixins/actionsNotify';
+  import navigation from '../mixins/navigation';
+  import navigationSearch from '../mixins/navigationSearch';
+  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
 
   export default {
     name: 'Schedule',
@@ -109,16 +126,29 @@
     components: {
       Loading, 
       Datepicker, 
+      SearchBar,
       ActionButtons,
       DeleteButton
     },
 
-    mixins: [actionsNotify],
+    mixins: [
+      actionsNotify,
+      navigation,
+      navigationSearch
+    ],
+
+    watch: {
+      pageSize() { 
+        this.searchClients();
+      }
+    },
 
     data() {
       return {
         enterClient: false,
         sr: sr,
+        customLabels,
+        customStyles,
         scheduleInput: {
           title: '',
           weekday: [],
@@ -145,6 +175,7 @@
       ...mapGetters([ 'getAllSchedules', 
                       'getOneSchedule',
                       'getAllClients',
+                      'getClientsPageSize',
                       'getErrors',
                       'loadingState' ]),
     },
@@ -154,9 +185,25 @@
                       'scheduleUpdate', 
                       'scheduleDelete',
                       'fetchClients',
+                      'fetchClientsPageSize',
                       'formTypeChange',
                       'clearErrors',
                       'setLoadingState' ]),
+
+      setPageSize(val) {
+        this.pageSize = val;
+        this.fetchClientsPageSize(val);
+      },
+        
+      async searchClients(val = '') {
+        await this.initClients();
+        let mu = this.notClients.filter(post => {
+          return post.first_name.toLowerCase().includes(val.toLowerCase()) || 
+                  post.last_name.toLowerCase().includes(val.toLowerCase()) || 
+                  post.mobile.includes(val)
+        });
+        this.filteredClients = mu;
+      },
 
       async addSchedule() {
         this.setLoadingState(true);
@@ -180,12 +227,14 @@
         if (!member ) {
           this.scheduleInput.members.push({'client':client, 'start_date':this.selectedDate});
           this.notClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
+          this.filteredClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
         }
       },
 
       removeMember(client) {
         this.scheduleInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
         this.notClients.push(client);
+        //this.filteredClients.push(client);
       },
 
       async delEx() {
@@ -199,6 +248,18 @@
             container = item.client;
             return container;
         });
+      },
+
+      async initClients() {
+        if (this.getOneSchedule._id) {
+          this.scheduleInput = this.getOneSchedule;
+          this.notClients = this.getAllClients
+            .filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
+        } else {
+          this.notClients = this.getAllClients;
+        }
+        this.filteredClients = this.notClients;
+        if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
     },
 
@@ -213,12 +274,7 @@
 
     async created() {
       await this.fetchClients();
-      if (this.getOneSchedule._id) {
-        this.scheduleInput = this.getOneSchedule;
-        this.notClients = this.getAllClients.filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-      } else {
-        this.notClients = this.getAllClients;
-      }
+      await this.initClients();
       this.setLoadingState(false);
     },
   }
@@ -255,6 +311,19 @@
 
   .clients__add_list {
     margin-top: 1em;
+  }
+
+  .schedule__search {
+    display: grid;
+    margin-bottom: .3em;
+  }
+
+  .notclients__container {
+    margin-left: .5em;
+  }
+
+  .notclients__list {
+    justify-items: stretch;
   }
 
   @media (max-width: 599px) {
