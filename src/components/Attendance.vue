@@ -13,7 +13,8 @@
           <div class="input__field att_date">
 
             <label for="datePicker">Datum 
-              <div class="tooltip" v-if="!getOneAttendance._id">
+              <tooltip  v-if="!getOneAttendance._id" tip="Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana." />
+      <!--         <div class="tooltip" v-if="!getOneAttendance._id">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" width="15px"
                     viewBox="0 0 23.625 23.625" style="enable-background:new 0 0 23.625 23.625;" xml:space="preserve">
                   <g>
@@ -34,7 +35,7 @@
                 <span class="tooltiptext">
                   Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana.
                 </span>
-              </div>
+              </div> -->
             </label>
             <datepicker v-model="attendanceInput.attend_date" 
                         placeholder="datum upisa" 
@@ -93,6 +94,32 @@
           </div> -->
 
             <div class="">
+              <!-- <div v-if="getOneAttendance._id" class="akcije"> -->
+              <div class="akcije">
+                <tooltip tip="Omogućava dodavanje vježbačica koje nisu u listi, kao i brisanje postojećih iz liste" />
+                <button @click.prevent="toggleActions()" class="btn__auto btn__auto_toggle">dodatne opcije</button>
+                <transition name="fail" mode="out-in">
+                <form v-if="actions" @submit="handleFormSubmit" class="form__auto">
+                  <autocomplete :search="searchClientsAdd"
+                                :get-result-value="getResultValue"
+                                @submit="handleSubmit"
+                                ref="autocomplete"
+                                placeholder="traži (ime) vježbačicu koja nije u listi"
+                  ></autocomplete>
+                  <button type="submit" class="btn__auto btn__auto_submit">
+                    <svg version="1.1" id="Layer_1" x="0px" y="0px" height="20px"
+                          viewBox="0 0 300.003 300.003" style="fill:var(--purple)" >
+                        <path d="M150,0C67.159,0,0.001,67.159,0.001,150c0,82.838,67.157,150.003,149.997,150.003S300.002,232.838,300.002,150
+                          C300.002,67.159,232.839,0,150,0z M213.281,166.501h-48.27v50.469c-0.003,8.463-6.863,15.323-15.328,15.323
+                          c-8.468,0-15.328-6.86-15.328-15.328v-50.464H87.37c-8.466-0.003-15.323-6.863-15.328-15.328c0-8.463,6.863-15.326,15.328-15.328
+                          l46.984,0.003V91.057c0-8.466,6.863-15.328,15.326-15.328c8.468,0,15.331,6.863,15.328,15.328l0.003,44.787l48.265,0.005
+                          c8.466-0.005,15.331,6.86,15.328,15.328C228.607,159.643,221.742,166.501,213.281,166.501z"/>
+                    </svg>
+                  </button>
+                </form>
+                </transition>
+              </div>
+              
               <div class="days__list attendance__list_header">
                 <span>Vježbačica</span>
                 <span>Prisutna</span>
@@ -107,6 +134,15 @@
                 </div>
                 <input type="checkbox" v-model="member.present" class="login_input user_input payment__price check">
                 <input type="text" v-model="member.note" class="login_input user_input payment__note">
+
+                <svg v-if="actions" @click="removeClient(member)" 
+                    class="btn_minus" version="1.1" id="Layer_1" x="0px" y="0px" height="20px"
+                    viewBox="0 0 300.003 300.003" style="fill:var(--purple)" xml:space="preserve">
+                      <path d="M150.001,0c-82.843,0-150,67.159-150,150c0,82.838,67.157,150.003,150,150.003c82.838,0,150-67.165,150-150.003
+                        C300.001,67.159,232.838,0,150.001,0z M197.218,166.283H92.41c-8.416,0-15.238-6.821-15.238-15.238s6.821-15.238,15.238-15.238
+                        H197.22c8.416,0,15.238,6.821,15.238,15.238S205.634,166.283,197.218,166.283z"/>
+                </svg>
+
               </div>
 
             </div>
@@ -138,10 +174,13 @@
   import SearchBar from '@/components/utils/SearchBar.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
   import DeleteButton from '@/components/utils/DeleteButton.vue';
+  import Tooltip from '@/components/utils/Tooltip.vue';
   import actionsNotify from '../mixins/actionsNotify';
   import navigation from '../mixins/navigation';
   import navigationSearch from '../mixins/navigationSearch';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+  import Autocomplete from '@trevoreyre/autocomplete-vue';
+  //import '@trevoreyre/autocomplete-vue/dist/style.css';
 
   export default {
     name: 'Attendance',
@@ -151,7 +190,9 @@
       Datepicker, 
       SearchBar,
       ActionButtons,
-      DeleteButton
+      DeleteButton,
+      Tooltip,
+      Autocomplete
     },
 
     mixins: [
@@ -171,6 +212,13 @@
           members: []
         },
         notClients: [],
+        actions: false,
+        input: '',
+        foundClient: {
+          _id: '',
+          note: '',
+          present: true
+        }
       }
     },
 
@@ -214,6 +262,56 @@
                   post.client.mobile.includes(val)
         });
         this.filteredClients = mu;
+      },
+
+      toggleActions() {
+        this.actions = !this.actions;
+      },
+
+      searchClientsAdd(input) {
+        this.input = input
+        this.submitted = false
+        //if (input.length < 1) { return [] }
+          return this.notClients.filter(post => {
+            return post.first_name.toLowerCase() 
+              .startsWith(input.toLowerCase())
+          })
+      },
+
+      getResultValue(result) {
+        return result.last_name + ', ' + result.first_name + ' - ' + result.mobile
+        //return result
+      },
+
+      handleSubmit(result) {
+        this.submittedResult = result;
+        this.foundClient.client = result;
+        if (this.getOneAttendance._id) this.foundClient._id = this.getOneAttendance._id;
+        console.log(result)
+        //alert(`You selected ${result}`)
+      },
+
+      handleFormSubmit(event) {
+        event.preventDefault()
+        console.log(event)
+        if (this.foundClient._id) {
+          this.attendanceInput.members.unshift(this.foundClient);
+          this.notClients.splice(this.notClients.findIndex(v => v._id === this.foundClient._id), 1);
+          this.foundClient = {
+            _id: '',
+            note: '',
+            present: true
+          }
+          this.input = '';
+          this.value = ''
+          this.$refs.autocomplete.value = ''
+        }
+      },
+
+      removeClient(client) {
+        //this.attendanceInput.members.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
+        this.filteredClients.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
+        this.notClients.push(client.client);
       },
 
       presentClients() {
@@ -276,7 +374,7 @@
           })
         }
         this.filteredClients = this.attendanceInput.members
-        this.notClients = [];
+        //this.notClients = [];
       },
 
       mapMembers() {
@@ -300,9 +398,10 @@
             .find(({ _id }) => elem._id === _id));
           this.filteredClients = this.attendanceInput.members;
         } else {
-          this.notClients = this.getAllClients
-            .filter(active => active.active === true);
           await this.selectDate();
+          this.notClients = this.getAllClients
+            .filter((elem) => !this.mapMembers()
+            .find(({ _id }) => elem._id === _id));
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
@@ -470,7 +569,7 @@
     text-align: right;
     border-radius: .5em;
     /* border: 1px solid var(--gold); */
-    padding: .2em;
+    padding: .2em .3em;
     justify-self: end;
     align-self: baseline;
     margin-top: .5em;
@@ -489,43 +588,103 @@
     margin-left: .5em;
   }
 
-  .tooltip {
-    position: relative;
-    display: inline-block;
+  .form__auto {
+    display: flex;
+    align-items: center;
+  }
+
+  .autocomplete-input {
+    /* border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important; */
+    background-color: #ddd;
+    border: 2px solid transparent;
+    padding: .3em;
+    margin: 0;
+  }
+
+  .autocomplete-input:hover, .autocomplete-input:focus {
+    background-color: white;
+    border: 2px solid var(--black);
+    border-radius: .3em;
+    outline: none;
+  }
+
+  .autocomplete-result-list {
+    background-color: var(--white);
+    color: var(--purple-dark);
+    padding: .3em;
+    margin: 0;
+    border-bottom-left-radius: .3em;
+    border-bottom-right-radius: .3em;
+    list-style: none;
     cursor: pointer;
   }
 
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: var(--purple-dark);
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
+  .autocomplete-result-list li {
+    padding: .3em;
+    border-radius: .3em;
   }
 
-  .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
+  .btn__auto {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0 16px;
+    line-height: 1;
+    background: #ddd;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin: .3em 0;
   }
 
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+  .btn__auto:hover {
+    outline: none;
+    border-color: #ccc;
+    background: #ccc;
   }
+
+  .btn__auto:hover svg {
+    fill: var(--gold) !important;
+  }
+
+  .btn__auto_toggle {
+    border-radius: 0;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding: .7em;
+    margin-left: .2em;
+  }
+
+  .btn__auto_submit {
+    padding: .4em;
+  }
+
+  .btn_minus {
+    cursor: pointer;
+    margin-right: .2em;
+  }
+
+  .btn_minus:hover {
+    fill: var(--gold) !important;
+  }
+
+
+pre {
+/*   position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: auto; */
+  /* padding: 24px; */
+}
+
+.akcije {
+  display: flex;
+  align-items: center;
+}
 
 </style>

@@ -309,6 +309,10 @@
     font-size: 1em;
   }
 
+  .members__items .members__not:nth-child(odd) {
+    background-color: var(--gold-lighter) !important;
+  }
+
   .clients__add_list {
     margin-top: 1em;
   }

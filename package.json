@@ -2,7 +2,7 @@
   "name": "studio88_frontend",
   "description": "A pilates club management project",
   "author": "Nikola Pavicevic <nijepa@gmail.com>",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve -s dist",
@@ -11,6 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@trevoreyre/autocomplete-vue": "^2.2.0",
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
