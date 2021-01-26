@@ -60,7 +60,10 @@
           <div class="members__items notclients__container">
 
             <div class="input__field clients__add_list">
-              <label for="date_start">Datum pristupa</label>
+              <label for="date_start">
+                Datum pristupa
+                <tooltip tip="Izaberi datum dodavanja vježbačice u grupu, zatim je dodaj iz liste" />
+              </label>
               <datepicker v-model="selectedDate" 
                         placeholder="datum pristupa" 
                         class="login_input user_input"
@@ -115,6 +118,7 @@
   import SearchBar from '@/components/utils/SearchBar.vue';
   import ActionButtons from '@/components/utils/ActionButtons.vue';
   import DeleteButton from '@/components/utils/DeleteButton.vue';
+  import Tooltip from '@/components/utils/Tooltip.vue';
   import actionsNotify from '../mixins/actionsNotify';
   import navigation from '../mixins/navigation';
   import navigationSearch from '../mixins/navigationSearch';
@@ -128,7 +132,8 @@
       Datepicker, 
       SearchBar,
       ActionButtons,
-      DeleteButton
+      DeleteButton,
+      Tooltip
     },
 
     mixins: [

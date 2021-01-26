@@ -33,6 +33,13 @@
             <p>Nova vježbačica</p> 
           </button>
 
+          <div class="total__clients">
+            <h3>AKTIVNE : </h3>
+            <h1>{{ activeClients.length }} </h1>
+            <h3> OD </h3>
+            <h1>{{ getAllClients.length }}</h1>
+          </div>
+          
           <search-bar :searchStr="search" 
                       :pageSizeNr="pageSize"
                       @changed="setPageSize"
@@ -148,6 +155,9 @@
                       'getClientsPage',
                       'getClientsPageSize',
                       'loadingState' ]),
+      activeClients: function () {
+        return this.getAllClients.filter(a => a.active === true)
+      }
     },
 
     watch: {
@@ -250,9 +260,25 @@
 </script>
 
 <style>
+  .total__clients {
+    display: flex;
+    align-items: baseline;
+    justify-self: center;
+    letter-spacing: .1em;
+  }
+
+  .total__clients h1 {
+    margin: 0 .3em;
+  }
+
+  .total__clients h3 {
+    color: var(--gold);
+  }
+
   .clients__manipulate {
     width: 100%;
     overflow: hidden;
+    display: grid;
   }
 
   .clients__ss {
@@ -314,6 +340,7 @@
     margin-bottom: .3em;
     color: var(--purple);
     border-bottom: 2px solid var(--purple);
+    justify-self: left;
   }
 
   .client__add:hover {

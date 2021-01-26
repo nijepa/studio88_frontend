@@ -48,7 +48,8 @@ export default
             position: "bottomLeft"
           },
           success: {
-            position: "center"
+            position: "center",
+            timeout: 3000,
           },
           warning: {
             position: "topLeft"
