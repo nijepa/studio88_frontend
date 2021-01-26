@@ -524,7 +524,7 @@
     grid-column-gap: 1em;
   }
 
-  .members__items .members_input:nth-child(odd) {
+  .members__items .members_input:nth-child(even) {
     background-color: var(--purple-lighter);
     border-radius: .5em;
   }

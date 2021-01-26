@@ -314,7 +314,7 @@
     font-size: 1em;
   }
 
-  .members__items .members__not:nth-child(odd) {
+  .members__items .members__not:nth-child(even) {
     background-color: var(--gold-lighter) !important;
   }
 

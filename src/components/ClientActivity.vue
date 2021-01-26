@@ -64,7 +64,7 @@
 
       <div class="activities__wrapper">
         <div class="">
-          <h3 class="activities__title">Plaćanja - <span>ukupno : {{ totalPayments() }}</span></h3>
+          <h3 class="activities__title">Plaćanja - ukupno : <span class="activities__title_val"> {{ totalPayments() }}</span></h3>
           <div class="payments__head days__list ">
             <span>Godina</span>
             <span>Mjesec</span>
@@ -72,27 +72,37 @@
             <span>Iznos</span>
             <span>Napomena</span>
           </div>
-          <div v-for="client in clientPayments" :key="client._id" class="activities__list payments">
+          <div v-for="client in pageOfItems" :key="client._id" class="activities__list payments">
             <p class="activities__item">{{ client.year }}</p>
             <p class="activities__item">{{ client.month }}</p>
             <p class="activities__item">{{ client.date | formatDate1 }}</p>
             <p class="activities__item">{{ client.amount }}</p>
             <p class="activities__item">{{ client.note }}</p>
           </div>
+          <jw-pagination :items="filteredClients" @changePage="onChangePage" 
+                          :initialPage="initialPage" :pageSize="pageSize" 
+                          :labels="customLabels" :styles="customStyles"
+                          class="pagine">
+          </jw-pagination>
         </div>
 
         <div class="">
-          <h3 class="activities__title">Prisustva - <span>ukupno : {{ totalAttendances() }} od {{ clientAttendances.length }}</span></h3>
+          <h3 class="activities__title">Prisustva - ukupno : <span class="activities__title_val"> {{ totalAttendances() }} </span> od <span class="activities__title_val"> {{ clientAttendances.length }}</span></h3>
           <div class="days__list attendances__head">
             <span>Datum</span>
             <span>Prisutna</span>
             <span>Napomena</span>
           </div>
-          <div v-for="client in clientAttendances" :key="client._id" class="activities__list attendances">
+          <div v-for="client in pageOfItemsA" :key="client._id" class="activities__list attendances">
             <p class="activities__item">{{ client.date | formatDate }}</p>
-            <input type="checkbox" class="activities__item" v-model="client.present" disabled>
+            <input type="checkbox" class="activities__item" v-model="client.present" onclick="return false;" readonly="readonly">
             <p class="activities__item">{{ client.note }}</p>
           </div>
+          <jw-pagination :items="filteredClientsA" @changePage="onChangePageA" 
+                          :initialPage="initialPage" :pageSize="pageSize" 
+                          :labels="customLabels" :styles="customStyles"
+                          class="pagine">
+          </jw-pagination>
         </div>
       </div>
       
@@ -108,6 +118,7 @@
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
   import navigation from '../mixins/navigation';
+  import navigationSearch from '../mixins/navigationSearch';
 
   export default {
     name: 'ClientActivity',
@@ -118,7 +129,8 @@
     },
 
     mixins: [
-      navigation
+      navigation,
+      navigationSearch
     ],
 
     data() {
@@ -126,6 +138,8 @@
         sr: sr,
         clientPayments: [],
         clientAttendances: [],
+        pageOfItemsA: [],
+        filteredClientsA: [],
         customLabels,
         customStyles,
         search: '',
@@ -148,8 +162,18 @@
                       'fetchPayments',
                       'fetchAttendances',
                       'clientClear',
+                      'fetchClientsPageSize',
                       'formTypeChange',
                       'setLoadingState' ]),
+
+      setPageSize(val) {
+        this.pageSize = val;
+        this.fetchClientsPageSize(val);
+      },
+
+      onChangePageA(pageOfItems) {
+        this.pageOfItemsA = pageOfItems;
+      },
 
       customFormatter(date) {
         return moment(date).format('DD MMM YYYY');
@@ -180,21 +204,24 @@
           .filter(year => 
                     year.date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
                     year.date <= moment(this.dateTill).format('YYYY-MM-DD'));
+        this.filteredClientsA = this.clientAttendances;
         this.clientPayments = this.mapPayments().filter(post => {
             return post.client._id == this.getOneClient._id
           })
           .filter(year => 
-                    year.date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
-                    year.date <= moment(this.dateTill).format('YYYY-MM-DD'));
+                    year.datep >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    year.datep <= moment(this.dateTill).format('YYYY-MM-DD'));
+        this.filteredClients = this.clientPayments;
       },
 
       mapPayments() {
         let obj, arr = []
         for (let i=0; i<this.getAllPayments.length; i++) {
-          for(let j =0; j<this.getAllPayments[i].members.length; j++) {
+          for(let j=0; j<this.getAllPayments[i].members.length; j++) {
             obj = {
               "year": this.getAllPayments[i].payment_year,
               "month": this.getAllPayments[i].payment_month,
+              "datep": this.getAllPayments[i].payment_date,
               "amount": this.getAllPayments[i].members[j].payment_amount,
               "date": this.getAllPayments[i].members[j].payment_date,
               "client": this.getAllPayments[i].members[j].client,
@@ -239,7 +266,7 @@
       formatDate: function(value) {
         if (value) {
           moment.locale('sr');
-          return moment(String(value)).format('dddd, ll')
+          return moment(String(value)).format('ll dddd')
         }
       },
       formatDate1: function(value) {
@@ -260,6 +287,7 @@
         return post.client._id == this.getOneClient._id
       });
       this.selectPeriod();
+      this.pageSize = 12;
       this.setLoadingState(false);
     }
   }
@@ -276,6 +304,12 @@
 
   .activities__title {
     font-variant: small-caps;
+    color: var(--gold);
+    letter-spacing: .1em;
+  }
+
+  .activities__title_val {
+    color: var(--purple-dark);
   }
 
   .activities__header {
@@ -291,23 +325,27 @@
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: .2em;
     justify-content: center;
-    justify-items: center;
+    justify-items: left;
     align-items: center;
     margin-top: .1em;
     border-radius: 1em;
     transition: ease .5s all;
+    padding-left: .2em;
   }
 
   .payments {
-    grid-template-columns: repeat(5, 1fr);
+    /* grid-template-columns: repeat(5, 1fr); */
+    grid-template-columns: auto repeat(2, 1fr) auto 1fr;
   }
 
   .payments__head {
-    grid-template-columns: repeat(5, 1fr) !important;
+    /* grid-template-columns: repeat(5, 1fr) !important; */
+    grid-template-columns: auto repeat(2, 1fr) auto 1fr !important;
   }
 
   .attendances {
-    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(3, 1fr); */
+    grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
   }
 
