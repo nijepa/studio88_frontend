@@ -97,8 +97,8 @@
               <!-- <div v-if="getOneAttendance._id" class="akcije"> -->
               <div class="akcije">
                 <tooltip tip="Omogućava dodavanje vježbačica koje nisu u listi, kao i brisanje postojećih iz liste" />
-                <button @click.prevent="toggleActions()" class="btn__auto btn__auto_toggle">dodatne opcije</button>
-                <transition name="fail" mode="out-in">
+                <button @click.prevent="toggleActions()" class="btn__auto btn__auto_toggle">{{ btn_title }}</button>
+                <transition name="list" mode="out-in">
                 <form v-if="actions" @submit="handleFormSubmit" class="form__auto">
                   <autocomplete :search="searchClientsAdd"
                                 :get-result-value="getResultValue"
@@ -218,7 +218,8 @@
           _id: '',
           note: '',
           present: true
-        }
+        },
+        btn_title: 'dodatne opcije'
       }
     },
 
@@ -266,6 +267,7 @@
 
       toggleActions() {
         this.actions = !this.actions;
+        this.btn_title === 'dodatne opcije' ? this.btn_title = 'sakrij' : this.btn_title = 'dodatne opcije';
       },
 
       searchClientsAdd(input) {
@@ -286,14 +288,15 @@
       handleSubmit(result) {
         this.submittedResult = result;
         this.foundClient.client = result;
-        if (this.getOneAttendance._id) this.foundClient._id = this.getOneAttendance._id;
+        //if (this.getOneAttendance._id) this.foundClient._id = this.getOneAttendance._id;
+        this.foundClient._id = this.foundClient.client._id;
         console.log(result)
         //alert(`You selected ${result}`)
       },
 
       handleFormSubmit(event) {
         event.preventDefault()
-        console.log(event)
+        console.log(this.foundClient)
         if (this.foundClient._id) {
           this.attendanceInput.members.unshift(this.foundClient);
           this.notClients.splice(this.notClients.findIndex(v => v._id === this.foundClient._id), 1);
@@ -309,8 +312,8 @@
       },
 
       removeClient(client) {
-        //this.attendanceInput.members.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
-        this.filteredClients.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
+        this.attendanceInput.members.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
+        //this.filteredClients.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
         this.notClients.push(client.client);
       },
 
@@ -334,14 +337,14 @@
             'Subota'
           ];
           const cgDay = cgDays[selDate];
-          const filteredSchedules = this.getAllSchedules.filter((a) => {
+          const filteredSchedules = await this.getAllSchedules.filter((a) => {
             return a.weekday.includes(cgDay)
           }).map(item => {
               let container = {};
               container = item.members;
               return container;
           })
-          const merged = [].concat.apply([], filteredSchedules);
+          const merged = await [].concat.apply([], filteredSchedules);
           this.attendanceInput.members = [];
           this.filteredClients = [];
           this.addAllmembers(merged);
@@ -365,16 +368,19 @@
         }
       },
 
-      addAllmembers(cli) {
+      async addAllmembers(cli) {
         for (let i = 0; i < cli.filter(active => active.client.active !== false).length; i++) {
           this.attendanceInput.members.push({
-            'client':this.getAllClients.filter(active => active.active !== false)[i], 
+            //'client':this.getAllClients.filter(active => active.active !== false)[i], 
+            'client':cli[i].client,
             'present':true, 
-            'note': ''
-          })
+            'note': '',
+            '_id': cli[i]._id
+          });
         }
-        this.filteredClients = this.attendanceInput.members
-        //this.notClients = [];
+        this.attendanceInput.members.sort((a, b) => 
+          (a.client.last_name.toLowerCase() > b.client.last_name.toLowerCase() ? 1 : -1));
+        this.initClients();
       },
 
       mapMembers() {
@@ -398,10 +404,12 @@
             .find(({ _id }) => elem._id === _id));
           this.filteredClients = this.attendanceInput.members;
         } else {
-          await this.selectDate();
-          this.notClients = this.getAllClients
+          //await this.selectDate();
+          console.log('888')
+          this.notClients = await this.getAllClients
             .filter((elem) => !this.mapMembers()
             .find(({ _id }) => elem._id === _id));
+          this.filteredClients = this.attendanceInput.members;
         }
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
       }
@@ -421,6 +429,7 @@
       this.year = currentYear;
       await this.fetchClients();
       await this.initClients();
+      if (this.getOneAttendance._id) { await this.selectDate(); }
       this.setLoadingState(false);
     },
   }
@@ -655,12 +664,12 @@
     border-radius: 0;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    padding: .7em;
+    padding: .8em;
     margin-left: .2em;
   }
 
   .btn__auto_submit {
-    padding: .4em;
+    padding: .5em;
   }
 
   .btn_minus {
@@ -672,19 +681,20 @@
     fill: var(--gold) !important;
   }
 
+  .akcije {
+    display: flex;
+    align-items: center;
+  }
 
-pre {
-/*   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  overflow: auto; */
-  /* padding: 24px; */
+.list-enter,
+.list-leave-to {
+
+  opacity: 0;
 }
 
-.akcije {
-  display: flex;
-  align-items: center;
-}
+.list-enter-active,
+.list-leave-active {
 
+  transition: opacity .4s;
+}
 </style>
