@@ -74,7 +74,6 @@ const actions = {
   async attendanceUpdate({commit}, attendanceData) {
     await axios.put(URL + 'attendances/' + attendanceData._id, attendanceData)
       .then((response) => {
-        console.log('uuu')
         commit('updateAttendance', response.data);
         //router.push("/dashboard");
       })

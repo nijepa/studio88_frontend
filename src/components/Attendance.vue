@@ -290,13 +290,10 @@
         this.foundClient.client = result;
         //if (this.getOneAttendance._id) this.foundClient._id = this.getOneAttendance._id;
         this.foundClient._id = this.foundClient.client._id;
-        console.log(result)
-        //alert(`You selected ${result}`)
       },
 
       handleFormSubmit(event) {
         event.preventDefault()
-        console.log(this.foundClient)
         if (this.foundClient._id) {
           this.attendanceInput.members.unshift(this.foundClient);
           this.notClients.splice(this.notClients.findIndex(v => v._id === this.foundClient._id), 1);
@@ -404,8 +401,6 @@
             .find(({ _id }) => elem._id === _id));
           this.filteredClients = this.attendanceInput.members;
         } else {
-          //await this.selectDate();
-          console.log('888')
           this.notClients = await this.getAllClients
             .filter((elem) => !this.mapMembers()
             .find(({ _id }) => elem._id === _id));
@@ -429,7 +424,7 @@
       this.year = currentYear;
       await this.fetchClients();
       await this.initClients();
-      if (this.getOneAttendance._id) { await this.selectDate(); }
+      if (!this.getOneAttendance._id) { await this.selectDate(); }
       this.setLoadingState(false);
     },
   }
@@ -459,7 +454,7 @@
       grid-template-columns: repeat(2 ,auto) ;
     }
     .activities__list {
-      grid-template-columns: repeat(2 ,1fr) !important;
+      grid-template-columns: 2fr 1fr !important;;
     }
     .activities__wrapper {
       grid-template-columns: auto !important;
@@ -475,6 +470,9 @@
     }
     .cient__name {
       font-size: 2em;
+    }
+    .activities__check {
+      justify-self: center;
     }
   }
 

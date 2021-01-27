@@ -243,7 +243,6 @@
     async created() {
       await this.fetchGenerals();
       if (this.getGeneral._id) {
-        console.log('111')
         this.generalInput = this.getGeneral;
         this.price._id = this.getGeneral._id;
       } else {

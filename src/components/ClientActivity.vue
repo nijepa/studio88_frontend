@@ -68,6 +68,7 @@
           <div class="payments__head days__list ">
             <span>Godina</span>
             <span>Mjesec</span>
+            <!-- <span>Evidentirano</span> -->
             <span>Datum</span>
             <span>Iznos</span>
             <span>Napomena</span>
@@ -75,6 +76,7 @@
           <div v-for="client in pageOfItems" :key="client._id" class="activities__list payments">
             <p class="activities__item">{{ client.year }}</p>
             <p class="activities__item">{{ client.month }}</p>
+            <!-- <p class="activities__item">{{ client.datep | formatDate1 }}</p> -->
             <p class="activities__item">{{ client.date | formatDate1 }}</p>
             <p class="activities__item">{{ client.amount }}</p>
             <p class="activities__item">{{ client.note }}</p>
@@ -95,7 +97,7 @@
           </div>
           <div v-for="client in pageOfItemsA" :key="client._id" class="activities__list attendances">
             <p class="activities__item">{{ client.date | formatDate }}</p>
-            <input type="checkbox" class="activities__item" v-model="client.present" onclick="return false;" readonly="readonly">
+            <input type="checkbox" class="activities__item activities__check" v-model="client.present" onclick="return false;" readonly="readonly">
             <p class="activities__item">{{ client.note }}</p>
           </div>
           <jw-pagination :items="filteredClientsA" @changePage="onChangePageA" 
@@ -335,7 +337,7 @@
 
   .payments {
     /* grid-template-columns: repeat(5, 1fr); */
-    grid-template-columns: auto repeat(2, 1fr) auto 1fr;
+    grid-template-columns: auto 1fr auto auto 1fr;
   }
 
   .payments__head {
