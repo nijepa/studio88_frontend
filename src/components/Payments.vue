@@ -115,6 +115,7 @@
     <jw-pagination :items="getAllPayments" @changePage="onChangePage" 
                     :labels="customLabels" :styles="customStyles" class="pagine">
     </jw-pagination>
+    
   </div>
 </template>
 

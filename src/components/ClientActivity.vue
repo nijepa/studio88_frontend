@@ -68,7 +68,6 @@
           <div class="payments__head days__list ">
             <span>Godina</span>
             <span>Mjesec</span>
-            <!-- <span>Evidentirano</span> -->
             <span>Datum</span>
             <span>Iznos</span>
             <span>Napomena</span>
@@ -76,11 +75,11 @@
           <div v-for="client in pageOfItems" :key="client._id" class="activities__list payments">
             <p class="activities__item">{{ client.year }}</p>
             <p class="activities__item">{{ client.month }}</p>
-            <!-- <p class="activities__item">{{ client.datep | formatDate1 }}</p> -->
             <p class="activities__item">{{ client.date | formatDate1 }}</p>
             <p class="activities__item">{{ client.amount }}</p>
             <p class="activities__item">{{ client.note }}</p>
           </div>
+
           <jw-pagination :items="filteredClients" @changePage="onChangePage" 
                           :initialPage="initialPage" :pageSize="pageSize" 
                           :labels="customLabels" :styles="customStyles"
@@ -100,6 +99,7 @@
             <input type="checkbox" class="activities__item activities__check" v-model="client.present" onclick="return false;" readonly="readonly">
             <p class="activities__item">{{ client.note }}</p>
           </div>
+
           <jw-pagination :items="filteredClientsA" @changePage="onChangePageA" 
                           :initialPage="initialPage" :pageSize="pageSize" 
                           :labels="customLabels" :styles="customStyles"
@@ -183,8 +183,6 @@
 
       getPreviousMonday() {
         let firstDay = new Date(new Date().getFullYear(), 0, 2);
-        // let date = new Date();
-        // let firstDay = new Date(date.getFullYear(), date.getMonth(), 2);
         return new Date(firstDay).toISOString().slice(0,10);
       },
       
@@ -336,17 +334,14 @@
   }
 
   .payments {
-    /* grid-template-columns: repeat(5, 1fr); */
     grid-template-columns: auto 1fr auto auto 1fr;
   }
 
   .payments__head {
-    /* grid-template-columns: repeat(5, 1fr) !important; */
     grid-template-columns: auto repeat(2, 1fr) auto 1fr !important;
   }
 
   .attendances {
-    /* grid-template-columns: repeat(3, 1fr); */
     grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
   }
@@ -355,7 +350,9 @@
     grid-template-columns: repeat(3, 1fr) !important;
   }
 
-  div.activities__list:nth-child(even) {background: var(--purple-lighter);}
+  div.activities__list:nth-child(even) {
+    background: var(--purple-lighter);
+  }
 
   .activities__item {
     padding: .1em;
@@ -368,9 +365,7 @@
 
   .filter_bar {
     justify-self: center;
-    /* background: var(--gold-lighter); */
     border-radius: .5em;
-    /* color: var(--black); */
     padding: 0 .5em;
     margin: .5em 0;
   }

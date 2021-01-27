@@ -68,5 +68,17 @@
 </script>
 
 <style>
+  .delete__btn {
+    color: var(--red);
+    border-bottom: 2px solid var(--red);
+    font-size: .8em;
+    grid-column-gap: .2em;
+    justify-self: end;
+  }
 
+  .delete__btn:hover {
+    background: var(--red-light) ;
+    color: var(--red-dark);
+    border-bottom: 2px solid var(--red-dark);
+  }
 </style>

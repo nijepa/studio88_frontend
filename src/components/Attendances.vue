@@ -7,8 +7,8 @@
       <div v-else class="client__wrapper" key="2">
 
         <button type="submit" @click="newAttendance()" class="action_btn client__add">
-          <svg fill="var(--purple)" width="50px" height="50px" viewBox="0 0 1106.000000 1280.000000"
-            preserveAspectRatio="xMidYMid meet">
+          <svg fill="var(--purple)" width="50px" height="50px" 
+              viewBox="0 0 1106.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
             fill="var(--purple)" stroke="none">
             <path d="M1975 12688 c-61 -121 -60 -116 -39 -245 9 -57 0 -87 -41 -132 -33

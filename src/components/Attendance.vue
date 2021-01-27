@@ -13,29 +13,8 @@
           <div class="input__field att_date">
 
             <label for="datePicker">Datum 
-              <tooltip  v-if="!getOneAttendance._id" tip="Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana." />
-      <!--         <div class="tooltip" v-if="!getOneAttendance._id">
-                <svg version="1.1" id="Capa_1" x="0px" y="0px" width="15px"
-                    viewBox="0 0 23.625 23.625" style="enable-background:new 0 0 23.625 23.625;" xml:space="preserve">
-                  <g>
-                    <path style="fill:var(--purple);" d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
-                      S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
-                      c-0.736,0-1.309-0.18-1.717-0.539s-0.611-0.814-0.611-1.367c0-0.215,0.015-0.435,0.045-0.659c0.031-0.224,0.08-0.476,0.147-0.759
-                      l0.761-2.688c0.067-0.258,0.125-0.503,0.171-0.731c0.046-0.23,0.068-0.441,0.068-0.633c0-0.342-0.071-0.582-0.212-0.717
-                      c-0.143-0.135-0.412-0.201-0.813-0.201c-0.196,0-0.398,0.029-0.605,0.09c-0.205,0.063-0.383,0.12-0.529,0.176l0.201-0.828
-                      c0.498-0.203,0.975-0.377,1.43-0.521c0.455-0.146,0.885-0.218,1.29-0.218c0.731,0,1.295,0.178,1.692,0.53
-                      c0.395,0.353,0.594,0.812,0.594,1.376c0,0.117-0.014,0.323-0.041,0.617c-0.027,0.295-0.078,0.564-0.152,0.811l-0.757,2.68
-                      c-0.062,0.215-0.117,0.461-0.167,0.736c-0.049,0.275-0.073,0.485-0.073,0.626c0,0.356,0.079,0.599,0.239,0.728
-                      c0.158,0.129,0.435,0.194,0.827,0.194c0.185,0,0.392-0.033,0.626-0.097c0.232-0.064,0.4-0.121,0.506-0.17L14.271,18.307z
-                      M14.137,7.429c-0.353,0.328-0.778,0.492-1.275,0.492c-0.496,0-0.924-0.164-1.28-0.492c-0.354-0.328-0.533-0.727-0.533-1.193
-                      c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
-                      c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
-                  </g>
-                </svg>
-                <span class="tooltiptext">
-                  Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana.
-                </span>
-              </div> -->
+              <tooltip v-if="!getOneAttendance._id" 
+                        tip="Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana." />
             </label>
             <datepicker v-model="attendanceInput.attend_date" 
                         placeholder="datum upisa" 
@@ -60,63 +39,32 @@
                       :pageSizeNr="pageSize"
                       @changed="setPageSize"
                       @typed="searchClients" />
-   <!--        <div class="clients__ss search_group">
-            <div class="search__bar">
-              <svg version="1.1" id="Layer_1" x="0px" y="0px" height="30px" viewBox="0 0 297.888 297.888">
-                <g>
-                  <path class="svg__parts" style="fill:var(--purple);" d="M218.971,187.618c8.659,8.658,8.659,22.695,0,31.354c-8.657,8.658-22.694,8.657-31.352,0
-                    l-50.096-50.096c-8.657-8.658-8.659-22.695-0.001-31.353c8.659-8.659,22.696-8.658,31.355,0L218.971,187.618z"/>
-                  <circle class="svg__parts" style="fill:var(--purple);" cx="100.697" cy="100.697" r="100.697"/>
-                  <circle class="svg__parts" style="fill:var(--purple-light);" cx="100.697" cy="100.697" r="64.794"/>
-                  <path class="svg__parts" style="fill:var(--purple);" d="M186.271,233.504c-13.044-13.042-13.044-34.191,0-47.234c13.043-13.044,34.19-13.043,47.234,0
-                    l54.6,54.601c13.044,13.043,13.044,34.19,0,47.234c-13.042,13.043-34.19,13.043-47.234,0L186.271,233.504z"/>
-                </g>
-              </svg>
-              <input type="text" name="search" id="search" @keyup="searchClients()"
-                      v-model="search" class="login_input search_input" placeholder="traži (ime, prezime, tel.)">
-            </div>
-
-            <div class="page__size">
-              <label for="days">Prikaži</label>
-              <div class="login_input user_input nr_clients">
-                <select name="days" id="days" class=""
-                        v-model="pageSize" 
-                        :value="pageSize" 
-                        @change="setPageSize()">
-                  <option :value="Number(10)">10</option>
-                  <option :value="Number(20)">20</option>
-                  <option :value="Number(50)">50</option>
-                  <option :value="Number(1000)">sve</option>
-                </select>
-              </div>
-              <label for="days">vježbačica</label>
-            </div>
-          </div> -->
 
             <div class="">
-              <!-- <div v-if="getOneAttendance._id" class="akcije"> -->
               <div class="akcije">
                 <tooltip tip="Omogućava dodavanje vježbačica koje nisu u listi, kao i brisanje postojećih iz liste" />
+
                 <button @click.prevent="toggleActions()" class="btn__auto btn__auto_toggle">{{ btn_title }}</button>
+
                 <transition name="list" mode="out-in">
-                <form v-if="actions" @submit="handleFormSubmit" class="form__auto">
-                  <autocomplete :search="searchClientsAdd"
-                                :get-result-value="getResultValue"
-                                @submit="handleSubmit"
-                                ref="autocomplete"
-                                placeholder="traži (ime) vježbačicu koja nije u listi"
-                  ></autocomplete>
-                  <button type="submit" class="btn__auto btn__auto_submit">
-                    <svg version="1.1" id="Layer_1" x="0px" y="0px" height="20px"
-                          viewBox="0 0 300.003 300.003" style="fill:var(--purple)" >
-                        <path d="M150,0C67.159,0,0.001,67.159,0.001,150c0,82.838,67.157,150.003,149.997,150.003S300.002,232.838,300.002,150
-                          C300.002,67.159,232.839,0,150,0z M213.281,166.501h-48.27v50.469c-0.003,8.463-6.863,15.323-15.328,15.323
-                          c-8.468,0-15.328-6.86-15.328-15.328v-50.464H87.37c-8.466-0.003-15.323-6.863-15.328-15.328c0-8.463,6.863-15.326,15.328-15.328
-                          l46.984,0.003V91.057c0-8.466,6.863-15.328,15.326-15.328c8.468,0,15.331,6.863,15.328,15.328l0.003,44.787l48.265,0.005
-                          c8.466-0.005,15.331,6.86,15.328,15.328C228.607,159.643,221.742,166.501,213.281,166.501z"/>
-                    </svg>
-                  </button>
-                </form>
+                  <form v-if="actions" @submit="handleFormSubmit" class="form__auto">
+                    <autocomplete :search="searchClientsAdd"
+                                  :get-result-value="getResultValue"
+                                  @submit="handleSubmit"
+                                  ref="autocomplete"
+                                  placeholder="traži (ime) vježbačicu koja nije u listi"
+                    ></autocomplete>
+                    <button type="submit" class="btn__auto btn__auto_submit">
+                      <svg version="1.1" id="Layer_1" x="0px" y="0px" height="20px"
+                            viewBox="0 0 300.003 300.003" style="fill:var(--purple)" >
+                          <path d="M150,0C67.159,0,0.001,67.159,0.001,150c0,82.838,67.157,150.003,149.997,150.003S300.002,232.838,300.002,150
+                            C300.002,67.159,232.839,0,150,0z M213.281,166.501h-48.27v50.469c-0.003,8.463-6.863,15.323-15.328,15.323
+                            c-8.468,0-15.328-6.86-15.328-15.328v-50.464H87.37c-8.466-0.003-15.323-6.863-15.328-15.328c0-8.463,6.863-15.326,15.328-15.328
+                            l46.984,0.003V91.057c0-8.466,6.863-15.328,15.326-15.328c8.468,0,15.331,6.863,15.328,15.328l0.003,44.787l48.265,0.005
+                            c8.466-0.005,15.331,6.86,15.328,15.328C228.607,159.643,221.742,166.501,213.281,166.501z"/>
+                      </svg>
+                    </button>
+                  </form>
                 </transition>
               </div>
               
@@ -310,7 +258,6 @@
 
       removeClient(client) {
         this.attendanceInput.members.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
-        //this.filteredClients.splice(this.filteredClients.findIndex(v => v._id === client._id), 1);
         this.notClients.push(client.client);
       },
 
@@ -474,6 +421,15 @@
     .activities__check {
       justify-self: center;
     }
+    .input__group {
+      grid-template-columns: auto !important;
+      justify-content: left;
+      
+    }
+    .members__list {
+      display: grid !important;
+      justify-content: center;
+    }
   }
 
   .schedule__wrapper {
@@ -575,18 +531,15 @@
   .att_totals {
     text-align: right;
     border-radius: .5em;
-    /* border: 1px solid var(--gold); */
     padding: .2em .3em;
     justify-self: end;
     align-self: baseline;
     margin-top: .5em;
     color: var(--gold-light);
     background-color: var(--purple);
-    /* grid-area: 3 / 1 / 4 / 3; */
   }
 
   .att_date {
-    /* display: flex; */
     align-items: baseline;
   }
 
@@ -684,15 +637,13 @@
     align-items: center;
   }
 
-.list-enter,
-.list-leave-to {
+  .list-enter,
+  .list-leave-to {
+    opacity: 0;
+  }
 
-  opacity: 0;
-}
-
-.list-enter-active,
-.list-leave-active {
-
-  transition: opacity .4s;
-}
+  .list-enter-active,
+  .list-leave-active {
+    transition: opacity .4s;
+  }
 </style>

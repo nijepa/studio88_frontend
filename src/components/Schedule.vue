@@ -239,7 +239,6 @@
       removeMember(client) {
         this.scheduleInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
         this.notClients.push(client);
-        //this.filteredClients.push(client);
       },
 
       async delEx() {
@@ -333,17 +332,5 @@
 
   .notclients__list {
     justify-items: stretch;
-  }
-
-  @media (max-width: 599px) {
-    .input__group {
-      grid-template-columns: auto !important;
-      justify-content: left;
-      
-    }
-    .members__list {
-      display: grid !important;
-      justify-content: center;
-    }
   }
 </style>

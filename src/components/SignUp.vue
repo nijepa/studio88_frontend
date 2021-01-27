@@ -47,35 +47,35 @@
           <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                 class="info__img">
         </div> -->
-        <div class="input__field">
+        <div class="input__field signup__field">
           <label for="username">User name</label>
           <input @focus="clearErrors" v-model="signupInput.username"
                   class="login_input user_input"
                   type="text" name="username" id="username" required>
         </div>
 
-        <div class="input__field">
+        <div class="input__field signup__field">
           <label for="first_name">First name</label>
           <input @focus="clearErrors" v-model="signupInput.first_name"
                   class="login_input user_input"
                   type="text" name="first_name" id="first_name">
         </div>
 
-        <div class="input__field">
+        <div class="input__field signup__field">
           <label for="last_name">First name</label>
           <input @focus="clearErrors" v-model="signupInput.last_name"
                   class="login_input user_input"
                   type="text" name="last_name" id="last_name">
         </div>
 
-        <div class="input__field">
+        <div class="input__field signup__field">
           <label for="email">E-mail</label>
           <input @focus="clearErrors" v-model="signupInput.email"
                   class="login_input user_input"
                   type="email" name="email" id="email">
         </div>
 
-        <div class="input__field">
+        <div class="input__field signup__field">
           <label for="password">Password</label>
           <input @focus="clearErrors" v-model="signupInput.password"
                   class="login_input user_input"
@@ -177,6 +177,9 @@
 </script>
 
 <style>
+  .signup__field {
+    margin: .5em;
+  }
   .user__profile {
     display: grid;
     justify-content: center;

@@ -1,9 +1,6 @@
 <template>
   <div class="d">
-    <!-- <div v-if="isLog" class="app-load" key="1">
-      <img src="../assets/img/loading1.gif" alt="" class="loading">
-      loading ...
-    </div> -->
+
     <loading pic="loading1" v-if="isLog" key="1" class="app-load" />
     
     <div v-else class="">

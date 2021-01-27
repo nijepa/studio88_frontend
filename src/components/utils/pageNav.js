@@ -1,4 +1,3 @@
-
 const customLabels = {
   first: '<<',
   last: '>>',

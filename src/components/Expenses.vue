@@ -130,6 +130,7 @@
   .expense__list {
     grid-template-columns: repeat(6, 1fr) ;
   }
+  
   .expenses__header {
     grid-template-columns: repeat(6, 1fr) ;
   }

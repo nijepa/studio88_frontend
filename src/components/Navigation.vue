@@ -60,9 +60,11 @@
 
   export default {
     name: 'Navigation',
+
     props: {
       method: { type: Function },
     },
+
     data() {
       return {
         activeLink: 'home',
@@ -76,6 +78,7 @@
                     {id: 'general', title: 'general'}]
       }
     },
+    
     computed: {
       ...mapGetters([ 'loggedUser',
                       'getGeneral',

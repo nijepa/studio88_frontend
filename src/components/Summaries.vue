@@ -1,10 +1,7 @@
 <template>
   <div class="">
     <transition name="fall" mode="out-in">
-      <!-- <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div> -->
+
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="dash__wrapper" key="2">
@@ -30,40 +27,30 @@
           <Charto v-if="loadedPayment" :chartdata="totalPayments" :chartdata2="totalExpenses"
                   :chartlabel="paymentLabels" class="charts">
           </Charto>
-      <!--     <h1 v-for="tot in totalPayments" :key="tot.payment_month" class="dash__item">
-            <span>{{ tot.payment_month }} {{ tot.payment_year }} : </span>
-            <span>{{ tot.total_amount }}</span>
-          </h1> -->
         </div>
 
         <div class="dash__items">
           <div class="dash__text">Dolasci od 
-            <!-- <input type="date" name="" id="" v-model="dateFrom" @input="selectAttendances($event.target.value) | formatDate"> -->
             <datepicker v-model="dateFrom" 
-                          placeholder="datum upisa" 
-                          class="login_input user_input datepicker"
-                          :language="sr"
-                          :format="customFormatter"
-                          @input="selectAttendances()">
+                        placeholder="datum upisa" 
+                        class="login_input user_input datepicker"
+                        :language="sr"
+                        :format="customFormatter"
+                        @input="selectAttendances()">
             </datepicker> 
             do 
             <datepicker v-model="dateTill" 
-                          placeholder="datum upisa" 
-                          class="login_input user_input datepicker"
-                          :language="sr"
-                          :format="customFormatter"
-                          @input="selectAttendances()">
+                        placeholder="datum upisa" 
+                        class="login_input user_input datepicker"
+                        :language="sr"
+                        :format="customFormatter"
+                        @input="selectAttendances()">
             </datepicker>
-            <!-- <input type="date" name="" id="" v-model="dateTill" @input="selectAttendances($event.target.value)"> -->
           </div>
 
           <Charto2 v-if="loadedAttend" :chartdata="totalAttendances" 
                     :chartlabel="attendanceLabels" class="charts">
           </Charto2>
-    <!--      <h1 v-for="tota in totalAttendances" :key="tota.attend_date" class="dash__item">
-            <span>{{ tota.attend_date | formatDate }} : </span>
-            <span>{{ tota.total_amount }}</span>
-          </h1> -->
         </div>
       </div>
     </transition>
@@ -76,7 +63,7 @@
   import Charto from './utils/AreaChart';
   import Charto2 from './utils/AreaChartLine';
   import Datepicker from 'vuejs-datepicker';
-  import {sr} from 'vuejs-datepicker/dist/locale';
+  import { sr } from 'vuejs-datepicker/dist/locale';
   import Loading from '@/components/utils/Loading.vue';
 
   export default {
@@ -146,7 +133,7 @@
       mapExpenses() {
         let helper = {};
         return this.getAllExpenses.reduce(function(r, o) {
-          var key = o.expense_month + '-' + o.expense_year;
+          let key = o.expense_month + '-' + o.expense_year;
           
           if(!helper[key]) {
             helper[key] = Object.assign({}, o); // create a copy of o
@@ -154,7 +141,6 @@
           } else {
             helper[key].expense_amount += o.expense_amount;
           }
-
           return r;
         }, []);
       },
@@ -186,15 +172,10 @@
         this.loadedAttend = true;
       },
 
-/*       makeCorrectDate(str) {
-        return new Date(str).toISOString().split('T')[0] ;
-      }, */
-
       selectPayments() {
         let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
         let arr = arro.map(item => item.total_amount);
         let arr1 = arro.map(item => item.payment_month);
-
         this.totalPayments = arr;
         this.paymentLabels = arr1;
       },
@@ -204,9 +185,7 @@
                     year.attend_date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
                     year.attend_date <= moment(this.dateTill).format('YYYY-MM-DD'));
         let arra1 = arra.map(item => item.total_amount);
-        //let arra2 = arra.map(item => this.makeCorrectDate(item.attend_date));
         let arra2 = arra.map(item => moment(item.attend_date).format('DD MMM YYYY'));
-
         this.totalAttendances = arra1;
         this.attendanceLabels = arra2;
       },
@@ -215,7 +194,6 @@
         let expenses = this.mapExpenses()
                           .filter(year => year.expense_year == this.yearSelected)
                           .map(item => item.expense_amount);
-
         this.totalExpenses = expenses;
       } 
     },
@@ -269,7 +247,7 @@
 
   .active__nr {
     font-size: 3em;
-    color: var(--purple-dark)
+    color: var(--purple-dark);
   }
 
   .dash__items {

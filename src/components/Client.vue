@@ -1,10 +1,7 @@
 <template>
   <div class="">
     <transition name="fall" mode="out-in">
-      <!-- <div v-if="loadingState" class="" key="1">
-        <img src="../assets/img/loading1.gif" alt="" class="loading">
-        loading ...
-      </div> -->
+
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="schedule__wrapper" key="2">
@@ -49,16 +46,7 @@
               <input type="email" id="email" placeholder="e-mail" required
                       class="login_input user_input" v-model="clientInput.email">
             </div>
-    <!--         <div class="input__field">
-              <label for="address">Adresa</label>
-              <input type="text" name="address" placeholder="adresa"
-                      class="login_input user_input" v-model="clientInput.address">
-            </div>
-            <div class="input__field">
-              <label for="tel">Telefon</label>
-              <input type="tel" name="tel" placeholder="telefon"
-                      class="login_input user_input" v-model="clientInput.phone">
-            </div> -->
+
             <div class="input__field">
               <label for="mobile">Mobilni</label>
               <input type="tel" id="mobile" placeholder="mobilni" required
@@ -143,7 +131,6 @@
 </template>
 
 <script>
-  //import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Datepicker from 'vuejs-datepicker';
   import {sr} from 'vuejs-datepicker/dist/locale';
@@ -316,72 +303,8 @@
     justify-content: center;
     justify-items: baseline;
     margin: 1em;
-    /* padding: .5em; */
     border: 2px solid var(--purple);
     border-radius: 1em;
-  }
-
-  .action_btns  {
-    display: flex;
-  }
-
-  .action_btn {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: .2em;
-    align-items: center;
-    background: transparent;
-    margin: .3em .7em .3em .3em;
-    padding: .3em;
-    /* margin-right: 1em;
-    margin-top: .3em; */
-    cursor: pointer;
-    color: var(--green);
-    font-size: 1.2em;
-    font-weight: 800;
-    border: 2px solid transparent;
-    border-bottom: 2px solid var(--green);
-    transition: ease .8s all;
-  }
-
-  .action_btn:hover {
-    color: var(--green-dark);
-    border-bottom: 2px solid var(--green-dark);
-    border-radius: 1em;
-    background: var(--purple-lighter);
-    transform: scale(1.05);
-  }
-
-  .save__btn:hover {
-    background: var(--green-light) ;
-  }
-
-  .cancel__btn:hover {
-    background: var(--yellow-light) ;
-  }
-
-  .cancel__btn {
-    color: var(--orange);
-    border-bottom: 2px solid var(--orange);
-  }
-
-  .cancel__btn:hover {
-    color: var(--orange-dark);
-    border-bottom: 2px solid var(--orange-dark);
-  }
-
-  .delete__btn {
-    color: var(--red);
-    border-bottom: 2px solid var(--red);
-    font-size: .8em;
-    grid-column-gap: .2em;
-    justify-self: end;
-  }
-
-  .delete__btn:hover {
-    background: var(--red-light) ;
-    color: var(--red-dark);
-    border-bottom: 2px solid var(--red-dark);
   }
 
   .user_input {
@@ -435,7 +358,6 @@
     border: none;
     border-bottom: 1px solid transparent;
     box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
-    /* max-width: 7em; */
     padding: 0;
     margin: .2em;
     background: transparent;

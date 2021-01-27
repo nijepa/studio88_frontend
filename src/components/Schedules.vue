@@ -6,9 +6,8 @@
     <div v-else class="client__wrapper schedule_mobile" key="2">
 
       <button type="submit" @click="newSchedule()" class="action_btn client__add">
-        <svg version="1.0" fill="var(--purple)"
-          width="50px" height="50px" viewBox="0 0 1280.000000 640.000000"
-          preserveAspectRatio="xMidYMid meet">
+        <svg version="1.0" fill="var(--purple)" width="50px" height="50px" 
+              viewBox="0 0 1280.000000 640.000000" preserveAspectRatio="xMidYMid meet">
           <g transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
           fill="var(--purple)" stroke="none">
           <path d="M3153 6340 c-103 -14 -203 -69 -203 -110 0 -10 -24 -32 -58 -53 -123
@@ -171,17 +170,6 @@
 
   .schedule__items:hover {
     background: var(--purple-light);
-  }
-
-  .days__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-items: center;
-    border-radius: .5em;
-    padding: .2em;
-    margin-top: .5em;
-    background: var(--purple);
-    color: var(--gold-light);
   }
 
   .week__day {

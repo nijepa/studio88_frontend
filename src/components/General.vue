@@ -66,10 +66,6 @@
                           class="login_input user_input"
                           :language="sr">
                 </datepicker>
-                <!-- <input type="date" name="date_start" placeholder="datum upisa" required
-                        class="login_input user_input memeber__date" id="datePicker" 
-                        :value="generalInput.general_date && makeCorrectDate(generalInput.general_date)"
-                        @input="generalInput.general_date = $event.target.valueAsDate"> -->
           </div>
         </div>
 
@@ -104,7 +100,7 @@
             </svg>
             <p>Nova cijena</p> 
           </div>
-          <!-- <transition name="fall"> -->
+
           <div v-for="price in generalInput.prices" :key="price.amount" >
             <div class="input__field">
               <label for="amount">Cijena</label>
@@ -120,10 +116,6 @@
                           class="login_input user_input"
                           :language="sr">
               </datepicker>
-              <!-- <input type="date" name="datePrice" 
-                      class="login_input user_input memeber__date" id="datePrice" 
-                      :value="price.price_date && makeCorrectDate(price.price_date)"
-                      @input="price.price_date = $event.target.valueAsDate"> -->
             </div>
 
             <div class="input__field for__note">
@@ -133,7 +125,6 @@
               </textarea>
             </div>
           </div>
-          <!-- </transition> -->
         </div>
 
         <div class="modify_btns general__btns">

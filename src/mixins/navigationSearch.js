@@ -15,5 +15,4 @@ export default
       this.appeared = true;
     },
   },
-
 }

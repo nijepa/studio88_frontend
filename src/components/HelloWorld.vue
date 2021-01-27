@@ -21,7 +21,8 @@
 </template>
 
 <script>
-  import LogIn from '@/components/LogIn.vue'
+  import LogIn from '@/components/LogIn.vue';
+  
   export default {
     name: "HelloWorld",
 
