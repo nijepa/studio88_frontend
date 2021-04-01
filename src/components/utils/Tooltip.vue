@@ -73,4 +73,9 @@
     visibility: visible;
     opacity: 1;
   }
+
+  .tooltip:active .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
 </style>

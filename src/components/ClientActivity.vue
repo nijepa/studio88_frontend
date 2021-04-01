@@ -82,22 +82,27 @@
         />
       </transition>
 
-      <div class="dash__text filter_bar">Period od 
-        <datepicker v-model="dateFrom" 
-                      placeholder="datum upisa" 
-                      class="login_input user_input datepicker"
-                      :language="sr"
-                      :format="customFormatter"
-                      @input="selectPeriod()">
-        </datepicker> 
-        do 
-        <datepicker v-model="dateTill" 
-                      placeholder="datum upisa" 
-                      class="login_input user_input datepicker"
-                      :language="sr"
-                      :format="customFormatter"
-                      @input="selectPeriod()">
-        </datepicker>
+      <div class="period">
+        <Tooltip tip="Izaberi datume za prikazivanje svih prisustava / plaćanja u tom periodu" />
+
+        <div class="dash__text filter_bar">
+          Period od 
+          <datepicker v-model="dateFrom" 
+                        placeholder="datum upisa" 
+                        class="login_input user_input datepicker"
+                        :language="sr"
+                        :format="customFormatter"
+                        @input="selectPeriod()">
+          </datepicker> 
+          do 
+          <datepicker v-model="dateTill" 
+                        placeholder="datum upisa" 
+                        class="login_input user_input datepicker"
+                        :language="sr"
+                        :format="customFormatter"
+                        @input="selectPeriod()">
+          </datepicker>
+        </div>
       </div>
 
       <div class="activities__wrapper">
@@ -376,6 +381,11 @@
 </script>
 
 <style>
+  .period {
+    display: grid;
+    justify-self: center;
+    align-items: center;
+  }
   .activities__btns {
     display: flex;
     justify-content: space-between;
