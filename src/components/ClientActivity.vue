@@ -48,7 +48,7 @@
         <h1 class="cient__name">{{ getOneClient.name }}</h1>
       </div>
 
-      <transition name="fall" mode="out-in" key="1">
+      <transition name="rise" mode="out-in" key="1">
         <div v-if="!toggleActions" class="activities__btns">
           <button 
             class="action_btn client__add for_mobile"
@@ -56,6 +56,7 @@
           >
             Plaćanje
           </button>
+          <Tooltip tip="Klikni na plaćanje / prisustvo za dodavanje istog ili selektuj klijenta iz liste za izmjenu / brisanje" />
           <button 
             class="action_btn client__add for_mobile" 
             @click="toggleActions = 'a'"
@@ -183,6 +184,7 @@
   import navigationSearch from '../mixins/navigationSearch';
   import ClientAttendance from '../components/ClientAttendance';
   import ClientPayment from '../components/ClientPayment';
+  import Tooltip from '@/components/utils/Tooltip.vue';
 
   export default {
     name: 'ClientActivity',
@@ -191,7 +193,8 @@
       Loading,
       Datepicker,
       ClientAttendance,
-      ClientPayment
+      ClientPayment,
+      Tooltip
     },
 
     mixins: [

@@ -247,7 +247,7 @@
   }
 
   .fall-enter-active {
-    transition: all 1s ease;
+    transition: all 1s ease-in-out;
   }
 
   .fall-enter, .fall-leave-to {
@@ -255,8 +255,9 @@
     opacity: 0;
   }
 
-  .rise-enter-active {
-    transition: all 1s ease;
+  .rise-enter-active,
+  .rise-leave-active {
+    transition: all .5s ease-in-out;
   }
 
   .rise-enter, .rise-leave-to {

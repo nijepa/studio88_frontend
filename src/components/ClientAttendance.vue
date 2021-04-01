@@ -24,7 +24,7 @@
     </div>
     <div class="modify_btns">
       <action-buttons @canceled="handleCancel" />
-      <delete-button @clicked="delClient()" />
+      <delete-button v-if="clientAtt.date" @clicked="delClient()" />
     </div>
     </form>
 </template>

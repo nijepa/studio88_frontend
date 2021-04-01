@@ -9,46 +9,61 @@
         <a @click="logout(loggedUser)" href="#" class="user__logout">Log Out</a>
       </div>
 
-      <nav>
+      <div class="nav-mobile">
+        <img v-if="!showMenu" src="../assets/img/studio881.png" alt="" class="logo-nav">
 
-        <button class="dashboard__btn" @click="navClick('home')" 
-                :class="activeLink === 'home' ? 'home__btn' : 'dashboard__btn_hover'">
-          <img src="../assets/img/studio881.png" alt="" class="logo__small">
-          <!-- <p>Početna</p>  -->
+        <button @click="showMenu = !showMenu" class="nav-toggle">
+          <svg v-if="!showMenu" width="44px" height="44px" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7H20M4 12H20M4 17H20" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg v-if="showMenu" width="44px" height="44px" viewBox="0 0 24 24">
+            <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/>
+            <path stroke="var(--purple)" d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"/>
+          </svg>
         </button>
+      </div>
+      
+      <transition name="rise" mode="in-out">
+        <nav v-if="showMenu" >
 
-        <button class="dashboard__btn" @click="navClick('clients')" 
-                :class="activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'">
-          <img src="../assets/img/1.png" alt="" class="nav__img">
-          <p>Vježbačice</p> 
-        </button>
+          <button class="dashboard__btn" @click="navClick('home')" 
+                  :class="activeLink === 'home' ? 'home__btn' : 'dashboard__btn_hover'">
+            <img src="../assets/img/studio881.png" alt="" class="logo__small">
+            <!-- <p>Početna</p>  -->
+          </button>
 
-        <button class="dashboard__btn" @click="navClick('schedules')"
-                :class="activeLink === 'schedules' ? 'active__link' : 'dashboard__btn_hover'">
-          <img src="../assets/img/2.png" alt="" class="nav__img">
-          <p>Termini</p>
-        </button>
+          <button class="dashboard__btn" @click="navClick('clients')" 
+                  :class="activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'">
+            <img src="../assets/img/1.png" alt="" class="nav__img">
+            <p>Vježbačice</p> 
+          </button>
 
-        <button class="dashboard__btn" @click="navClick('attendances')"
-                :class="activeLink === 'attendances' ? 'active__link' : 'dashboard__btn_hover'">
-          <img src="../assets/img/3.png" alt="" class="nav__img">
-          <p>Evidencija</p>
-        </button>
+          <button class="dashboard__btn" @click="navClick('schedules')"
+                  :class="activeLink === 'schedules' ? 'active__link' : 'dashboard__btn_hover'">
+            <img src="../assets/img/2.png" alt="" class="nav__img">
+            <p>Termini</p>
+          </button>
 
-        <button class="dashboard__btn" @click="navClick('payments')"
-                :class="activeLink === 'payments' ? 'active__link' : 'dashboard__btn_hover'">
-          <img src="../assets/img/4.png" alt="" class="nav__img">
-          <p>Plaćanja</p>
-        </button>
+          <button class="dashboard__btn" @click="navClick('attendances')"
+                  :class="activeLink === 'attendances' ? 'active__link' : 'dashboard__btn_hover'">
+            <img src="../assets/img/3.png" alt="" class="nav__img">
+            <p>Evidencija</p>
+          </button>
 
-        <button class="dashboard__btn" @click="navClick('expenses')"
-                :class="activeLink === 'expenses' ? 'active__link' : 'dashboard__btn_hover'">
-          <img src="../assets/img/5.png" alt="" class="nav__img">
-          <p>Troškovi</p>
-        </button>
+          <button class="dashboard__btn" @click="navClick('payments')"
+                  :class="activeLink === 'payments' ? 'active__link' : 'dashboard__btn_hover'">
+            <img src="../assets/img/4.png" alt="" class="nav__img">
+            <p>Plaćanja</p>
+          </button>
 
-      </nav>
+          <button class="dashboard__btn" @click="navClick('expenses')"
+                  :class="activeLink === 'expenses' ? 'active__link' : 'dashboard__btn_hover'">
+            <img src="../assets/img/5.png" alt="" class="nav__img">
+            <p>Troškovi</p>
+          </button>
 
+        </nav>
+      </transition>
       <hr>
 
     </div>
@@ -67,6 +82,10 @@
 
     data() {
       return {
+        showMenu: true,
+        window: {
+          width: 0
+        },
         activeLink: 'home',
         menuItems: [{id: 'home', title: 'home'},
                     {id: 'signup', title: 'signup'},
@@ -96,10 +115,16 @@
         this.setLoadingState(true);
         this.activeLink = type;
         this.formTypeChange(type);
+        if (this.window.width < 600) this.showMenu = false
       },
 
       toggleUser(type) {
         this.$emit('toggled-form', type);
+      },
+
+      handleResize() {
+        this.window.width = window.innerWidth;
+        (this.window.width < 600) ? this.showMenu = false : this.showMenu = true
       }
     },
 
@@ -111,7 +136,14 @@
       }
       this.initialState(price);
       this.navClick('home');
-    }
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
+    },
+
+    destroyed() {
+      window.removeEventListener('resize', this.handleResize);
+    },
+        
   }
 </script>
 
@@ -216,6 +248,32 @@
     color: var(--purple-light);
   }
 
+  .nav-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em;
+  }
+
+  .nav-toggle {
+    display: none;
+    margin: 0 auto;
+    padding: 0;
+    transition: all .5s ease;
+    /* width: 65px; */
+    height: 75px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav-toggle:hover {
+    transform: rotate(90deg);
+  }
+
+  .logo-nav {
+    width: 120px;
+  }
+
   @media (max-width: 1078px) {
     nav {
       grid-template-columns: repeat(3, auto);
@@ -231,6 +289,10 @@
   @media (max-width: 599px) {
     nav {
       grid-template-columns: repeat(2, auto);
+      /* display: none; */
+    }
+    .nav-toggle {
+      display: block;
     }
   }
 </style>
