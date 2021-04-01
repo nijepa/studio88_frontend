@@ -3,7 +3,7 @@
 
     <loading pic="loading1" v-if="loadingState" key="1" />
     
-    <div v-else class="client__wrapper" key="2">
+    <div v-else class="client__wrapper" key="2" id="tops">
 
       <div class="activities__header">
         <button 
@@ -49,7 +49,7 @@
       </div>
 
       <transition name="rise" mode="out-in" key="1">
-        <div v-if="!toggleActions" class="activities__btns">
+        <div v-if="!toggleActions" class="activities__btns" >
           <button 
             class="action_btn client__add for_mobile"
             @click="toggleActions = 'p'"
@@ -253,6 +253,7 @@
       handleUpdate(client, act) {
         this.clientAct = client
         act ? this.toggleActions = 'p' : this.toggleActions = 'a'
+        this.scrollToElement({behavior: 'smooth'})
       },
 
       setPageSize(val) {
@@ -346,6 +347,14 @@
 
       onAppeared() {
         this.appeared = true;
+      },
+
+      scrollToElement(options) {
+        const el = document.getElementById('tops');
+        console.log(el)
+        if (el) {
+          el.scrollIntoView(options);
+        }
       }
     },
 

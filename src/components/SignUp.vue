@@ -246,7 +246,8 @@
     text-decoration: underline;
   }
 
-  .fall-enter-active {
+  .fall-enter-active,
+  .fall-leave-active {
     transition: all 1s ease-in-out;
   }
 
@@ -255,13 +256,22 @@
     opacity: 0;
   }
 
-  .rise-enter-active,
+  .rise-enter-active {
+    transition: all .5s ease-in-out;
+    position: absolute;
+  }
+
   .rise-leave-active {
     transition: all .5s ease-in-out;
+    position: absolute;
   }
 
   .rise-enter, .rise-leave-to {
     transform: translateY(-2em);
     opacity: 0;
+  }
+
+  .rise-move {
+    transition: all .5s ease;
   }
 </style>

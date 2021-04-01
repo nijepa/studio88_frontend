@@ -26,6 +26,10 @@
         if(scrollTop > 100) document.querySelector('.scrol').style.display = "block";
         else document.querySelector('.scrol').style.display = "none"
       })
+    },
+
+    destroyed() {
+      window.removeEventListener('scroll');
     }
   }
 </script>
