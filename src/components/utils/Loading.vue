@@ -15,7 +15,7 @@
 
     methods: {
       getPngUrl() {
-        return require('../../assets/img/loading' + Math.floor(Math.random() * 4) + '.gif')
+        return require('../../assets/img/loading' + Math.floor(Math.random() * 5) + '.gif')
       },
     }
   }
