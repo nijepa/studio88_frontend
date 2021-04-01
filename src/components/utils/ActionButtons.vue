@@ -56,7 +56,7 @@
       <p>Sačuvaj</p> 
     </button>
 
-    <button type="submit" @click.prevent="formTypeChange(toForm)" class="action_btn cancel__btn">
+    <button type="submit" @click.prevent="handleCancel" class="action_btn cancel__btn">
       <svg version="1.1" id="Layer_1" x="0px" y="0px" height="40px"
             viewBox="0 0 408.759 408.759" style="enable-background:new 0 0 408.759 408.759;" xml:space="preserve">
         <g>
@@ -107,6 +107,14 @@
 
     methods: {
       ...mapActions([ 'formTypeChange' ]),
+
+      handleCancel() {
+        if (this.toForm) {
+          this.formTypeChange(this.toForm)
+        } else {
+          this.$emit('canceled', true)
+        }
+      }
     }
   }
 </script>
@@ -132,7 +140,7 @@
     font-weight: 800;
     border: 2px solid transparent;
     border-bottom: 2px solid var(--green);
-    transition: ease .8s all;
+    transition: ease .5s all;
   }
 
   .action_btn:hover {

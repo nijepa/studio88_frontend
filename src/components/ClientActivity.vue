@@ -6,7 +6,11 @@
     <div v-else class="client__wrapper" key="2">
 
       <div class="activities__header">
-        <button type="submit" @click="selectClient()" class="action_btn client__add for_mobile">
+        <button 
+          type="submit" 
+          @click="selectClient()" 
+          class="action_btn client__add for_mobile"
+        >
           <svg version="1.1" id="Layer_1"  x="0px" y="0px" height="40px"
                 viewBox="0 0 408.761 408.761" style="enable-background:new 0 0 408.761 408.761;" xml:space="preserve">
               <g>
@@ -44,6 +48,39 @@
         <h1 class="cient__name">{{ getOneClient.name }}</h1>
       </div>
 
+      <transition name="fall" mode="out-in" key="1">
+        <div v-if="!toggleActions" class="activities__btns">
+          <button 
+            class="action_btn client__add for_mobile"
+            @click="toggleActions = 'p'"
+          >
+            Plaćanje
+          </button>
+          <button 
+            class="action_btn client__add for_mobile" 
+            @click="toggleActions = 'a'"
+          >
+            Prisustvo
+          </button>
+        </div>
+
+        <ClientPayment 
+          v-else-if="toggleActions === 'p'" 
+          :client="getOneClient" 
+          :clientAtt="clientAct"
+          @canceled="handleCanceled" 
+          key="2"
+        />
+
+        <ClientAttendance 
+          v-else-if="toggleActions === 'a'"
+          :client="getOneClient" 
+          :clientAtt="clientAct"
+          @canceled="handleCanceled" 
+          key="3"
+        />
+      </transition>
+
       <div class="dash__text filter_bar">Period od 
         <datepicker v-model="dateFrom" 
                       placeholder="datum upisa" 
@@ -64,7 +101,10 @@
 
       <div class="activities__wrapper">
         <div class="">
-          <h3 class="activities__title">Plaćanja - ukupno : <span class="activities__title_val"> {{ totalPayments() }}</span></h3>
+          <h3 class="activities__title">
+            Plaćanja - ukupno : 
+            <span class="activities__title_val"> {{ totalPayments() }}</span>
+          </h3>
           <div class="payments__head days__list ">
             <span>Godina</span>
             <span>Mjesec</span>
@@ -72,7 +112,12 @@
             <span>Iznos</span>
             <span>Napomena</span>
           </div>
-          <div v-for="client in pageOfItems" :key="client._id" class="activities__list payments">
+          <div 
+            v-for="client in pageOfItems" 
+            :key="client._id" 
+            class="activities__list payments"
+            @click="handleUpdate(client, true)"
+          >
             <p class="activities__item">{{ client.year }}</p>
             <p class="activities__item">{{ client.month }}</p>
             <p class="activities__item">{{ client.date | formatDate1 }}</p>
@@ -88,15 +133,30 @@
         </div>
 
         <div class="">
-          <h3 class="activities__title">Prisustva - ukupno : <span class="activities__title_val"> {{ totalAttendances() }} </span> od <span class="activities__title_val"> {{ clientAttendances.length }}</span></h3>
+          <h3 class="activities__title">
+            Prisustva - ukupno : 
+            <span class="activities__title_val"> {{ totalAttendances() }} </span> od 
+            <span class="activities__title_val"> {{ clientAttendances.length }}</span>
+          </h3>
           <div class="days__list attendances__head">
             <span>Datum</span>
             <span>Prisutna</span>
             <span>Napomena</span>
           </div>
-          <div v-for="client in pageOfItemsA" :key="client._id" class="activities__list attendances">
+          <div 
+            v-for="client in pageOfItemsA" 
+            :key="client._id" 
+            class="activities__list attendances"
+            @click="handleUpdate(client, false)"
+          >
             <p class="activities__item">{{ client.date | formatDate }}</p>
-            <input type="checkbox" class="activities__item activities__check" v-model="client.present" onclick="return false;" readonly="readonly">
+            <input 
+              type="checkbox" 
+              class="activities__item activities__check" 
+              v-model="client.present" 
+              onclick="return false;" 
+              readonly="readonly"
+            >
             <p class="activities__item">{{ client.note }}</p>
           </div>
 
@@ -121,13 +181,17 @@
   import {sr} from 'vuejs-datepicker/dist/locale';
   import navigation from '../mixins/navigation';
   import navigationSearch from '../mixins/navigationSearch';
+  import ClientAttendance from '../components/ClientAttendance';
+  import ClientPayment from '../components/ClientPayment';
 
   export default {
     name: 'ClientActivity',
 
     components: {
       Loading,
-      Datepicker
+      Datepicker,
+      ClientAttendance,
+      ClientPayment
     },
 
     mixins: [
@@ -147,7 +211,9 @@
         search: '',
         dateFrom: this.getPreviousMonday(),
         dateTill: new Date().toISOString().slice(0,10),
-        appeared: false
+        appeared: false,
+        toggleActions: '',
+        clientAct: {}
       }
     },
 
@@ -167,6 +233,19 @@
                       'fetchClientsPageSize',
                       'formTypeChange',
                       'setLoadingState' ]),
+
+      async handleCanceled() {
+        this.clientAct = {}
+        this.toggleActions = ''
+        await this.fetchAttendances()
+        await this.fetchPayments()
+        this.selectPeriod()
+      },
+
+      handleUpdate(client, act) {
+        this.clientAct = client
+        act ? this.toggleActions = 'p' : this.toggleActions = 'a'
+      },
 
       setPageSize(val) {
         this.pageSize = val;
@@ -202,15 +281,15 @@
             return post.client._id == this.getOneClient._id
           })
           .filter(year => 
-                    year.date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
-                    year.date <= moment(this.dateTill).format('YYYY-MM-DD'));
+                    moment(year.date).format('YYYY-MM-DD') >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    moment(year.date).format('YYYY-MM-DD') <= moment(this.dateTill).format('YYYY-MM-DD'));
         this.filteredClientsA = this.clientAttendances;
         this.clientPayments = this.mapPayments().filter(post => {
             return post.client._id == this.getOneClient._id
           })
           .filter(year => 
-                    year.datep >= moment(this.dateFrom).format('YYYY-MM-DD') && 
-                    year.datep <= moment(this.dateTill).format('YYYY-MM-DD'));
+                    moment(year.datep).format('YYYY-MM-DD') >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    moment(year.datep).format('YYYY-MM-DD') <= moment(this.dateTill).format('YYYY-MM-DD'));
         this.filteredClients = this.clientPayments;
       },
 
@@ -294,6 +373,16 @@
 </script>
 
 <style>
+  .activities__btns {
+    display: flex;
+    justify-content: space-between;
+    justify-self: stretch;
+    margin: .5em;
+    padding: 0 .5em;
+    background: var(--gold-lighter);
+    border: 2px solid var(--purple-dark);
+    border-radius: .5em;
+  }
   .activities__wrapper {
     display: grid;
     grid-template-columns: auto auto;
@@ -335,6 +424,7 @@
 
   .payments {
     grid-template-columns: auto 1fr auto auto 1fr;
+    cursor: pointer;
   }
 
   .payments__head {
@@ -344,6 +434,7 @@
   .attendances {
     grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
+    cursor: pointer;
   }
 
   .attendances__head {
