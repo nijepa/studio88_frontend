@@ -1,9 +1,9 @@
 <template>
   <div class="d">
 
-    <loading pic="loading1" v-if="isLog" key="1" class="app-load" />
+    <Loading pic="loading1" v-if="isLog" key="1" class="app-load" />
     
-    <div v-else class="">
+    <div v-else >
       <form @submit.prevent="logIn()" 
             method="post" class="login__wrapper">
         <label for="username">User name</label>

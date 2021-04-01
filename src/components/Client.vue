@@ -336,7 +336,7 @@
   }
 
   label {
-    color: var(--grey-light);
+    color: var(--grey);
   }
 
   .termin {

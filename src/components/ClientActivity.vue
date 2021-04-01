@@ -386,6 +386,7 @@
     justify-self: center;
     align-items: center;
   }
+  
   .activities__btns {
     display: flex;
     justify-content: space-between;
@@ -435,6 +436,11 @@
     padding-left: .2em;
   }
 
+  .activities__list:hover {
+    background: var(--purple);
+    color: whitesmoke;
+  }
+
   .payments {
     grid-template-columns: auto 1fr auto auto 1fr;
     cursor: pointer;
@@ -456,6 +462,11 @@
 
   div.activities__list:nth-child(even) {
     background: var(--purple-lighter);
+  }
+
+  div.activities__list:nth-child(even):hover {
+    background: var(--purple);
+    color: whitesmoke;
   }
 
   .activities__item {

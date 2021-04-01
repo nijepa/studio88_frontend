@@ -142,8 +142,7 @@
 
     destroyed() {
       window.removeEventListener('resize', this.handleResize);
-    },
-        
+    }
   }
 </script>
 
@@ -260,6 +259,7 @@
     margin: 0 auto;
     padding: 0;
     transition: all .5s ease;
+    background: transparent;
     /* width: 65px; */
     height: 75px;
     border: none;
@@ -267,6 +267,10 @@
   }
 
   .nav-toggle:hover {
+    transform: rotate(90deg);
+  }
+
+  .nav-toggle:active {
     transform: rotate(90deg);
   }
 
@@ -289,8 +293,8 @@
   @media (max-width: 599px) {
     nav {
       grid-template-columns: repeat(2, auto);
-      /* display: none; */
     }
+    
     .nav-toggle {
       display: block;
     }
