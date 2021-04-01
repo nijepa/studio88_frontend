@@ -258,12 +258,12 @@
 
   .rise-enter-active {
     transition: all .5s ease-in-out;
-    position: absolute;
+    /* position: absolute; */
   }
 
   .rise-leave-active {
     transition: all .5s ease-in-out;
-    position: absolute;
+    /* position: absolute; */
   }
 
   .rise-enter, .rise-leave-to {
