@@ -90,6 +90,7 @@
     display: grid;
     justify-self: baseline;
     height: 350px;
+    margin-left: 2em;
   }
 
   .club__link {

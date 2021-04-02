@@ -418,7 +418,7 @@
     margin: .5em;
     padding: 0 .5em;
     background: var(--gold-lighter);
-    border: 2px solid var(--purple-dark);
+    /* border: 2px solid var(--purple-dark); */
     border-radius: .5em;
   }
   .activities__wrapper {
@@ -519,6 +519,6 @@
     margin-right: .2em;
     margin-left: .1em;
     font-variant: none;
-    font-size: .8em;
+    font-size: .7em;
   }
 </style>
