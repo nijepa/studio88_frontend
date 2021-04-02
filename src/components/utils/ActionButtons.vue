@@ -136,7 +136,7 @@
     margin-top: .3em; */
     cursor: pointer;
     color: var(--green);
-    font-family: 'Baloo Tamma 2';
+    font-family: 'Baloo Tamma 2', cursive;
     font-size: 1.2em;
     font-weight: 800;
     border: 2px solid transparent;

@@ -47,7 +47,7 @@
           <button class="dashboard__btn" @click="navClick('attendances')"
                   :class="activeLink === 'attendances' ? 'active__link' : 'dashboard__btn_hover'">
             <img src="../assets/img/3.png" alt="" class="nav__img">
-            <p>Evidencija</p>
+            <p>Evidencije</p>
           </button>
 
           <button class="dashboard__btn" @click="navClick('payments')"
