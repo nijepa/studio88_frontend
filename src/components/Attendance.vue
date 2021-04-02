@@ -430,6 +430,9 @@
       display: grid !important;
       justify-content: center;
     }
+    .filter_bar {
+      font-size: 1.2em;
+    }
   }
 
   .schedule__wrapper {

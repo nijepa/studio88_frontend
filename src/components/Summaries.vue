@@ -182,8 +182,8 @@
 
       selectAttendances() {
         let arra = this.mapAttendances().filter(year => 
-                    year.attend_date >= moment(this.dateFrom).format('YYYY-MM-DD') && 
-                    year.attend_date <= moment(this.dateTill).format('YYYY-MM-DD'));
+                    moment(year.attend_date).format('YYYY-MM-DD') >= moment(this.dateFrom).format('YYYY-MM-DD') && 
+                    moment(year.attend_date).format('YYYY-MM-DD') <= moment(this.dateTill).format('YYYY-MM-DD'));
         let arra1 = arra.map(item => item.total_amount);
         let arra2 = arra.map(item => moment(item.attend_date).format('DD MMM YYYY'));
         this.totalAttendances = arra1;

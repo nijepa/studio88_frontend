@@ -48,12 +48,23 @@
         <h1 class="cient__name">{{ getOneClient.name }}</h1>
       </div>
 
-      <transition name="rise" mode="out-in" key="1">
+      <transition name="rise" mode="out-in">
         <div v-if="!toggleActions" class="activities__btns" >
           <button 
             class="action_btn client__add for_mobile"
             @click="toggleActions = 'p'"
           >
+            <svg version="1.1" id="Capa_1" x="0px" y="0px"
+              width="30px" height="30px" viewBox="0 0 30 30" fill="var(--gold)" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+              <path d="M15,0C6.729,0,0,6.729,0,15c0,8.271,6.729,15,15,15c8.271,0,15-6.729,15-15C30,6.729,23.271,0,15,0z M15,27.777
+                C7.956,27.777,2.223,22.046,2.223,15S7.956,2.223,15,2.223S27.777,7.954,27.777,15S22.044,27.777,15,27.777z"/>
+              <path d="M15,3.5C8.66,3.5,3.5,8.659,3.5,15S8.66,26.5,15,26.5S26.5,21.341,26.5,15S21.34,3.5,15,3.5z M19.145,10.677
+                c-0.754-0.593-1.61-0.89-2.568-0.89c-0.741,0-1.395,0.239-1.957,0.718c-0.563,0.479-0.963,1.116-1.199,1.912h4.309v1.891h-4.611
+                c-0.027,0.397-0.041,0.674-0.041,0.829c0,0.184,0.007,0.381,0.02,0.598h4.63v1.922h-4.328c0.506,1.699,1.514,2.548,3.024,2.548
+                c0.95,0,1.856-0.304,2.72-0.911v2.488c-0.795,0.484-1.832,0.728-3.115,0.728c-1.516,0-2.753-0.42-3.71-1.259
+                s-1.591-2.038-1.901-3.595H9.182v-1.923h0.971c-0.014-0.168-0.021-0.367-0.021-0.597c0-0.12,0.014-0.396,0.041-0.829H9.182v-1.891
+                h1.285c0.37-1.558,1.072-2.768,2.103-3.63c1.032-0.863,2.316-1.295,3.853-1.295c1.126,0,2.032,0.186,2.72,0.557v2.629H19.145z"/>
+            </svg>
             Plaćanje
           </button>
           <Tooltip tip="Klikni na plaćanje / prisustvo za dodavanje istog ili selektuj klijenta iz liste za izmjenu / brisanje" />
@@ -61,6 +72,10 @@
             class="action_btn client__add for_mobile" 
             @click="toggleActions = 'a'"
           >
+            <svg version="1.1" x="0px" y="0px" fill="var(--gold)" width="30px" height="30px" 
+              viewBox="0 0 1000 1000" enable-background="new 0 0 30 30" xml:space="preserve">
+              <path d="M411.3,882.2c-2.8,0.2-4.7,0.5-6.6,0.5c-52.6,0.5-105.1-2.5-157.5-7.5c-38.2-3.7-76.3-7.4-114.2-12.5c-26-3.4-51.7-9.1-77.5-13.9c-11.8-2.2-17.8-10-21-21.2c-7-24.7-8.3-50-6.2-75.4c1.2-15.1,2.8-30.1,5-45.1c3.9-27,20.5-45.2,42.8-59.1c19.2-11.9,41-16.9,62.2-23.5c22.4-7,45.1-13.4,67-21.9c22.4-8.8,42.4-22,57.1-41.9c7.8-10.6,11.8-22.5,11.3-35.8c-0.3-9.4-0.9-18.9-1.9-28.4c-1.2-11.4-6.7-20.7-15.1-28.4c-5.6-5.1-11.1-10.6-17.3-15.1c-13.2-9.6-21.9-22.4-27.7-37.2c-4.2-10.5-7.5-21.3-11.6-31.9c-0.8-2.1-2.6-4.7-4.5-5.5c-11.1-4.5-19-12.7-24.3-22.7c-14.6-28-16.1-55.7,4.5-82.1c1.3-1.7,1.5-4.3,1.7-6.6c1.9-24.7,2.5-49.6,5.8-74.2c3.9-28.7,10.4-57.1,24.4-83c28.3-52.2,71.8-84.4,130-95.2C400.6,3,460.2,13.2,515.7,45.3c31.9,18.4,53.4,45.6,66.9,79.1c13.7,33.9,21,69.4,23.2,105.9c0.7,12.9,1.2,25.9,1.9,38.8c0.1,1.7,0.6,3.9,1.7,4.9c11.5,10.8,15.4,24.6,14.9,39.7c-0.6,16.3-2.6,32.4-12.4,46.4c-5.6,8-12.7,14-21.6,18c-2.1,1-4.3,3.3-5.1,5.5c-3.7,9.6-6.7,19.4-10.3,28.9c-0.8,2.1-2.9,4.3-5,5.1c-43.1,17.9-80.5,44.2-112.7,77.9c-45.6,47.7-75,103.8-85.9,169.1c-12.3,73.9,0.4,143.8,36,209.5C408.6,876.6,409.7,879,411.3,882.2z"/><path d="M695.8,437.1c-152.6,0-276.6,123.8-276.7,276.3C419,866.1,543.2,990.1,696.2,990c152.2-0.1,276.2-123.9,276.4-276.1C972.9,561.2,848.7,437.2,695.8,437.1z M878.3,634.1l-219,221.8c0.2-0.3,0.5-0.6,0.7-0.9c-7.2,7.8-13-0.6-12.7-0.3L503,711.4c-4.7-4.7-4.7-12.4,0-17.2l34.5-35.1c4.7-4.7,12.4-4.7,17.2,0l100,100l172.5-175.9c4.7-4.7,12.3-4.7,16.9,0l33.9,33.9c4.7,4.7,4.7,12.3,0,16.9H878.3z"/>
+            </svg>
             Prisustvo
           </button>
         </div>
@@ -83,24 +98,24 @@
       </transition>
 
       <div class="period">
-        <Tooltip tip="Izaberi datume za prikazivanje svih prisustava / plaćanja u tom periodu" />
-
+        
         <div class="dash__text filter_bar">
+          <Tooltip class="tool__act" tip="Izaberi datume za prikazivanje svih prisustava / plaćanja u tom periodu" />
           Period od 
           <datepicker v-model="dateFrom" 
-                        placeholder="datum upisa" 
-                        class="login_input user_input datepicker"
-                        :language="sr"
-                        :format="customFormatter"
-                        @input="selectPeriod()">
+                      placeholder="datum upisa" 
+                      class="login_input user_input datepicker"
+                      :language="sr"
+                      :format="customFormatter"
+                      @input="selectPeriod()">
           </datepicker> 
           do 
           <datepicker v-model="dateTill" 
-                        placeholder="datum upisa" 
-                        class="login_input user_input datepicker"
-                        :language="sr"
-                        :format="customFormatter"
-                        @input="selectPeriod()">
+                      placeholder="datum upisa" 
+                      class="login_input user_input datepicker"
+                      :language="sr"
+                      :format="customFormatter"
+                      @input="selectPeriod()">
           </datepicker>
         </div>
       </div>
@@ -490,7 +505,7 @@
   .filter_bar {
     justify-self: center;
     border-radius: .5em;
-    padding: 0 .5em;
+    padding: 0 .2em;
     margin: .5em 0;
   }
 
@@ -498,5 +513,12 @@
     justify-self: center;
     color: var(--gold);
     font-size: 2em;
+  }
+
+  .tool__act {
+    margin-right: .2em;
+    margin-left: .1em;
+    font-variant: none;
+    font-size: .8em;
   }
 </style>

@@ -157,6 +157,7 @@
   import DeleteButton from '@/components/utils/DeleteButton.vue';
   import Tooltip from '@/components/utils/Tooltip.vue';
   import actionsNotify from '../mixins/actionsNotify';
+  import findMonth from '../mixins/findMonth';
   import navigation from '../mixins/navigation';
   import navigationSearch from '../mixins/navigationSearch';
   import { customLabels, customStyles } from '@/components/utils/pageNav.js';
@@ -178,7 +179,8 @@
     mixins: [
       actionsNotify,
       navigation, 
-      navigationSearch
+      navigationSearch,
+      findMonth
     ],
 
     data() {
@@ -188,7 +190,7 @@
         customStyles,
         paymentInput: {
           payment_year: moment(new Date).format('YYYY'),
-          payment_month: '',
+          payment_month: this.checkMonth(),
           payment_date: new Date,
           price: 35,
           notes: '',
