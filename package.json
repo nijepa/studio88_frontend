@@ -2,7 +2,7 @@
   "name": "studio88_frontend",
   "description": "A pilates club management project",
   "author": "Nikola Pavicevic <nijepa@gmail.com>",
-  "version": "1.2.6",
+  "version": "1.2.9",
   "repository": {
     "type" : "git",
     "url" : "https://github.com/nijepa/studio88_frontend"

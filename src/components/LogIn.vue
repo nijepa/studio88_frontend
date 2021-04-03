@@ -1,7 +1,7 @@
 <template>
   <div class="d">
 
-    <Loading pic="loading1" v-if="isLog" key="1" class="app-load" />
+    <Loading pic="loading1" v-if="isLog" key="1" />
     
     <div v-else >
       <form @submit.prevent="logIn()" 
@@ -140,9 +140,5 @@
 
   .err {
     color: var(--red);
-  }
-
-  .app-load {
-    margin: 0 auto;
   }
 </style>

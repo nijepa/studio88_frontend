@@ -388,6 +388,12 @@
   :-ms-input-placeholder { font-size: .8em; } /* ie */
   input:-moz-placeholder { font-size: .8em; }
 
+  @media only screen and (max-width: 799px) {
+    .activities__wrapper {
+      grid-template-columns: auto !important;
+    }
+  }
+
   @media only screen and (max-width: 599px) {
     .days__list {
       /* font-size: 80%; */
@@ -408,9 +414,9 @@
     .activities__list {
       grid-template-columns: 2fr 1fr !important;;
     }
-    .activities__wrapper {
+/*     .activities__wrapper {
       grid-template-columns: auto !important;
-    }
+    } */
     .attend__heading {
       grid-template-columns: repeat(3, 1fr) !important;
     }
@@ -429,13 +435,15 @@
     .input__group {
       grid-template-columns: auto !important;
       justify-content: left;
-      
     }
     .members__list {
       display: grid !important;
       justify-content: center;
     }
     .filter_bar {
+      font-size: 1.2em;
+    }
+    .dash__text {
       font-size: 1.2em;
     }
   }

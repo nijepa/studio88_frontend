@@ -467,6 +467,7 @@
 
   .payments {
     grid-template-columns: auto 1fr auto auto 1fr;
+    min-width: 350px;
     cursor: pointer;
   }
 
@@ -477,6 +478,7 @@
   .attendances {
     grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
+    min-width: 350px;
     cursor: pointer;
   }
 

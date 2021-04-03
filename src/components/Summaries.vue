@@ -173,21 +173,21 @@
       },
 
       selectPayments() {
-        let arro = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
-        let arr = arro.map(item => item.total_amount);
-        let arr1 = arro.map(item => item.payment_month);
-        this.totalPayments = arr;
-        this.paymentLabels = arr1;
+        let filteredPayments = this.mapPayments().filter(year => year.payment_year == this.yearSelected);
+        let filteredPaymentsAmounts = filteredPayments.map(item => item.total_amount);
+        let filteredPaymentsLabels = filteredPayments.map(item => item.payment_month);
+        this.totalPayments = filteredPaymentsAmounts;
+        this.paymentLabels = filteredPaymentsLabels;
       },
 
       selectAttendances() {
-        let arra = this.mapAttendances().filter(year => 
+        let filteredAttendances = this.mapAttendances().filter(year => 
                     moment(year.attend_date).format('YYYY-MM-DD') >= moment(this.dateFrom).format('YYYY-MM-DD') && 
                     moment(year.attend_date).format('YYYY-MM-DD') <= moment(this.dateTill).format('YYYY-MM-DD'));
-        let arra1 = arra.map(item => item.total_amount);
-        let arra2 = arra.map(item => moment(item.attend_date).format('DD MMM YYYY'));
-        this.totalAttendances = arra1;
-        this.attendanceLabels = arra2;
+        let filteredAttendancesAmounts = filteredAttendances.map(item => item.total_amount);
+        let filteredAttendancesLabels = filteredAttendances.map(item => moment(item.attend_date).format('DD MMM YYYY'));
+        this.totalAttendances = filteredAttendancesAmounts;
+        this.attendanceLabels = filteredAttendancesLabels;
       },
 
       selectExpenses() {

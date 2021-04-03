@@ -8,11 +8,11 @@
       <p class="club__type">p i l a t e s</p> -->
       <div class="club__login">
         <transition name="slide-fade" mode="out-in">
-        <p class="club__link" v-if="!loginForm" @click="toggleLoginForm" 
-            href="#" target="_blank" rel="noopener">
-          Log In
-        </p>
-        <log-in v-else></log-in>
+          <p class="club__link" v-if="!loginForm" @click="toggleLoginForm" 
+              href="#" target="_blank" rel="noopener">
+            Log In
+          </p>
+          <log-in v-else></log-in>
         </transition>
       </div>
       

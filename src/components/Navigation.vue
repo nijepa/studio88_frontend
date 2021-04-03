@@ -284,7 +284,7 @@
     }
   }
 
-  @media (max-width: 728px) {
+  @media (max-width: 799px) {
     .dash__wrapper {
       grid-template-columns: auto !important;
     }
