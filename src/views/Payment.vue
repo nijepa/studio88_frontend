@@ -327,6 +327,7 @@ export default {
       "paymentDelete",
       "fetchClients",
       "fetchClientsPageSize",
+      "fetchPayments",
       "formTypeChange",
       "clearErrors",
       "setLoadingState",
@@ -421,6 +422,7 @@ export default {
       this.setLoadingState(true);
       if (this.getOnePayment._id) {
         await this.paymentUpdate(this.paymentInput);
+        await this.fetchPayments();
       } else {
         await this.paymentAdd(this.paymentInput);
       }

@@ -395,6 +395,7 @@ export default {
       "fetchSchedules",
       "fetchAttendances",
       "fetchPayments",
+      "fetchClients",
       "fetchFromForm",
       "formTypeChange",
       "clearErrors",
@@ -405,6 +406,7 @@ export default {
       this.setLoadingState(true);
       if (this.getOneClient._id) {
         await this.clientUpdate(this.clientInput);
+        await this.fetchClients();
       } else {
         await this.clientAdd(this.clientInput);
       }

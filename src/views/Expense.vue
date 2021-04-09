@@ -177,6 +177,7 @@ export default {
       this.setLoadingState(true);
       if (this.getOneExpense._id) {
         await this.expenseUpdate(this.expenseInput);
+        await this.fetchExpenses();
       } else {
         await this.expenseAdd(this.expenseInput);
       }

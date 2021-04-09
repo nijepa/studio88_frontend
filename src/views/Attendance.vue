@@ -267,6 +267,7 @@ export default {
       "fetchClients",
       "fetchSchedules",
       "fetchClientsPageSize",
+      "fetchAttendances",
       "formTypeChange",
       "clearErrors",
       "setLoadingState",
@@ -386,6 +387,7 @@ export default {
       this.setLoadingState(true);
       if (this.getOneAttendance._id) {
         await this.attendanceUpdate(this.attendanceInput);
+        await this.fetchAttendances();
       } else {
         await this.attendanceAdd(this.attendanceInput);
       }

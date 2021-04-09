@@ -256,6 +256,7 @@ export default {
       "scheduleDelete",
       "fetchClients",
       "fetchClientsPageSize",
+      "fetchSchedules",
       "formTypeChange",
       "clearErrors",
       "setLoadingState",
@@ -285,6 +286,7 @@ export default {
       } else {
         await this.scheduleAdd(this.scheduleInput);
       }
+      await this.fetchSchedules();
       this.setLoadingState(false);
       if (this.getErrors.length) {
         this.$toast.error(
