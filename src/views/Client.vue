@@ -422,13 +422,15 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        this.formTypeChange("clients");
+        //this.formTypeChange("clients");
+        this.$router.push("/clients");
       }
     },
 
     async delEx() {
       await this.clientDelete(this.getOneClient);
-      this.formTypeChange("clients");
+      //this.formTypeChange("clients");
+      this.$router.push("/clients");
     },
 
     mapAttendances() {

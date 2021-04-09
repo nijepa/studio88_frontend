@@ -403,7 +403,8 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        this.formTypeChange("attendances");
+        //this.formTypeChange("attendances");
+        this.$router.push("/attendances");
       }
     },
 
@@ -439,7 +440,8 @@ export default {
 
     async delEx() {
       await this.attendanceDelete(this.getOneAttendance);
-      this.formTypeChange("attendances");
+      //this.formTypeChange("attendances");
+      this.$router.push("/attendances");
     },
 
     async initClients() {

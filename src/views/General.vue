@@ -313,7 +313,8 @@ export default {
       } else {
         this.generalAdd(this.generalInput);
       }
-      this.formTypeChange("home");
+      //this.formTypeChange("home");
+      this.$router.push("/summaries");
     },
 
     savePrice() {

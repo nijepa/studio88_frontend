@@ -160,7 +160,8 @@ const actions = {
             .then((response) => {
                 commit('updateUser', response.data);
                 ls.updateToken(userData)
-                router.push("/");
+                    //router.push("/");
+                router.push("/summaries");
             })
             .catch((error) => {
                 if (error.response) {

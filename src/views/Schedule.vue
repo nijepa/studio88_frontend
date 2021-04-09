@@ -1,16 +1,25 @@
 <template>
   <!-- <transition name="fall" mode="out-in"> -->
 
-    <loading pic="loading" v-if="loadingState" key="1" />
+  <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="lists__wrapper" key="2">
-
-      <form @submit.prevent="addSchedule()" method="post" class="user__form">
-
-        <h3 v-if="!getOneSchedule._id" class="new_item item__header">
-          <svg version="1.1" id="Capa_1" x="0px" y="0px" width="30px" height="30px" fill="var(--gold)"
-            viewBox="0 0 489.2 489.2" style="enable-background:new 0 0 489.2 489.2;" xml:space="preserve">
-            <path d="M177.8,238.1c0,4.5-3.6,8.1-8.1,8.1h-30.4c-4.5,0-8.1-3.6-8.1-8.1v-30.4c0-4.5,3.6-8.1,8.1-8.1h30.4
+  <div v-else class="lists__wrapper" key="2">
+    <form @submit.prevent="addSchedule()" method="post" class="user__form">
+      <h3 v-if="!getOneSchedule._id" class="new_item item__header">
+        <svg
+          version="1.1"
+          id="Capa_1"
+          x="0px"
+          y="0px"
+          width="30px"
+          height="30px"
+          fill="var(--gold)"
+          viewBox="0 0 489.2 489.2"
+          style="enable-background: new 0 0 489.2 489.2"
+          xml:space="preserve"
+        >
+          <path
+            d="M177.8,238.1c0,4.5-3.6,8.1-8.1,8.1h-30.4c-4.5,0-8.1-3.6-8.1-8.1v-30.4c0-4.5,3.6-8.1,8.1-8.1h30.4
               c4.5,0,8.1,3.6,8.1,8.1V238.1z M241.3,207.8c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1v30.4c0,4.5,3.6,8.1,8.1,8.1h30.4
               c4.5,0,8.1-3.6,8.1-8.1V207.8z M304.8,207.8c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1v30.4c0,4.5,3.6,8.1,8.1,8.1h30.4
               c4.5,0,8.1-3.6,8.1-8.1V207.8z M177.8,269.6c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1V300c0,4.5,3.6,8.1,8.1,8.1h30.4
@@ -27,286 +36,347 @@
               c0-9.6-7.8-17.4-17.4-17.4h-27.1c-9.6,0-17.4,7.8-17.4,17.4v29.5H47.7C21.4,47.3,0,68.7,0,95v293.3C0,414.5,21.4,435.9,47.7,435.9
               z M489.2,397.7c0,50.3-40.8,91.1-91.1,91.1S307,448,307,397.7s40.8-91.1,91.1-91.1S489.2,347.4,489.2,397.7z M444.1,374.1
               c0-2.9-1.1-5.7-3.2-7.7c-4.3-4.3-11.2-4.3-15.5,0L385.8,406l-15.2-15.2c-4.3-4.3-11.2-4.3-15.5,0c-2.1,2.1-3.2,4.8-3.2,7.7
-              c0,2.9,1.1,5.7,3.2,7.7l22.9,22.9c4.3,4.3,11.2,4.3,15.5,0l47.3-47.3C443,379.8,444.1,377,444.1,374.1z"/>
-          </svg>
-          NOVI TERMIN/GRUPA
-        </h3>
+              c0,2.9,1.1,5.7,3.2,7.7l22.9,22.9c4.3,4.3,11.2,4.3,15.5,0l47.3-47.3C443,379.8,444.1,377,444.1,374.1z"
+          />
+        </svg>
+        NOVI TERMIN/GRUPA
+      </h3>
 
-        <div class="input__group">
-
-          <div class="input__field">
-            <label for="name">Naziv</label>
-            <input type="text" name="name" placeholder="ime termina (npr. I)" required
-                    class="login_input user_input" v-model="scheduleInput.title">
-          </div>
-
-          <div class="input__field dani">
-            <label for="day">Dani treninga</label>
-            <div v-for="day in days" :key="day.id">
-              <label :for="'dan'+day" class="dan">{{day}}</label>
-              <input :id="'dan'+day" type="checkbox" class="dan_input"
-                      v-model="scheduleInput.weekday" 
-                      :value="day"/>
-            </div>
-          </div>
-
+      <div class="input__group">
+        <div class="input__field">
+          <label for="name">Naziv</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="ime termina (npr. I)"
+            required
+            class="login_input user_input"
+            v-model="scheduleInput.title"
+          />
         </div>
-        
-        <div class="input__group">
 
-          <div class="input__field">
-            <label for="time">Vrijeme početka</label>
-            <input type="time" name="time" placeholder="vreme održavanja termina (npr. 10:00:AM)"
-                    class="login_input user_input" v-model="scheduleInput.startTime" required>
+        <div class="input__field dani">
+          <label for="day">Dani treninga</label>
+          <div v-for="day in days" :key="day.id">
+            <label :for="'dan' + day" class="dan">{{ day }}</label>
+            <input
+              :id="'dan' + day"
+              type="checkbox"
+              class="dan_input"
+              v-model="scheduleInput.weekday"
+              :value="day"
+            />
           </div>
-
-          <div class="input__field">
-            <label for="duration">Trajanje u minutima</label>
-            <input type="number" name="duration" placeholder="trajanje termina u min. (npr. 60)"
-                    class="login_input user_input" v-model="scheduleInput.duration" value="60">
-          </div>
-
         </div>
-        
-        <div class="members__list">
+      </div>
 
-          <div class="members__items">
-            <label for="members">Vježbačice u grupi</label>
-            <p v-for="member in scheduleInput.members" :key="member._id" name="member"
-                class="login_input user_input members_input" @click="removeMember(member.client)">
-                {{ scheduleInput.members.map(item => item.client._id).indexOf(member.client._id) + 1 }}
-                {{ member.client.last_name }}, {{ member.client.first_name }} 
-              <span class="members__span"> - {{ member.start_date | formatDate }}</span> 
+      <div class="input__group">
+        <div class="input__field">
+          <label for="time">Vrijeme početka</label>
+          <input
+            type="time"
+            name="time"
+            placeholder="vreme održavanja termina (npr. 10:00:AM)"
+            class="login_input user_input"
+            v-model="scheduleInput.startTime"
+            required
+          />
+        </div>
+
+        <div class="input__field">
+          <label for="duration">Trajanje u minutima</label>
+          <input
+            type="number"
+            name="duration"
+            placeholder="trajanje termina u min. (npr. 60)"
+            class="login_input user_input"
+            v-model="scheduleInput.duration"
+            value="60"
+          />
+        </div>
+      </div>
+
+      <div class="members__list">
+        <div class="members__items">
+          <label for="members">Vježbačice u grupi</label>
+          <p
+            v-for="member in scheduleInput.members"
+            :key="member._id"
+            name="member"
+            class="login_input user_input members_input"
+            @click="removeMember(member.client)"
+          >
+            {{
+              scheduleInput.members
+                .map((item) => item.client._id)
+                .indexOf(member.client._id) + 1
+            }}
+            {{ member.client.last_name }}, {{ member.client.first_name }}
+            <span class="members__span">
+              - {{ member.start_date | formatDate }}</span
+            >
+          </p>
+        </div>
+
+        <div class="members__items notclients__container">
+          <div class="input__field clients__add_list">
+            <label for="date_start">
+              Datum pristupa
+              <tooltip
+                tip="Izaberi datum dodavanja vježbačice u grupu, zatim je dodaj iz liste"
+              />
+            </label>
+            <datepicker
+              v-model="selectedDate"
+              placeholder="datum pristupa"
+              class="login_input user_input"
+              :language="sr"
+            >
+            </datepicker>
+          </div>
+
+          <div class="input__field notclients__list">
+            <label for="">Dodaj vježbačicu</label>
+
+            <search-bar
+              :searchStr="search"
+              :pageSizeNr="pageSize"
+              @changed="setPageSize"
+              @typed="searchClients"
+              class="schedule__search"
+            />
+
+            <p
+              v-for="client in pageOfItems"
+              :key="client._id"
+              name="clients"
+              class="login_input user_input members_input members__not"
+              @click="addMember(client)"
+            >
+              {{ client.last_name }}, {{ client.first_name }}
+              <span class="members__span"> - {{ client.mobile }}</span>
             </p>
           </div>
 
-          <div class="members__items notclients__container">
-
-            <div class="input__field clients__add_list">
-              <label for="date_start">
-                Datum pristupa
-                <tooltip tip="Izaberi datum dodavanja vježbačice u grupu, zatim je dodaj iz liste" />
-              </label>
-              <datepicker v-model="selectedDate" 
-                        placeholder="datum pristupa" 
-                        class="login_input user_input"
-                        :language="sr">
-              </datepicker>
-            </div>
-            
-            <div class="input__field notclients__list">
-              <label for="">Dodaj vježbačicu</label>
-
-              <search-bar :searchStr="search" 
-                          :pageSizeNr="pageSize"
-                          @changed="setPageSize"
-                          @typed="searchClients"
-                          class="schedule__search" />
-
-              <p v-for="client in pageOfItems" :key="client._id" name="clients"
-                  class="login_input user_input members_input members__not" 
-                  @click="addMember(client)">
-                {{ client.last_name}}, {{ client.first_name}} 
-                <span class="members__span"> - {{ client.mobile }}</span> 
-              </p>
-            </div>
-
-            <jw-pagination :items="filteredClients" @changePage="onChangePage" 
-                          :initialPage="initialPage" :pageSize="pageSize" 
-                          :labels="customLabels" :styles="customStyles"
-                          class="pagine">
-            </jw-pagination>
-            
-          </div>
+          <jw-pagination
+            :items="filteredClients"
+            @changePage="onChangePage"
+            :initialPage="initialPage"
+            :pageSize="pageSize"
+            :labels="customLabels"
+            :styles="customStyles"
+            class="pagine"
+          >
+          </jw-pagination>
         </div>
+      </div>
 
-        <hr>
+      <hr />
 
-        <div class="modify_btns">
-          <action-buttons toForm='schedules' />
-          <delete-button @clicked="delClient()" />
-        </div>
-
-      </form>
-    </div>
+      <div class="modify_btns">
+        <action-buttons toForm="schedules" />
+        <delete-button @clicked="delClient()" />
+      </div>
+    </form>
+  </div>
   <!-- </transition> -->
 </template>
 
 <script>
-  import moment from 'moment';
-  import { mapGetters, mapActions } from 'vuex';
-  import Datepicker from 'vuejs-datepicker';
-  import {sr} from 'vuejs-datepicker/dist/locale';
-  import Loading from '@/components/utils/Loading.vue';
-  import SearchBar from '@/components/utils/SearchBar.vue';
-  import ActionButtons from '@/components/utils/ActionButtons.vue';
-  import DeleteButton from '@/components/utils/DeleteButton.vue';
-  import Tooltip from '@/components/utils/Tooltip.vue';
-  import actionsNotify from '../mixins/actionsNotify';
-  import navigation from '../mixins/navigation';
-  import navigationSearch from '../mixins/navigationSearch';
-  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
+import Loading from "@/components/utils/Loading.vue";
+import SearchBar from "@/components/utils/SearchBar.vue";
+import ActionButtons from "@/components/utils/ActionButtons.vue";
+import DeleteButton from "@/components/utils/DeleteButton.vue";
+import Tooltip from "@/components/utils/Tooltip.vue";
+import actionsNotify from "../mixins/actionsNotify";
+import navigation from "../mixins/navigation";
+import navigationSearch from "../mixins/navigationSearch";
+import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 
-  export default {
-    name: 'Schedule',
+export default {
+  name: "Schedule",
 
-    components: {
-      Loading, 
-      Datepicker, 
-      SearchBar,
-      ActionButtons,
-      DeleteButton,
-      Tooltip
+  components: {
+    Loading,
+    Datepicker,
+    SearchBar,
+    ActionButtons,
+    DeleteButton,
+    Tooltip,
+  },
+
+  mixins: [actionsNotify, navigation, navigationSearch],
+
+  watch: {
+    pageSize() {
+      this.searchClients();
+    },
+  },
+
+  data() {
+    return {
+      enterClient: false,
+      sr: sr,
+      customLabels,
+      customStyles,
+      scheduleInput: {
+        title: "",
+        weekday: [],
+        startTime: "",
+        duration: 60,
+        notes: "",
+        members: [],
+      },
+      days: ["Poneđeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
+      notClients: [],
+      selectedDate: new Date().toISOString().slice(0, 10),
+      appeared: false,
+    };
+  },
+
+  computed: {
+    ...mapGetters([
+      "getAllSchedules",
+      "getOneSchedule",
+      "getAllClients",
+      "getClientsPageSize",
+      "getErrors",
+      "loadingState",
+    ]),
+  },
+
+  methods: {
+    ...mapActions([
+      "scheduleAdd",
+      "scheduleUpdate",
+      "scheduleDelete",
+      "fetchClients",
+      "fetchClientsPageSize",
+      "formTypeChange",
+      "clearErrors",
+      "setLoadingState",
+    ]),
+
+    setPageSize(val) {
+      this.pageSize = val;
+      this.fetchClientsPageSize(val);
     },
 
-    mixins: [
-      actionsNotify,
-      navigation,
-      navigationSearch
-    ],
-
-    watch: {
-      pageSize() { 
-        this.searchClients();
-      }
-    },
-
-    data() {
-      return {
-        enterClient: false,
-        sr: sr,
-        customLabels,
-        customStyles,
-        scheduleInput: {
-          title: '',
-          weekday: [],
-          startTime: '',
-          duration: 60,
-          notes: '',
-          members: []
-        },
-        days: [
-            'Poneđeljak',
-            'Utorak',
-            'Srijeda',
-            'Četvrtak',
-            'Petak',
-            'Subota'
-        ],
-        notClients: [],
-        selectedDate: new Date().toISOString().slice(0,10),
-        appeared: false,
-      }
-    },
-
-    computed: {
-      ...mapGetters([ 'getAllSchedules', 
-                      'getOneSchedule',
-                      'getAllClients',
-                      'getClientsPageSize',
-                      'getErrors',
-                      'loadingState' ]),
-    },
-
-    methods: {
-      ...mapActions([ 'scheduleAdd', 
-                      'scheduleUpdate', 
-                      'scheduleDelete',
-                      'fetchClients',
-                      'fetchClientsPageSize',
-                      'formTypeChange',
-                      'clearErrors',
-                      'setLoadingState' ]),
-
-      setPageSize(val) {
-        this.pageSize = val;
-        this.fetchClientsPageSize(val);
-      },
-        
-      async searchClients(val = '') {
-        await this.initClients();
-        let mu = this.notClients.filter(post => {
-          return post.first_name.toLowerCase().includes(val.toLowerCase()) || 
-                  post.last_name.toLowerCase().includes(val.toLowerCase()) || 
-                  post.mobile.includes(val)
-        });
-        this.filteredClients = mu;
-      },
-
-      async addSchedule() {
-        this.setLoadingState(true);
-        if (this.getOneSchedule._id) {
-          await this.scheduleUpdate(this.scheduleInput);
-        } else {
-          await this.scheduleAdd(this.scheduleInput);
-        }
-        this.setLoadingState(false);
-        if (this.getErrors.length) {
-          this.$toast.error('Greška! ' + this.getErrors, 'OK', this.notificationSystem.options.error)
-          this.clearErrors();
-        } else {
-          this.$toast.success('Uspješno sačuvano!', 'OK', this.notificationSystem.options.success)
-          this.formTypeChange('schedules');
-        }
-      },
-
-      addMember(client) {
-        let member = this.scheduleInput.members.find(x => x.client._id === client._id);
-        if (!member ) {
-          this.scheduleInput.members.push({'client':client, 'start_date':this.selectedDate});
-          this.notClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
-          this.filteredClients.splice(this.notClients.findIndex(v => v._id === client._id), 1);
-        }
-      },
-
-      removeMember(client) {
-        this.scheduleInput.members.splice(this.mapMembers().findIndex(v => v._id === client._id), 1);
-        this.notClients.push(client);
-      },
-
-      async delEx() {
-        await this.scheduleDelete(this.getOneSchedule);
-        this.formTypeChange('schedules');
-      },
-
-      mapMembers() {
-        return this.scheduleInput.members.map(item => {
-            let container = {};
-            container = item.client;
-            return container;
-        });
-      },
-
-      async initClients() {
-        if (this.getOneSchedule._id) {
-          this.scheduleInput = this.getOneSchedule;
-          this.notClients = this.getAllClients
-            .filter((elem) => !this.mapMembers().find(({ _id }) => elem._id === _id));
-        } else {
-          this.notClients = this.getAllClients;
-        }
-        this.filteredClients = this.notClients;
-        if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
-      }
-    },
-
-    filters: {
-      formatDate: function(value) {
-        if (value) {
-          moment.locale('sr');
-          return moment(String(value)).format('DD MMM YYYY')
-        }
-      }
-    },
-
-    async created() {
-      if (!this.getAllClients.length) await this.fetchClients();
+    async searchClients(val = "") {
       await this.initClients();
-      this.setLoadingState(false);
+      let mu = this.notClients.filter((post) => {
+        return (
+          post.first_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.last_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.mobile.includes(val)
+        );
+      });
+      this.filteredClients = mu;
     },
-  }
+
+    async addSchedule() {
+      this.setLoadingState(true);
+      if (this.getOneSchedule._id) {
+        await this.scheduleUpdate(this.scheduleInput);
+      } else {
+        await this.scheduleAdd(this.scheduleInput);
+      }
+      this.setLoadingState(false);
+      if (this.getErrors.length) {
+        this.$toast.error(
+          "Greška! " + this.getErrors,
+          "OK",
+          this.notificationSystem.options.error
+        );
+        this.clearErrors();
+      } else {
+        this.$toast.success(
+          "Uspješno sačuvano!",
+          "OK",
+          this.notificationSystem.options.success
+        );
+        //this.formTypeChange('schedules');
+        this.$router.push("/schedules");
+      }
+    },
+
+    addMember(client) {
+      let member = this.scheduleInput.members.find(
+        (x) => x.client._id === client._id
+      );
+      if (!member) {
+        this.scheduleInput.members.push({
+          client: client,
+          start_date: this.selectedDate,
+        });
+        this.notClients.splice(
+          this.notClients.findIndex((v) => v._id === client._id),
+          1
+        );
+        this.filteredClients.splice(
+          this.notClients.findIndex((v) => v._id === client._id),
+          1
+        );
+      }
+    },
+
+    removeMember(client) {
+      this.scheduleInput.members.splice(
+        this.mapMembers().findIndex((v) => v._id === client._id),
+        1
+      );
+      this.notClients.push(client);
+    },
+
+    async delEx() {
+      await this.scheduleDelete(this.getOneSchedule);
+      //this.formTypeChange("schedules");
+      this.$router.push("/schedules");
+    },
+
+    mapMembers() {
+      return this.scheduleInput.members.map((item) => {
+        let container = {};
+        container = item.client;
+        return container;
+      });
+    },
+
+    async initClients() {
+      if (this.getOneSchedule._id) {
+        this.scheduleInput = this.getOneSchedule;
+        this.notClients = this.getAllClients.filter(
+          (elem) => !this.mapMembers().find(({ _id }) => elem._id === _id)
+        );
+      } else {
+        this.notClients = this.getAllClients;
+      }
+      this.filteredClients = this.notClients;
+      if (this.getClientsPageSize !== 10)
+        this.pageSize = this.getClientsPageSize;
+    },
+  },
+
+  filters: {
+    formatDate: function (value) {
+      if (value) {
+        moment.locale("sr");
+        return moment(String(value)).format("DD MMM YYYY");
+      }
+    },
+  },
+
+  async created() {
+    if (!this.getAllClients.length) await this.fetchClients();
+    await this.initClients();
+    this.setLoadingState(false);
+  },
+};
 </script>
 
 <style>
-  
 </style>
