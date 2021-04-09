@@ -1,5 +1,5 @@
 <template>
-  <transition name="fall" mode="out-in">
+  <transition name="slide" mode="out-in">
 
     <loading pic="loading" v-if="loadingState" key="1" />
 
@@ -132,71 +132,26 @@
 
       async newSchedule() {
         this.setLoadingState(true);
-        this.formTypeChange('schedule');
+        //this.formTypeChange('schedule');
+        this.$router.push('/schedule')
         await this.scheduleClear();
       },
 
       async selectSchedule(schedule) {
         this.setLoadingState(true);
         await this.fetchSchedule(schedule);
-        this.formTypeChange('schedule');
+        //this.formTypeChange('schedule');
+        this.$router.push('/schedule')
       }
     },
 
     async mounted() {
-      await this.fetchSchedules();
+      if (!this.getAllSchedules.length) await this.fetchSchedules();
       this.setLoadingState(false);
     }
   }
 </script>
 
 <style>
-  .schedule__card {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1em;
-  }
-
-  .schedule__items {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 1em;
-    border: 2px solid var(--purple);
-    border-radius: 1em;
-    padding: 1em;
-    cursor: pointer;
-    transition: ease .7s all;
-  }
-
-  .schedule__items:hover {
-    background: var(--purple-light);
-  }
-
-  .week__day {
-    margin: 0;
-  }
-
-  .item__desc {
-    font-size: .8em;
-    font-style: italic;
-    color: var(--grey);
-  }
-
-  .schedule__btn {
-    font-size: .9em;
-    padding: .1em;
-    background: transparent;
-  }
-
-  @media (max-width: 728px) {
-    .schedule__card {
-      grid-template-columns: auto auto !important;
-    }
-  }
-
-  @media (max-width: 599px) {
-    .schedule__card {
-      grid-template-columns: auto !important;
-    }
-  }
+  
 </style>

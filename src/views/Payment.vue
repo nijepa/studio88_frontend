@@ -1,9 +1,9 @@
 <template>
-  <transition name="fall" mode="out-in">
+  <!-- <transition name="fall" mode="out-in"> -->
 
     <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="schedule__wrapper" key="2">
+    <div v-else class="lists__wrapper" key="2">
 
       <form @submit.prevent="addPayment()" method="post" class="user__form">
 
@@ -30,9 +30,9 @@
           </div>
 
           <div class="input__field">
-            <label for="days">Mjesec</label>
+            <label :for="'days'+paymentInput.payment_month">Mjesec</label>
             <div class="login_input user_input ">
-              <select name="days" id="days" class="" required
+              <select name="days" :id="'days'+paymentInput.payment_month" required
                       v-model="paymentInput.payment_month" 
                       :value="paymentInput.payment_month" >
                 <option value="Januar">Januar</option>
@@ -156,7 +156,7 @@
       </form>
 
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -380,7 +380,7 @@
       let currentYear = new Date();
       currentYear = moment().format('YYYY');
       this.year = currentYear;
-      await this.fetchClients();
+      if (!this.getAllClients.length) await this.fetchClients();
       this.initClients();
       this.filteredClients = this.paymentInput.members;
       this.setLoadingState(false);

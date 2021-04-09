@@ -1,7 +1,7 @@
 <template>
 
-  <div class="schedule__wrapper">
-    <transition name="fall">
+  <div class="lists__wrapper">
+    <transition name="fall" mode="out-in">
 
  <!--      <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
             class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
@@ -92,7 +92,7 @@
         <!-- </div> -->
 
         <div class="modify_btns">
-          <action-buttons toForm='home' />
+          <action-buttons toForm='summaries' />
         </div>
 
       </form>
@@ -180,6 +180,7 @@
   .signup__field {
     margin: .5em;
   }
+  
   .user__profile {
     display: grid;
     justify-content: center;
@@ -244,34 +245,5 @@
   .info__friends:hover {
     color: black;
     text-decoration: underline;
-  }
-
-  .fall-enter-active,
-  .fall-leave-active {
-    transition: all 1s ease-in-out;
-  }
-
-  .fall-enter, .fall-leave-to {
-    transform: translateY(-2em);
-    opacity: 0;
-  }
-
-  .rise-enter-active {
-    transition: all .5s ease-in-out;
-    /* position: absolute; */
-  }
-
-  .rise-leave-active {
-    transition: all .5s ease-in-out;
-    /* position: absolute; */
-  }
-
-  .rise-enter, .rise-leave-to {
-    transform: translateY(-2em);
-    opacity: 0;
-  }
-
-  .rise-move {
-    transition: all .5s ease;
   }
 </style>

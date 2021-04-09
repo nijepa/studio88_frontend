@@ -1,9 +1,9 @@
 <template>
-  <transition name="fall" mode="out-in">
+  <transition name="slide" mode="out-in">
 
     <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="schedule__wrapper" key="2">
+    <div v-else class="lists__wrapper" key="2">
       <form @submit.prevent="addExpense()" method="post" class="user__form">
         <h3 v-if="!getOneExpense._id" class="new_item item__header">
           <svg width="30px" height="30px" viewBox="0 0 512 512">
@@ -175,25 +175,5 @@
 </script>
 
 <style>
-  .new_item {
-    justify-self: stretch;
-    margin: 0 0 .5em 0;
-    padding: 0;
-    color: var( --gold);
-    border-top-left-radius: .7em;
-    border-top-right-radius: .7em;
-    border: 1px solid var(--purple-light);
-    background: var(--purple-lightest);
-  }
-
-  .modify_btns {
-    justify-self: stretch;
-    margin: 0.5em 0 0 0;
-    padding: .2em;
-    border-bottom-left-radius: .9em;
-    border-bottom-right-radius: .9em;
-    border: 1px solid var(--purple-light);
-    display: grid;
-    background: var(--purple-lightest);
-  }
+  
 </style>

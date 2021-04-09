@@ -1,9 +1,9 @@
 <template>
-  <transition name="fall" mode="out-in">
+  <!-- <transition name="fall" mode="out-in"> -->
 
     <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="schedule__wrapper" key="2">
+    <div v-else class="lists__wrapper" key="2">
 
       <form @submit.prevent="addSchedule()" method="post" class="user__form">
 
@@ -43,8 +43,8 @@
           <div class="input__field dani">
             <label for="day">Dani treninga</label>
             <div v-for="day in days" :key="day.id">
-              <label for="dan" class="dan">{{day}}</label>
-              <input id="dan" type="checkbox" class="dan_input"
+              <label :for="'dan'+day" class="dan">{{day}}</label>
+              <input :id="'dan'+day" type="checkbox" class="dan_input"
                       v-model="scheduleInput.weekday" 
                       :value="day"/>
             </div>
@@ -129,7 +129,7 @@
 
       </form>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -300,7 +300,7 @@
     },
 
     async created() {
-      await this.fetchClients();
+      if (!this.getAllClients.length) await this.fetchClients();
       await this.initClients();
       this.setLoadingState(false);
     },
@@ -308,52 +308,5 @@
 </script>
 
 <style>
-  .dani {
-    margin-bottom: 1em;
-  }
-
-  .dan {
-    font-size: 1.3em;
-    color: var(--black);
-    cursor: pointer;
-  }
-
-  .dan_input {
-    cursor: pointer;
-  }
-
-  .members_input {
-    grid-template-columns: auto 1fr;
-    align-items: baseline;
-  }
-
-  .members__span {
-    justify-self: end;
-    font-size: .7em;
-  }
-
-  .members__not {
-    font-size: 1em;
-  }
-
-  .members__items .members__not:nth-child(even) {
-    background-color: var(--gold-lighter) !important;
-  }
-
-  .clients__add_list {
-    margin-top: 1em;
-  }
-
-  .schedule__search {
-    display: grid;
-    margin-bottom: .3em;
-  }
-
-  .notclients__container {
-    margin-left: .5em;
-  }
-
-  .notclients__list {
-    justify-items: stretch;
-  }
+  
 </style>

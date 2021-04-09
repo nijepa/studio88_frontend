@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <transition name="fall" mode="out-in">
+    <transition name="slide" mode="out-in">
 
       <loading pic="loading" v-if="loadingState" key="1" />
 
@@ -167,14 +167,16 @@
 
       async newAttendance() {
         this.setLoadingState(true);
-        this.formTypeChange('attendance');
+        //this.formTypeChange('attendance');
+        this.$router.push('/attendance')
         await this.attendanceClear();
       },
 
       async selectAttendance(attendance) {
         this.setLoadingState(true);
         await this.fetchAttendance(attendance);
-        this.formTypeChange('attendance');
+        //this.formTypeChange('attendance');
+        this.$router.push('/attendance')
       },
 
       mapAttendances(attendance) {
@@ -192,32 +194,12 @@
     },
 
     async mounted() {
-      await this.fetchAttendances();
+      if (!this.getAllAttendances.length) await this.fetchAttendances();
       this.setLoadingState(false);
     }
   }
 </script>
 
 <style>
-  .attend__list {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-
-  .attend__heading {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-
-  ul.pagination {
-    margin-top: 1em !important;
-  }
-
-  li.active {
-    background: var(--gold);
-    border-radius: 1em;
-  }
-
-  li:hover {
-    background: var(--gold-light);
-    border-radius: 1em;
-  }
+  
 </style>

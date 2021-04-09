@@ -1,6 +1,6 @@
 <template>
   <div class="" >
-    <transition name="fall" mode="out-in">
+    <transition name="slide" mode="out-in">
 
       <loading pic="loading1" v-if="loadingState" key="1" />
     
@@ -62,11 +62,11 @@
             </p>
             <p class="client__item" @click="selectClient(client)">{{ setClientSchedule(client._id) }}</p>
             <p class="client__item" @click="selectClient(client)">{{ client.mobile }}</p>
-            <p class="client__item" @click="selectClient(client)">
+            <label class="client__item" @click="selectClient(client)">.
               <input type="checkbox" class="" v-model="client.active">
-            </p>
+            </label>
 
-            <button type="submit" @click="clientActivities(client)" class="activities_btn">
+            <button type="submit" @click="clientActivities(client)" class="activities_btn" aria-label="Client Activities">
               <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 1964.601 1689.422" 
                     enable-background="new 0 0 1964.601 1689.422" xml:space="preserve"
                     fill="var(--purple)" width="30px" height="30px">
@@ -157,7 +157,8 @@
 
       async newClient() {
         this.setLoadingState(true);
-        this.formTypeChange('client');
+        //this.formTypeChange('client');
+        this.$router.push('/client')
         await this.clientClear();
       },
 
@@ -170,7 +171,8 @@
         this.setLoadingState(true);
         await this.fetchClient(client);
         this.setPageNr();
-        this.formTypeChange('client');
+        //this.formTypeChange('client');
+        this.$router.push('/client')
       },
 
       async clientActivities(client) {
@@ -178,7 +180,8 @@
         await this.fetchClient(client);
         this.fetchFromForm('clients');
         this.setPageNr();
-        this.formTypeChange('clientactivity');
+        //this.formTypeChange('clientactivity');
+        this.$router.push('/clientactivity')
       },
 
       mapSchedules() {
@@ -205,12 +208,12 @@
       },
 
       async initClients() {
-        await this.fetchClients();
+        if (!this.getAllClients.length) await this.fetchClients();
         this.filteredClients = this.getAllClients.sort((a, b) => 
                                 (a.last_name.toLowerCase() > b.last_name.toLowerCase() ? 1 : -1));
         if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
         if (this.getClientsPageSize !== 10) this.pageSize = this.getClientsPageSize;
-        await this.fetchSchedules();
+        if (!this.getAllSchedules.length) await this.fetchSchedules();
       }
     },
 
@@ -222,139 +225,5 @@
 </script>
 
 <style>
-  .total__clients {
-    display: flex;
-    align-items: baseline;
-    justify-self: center;
-    letter-spacing: .1em;
-  }
-
-  .total__clients h1 {
-    margin: 0 .3em;
-  }
-
-  .total__clients h3 {
-    color: var(--gold);
-  }
-
-  .clients__manipulate {
-    width: 100%;
-    overflow: hidden;
-    display: grid;
-  }
-
-  .clients__ss {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .page__size {
-    display: flex;
-    align-items: baseline;
-  }
-
-  .client__wrapper {
-    display: grid;
-    justify-content: center;
-    justify-items: left;
-  }
-
-  .list__container {
-    justify-self: center;
-  }
-
-  .clients__list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 1em;
-    justify-content: center;
-    justify-items: center;
-    margin-top: .2em;
-    border-radius: 1em;
-    transition: ease .5s all;
-  }
-
-  div.clients__list:nth-child(odd) {
-    border: 2px solid var(--purple-light);
-  }
-
-  .clients__list:hover {
-    background: var(--purple-light);
-  }
-
-  .client__item {
-    cursor: pointer;
-    border-radius: 1em;
-    padding: 1em;
-    margin: 0;
-    text-align: left;
-  }
-
-  .client__add {
-    margin-bottom: .3em;
-    color: var(--purple);
-    border-bottom: 2px solid var(--purple);
-    justify-self: left;
-  }
-
-  .client__add:hover {
-    color: var(--purple-dark);
-    border-bottom: 2px solid var(--purple-dark);
-  }
-
-  .client__add:hover svg g {
-    fill: var(--purple-dark);
-  }
-
-  .clients__heading {
-    grid-template-columns: repeat(5, 1fr) !important;
-  }
-
-  .activities_btn {
-    margin: 0;
-    padding: .5em;
-    border: none;
-    cursor: pointer;
-    border-radius: 1em;
-    z-index: 100;
-    transition: ease .5s all;
-  }
-
-  .activities_btn:hover {
-    background: var(--purple);
-    transform: scale(1.1);
-  }
-
-  .activities_btn svg {
-    z-index: 100;
-  }
-
-  .activities_btn:hover svg {
-    fill: var(--gold-light);
-  }
-
-  .not_schedule {
-    color: var(--red);
-  }
-
-  .days__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-items: center;
-    border-radius: .5em;
-    padding: .2em;
-    margin-top: .5em;
-    background: var(--purple);
-    color: var(--gold-light);
-  }
-
-  @media only screen and (max-width: 599px) {
-    #search {
-      width: 7em;
-    }
-    .page__size {
-      font-size: .8em;
-    }
-  }
+  
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="">
 
-    <transition name="fall" mode="out-in">
+    <!-- <transition name="fall" mode="out-in"> -->
 
       <loading pic="loading" v-if="loadingState" key="1" />
 
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-    </transition>
+    <!-- </transition> -->
 
     <jw-pagination :items="getAllExpenses" @changePage="onChangePage" 
                     :labels="customLabels" :styles="customStyles" class="pagine">
@@ -104,14 +104,16 @@
       
       async newExpense() {
         this.setLoadingState(true);
-        this.formTypeChange('expense');
+        //this.formTypeChange('expense');
+        this.$router.push('/expense')
         await this.expenseClear();
       },
 
       async selectExpense(expense) {
         this.setLoadingState(true);
         await this.fetchExpense(expense);
-        this.formTypeChange('expense');
+        //this.formTypeChange('expense');
+        this.$router.push('/expense')
       },
 
       mapExpenses(expense) {
@@ -120,7 +122,7 @@
     },
 
     async mounted() {
-      await this.fetchExpenses();
+      if (!this.getAllExpenses.length) await this.fetchExpenses();
       this.setLoadingState(false);
     }
   }

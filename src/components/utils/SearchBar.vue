@@ -16,9 +16,9 @@
     </div>
 
     <div class="page__size">
-      <label for="days">Prikaži</label>
+      <label :for="'days'+pageSize">Prikaži</label>
       <div class="login_input user_input nr_clients">
-        <select name="days" id="days" class=""
+        <select name="days" :id="'days'+pageSize" class=""
                 v-model="pageSize" 
                 :value="pageSize" 
                 @change="changed()">

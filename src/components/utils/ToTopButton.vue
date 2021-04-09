@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="scrol">
-      <img @click="animateToTop()" class="scrolling" src="@/assets/img/top.png">
+      <img @click="animateToTop()" class="scrolling" src="@/assets/img/top.png" alt="top">
     </div>
   </div>
 </template>
@@ -27,10 +27,10 @@
         else document.querySelector('.scrol').style.display = "none"
       })
     },
-
+/* 
     destroyed() {
       window.removeEventListener('scroll');
-    }
+    } */
   }
 </script>
 

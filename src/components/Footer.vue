@@ -5,8 +5,8 @@
       <div class="footer_group">
         <span class="footer__text">Studio 88 @ 2021</span>
       </div>
-      <a href="https://www.instagram.com/studio88pilates/" target="blank">
-        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 333333 333333" shape-rendering="geometricPrecision" 
+      <a href="https://www.instagram.com/studio88pilates/" target="blank" aria-label="Instagram">
+        <svg viewBox="0 0 333333 333333" shape-rendering="geometricPrecision" 
               text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" 
               clip-rule="evenodd" height="20px" class="footer__svg">
           <defs>
@@ -22,7 +22,7 @@
           fill="url(#a)"/>
         </svg>
       </a>
-      <a href="https://www.facebook.com/jecabu2" target="blank">
+      <a href="https://www.facebook.com/jecabu2" target="blank" aria-label="Facebook">
         <svg version="1.1" id="Layer_1" x="0px" y="0px" width="20px" height="20px" 
               viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895" xml:space="preserve">
           <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812  c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225  H248.082z"/>

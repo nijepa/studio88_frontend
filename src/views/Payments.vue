@@ -1,7 +1,6 @@
 <template>
   <div class="">
-
-    <transition name="fall" mode="out-in">
+    <transition name="slide" mode="out-in">
 
       <loading pic="loading" v-if="loadingState" key="1" />
 
@@ -157,14 +156,16 @@
       
       async newPayment() {
         this.setLoadingState(true);
-        this.formTypeChange('payment');
+        //this.formTypeChange('payment');
+        this.$router.push('/payment')
         await this.paymentClear();
       },
 
       async selectPayment(payment) {
         this.setLoadingState(true);
         await this.fetchPayment(payment);
-        this.formTypeChange('payment');
+        //this.formTypeChange('payment');
+        this.$router.push('/payment')
       },
 
       mapPayments(payment) {
@@ -173,7 +174,7 @@
     },
 
     async mounted() {
-      await this.fetchPayments();
+      if (!this.getAllPayments.length) await this.fetchPayments();
       this.setLoadingState(false);
     }
   }

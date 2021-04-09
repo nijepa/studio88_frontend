@@ -110,7 +110,8 @@
 
       handleCancel() {
         if (this.toForm) {
-          this.formTypeChange(this.toForm)
+          //this.formTypeChange(this.toForm)
+          this.$router.push('/'+ this.toForm)
         } else {
           this.$emit('canceled', true)
         }
@@ -120,53 +121,5 @@
 </script>
 
 <style>
-  .action_btns  {
-    display: flex;
-  }
-
-  .action_btn {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: .2em;
-    align-items: center;
-    background: transparent;
-    margin: .3em .7em .3em .3em;
-    padding: .3em;
-    /* margin-right: 1em;
-    margin-top: .3em; */
-    cursor: pointer;
-    color: var(--green);
-    font-family: 'Baloo Tamma 2', cursive;
-    font-size: 1.2em;
-    font-weight: 800;
-    border: 2px solid transparent;
-    border-bottom: 2px solid var(--green);
-    transition: ease .5s all;
-  }
-
-  .action_btn:hover {
-    color: var(--green-dark);
-    border-bottom: 2px solid var(--green-dark);
-    border-radius: 1em;
-    background: var(--purple-lighter);
-    transform: scale(1.05);
-  }
   
-  .save__btn:hover {
-    background: var(--green-light) ;
-  }
-
-  .cancel__btn:hover {
-    background: var(--yellow-light) ;
-  }
-
-  .cancel__btn {
-    color: var(--orange);
-    border-bottom: 2px solid var(--orange);
-  }
-
-  .cancel__btn:hover {
-    color: var(--orange-dark);
-    border-bottom: 2px solid var(--orange-dark);
-  }
 </style>
