@@ -1,6 +1,57 @@
 <script>
 import { Line } from "vue-chartjs";
 
+import { _adapters } from "chart.js";
+import dayjs from "./dayjs";
+
+// chartjs dayjs adapter adapted from here:
+// https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/blob/master/src/index.js
+const FORMATS = {
+  datetime: "MMM D, YYYY, h:mm:ss a",
+  millisecond: "h:mm:ss.SSS a",
+  second: "h:mm:ss a",
+  minute: "h:mm a",
+  hour: "hA",
+  day: "MMM D",
+  week: "ll",
+  month: "MMM YYYY",
+  quarter: "[Q]Q - YYYY",
+  year: "YYYY",
+};
+
+_adapters._date.override({
+  _id: "dayjs",
+  formats: () => FORMATS,
+  parse: (value, format) => {
+    const valueType = typeof value;
+
+    if (value === null || valueType === "undefined") {
+      return null;
+    }
+
+    let parsedValue = null;
+
+    if (valueType === "string" && typeof format === "string") {
+      parsedValue = dayjs(value, format);
+    } else if (!(value instanceof dayjs)) {
+      parsedValue = dayjs(value);
+    }
+
+    return parsedValue.isValid() ? parsedValue.valueOf() : null;
+  },
+  format: (time, format) => dayjs(time).format(format),
+  add: (time, amount, unit) => dayjs(time).add(amount, unit).valueOf(),
+  diff: (max, min, unit) => dayjs(max).diff(dayjs(min), unit),
+  startOf: (time, unit, weekday) => {
+    if (unit === "isoWeek") {
+      return dayjs(time).isoWeekday(weekday).startOf("day").valueOf();
+    }
+
+    return dayjs(time).startOf(unit).valueOf();
+  },
+  endOf: (time, unit) => dayjs(time).endOf(unit).valueOf(),
+});
+
 export default {
   extends: Line,
 
