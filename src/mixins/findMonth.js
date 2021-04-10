@@ -1,10 +1,9 @@
-export default
-{
-/*   data() {
-    return {
-      payment_month: this.checkMonth(),
-    }
-  }, */
+export default {
+  /*   data() {
+      return {
+        payment_month: this.checkMonth(),
+      }
+    }, */
 
   methods: {
     checkMonth() {

@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -123,6 +123,10 @@ import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import actionsNotify from "../mixins/actionsNotify";
 import findMonth from "../mixins/findMonth";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "Expense",
@@ -142,7 +146,7 @@ export default {
       expenseInput: {
         expense_date: new Date(),
         expense_month: this.checkMonth(),
-        expense_year: moment(new Date()).format("YYYY"),
+        expense_year: dayjs(new Date()).format("YYYY"),
         expense_amount: 0,
         notes: "",
       },
@@ -168,7 +172,6 @@ export default {
       "expenseUpdate",
       "expenseDelete",
       "fetchExpenses",
-      "formTypeChange",
       "clearErrors",
       "setLoadingState",
     ]),
@@ -195,21 +198,19 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        //this.formTypeChange('expenses');
         this.$router.push("/expenses");
       }
     },
 
     async delEx() {
       await this.expenseDelete(this.getOneExpense);
-      //this.formTypeChange("expenses");
       this.$router.push("/expenses");
     },
   },
 
   async mounted() {
     let currentYear = new Date();
-    currentYear = moment().format("YYYY");
+    currentYear = dayjs().format("YYYY");
     this.year = currentYear;
     if (this.getOneExpense._id) {
       this.expenseInput = this.getOneExpense;

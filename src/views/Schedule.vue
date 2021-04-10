@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -196,6 +196,10 @@ import actionsNotify from "../mixins/actionsNotify";
 import navigation from "../mixins/navigation";
 import navigationSearch from "../mixins/navigationSearch";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "Schedule",
@@ -257,7 +261,6 @@ export default {
       "fetchClients",
       "fetchClientsPageSize",
       "fetchSchedules",
-      "formTypeChange",
       "clearErrors",
       "setLoadingState",
     ]),
@@ -301,7 +304,6 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        //this.formTypeChange('schedules');
         this.$router.push("/schedules");
       }
     },
@@ -336,7 +338,6 @@ export default {
 
     async delEx() {
       await this.scheduleDelete(this.getOneSchedule);
-      //this.formTypeChange("schedules");
       this.$router.push("/schedules");
     },
 
@@ -363,14 +364,14 @@ export default {
     },
   },
 
-  filters: {
+  /*   filters: {
     formatDate: function (value) {
       if (value) {
-        moment.locale("sr");
-        return moment(String(value)).format("DD MMM YYYY");
+        //moment.locale("sr");
+        return dayjs(String(value)).format("DD MMM YYYY");
       }
     },
-  },
+  }, */
 
   async created() {
     if (!this.getAllClients.length) await this.fetchClients();

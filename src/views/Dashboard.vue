@@ -43,7 +43,6 @@ export default {
 </script>
 
 <style>
-/* style.css */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -60,12 +59,10 @@ export default {
 
 .slide-enter-active {
   transition: all 0.5s ease-in-out;
-  /* position: absolute; */
 }
 
 .slide-leave-active {
   transition: all 0.5s ease-in-out;
-  /* position: absolute; */
 }
 
 .slide-enter {

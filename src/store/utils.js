@@ -1,17 +1,17 @@
-const  state = {
+const state = {
   loading: true,
   inputType: '',
   errors: []
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
-const  getters = {
+const getters = {
   loadingState: state => state.loading,
   getErrors: state => state.errors
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
-const  mutations = {
+const mutations = {
   changeLoadingState(state, loading) {
     state.loading = loading;
   },
@@ -23,11 +23,15 @@ const  mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  setLoadingState({commit}, loading) {
+  setLoadingState({
+    commit
+  }, loading) {
     commit('changeLoadingState', loading);
   },
 
-  clearErrors({ commit }) {
+  clearErrors({
+    commit
+  }) {
     commit('setErrors', [])
   }
 };

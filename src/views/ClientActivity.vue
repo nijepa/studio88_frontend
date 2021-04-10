@@ -202,7 +202,7 @@
         >
           <p class="activities__item">{{ client.year }}</p>
           <p class="activities__item">{{ client.month }}</p>
-          <p class="activities__item">{{ client.date | formatDate1 }}</p>
+          <p class="activities__item">{{ client.date | formatDate }}</p>
           <p class="activities__item">{{ client.amount }}</p>
           <p class="activities__item">{{ client.note }}</p>
         </div>
@@ -239,7 +239,7 @@
           class="activities__list attendances"
           @click="handleUpdate(client, false)"
         >
-          <p class="activities__item">{{ client.date | formatDate }}</p>
+          <p class="activities__item">{{ client.date | formatDateLong }}</p>
           <input
             type="checkbox"
             class="activities__item activities__check"
@@ -267,7 +267,7 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
@@ -278,6 +278,10 @@ import navigationSearch from "../mixins/navigationSearch";
 import ClientAttendance from "../components/ClientAttendance";
 import ClientPayment from "../components/ClientPayment";
 import Tooltip from "@/components/utils/Tooltip.vue";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "ClientActivity",
@@ -327,7 +331,6 @@ export default {
       "fetchAttendances",
       "clientClear",
       "fetchClientsPageSize",
-      "formTypeChange",
       "setLoadingState",
     ]),
 
@@ -355,7 +358,7 @@ export default {
     },
 
     customFormatter(date) {
-      return moment(date).format("DD MMM YYYY");
+      return dayjs(date).format("DD MMM YYYY");
     },
 
     getPreviousMonday() {
@@ -363,15 +366,14 @@ export default {
       return new Date(firstDay).toISOString().slice(0, 10);
     },
 
-    async newClient() {
+    /*     async newClient() {
       this.setLoadingState(true);
       this.formTypeChange("client");
       await this.clientClear();
-    },
+    }, */
 
     async selectClient() {
       this.setLoadingState(true);
-      //this.formTypeChange(this.getFromForm);
       this.$router.push("/client");
     },
 
@@ -382,10 +384,10 @@ export default {
         })
         .filter(
           (year) =>
-            moment(year.date).format("YYYY-MM-DD") >=
-              moment(this.dateFrom).format("YYYY-MM-DD") &&
-            moment(year.date).format("YYYY-MM-DD") <=
-              moment(this.dateTill).format("YYYY-MM-DD")
+            dayjs(year.date).format("YYYY-MM-DD") >=
+              dayjs(this.dateFrom).format("YYYY-MM-DD") &&
+            dayjs(year.date).format("YYYY-MM-DD") <=
+              dayjs(this.dateTill).format("YYYY-MM-DD")
         );
       this.filteredClientsA = this.clientAttendances;
       this.clientPayments = this.mapPayments()
@@ -394,10 +396,10 @@ export default {
         })
         .filter(
           (year) =>
-            moment(year.datep).format("YYYY-MM-DD") >=
-              moment(this.dateFrom).format("YYYY-MM-DD") &&
-            moment(year.datep).format("YYYY-MM-DD") <=
-              moment(this.dateTill).format("YYYY-MM-DD")
+            dayjs(year.datep).format("YYYY-MM-DD") >=
+              dayjs(this.dateFrom).format("YYYY-MM-DD") &&
+            dayjs(year.datep).format("YYYY-MM-DD") <=
+              dayjs(this.dateTill).format("YYYY-MM-DD")
         );
       this.filteredClients = this.clientPayments;
     },
@@ -461,18 +463,18 @@ export default {
   },
 
   filters: {
-    formatDate: function (value) {
+    formatDateLong: function (value) {
       if (value) {
-        moment.locale("sr");
-        return moment(String(value)).format("ll dddd");
+        //moment.locale("sr");
+        return dayjs(String(value)).format("DD MMM YYYY dddd");
       }
     },
-    formatDate1: function (value) {
+    /*     formatDate1: function (value) {
       if (value) {
-        moment.locale("sr");
-        return moment(String(value)).format("DD MMM YYYY");
+        //moment.locale("sr");
+        return dayjs(String(value)).format("DD MMM YYYY");
       }
-    },
+    }, */
   },
 
   async mounted() {

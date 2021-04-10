@@ -243,10 +243,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment";
+//import moment from "moment";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "General",
@@ -281,13 +285,13 @@ export default {
     ...mapGetters(["getGeneral", "getErrors"]),
   },
 
-  filters: {
+  /*   filters: {
     formatDate: function (value) {
       if (value) {
-        return moment(String(value)).format("MM/DD/YYYY");
+        return dayjs(String(value)).format("MM/DD/YYYY");
       }
     },
-  },
+  }, */
 
   methods: {
     ...mapActions([
@@ -295,7 +299,6 @@ export default {
       "generalAdd",
       "generalUpdate",
       "createPrice",
-      "formTypeChange",
       "clearErrors",
     ]),
 
@@ -313,7 +316,6 @@ export default {
       } else {
         this.generalAdd(this.generalInput);
       }
-      //this.formTypeChange("home");
       this.$router.push("/summaries");
     },
 

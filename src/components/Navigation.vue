@@ -35,7 +35,11 @@
           class="logo-nav"
         />
 
-        <button @click="showMenu = !showMenu" class="nav-toggle" aria-label="nav toggle">
+        <button
+          @click="showMenu = !showMenu"
+          class="nav-toggle"
+          aria-label="nav toggle"
+        >
           <svg
             v-if="!showMenu"
             width="44px"
@@ -196,7 +200,6 @@ export default {
     ...mapActions([
       "initialState",
       "logout",
-      "formTypeChange",
       "fetchGenerals",
       "setLoadingState",
     ]),
@@ -204,7 +207,6 @@ export default {
     navClick(type) {
       this.setLoadingState(true);
       this.activeLink = type;
-      //this.formTypeChange(type);
       if (this.window.width < 600) this.showMenu = false;
     },
 
@@ -242,5 +244,4 @@ export default {
 .logo__small {
   height: 70px;
 }
-
 </style>

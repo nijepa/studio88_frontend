@@ -44,7 +44,7 @@
             >
             </datepicker>
             <h3 class="weekday">
-              {{ attendanceInput.attend_date | formatDate }}
+              {{ attendanceInput.attend_date | formatDay }}
             </h3>
           </div>
 
@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -203,6 +203,10 @@ import navigationSearch from "../mixins/navigationSearch";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 //import '@trevoreyre/autocomplete-vue/dist/style.css';
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "Attendance",
@@ -268,7 +272,6 @@ export default {
       "fetchSchedules",
       "fetchClientsPageSize",
       "fetchAttendances",
-      "formTypeChange",
       "clearErrors",
       "setLoadingState",
     ]),
@@ -310,7 +313,6 @@ export default {
       return (
         result.last_name + ", " + result.first_name + " - " + result.mobile
       );
-      //return result
     },
 
     handleSubmit(result) {
@@ -405,7 +407,6 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        //this.formTypeChange("attendances");
         this.$router.push("/attendances");
       }
     },
@@ -442,7 +443,6 @@ export default {
 
     async delEx() {
       await this.attendanceDelete(this.getOneAttendance);
-      //this.formTypeChange("attendances");
       this.$router.push("/attendances");
     },
 
@@ -464,17 +464,17 @@ export default {
     },
   },
 
-  filters: {
+  /*   filters: {
     formatDate: function (value) {
       if (value) {
-        return moment(value).format("dddd");
+        return dayjs(value).format("dddd");
       }
     },
-  },
+  }, */
 
   async mounted() {
     let currentYear = new Date();
-    currentYear = moment().format("YYYY");
+    currentYear = dayjs().format("YYYY");
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
     await this.initClients();

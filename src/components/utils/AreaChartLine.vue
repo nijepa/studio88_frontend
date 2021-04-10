@@ -1,39 +1,39 @@
 <script>
-  import { Line } from "vue-chartjs";
+import { Line } from "vue-chartjs";
 
-  export default {
-    extends: Line,
+export default {
+  extends: Line,
 
-    data() {
-      return {
-        gradient: null
-      };
+  data() {
+    return {
+      gradient: null,
+    };
+  },
+
+  props: {
+    chartdata: {
+      type: Array,
+      default: null,
     },
-
-    props: {
-      chartdata: {
-        type: Array,
-        default: null
-      },
-      chartlabel: {
-        type: Array,
-        default: null
-      }
+    chartlabel: {
+      type: Array,
+      default: null,
     },
-    
-    mounted() {
-      this.gradient = this.$refs.canvas
-        .getContext("2d")
-        .createLinearGradient(0, 0, 0, 450);
+  },
 
-      this.gradient.addColorStop(0, "rgba(92, 72, 133, 0.75)");
-      this.gradient.addColorStop(0.5, "rgba(92, 72, 133, 0.25)");
-      this.gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+  mounted() {
+    this.gradient = this.$refs.canvas
+      .getContext("2d")
+      .createLinearGradient(0, 0, 0, 450);
 
-      this.renderChart(
-        {
-          labels: this.chartlabel
-  /*         [
+    this.gradient.addColorStop(0, "rgba(92, 72, 133, 0.75)");
+    this.gradient.addColorStop(0.5, "rgba(92, 72, 133, 0.25)");
+    this.gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+
+    this.renderChart(
+      {
+        labels: this.chartlabel,
+        /*         [
             "January",
             "February",
             "March",
@@ -41,51 +41,54 @@
             "May",
             "June",
             "July"
-          ] */,
-          datasets: [
-            {
-              label: "Dolazaka",
-              borderColor: "#856727",
-              pointBackgroundColor: "#5c4885",
-              borderWidth: 1,
-              pointBorderColor: "#856727",
-              backgroundColor: this.gradient,
-              data: this.chartdata,
-            },
-          ]
-        },
-        {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero: true,
-                    min: 0
-                  },
-                  gridLines: {
-                    display: false
-                  }
-                }],
-                xAxes: [ {
-                  gridLines: {
-                    display: false
-                  }
-                }],
-                responsive: true,
-                maintainAspectRatio: false,
-                height:300
-              },
+          ] */ datasets: [
+          {
+            label: "Dolazaka",
+            borderColor: "#856727",
+            pointBackgroundColor: "#5c4885",
+            borderWidth: 1,
+            pointBorderColor: "#856727",
+            backgroundColor: this.gradient,
+            data: this.chartdata,
           },
-        { responsive: true, maintainAspectRatio: false }
-      );
-    }
-  };
+        ],
+      },
+      {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                min: 0,
+              },
+              gridLines: {
+                display: false,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+            },
+          ],
+          responsive: true,
+          maintainAspectRatio: false,
+          height: 300,
+        },
+      },
+      { responsive: true, maintainAspectRatio: false }
+    );
+  },
+};
 </script>
 
 <style >
-  .kk {
-    color: rgba(59, 5, 109, 0.5);
-    color:rgba(59, 5, 109, 0.25);
-    color: rgba(255, 0, 0, 0);
-    color: rgb(92, 71, 133);
-  }
+.kk {
+  color: rgba(59, 5, 109, 0.5);
+  color: rgba(59, 5, 109, 0.25);
+  color: rgba(255, 0, 0, 0);
+  color: rgb(92, 71, 133);
+}
 </style>

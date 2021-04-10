@@ -1,17 +1,28 @@
 <template>
   <div class="">
     <transition name="slide" mode="out-in">
-
       <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
-
-        <button type="submit" @click="newAttendance()" class="action_btn client__add">
-          <svg fill="var(--purple)" width="50px" height="50px" 
-              viewBox="0 0 1106.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
-            fill="var(--purple)" stroke="none">
-            <path d="M1975 12688 c-61 -121 -60 -116 -39 -245 9 -57 0 -87 -41 -132 -33
+        <button
+          type="submit"
+          @click="newAttendance()"
+          class="action_btn client__add"
+        >
+          <svg
+            fill="var(--purple)"
+            width="50px"
+            height="50px"
+            viewBox="0 0 1106.000000 1280.000000"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g
+              transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+              fill="var(--purple)"
+              stroke="none"
+            >
+              <path
+                d="M1975 12688 c-61 -121 -60 -116 -39 -245 9 -57 0 -87 -41 -132 -33
             -36 -38 -38 -78 -34 -56 7 -133 -31 -178 -87 -18 -22 -38 -40 -45 -40 -31 0
             -55 -36 -64 -98 -7 -48 -16 -71 -39 -98 -17 -19 -33 -44 -35 -57 -2 -12 -9
             -49 -16 -82 -7 -33 -15 -98 -19 -145 -6 -59 -16 -103 -35 -145 -16 -33 -46
@@ -101,10 +112,11 @@
             68 97 162 261 175 305 13 42 19 266 9 306 -9 33 -7 43 81 457 14 62 29 127 34
             145 6 18 15 73 22 122 7 50 18 122 25 160 7 39 16 104 20 145 3 41 13 98 20
             125 8 28 19 81 25 119 19 117 74 194 132 182 43 -9 184 11 230 33 24 10 46 20
-            49 20 3 1 41 -43 85 -96z"/>
+            49 20 3 1 41 -43 85 -96z"
+              />
             </g>
           </svg>
-          <p>Nova prisustva</p> 
+          <p>Nova prisustva</p>
         </button>
 
         <div class="">
@@ -113,9 +125,15 @@
             <span>Prisustvovale</span>
             <span>Napomena</span>
           </div>
-          <div v-for="attendance in pageOfItems" :key="attendance._id" 
-                @click="selectAttendance(attendance)" class="clients__list attend__list">
-            <p class="client__item">{{ attendance.attend_date | formatDate }}</p>
+          <div
+            v-for="attendance in pageOfItems"
+            :key="attendance._id"
+            @click="selectAttendance(attendance)"
+            class="clients__list attend__list"
+          >
+            <p class="client__item">
+              {{ attendance.attend_date | formatDate }}
+            </p>
             <p class="client__item">{{ mapAttendances(attendance) }}</p>
             <p class="client__item">{{ attendance.notes }}</p>
           </div>
@@ -123,83 +141,88 @@
       </div>
     </transition>
 
-    <jw-pagination :items="getAllAttendances" @changePage="onChangePage" 
-                    :labels="customLabels" :styles="customStyles" class="pagine">
+    <jw-pagination
+      :items="getAllAttendances"
+      @changePage="onChangePage"
+      :labels="customLabels"
+      :styles="customStyles"
+      class="pagine"
+    >
     </jw-pagination>
-
   </div>
 </template>
 
 <script>
-  import moment from 'moment';
-  import { mapGetters, mapActions } from 'vuex';
-  import Loading from '@/components/utils/Loading.vue';
-  import { customLabels, customStyles } from '@/components/utils/pageNav.js';
-  import navigation from '../mixins/navigation';
+//import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
+import Loading from "@/components/utils/Loading.vue";
+import { customLabels, customStyles } from "@/components/utils/pageNav.js";
+import navigation from "../mixins/navigation";
+import dayjs from "dayjs";
+import sr from "dayjs/locale/sr";
 
-  export default {
-    name: 'Attendances',
+dayjs.locale(sr);
 
-    components: {
-      Loading
+export default {
+  name: "Attendances",
+
+  components: {
+    Loading,
+  },
+
+  mixins: [navigation],
+
+  data() {
+    return {
+      customLabels,
+      customStyles,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["getAllAttendances", "loadingState"]),
+  },
+
+  methods: {
+    ...mapActions([
+      "fetchAttendances",
+      "fetchAttendance",
+      "attendanceClear",
+      "setLoadingState",
+    ]),
+
+    async newAttendance() {
+      this.setLoadingState(true);
+      this.$router.push("/attendance");
+      await this.attendanceClear();
     },
 
-    mixins: [ navigation ],
+    async selectAttendance(attendance) {
+      this.setLoadingState(true);
+      await this.fetchAttendance(attendance);
+      this.$router.push("/attendance");
+    },
 
-    data() {
-      return {
-        customLabels,
-        customStyles
+    mapAttendances(attendance) {
+      return attendance.members.reduce((a, { present }) => a + present, 0);
+    },
+  },
+
+  filters: {
+    formatDate: function (value) {
+      if (value) {
+        //moment.locale("sr");
+        return dayjs(String(value)).format("dddd, DD. MMM YYYY");
       }
     },
+  },
 
-    computed: {
-      ...mapGetters([ 'getAllAttendances',
-                      'loadingState' ]),
-    },
-
-    methods: {
-      ...mapActions([ 'fetchAttendances', 
-                      'fetchAttendance',
-                      'attendanceClear',
-                      'formTypeChange',
-                      'setLoadingState' ]),
-
-      async newAttendance() {
-        this.setLoadingState(true);
-        //this.formTypeChange('attendance');
-        this.$router.push('/attendance')
-        await this.attendanceClear();
-      },
-
-      async selectAttendance(attendance) {
-        this.setLoadingState(true);
-        await this.fetchAttendance(attendance);
-        //this.formTypeChange('attendance');
-        this.$router.push('/attendance')
-      },
-
-      mapAttendances(attendance) {
-        return attendance.members.reduce((a, {present}) => a + present, 0);
-      },
-    },
-
-    filters: {
-      formatDate: function(value) {
-        if (value) {
-          moment.locale('sr');
-          return moment(String(value)).format('dddd, ll')
-        }
-      }
-    },
-
-    async mounted() {
-      if (!this.getAllAttendances.length) await this.fetchAttendances();
-      this.setLoadingState(false);
-    }
-  }
+  async mounted() {
+    if (!this.getAllAttendances.length) await this.fetchAttendances();
+    this.setLoadingState(false);
+  },
+};
 </script>
 
 <style>
-  
 </style>

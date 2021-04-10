@@ -1,16 +1,28 @@
 <template>
   <transition name="slide" mode="out-in">
-
     <loading pic="loading" v-if="loadingState" key="1" />
 
     <div v-else class="client__wrapper schedule_mobile" key="2">
-
-      <button type="submit" @click="newSchedule()" class="action_btn client__add">
-        <svg version="1.0" fill="var(--purple)" width="50px" height="50px" 
-              viewBox="0 0 1280.000000 640.000000" preserveAspectRatio="xMidYMid meet">
-          <g transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
-          fill="var(--purple)" stroke="none">
-          <path d="M3153 6340 c-103 -14 -203 -69 -203 -110 0 -10 -24 -32 -58 -53 -123
+      <button
+        type="submit"
+        @click="newSchedule()"
+        class="action_btn client__add"
+      >
+        <svg
+          version="1.0"
+          fill="var(--purple)"
+          width="50px"
+          height="50px"
+          viewBox="0 0 1280.000000 640.000000"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <g
+            transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
+            fill="var(--purple)"
+            stroke="none"
+          >
+            <path
+              d="M3153 6340 c-103 -14 -203 -69 -203 -110 0 -10 -24 -32 -58 -53 -123
           -76 -198 -184 -248 -358 -14 -52 -33 -106 -40 -120 -13 -27 -122 -121 -221
           -193 -31 -22 -53 -45 -53 -56 0 -10 27 -41 60 -70 33 -29 60 -59 60 -67 0 -8
           -10 -29 -22 -45 -18 -26 -20 -35 -10 -61 10 -25 8 -34 -8 -55 -15 -18 -20 -40
@@ -62,42 +74,58 @@
           -843 502 -56 3 -131 1 -165 -4z m1119 -873 c60 -94 61 -205 4 -324 -79 -164
           -257 -311 -445 -367 -71 -21 -71 -21 -71 12 0 25 6 29 78 55 151 53 256 145
           304 267 18 47 22 80 26 223 4 150 6 167 21 163 9 -3 23 -1 31 4 22 14 23 14
-          52 -33z"/>
+          52 -33z"
+            />
           </g>
         </svg>
-        <p>Novi termin</p> 
+        <p>Novi termin</p>
       </button>
-      
+
       <div class="schedule__card">
-
-        <div v-for="schedule in getAllSchedules" :key="schedule._id" 
-              class="schedule__items" @click="selectSchedule(schedule)">
-
+        <div
+          v-for="schedule in getAllSchedules"
+          :key="schedule._id"
+          class="schedule__items"
+          @click="selectSchedule(schedule)"
+        >
           <div class="">
             <span class="item__desc">Grupa</span>
-            <p class="client__item"> {{ schedule.title }}</p>
+            <p class="client__item">{{ schedule.title }}</p>
           </div>
 
           <div class="">
             <span class="item__desc">Dani treninga</span>
-            <div class="client__item" >
-              <p v-for="termin in schedule.weekday" :key="termin.id" class="week__day">{{ termin }}</p>
+            <div class="client__item">
+              <p
+                v-for="termin in schedule.weekday"
+                :key="termin.id"
+                class="week__day"
+              >
+                {{ termin }}
+              </p>
             </div>
           </div>
 
           <div class="">
             <span class="item__desc">Vrijeme početka</span>
-            <p class="client__item"> {{ schedule.startTime }}</p>
+            <p class="client__item">{{ schedule.startTime }}</p>
           </div>
 
           <div class="">
             <span class="item__desc">Polaznice</span>
-            <div class="client__item" >
-              <p v-for="polaznik in schedule.members" 
-                  :key="polaznik.id" 
-                  class="week__day">
-                  {{ schedule.members.map(item => item.client._id).indexOf(polaznik.client._id) + 1 }}
-                  {{ polaznik.client.last_name }}, {{ polaznik.client.first_name }}
+            <div class="client__item">
+              <p
+                v-for="polaznik in schedule.members"
+                :key="polaznik.id"
+                class="week__day"
+              >
+                {{
+                  schedule.members
+                    .map((item) => item.client._id)
+                    .indexOf(polaznik.client._id) + 1
+                }}
+                {{ polaznik.client.last_name }},
+                {{ polaznik.client.first_name }}
               </p>
             </div>
           </div>
@@ -108,50 +136,47 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
-  import Loading from '@/components/utils/Loading.vue';
+import { mapGetters, mapActions } from "vuex";
+import Loading from "@/components/utils/Loading.vue";
 
-  export default {
-    name: 'Schedules',
+export default {
+  name: "Schedules",
 
-    components: {
-      Loading
+  components: {
+    Loading,
+  },
+
+  computed: {
+    ...mapGetters(["getAllSchedules", "loadingState"]),
+  },
+
+  methods: {
+    ...mapActions([
+      "fetchSchedules",
+      "fetchSchedule",
+      "scheduleClear",
+      "setLoadingState",
+    ]),
+
+    async newSchedule() {
+      this.setLoadingState(true);
+      this.$router.push("/schedule");
+      await this.scheduleClear();
     },
 
-    computed: {
-      ...mapGetters([ 'getAllSchedules',
-                      'loadingState' ]),
+    async selectSchedule(schedule) {
+      this.setLoadingState(true);
+      await this.fetchSchedule(schedule);
+      this.$router.push("/schedule");
     },
+  },
 
-    methods: {
-      ...mapActions([ 'fetchSchedules', 
-                      'fetchSchedule',
-                      'scheduleClear',
-                      'formTypeChange',
-                      'setLoadingState' ]),
-
-      async newSchedule() {
-        this.setLoadingState(true);
-        //this.formTypeChange('schedule');
-        this.$router.push('/schedule')
-        await this.scheduleClear();
-      },
-
-      async selectSchedule(schedule) {
-        this.setLoadingState(true);
-        await this.fetchSchedule(schedule);
-        //this.formTypeChange('schedule');
-        this.$router.push('/schedule')
-      }
-    },
-
-    async mounted() {
-      if (!this.getAllSchedules.length) await this.fetchSchedules();
-      this.setLoadingState(false);
-    }
-  }
+  async mounted() {
+    if (!this.getAllSchedules.length) await this.fetchSchedules();
+    this.setLoadingState(false);
+  },
+};
 </script>
 
 <style>
-  
 </style>

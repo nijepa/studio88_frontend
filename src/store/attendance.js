@@ -4,7 +4,7 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 //import router from '../router';
 
 
-const  state = {
+const state = {
   attendance: {},
   attendances: []
 };
@@ -16,7 +16,7 @@ const getters = {
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
-const  mutations = {
+const mutations = {
   setAttendances: (state, attendances) => (state.attendances = attendances),
 
   setAttendance: (state, attendance) => (state.attendance = attendance),
@@ -31,13 +31,16 @@ const  mutations = {
 
   updateAttendance(state, attendance) {
     state.attendances = [
-      ...state.attendances.map(item => 
-          item._id !== attendance._id ? item : {...item, ...attendance}
+      ...state.attendances.map(item =>
+        item._id !== attendance._id ? item : {
+          ...item,
+          ...attendance
+        }
       )
-    ] 
+    ]
   },
 
-  deleteAttendance (state, id) {
+  deleteAttendance(state, id) {
     state.attendances = [
       ...state.attendances.filter((item) => item._id !== id)
     ];
@@ -46,17 +49,23 @@ const  mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  async fetchAttendances ({ commit }) {
+  async fetchAttendances({
+    commit
+  }) {
     const response = await axios.get(URL + "attendances");
     commit('setAttendances', response.data);
   },
 
-  async fetchAttendance ({ commit }, attendanceData) {
+  async fetchAttendance({
+    commit
+  }, attendanceData) {
     const response = await axios.get(URL + "attendances/" + attendanceData._id, attendanceData);
     commit('setAttendance', response.data);
   },
 
-  async attendanceAdd({commit}, attendanceData) {
+  async attendanceAdd({
+    commit
+  }, attendanceData) {
     await axios.post(URL + 'attendances', attendanceData)
       .then((response) => {
         commit('addAttendance', response.data.attendance);
@@ -71,7 +80,9 @@ const actions = {
       })
   },
 
-  async attendanceUpdate({commit}, attendanceData) {
+  async attendanceUpdate({
+    commit
+  }, attendanceData) {
     await axios.put(URL + 'attendances/' + attendanceData._id, attendanceData)
       .then((response) => {
         commit('updateAttendance', response.data);
@@ -86,7 +97,9 @@ const actions = {
       })
   },
 
-  async attendanceDelete({commit}, attendanceData) {
+  async attendanceDelete({
+    commit
+  }, attendanceData) {
     await axios.delete(URL + 'attendances/' + attendanceData._id, attendanceData)
       .then((response) => {
         commit('deleteAttendance', response.data._id)
@@ -100,7 +113,9 @@ const actions = {
       })
   },
 
-  async attendanceClear({commit}) {
+  async attendanceClear({
+    commit
+  }) {
     commit('clearAttendance');
   }
 };

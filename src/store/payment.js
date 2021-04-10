@@ -4,7 +4,7 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 //import router from '../router';
 
 
-const  state = {
+const state = {
   payment: {},
   payments: []
 };
@@ -16,7 +16,7 @@ const getters = {
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
-const  mutations = {
+const mutations = {
   setPayments: (state, payments) => (state.payments = payments),
 
   setPayment: (state, payment) => (state.payment = payment),
@@ -31,13 +31,16 @@ const  mutations = {
 
   updatePayment(state, payment) {
     state.payments = [
-      ...state.payments.map(item => 
-          item._id !== payment._id ? item : {...item, ...payment}
+      ...state.payments.map(item =>
+        item._id !== payment._id ? item : {
+          ...item,
+          ...payment
+        }
       )
-    ] 
+    ]
   },
 
-  deletePayment (state, id) {
+  deletePayment(state, id) {
     state.payments = [
       ...state.payments.filter((item) => item._id !== id)
     ];
@@ -46,17 +49,23 @@ const  mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  async fetchPayments ({ commit }) {
+  async fetchPayments({
+    commit
+  }) {
     const response = await axios.get(URL + "payments");
     commit('setPayments', response.data);
   },
 
-  async fetchPayment ({ commit }, paymentData) {
+  async fetchPayment({
+    commit
+  }, paymentData) {
     const response = await axios.get(URL + "payments/" + paymentData._id, paymentData);
     commit('setPayment', response.data);
   },
 
-  async paymentAdd({commit}, paymentData) {
+  async paymentAdd({
+    commit
+  }, paymentData) {
     await axios.post(URL + 'payments', paymentData)
       .then((response) => {
         commit('addPayment', response.data.payment);
@@ -71,7 +80,9 @@ const actions = {
       })
   },
 
-  async paymentUpdate({commit}, paymentData) {
+  async paymentUpdate({
+    commit
+  }, paymentData) {
     await axios.put(URL + 'payments/' + paymentData._id, paymentData)
       .then((response) => {
         commit('updatePayment', response.data);
@@ -86,7 +97,9 @@ const actions = {
       })
   },
 
-  async paymentDelete({commit}, paymentData) {
+  async paymentDelete({
+    commit
+  }, paymentData) {
     await axios.delete(URL + 'payments/' + paymentData._id, paymentData)
       .then((response) => {
         commit('deletePayment', response.data._id)
@@ -100,7 +113,9 @@ const actions = {
       })
   },
 
-  async paymentClear({commit}) {
+  async paymentClear({
+    commit
+  }) {
     commit('clearPayment');
   }
 };

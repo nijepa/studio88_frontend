@@ -13,10 +13,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    clientModule, 
-    scheduleModule, 
+    clientModule,
+    scheduleModule,
     paymentModule,
-    attendanceModule, 
+    attendanceModule,
     expenseModule,
     userModule,
     generalModule

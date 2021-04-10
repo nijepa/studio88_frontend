@@ -67,7 +67,9 @@ const mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-    initialState({ commit }, price) {
+    initialState({
+        commit
+    }, price) {
         const localAuth = ls.getToken();
         if (localAuth) {
             commit('setToken', localAuth.token);
@@ -78,15 +80,21 @@ const actions = {
         }
     },
 
-    setLoadingState({ commit }, loading) {
+    setLoadingState({
+        commit
+    }, loading) {
         commit('changeLoadingState', loading);
     },
 
-    signType({ commit }, typeData) {
+    signType({
+        commit
+    }, typeData) {
         commit('setSignType', typeData);
     },
 
-    async signup({ commit }, signupData) {
+    async signup({
+        commit
+    }, signupData) {
         await axios.post(URL + 'users/signup', signupData)
             .then((response) => {
                 commit('setUser', response.data.user);
@@ -103,7 +111,9 @@ const actions = {
             })
     },
 
-    async login({ commit }, loginData) {
+    async login({
+        commit
+    }, loginData) {
         await axios.post(URL + 'users/login', loginData)
             .then((response) => {
                 ls.saveToken(response.data);
@@ -121,7 +131,9 @@ const actions = {
             })
     },
 
-    async logout({ commit }, loginData) {
+    async logout({
+        commit
+    }, loginData) {
         await apiClient.post(URL + 'users/me/logout', loginData)
             .then((response) => {
                 commit('setUser', response.data.user);
@@ -139,28 +151,36 @@ const actions = {
             })
     },
 
-    async fetchUsers({ commit }) {
+    async fetchUsers({
+        commit
+    }) {
         const response = await axios.get(URL + "users");
         commit('setUsers', response.data);
     },
 
-    async fetchUser({ commit }) {
+    async fetchUser({
+        commit
+    }) {
         const response = await apiClient.get(URL + "users/me");
         commit('setUser', response.data);
         commit('setLogged', true);
         commit('changeLoadingState', false)
     },
 
-    async fetchSelectedUser({ commit }, selectedUser) {
+    async fetchSelectedUser({
+        commit
+    }, selectedUser) {
         commit('setSelectedUser', selectedUser);
     },
 
-    async userUpdate({ commit }, userData) {
+    async userUpdate({
+        commit
+    }, userData) {
         await apiClient.put(URL + 'users/' + userData._id, userData)
             .then((response) => {
                 commit('updateUser', response.data);
                 ls.updateToken(userData)
-                    //router.push("/");
+                //router.push("/");
                 router.push("/summaries");
             })
             .catch((error) => {
@@ -172,7 +192,9 @@ const actions = {
             })
     },
 
-    clearErrors({ commit }) {
+    clearErrors({
+        commit
+    }) {
         commit('setErrors', [])
     }
 };

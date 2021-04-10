@@ -6,8 +6,7 @@ const customLabels = {
 };
 
 const customStyles = {
-  ul: {
-  },
+  ul: {},
   li: {
     display: 'inline-block',
   },
@@ -17,5 +16,6 @@ const customStyles = {
 };
 
 export {
-  customLabels, customStyles
+  customLabels,
+  customStyles
 }

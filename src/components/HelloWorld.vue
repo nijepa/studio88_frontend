@@ -1,7 +1,11 @@
 <template>
   <div class="hello">
     <div class="club__title">
-      <img src="../assets/img/studio881.png" alt="studio 88" class="responsive" />
+      <img
+        src="../assets/img/studio881.png"
+        alt="studio 88"
+        class="responsive"
+      />
       <!--       <h1 class="club">{{ msg }} </h1>
       <p class="club__type">p i l a t e s</p> -->
       <div class="club__login">

@@ -244,7 +244,7 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -259,6 +259,10 @@ import navigation from "../mixins/navigation";
 import navigationSearch from "../mixins/navigationSearch";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "Payment",
@@ -281,7 +285,7 @@ export default {
       customLabels,
       customStyles,
       paymentInput: {
-        payment_year: moment(new Date()).format("YYYY"),
+        payment_year: dayjs(new Date()).format("YYYY"),
         payment_month: this.checkMonth(),
         payment_date: new Date(),
         price: 35,
@@ -328,7 +332,6 @@ export default {
       "fetchClients",
       "fetchClientsPageSize",
       "fetchPayments",
-      "formTypeChange",
       "clearErrors",
       "setLoadingState",
     ]),
@@ -440,7 +443,6 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        //this.formTypeChange('payments');
         this.$router.push("/payments");
       }
     },
@@ -474,7 +476,6 @@ export default {
 
     async delEx() {
       await this.paymentDelete(this.getOnePayment);
-      //this.formTypeChange("payments");
       this.$router.push("/payments");
     },
 
@@ -499,7 +500,7 @@ export default {
 
   async mounted() {
     let currentYear = new Date();
-    currentYear = moment().format("YYYY");
+    currentYear = dayjs().format("YYYY");
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
     this.initClients();

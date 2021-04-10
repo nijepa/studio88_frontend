@@ -81,13 +81,17 @@
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Charto from "../components/utils/AreaChart";
 import Charto2 from "../components/utils/AreaChartLine";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
 import Loading from "@/components/utils/Loading.vue";
+import dayjs from "dayjs";
+import srb from "dayjs/locale/sr";
+
+dayjs.locale(srb);
 
 export default {
   name: "Summaries",
@@ -134,12 +138,12 @@ export default {
       "fetchAttendances",
       "fetchExpenses",
       "clientClear",
-      "formTypeChange",
       "setLoadingState",
     ]),
 
     customFormatter(date) {
-      return moment(date).format("DD MMM YYYY");
+      //return moment(date).format("DD MMM YYYY");
+      return dayjs(date).format("DD MMM YYYY");
     },
 
     mapPayments() {
@@ -216,16 +220,21 @@ export default {
     selectAttendances() {
       let filteredAttendances = this.mapAttendances().filter(
         (year) =>
-          moment(year.attend_date).format("YYYY-MM-DD") >=
+          dayjs(year.attend_date).format("YYYY-MM-DD") >=
+            dayjs(this.dateFrom).format("YYYY-MM-DD") &&
+          dayjs(year.attend_date).format("YYYY-MM-DD") <=
+            dayjs(this.dateTill).format("YYYY-MM-DD")
+        /*             moment(year.attend_date).format("YYYY-MM-DD") >=
             moment(this.dateFrom).format("YYYY-MM-DD") &&
           moment(year.attend_date).format("YYYY-MM-DD") <=
-            moment(this.dateTill).format("YYYY-MM-DD")
+            moment(this.dateTill).format("YYYY-MM-DD") */
       );
       let filteredAttendancesAmounts = filteredAttendances.map(
         (item) => item.total_amount
       );
-      let filteredAttendancesLabels = filteredAttendances.map((item) =>
-        moment(item.attend_date).format("DD MMM YYYY")
+      let filteredAttendancesLabels = filteredAttendances.map(
+        (item) => dayjs(item.attend_date).format("DD MMM YYYY")
+        //moment(item.attend_date).format("DD MMM YYYY")
       );
       this.totalAttendances = filteredAttendancesAmounts;
       this.attendanceLabels = filteredAttendancesLabels;
