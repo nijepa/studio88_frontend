@@ -9,6 +9,7 @@
             src="../assets/img/studio881.png"
             alt="studio 88"
             class="logo responsive"
+            rel="preload"
           />
         </div>
 
@@ -254,6 +255,7 @@ export default {
   },
 
   async mounted() {
+    this.setLoadingState(false);
     if (!this.getAllClients.length) await this.fetchClients();
     if (!this.getAllPayments.length) await this.fetchPayments();
     if (!this.getAllAttendances.length) await this.fetchAttendances();
@@ -265,8 +267,6 @@ export default {
     this.selectPayments();
     this.selectAttendances(this.dateTill);
     this.selectExpenses();
-
-    this.setLoadingState(false);
     
     this.loadedPayment = true;
     this.loadedAttend = true;

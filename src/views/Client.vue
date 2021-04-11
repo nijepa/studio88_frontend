@@ -466,7 +466,7 @@ export default {
     },
   },
 
-  async created() {
+  async mounted() {
     if (this.getOneClient) {
       this.clientInput = this.getOneClient;
       if (!this.getOneClient.date_started) {

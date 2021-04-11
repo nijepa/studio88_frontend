@@ -85,6 +85,7 @@
               src="../assets/img/studio881.png"
               alt="studio88 logo"
               class="logo__small"
+              rel="preload"
             />
           </router-link>
           <router-link
@@ -209,7 +210,7 @@ export default {
     ]),
 
     navClick(type) {
-      this.setLoadingState(true);
+      //this.setLoadingState(true);
       this.activeLink = type;
       if (this.window.width < 600) this.showMenu = false;
     },
@@ -245,7 +246,5 @@ export default {
 </script>
 
 <style>
-.logo__small {
-  height: 70px;
-}
+
 </style>

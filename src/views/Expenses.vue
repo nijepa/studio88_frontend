@@ -4,6 +4,7 @@
       <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
+        <div class="clients__manipulate">
         <button
           type="submit"
           @click="newExpense()"
@@ -48,6 +49,14 @@
           <p>Novi trošak</p>
         </button>
 
+        <search-bar
+          :searchStr="search"
+          :pageSizeNr="pageSize"
+          :searchType="'traži (mjesec, godina, trošak, iznos)'"
+          @changed="setPageSize"
+          @typed="searchItems"
+        />
+
         <div class="">
           <div class="days__list expenses__header">
             <span>Godina</span>
@@ -73,11 +82,14 @@
           </div>
         </div>
       </div>
+      </div>
     <!-- </transition> -->
 
     <jw-pagination
-      :items="getAllExpenses"
+      :items="filteredClients"
       @changePage="onChangePage"
+      :initialPage="initialPage"
+      :pageSize="pageSize"
       :labels="customLabels"
       :styles="customStyles"
       class="pagine"
@@ -90,7 +102,10 @@
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
+import SearchBar from "@/components/utils/SearchBar.vue";
 import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
+import searchClients from "@/mixins/searchClients";
 import dayjs from "dayjs";
 import sr from "dayjs/locale/sr";
 
@@ -101,9 +116,14 @@ export default {
 
   components: {
     Loading,
+    SearchBar
   },
 
-  mixins: [navigation],
+  mixins: [
+    navigation, 
+    navigationSearch, 
+    searchClients
+  ],
 
   data() {
     return {
@@ -115,6 +135,8 @@ export default {
   computed: {
     ...mapGetters([
       "getAllExpenses", 
+      "getClientsPage",
+      "getClientsPageSize",
       "loadingState"
     ]),
   },
@@ -123,6 +145,8 @@ export default {
     ...mapActions([
       "fetchExpenses",
       "fetchExpense",
+      "fetchClientsPage",
+      "fetchClientsPageSize",
       "expenseClear",
       "setLoadingState",
     ]),
@@ -142,10 +166,31 @@ export default {
     mapExpenses(expense) {
       return expense.reduce((a, expense_amount) => a + expense_amount, 0);
     },
+
+    async searchItems(val = "") {
+      await this.initItems();
+      let mu = this.getAllExpenses.filter((post) => {
+        return (
+          post.expense_year.toString().includes(val) ||
+          post.expense_month.toLowerCase().includes(val.toLowerCase()) ||
+          post.expense_title.toLowerCase().includes(val.toLowerCase()) ||
+          post.expense_amount.toString().includes(val)
+        );
+      });
+      this.filteredClients = mu;
+    },
+
+    async initItems() {
+      if (!this.getAllExpenses.length) await this.fetchExpenses();
+      this.filteredClients = this.getAllExpenses; 
+      if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
+      if (this.getClientsPageSize !== 10)
+        this.pageSize = this.getClientsPageSize;
+    },
   },
 
   async mounted() {
-    if (!this.getAllExpenses.length) await this.fetchExpenses();
+    this.initItems();
     this.setLoadingState(false);
   },
 };

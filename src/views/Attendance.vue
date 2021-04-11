@@ -60,7 +60,7 @@
               :searchStr="search"
               :pageSizeNr="pageSize"
               @changed="setPageSize"
-              @typed="searchClients"
+              @typed="searchItems"
             />
 
             <div class="">
@@ -275,18 +275,6 @@ export default {
       "setLoadingState",
     ]),
 
-    async searchClients(val = "") {
-      await this.initClients();
-      let mu = this.attendanceInput.members.filter((post) => {
-        return (
-          post.client.first_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.client.last_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.client.mobile.includes(val)
-        );
-      });
-      this.filteredClients = mu;
-    }, 
-
     toggleActions() {
       this.actions = !this.actions;
       this.btn_title === "dodatne opcije"
@@ -424,7 +412,7 @@ export default {
           ? 1
           : -1
       );
-      this.initClients();
+      this.initItems();
     },
 
     mapMembers() {
@@ -440,7 +428,19 @@ export default {
       this.$router.push("/attendances");
     },
 
-    async initClients() {
+    async searchItems(val = "") {
+      await this.initItems();
+      let mu = this.attendanceInput.members.filter((post) => {
+        return (
+          post.client.first_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.client.last_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.client.mobile.includes(val)
+        );
+      });
+      this.filteredClients = mu;
+    }, 
+
+    async initItems() {
       if (this.getOneAttendance._id) {
         this.attendanceInput = this.getOneAttendance;
         this.notClients = this.getAllClients.filter(
@@ -463,7 +463,7 @@ export default {
     currentYear = dayjs().format("YYYY");
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
-    await this.initClients();
+    await this.initItems();
     if (!this.getOneAttendance._id) {
       await this.selectDate();
     }

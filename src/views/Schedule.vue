@@ -141,7 +141,7 @@
                 :searchStr="search"
                 :pageSizeNr="pageSize"
                 @changed="setPageSize"
-                @typed="searchClients"
+                @typed="searchItems"
                 class="schedule__search"
               />
 
@@ -258,18 +258,6 @@ export default {
       "setLoadingState",
     ]),
 
-    async searchClients(val = "") {
-      await this.initClients();
-      let mu = this.notClients.filter((post) => {
-        return (
-          post.first_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.last_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.mobile.includes(val)
-        );
-      });
-      this.filteredClients = mu;
-    }, 
-
     async addSchedule() {
       this.setLoadingState(true);
       if (this.getOneSchedule._id) {
@@ -337,7 +325,19 @@ export default {
       });
     },
 
-    async initClients() {
+    async searchItems(val = "") {
+      await this.initItems();
+      let mu = this.notClients.filter((post) => {
+        return (
+          post.first_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.last_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.mobile.includes(val)
+        );
+      });
+      this.filteredClients = mu;
+    }, 
+
+    async initItems() {
       if (this.getOneSchedule._id) {
         this.scheduleInput = this.getOneSchedule;
         this.notClients = this.getAllClients.filter(
@@ -354,7 +354,7 @@ export default {
 
   async mounted() {
     if (!this.getAllClients.length) await this.fetchClients();
-    await this.initClients();
+    await this.initItems();
     this.setLoadingState(false);
   },
 };

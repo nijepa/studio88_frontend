@@ -56,7 +56,7 @@
             :searchStr="search"
             :pageSizeNr="pageSize"
             @changed="setPageSize"
-            @typed="searchClients"
+            @typed="searchItems"
           />
         </div>
 
@@ -186,18 +186,6 @@ export default {
       "setLoadingState",
     ]),
 
-    async searchClients(val = "") {
-      await this.initClients();
-      let mu = this.getAllClients.filter((post) => {
-        return (
-          post.name.toLowerCase().includes(val.toLowerCase()) ||
-          post.email.toLowerCase().includes(val.toLowerCase()) ||
-          post.mobile.includes(val)
-        );
-      });
-      this.filteredClients = mu;
-    },
-
     async newClient() {
       this.setLoadingState(true);
       this.$router.push("/client");
@@ -243,7 +231,19 @@ export default {
       return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
     },
 
-    async initClients() {
+    async searchItems(val = "") {
+      await this.initItems();
+      let mu = this.getAllClients.filter((post) => {
+        return (
+          post.name.toLowerCase().includes(val.toLowerCase()) ||
+          post.email.toLowerCase().includes(val.toLowerCase()) ||
+          post.mobile.includes(val)
+        );
+      });
+      this.filteredClients = mu;
+    },
+
+    async initItems() {
       if (!this.getAllClients.length) await this.fetchClients();
       this.filteredClients = this.getAllClients.sort((a, b) =>
         a.last_name.toLowerCase() > b.last_name.toLowerCase() ? 1 : -1
@@ -256,7 +256,7 @@ export default {
   },
 
   async mounted() {
-    await this.initClients();
+    await this.initItems();
     this.setLoadingState(false);
   },
 };

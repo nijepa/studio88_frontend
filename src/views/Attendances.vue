@@ -125,7 +125,7 @@
           :pageSizeNr="pageSize"
           :searchType="'traži (dan, mjesec, godina)'"
           @changed="setPageSize"
-          @typed="searchClients"
+          @typed="searchItems"
         />
 
         <div class="">
@@ -234,8 +234,8 @@ export default {
       return attendance.members.reduce((a, { present }) => a + present, 0);
     },
 
-    async searchClients(val = "") {
-      await this.initClients();
+    async searchItems(val = "") {
+      await this.initItems();
       let mu = this.getAllAttendances.filter((post) => {
         return (
           this.$options.filters.formatDate(post.attend_date).toLowerCase().includes(val.toLowerCase()) ||
@@ -245,7 +245,7 @@ export default {
       this.filteredClients = mu;
     },
 
-    async initClients() {
+    async initItems() {
       if (!this.getAllAttendances.length) await this.fetchAttendances();
       this.filteredClients = this.getAllAttendances;
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
@@ -263,7 +263,7 @@ export default {
   },
 
   async mounted() {
-    this.initClients();
+    await this.initItems();
     this.setLoadingState(false);
   },
 };

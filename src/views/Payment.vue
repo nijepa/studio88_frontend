@@ -107,7 +107,7 @@
               :searchStr="search"
               :pageSizeNr="pageSize"
               @changed="setPageSize"
-              @typed="searchClients"
+              @typed="searchItems"
             />
 
             <div class="">
@@ -335,18 +335,6 @@ export default {
       "setLoadingState",
     ]),
 
-    async searchClients(val = "") {
-      await this.initClients();
-      let mu = this.paymentInput.members.filter((post) => {
-        return (
-          post.client.first_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.client.last_name.toLowerCase().includes(val.toLowerCase()) ||
-          post.client.mobile.includes(val)
-        );
-      });
-      this.filteredClients = mu;
-    }, 
-
     toggleActions() {
       this.actions = !this.actions;
       this.btn_title === "dodatne opcije"
@@ -470,7 +458,19 @@ export default {
       this.$router.push("/payments");
     },
 
-    initClients() {
+    async searchItems(val = "") {
+      await this.initItems();
+      let mu = this.paymentInput.members.filter((post) => {
+        return (
+          post.client.first_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.client.last_name.toLowerCase().includes(val.toLowerCase()) ||
+          post.client.mobile.includes(val)
+        );
+      });
+      this.filteredClients = mu;
+    }, 
+
+    initItems() {
       if (this.getOnePayment._id) {
         this.paymentInput = this.getOnePayment;
         this.notClients = this.getAllClients.filter(
@@ -494,7 +494,7 @@ export default {
     currentYear = dayjs().format("YYYY");
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
-    this.initClients();
+    this.initItems();
     this.filteredClients = this.paymentInput.members;
     this.setLoadingState(false);
   },
