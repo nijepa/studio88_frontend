@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" mode="out-in">
+  <!-- <transition name="slide" mode="out-in"> -->
     <loading pic="loading" v-if="loadingState" key="1" />
 
     <div v-else class="client__wrapper schedule_mobile" key="2">
@@ -132,7 +132,7 @@
         </div>
       </div>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -147,7 +147,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getAllSchedules", "loadingState"]),
+    ...mapGetters([
+      "getAllSchedules", 
+      "loadingState"
+    ]),
   },
 
   methods: {

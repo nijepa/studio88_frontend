@@ -110,14 +110,13 @@
 </template>
 
 <script>
-//import moment from "moment";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
+import { mapGetters, mapActions } from "vuex";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
-import { mapGetters, mapActions } from "vuex";
-import actionsNotify from "../mixins/actionsNotify";
-import findMonth from "../mixins/findMonth";
+import actionsNotify from "@/mixins/actionsNotify";
+import findMonth from "@/mixins/findMonth";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 
@@ -137,7 +136,10 @@ export default {
   mixins: [actionsNotify, findMonth],
 
   computed: {
-    ...mapGetters(["getAllPayments", "getErrors"]),
+    ...mapGetters([
+      "getAllPayments", 
+      "getErrors"
+    ]),
   },
 
   data() {
@@ -170,25 +172,6 @@ export default {
     handleCancel() {
       this.$emit("canceled", true);
     },
-
-    /*       checkMonth() {
-        let d = new Date();
-        let month = new Array();
-        month[0] = "Januar";
-        month[1] = "Februar";
-        month[2] = "Mart";
-        month[3] = "April";
-        month[4] = "Maj";
-        month[5] = "Jun";
-        month[6] = "Jul";
-        month[7] = "Avgust";
-        month[8] = "Septembar";
-        month[9] = "Oktobar";
-        month[10] = "Novembar";
-        month[11] = "Decembar";
-        var n = month[d.getMonth()];
-        return n;
-      }, */
 
     async addAttendance() {
       const attends = this.getAllPayments.find(
@@ -306,14 +289,6 @@ export default {
       }
     },
   },
-
-  /*   filters: {
-    formatDate: function (value) {
-      if (value) {
-        return dayjs(value).format("dddd");
-      }
-    },
-  }, */
 
   watch: {
     clientAtt: function () {

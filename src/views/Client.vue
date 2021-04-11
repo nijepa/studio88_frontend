@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <transition name="slide" mode="out-in">
+    <!-- <transition name="slide" mode="out-in"> -->
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="lists__wrapper" key="2">
@@ -302,19 +302,19 @@
           </div>
         </form>
       </div>
-    </transition>
+    <!-- </transition> -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
 import Loading from "@/components/utils/Loading.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
-import actionsNotify from "../mixins/actionsNotify";
 import Tooltip from "@/components/utils/Tooltip.vue";
+import actionsNotify from "@/mixins/actionsNotify";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
 
 export default {
   name: "Client",

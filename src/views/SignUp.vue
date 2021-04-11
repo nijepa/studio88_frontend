@@ -1,44 +1,6 @@
 <template>
   <div class="lists__wrapper">
     <transition name="fall" mode="out-in">
-      <!--      <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
-            class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
-        <div class="profile__group personal__data">
-          <div class="">
-          <p>
-            <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                class="info__img">
-          </p>
-          </div>
-          <div class="input__group">
-            <div class="input__field">
-              <span class="info__label">Username : </span>
-              <p class="login_input user_input">{{ signupInput.username }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">E-mail : </span>
-              <p class="login_input user_input">{{ signupInput.email }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">First name : </span>
-              <p class="login_input user_input">{{ signupInput.first_name }}</p>
-            </div>
-            <div class="input__field">
-              <span class="info__label">Last name : </span
-              ><p class="login_input user_input">{{ signupInput.last_name }}</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="profile__group">
-          <div class="">
-            <span class="info__label">About : </span>
-            <p class="info__input" v-html="signupInput.user_about"></p>
-          </div>
-        </div>
-      
-      </div> -->
-
       <form
         @submit.prevent="userUpdate(signupInput)"
         action=""
@@ -110,15 +72,6 @@
             id="password"
           />
         </div>
-        <!--         <div class="input__field">
-          <label for="about">About</label> -->
-        <!--      <ckeditor :editor="editor" v-model="signupInput.user_about" 
-                    :config="{ placeholder:'pls enter content'}"
-                    @focus="clearErrors" name="about" >
-          </ckeditor> -->
-        <!--           <textarea @focus="clearErrors" v-model="signupInput.user_about"
-                    name="about" id="about" rows="5" cols="30"></textarea> -->
-        <!-- </div> -->
 
         <div class="modify_btns">
           <action-buttons toForm="summaries" />
@@ -131,20 +84,16 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
-//import CKEditor from '@ckeditor/ckeditor5-vue';
-//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
   name: "Profile",
 
   components: {
-    ActionButtons,
-    //ckeditor:CKEditor.component
+    ActionButtons
   },
 
   data() {
     return {
-      //editor: ClassicEditor,
       signupInput: {
         _id: "",
         email: "",
@@ -161,11 +110,20 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["loggedUser", "getSelectedUser", "getErrors"]),
+    ...mapGetters([
+      "loggedUser", 
+      "getSelectedUser", 
+      "getErrors"
+    ]),
   },
 
   methods: {
-    ...mapActions(["signup", "fetchSelectedUser", "userUpdate", "clearErrors"]),
+    ...mapActions([
+      "signup", 
+      "fetchSelectedUser", 
+      "userUpdate", 
+      "clearErrors"
+    ]),
 
     selectFriends(selectedUser) {
       this.fetchSelectedUser(selectedUser);

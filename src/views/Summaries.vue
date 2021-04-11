@@ -11,11 +11,13 @@
             class="logo responsive"
           />
         </div>
+
         <loading pic="loading1" v-if="!activeClients.length" key="7" />
         <div v-else class="dash__items active__clients" key="3">
           <p class="dash__text">Aktivnih klijenata</p>
           <h1 class="active__nr">{{ activeClients.length }}</h1>
         </div>
+
         <loading pic="loading1" v-if="!loadedPayment" key="8" />
         <div class="dash__items" v-else key="4">
           <div class="dash__text">
@@ -33,15 +35,16 @@
             godini
           </div>
 
-          <Charto
+          <ChartPayments
             v-if="loadedPayment"
             :chartdata="totalPayments"
             :chartdata2="totalExpenses"
             :chartlabel="paymentLabels"
             class="charts"
           >
-          </Charto>
+          </ChartPayments>
         </div>
+
         <loading pic="loading1" v-if="!loadedAttend" key="6" />
         <div class="dash__items" v-else key="5">
           <div class="dash__text">
@@ -67,13 +70,13 @@
             </datepicker>
           </div>
 
-          <Charto2
+          <ChartAttendances
             v-if="loadedAttend"
             :chartdata="totalAttendances"
             :chartlabel="attendanceLabels"
             class="charts"
           >
-          </Charto2>
+          </ChartAttendances>
         </div>
       </div>
     </transition>
@@ -81,13 +84,12 @@
 </template>
 
 <script>
-//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
-import Charto from "../components/utils/AreaChart";
-import Charto2 from "../components/utils/AreaChartLine";
+import ChartPayments from "@/components/utils/AreaChart";
+import ChartAttendances from "@/components/utils/AreaChartLine";
+import Loading from "@/components/utils/Loading.vue";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
-import Loading from "@/components/utils/Loading.vue";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 
@@ -115,9 +117,9 @@ export default {
 
   components: {
     Loading,
-    Charto,
-    Charto2,
-    Datepicker,
+    ChartPayments,
+    ChartAttendances,
+    Datepicker
   },
 
   computed: {
@@ -126,7 +128,7 @@ export default {
       "getAllPayments",
       "getAllAttendances",
       "getAllExpenses",
-      "loadingState",
+      "loadingState"
     ]),
   },
 
@@ -138,11 +140,10 @@ export default {
       "fetchAttendances",
       "fetchExpenses",
       "clientClear",
-      "setLoadingState",
+      "setLoadingState"
     ]),
 
     customFormatter(date) {
-      //return moment(date).format("DD MMM YYYY");
       return dayjs(date).format("DD MMM YYYY");
     },
 
@@ -224,17 +225,12 @@ export default {
             dayjs(this.dateFrom).format("YYYY-MM-DD") &&
           dayjs(year.attend_date).format("YYYY-MM-DD") <=
             dayjs(this.dateTill).format("YYYY-MM-DD")
-        /*             moment(year.attend_date).format("YYYY-MM-DD") >=
-            moment(this.dateFrom).format("YYYY-MM-DD") &&
-          moment(year.attend_date).format("YYYY-MM-DD") <=
-            moment(this.dateTill).format("YYYY-MM-DD") */
       );
       let filteredAttendancesAmounts = filteredAttendances.map(
         (item) => item.total_amount
       );
-      let filteredAttendancesLabels = filteredAttendances.map(
-        (item) => dayjs(item.attend_date).format("DD MMM YYYY")
-        //moment(item.attend_date).format("DD MMM YYYY")
+      let filteredAttendancesLabels = filteredAttendances.map((item) =>
+        dayjs(item.attend_date).format("DD MMM YYYY")
       );
       this.totalAttendances = filteredAttendancesAmounts;
       this.attendanceLabels = filteredAttendancesLabels;
@@ -257,7 +253,7 @@ export default {
     },
   },
 
-  async created() {
+  async mounted() {
     if (!this.getAllClients.length) await this.fetchClients();
     if (!this.getAllPayments.length) await this.fetchPayments();
     if (!this.getAllAttendances.length) await this.fetchAttendances();
@@ -271,7 +267,7 @@ export default {
     this.selectExpenses();
 
     this.setLoadingState(false);
-
+    
     this.loadedPayment = true;
     this.loadedAttend = true;
   },

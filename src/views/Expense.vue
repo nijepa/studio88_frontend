@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" mode="out-in">
+  <!-- <transition name="slide" mode="out-in"> -->
     <loading pic="loading" v-if="loadingState" key="1" />
 
     <div v-else class="lists__wrapper" key="2">
@@ -110,19 +110,18 @@
         </div>
       </form>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
-//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
 import Loading from "@/components/utils/Loading.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
-import actionsNotify from "../mixins/actionsNotify";
-import findMonth from "../mixins/findMonth";
+import actionsNotify from "@/mixins/actionsNotify";
+import findMonth from "@/mixins/findMonth";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 

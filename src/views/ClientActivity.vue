@@ -267,17 +267,16 @@
 </template>
 
 <script>
-//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
+import ClientAttendance from "@/components/ClientAttendance";
+import ClientPayment from "@/components/ClientPayment";
+import Tooltip from "@/components/utils/Tooltip.vue";
+import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
-import navigation from "../mixins/navigation";
-import navigationSearch from "../mixins/navigationSearch";
-import ClientAttendance from "../components/ClientAttendance";
-import ClientPayment from "../components/ClientPayment";
-import Tooltip from "@/components/utils/Tooltip.vue";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 
@@ -366,15 +365,9 @@ export default {
       return new Date(firstDay).toISOString().slice(0, 10);
     },
 
-    /*     async newClient() {
-      this.setLoadingState(true);
-      this.formTypeChange("client");
-      await this.clientClear();
-    }, */
-
     async selectClient() {
       this.setLoadingState(true);
-      this.$router.push("/client");
+      this.$router.push("/" + this.getFromForm);
     },
 
     selectPeriod() {
@@ -465,16 +458,9 @@ export default {
   filters: {
     formatDateLong: function (value) {
       if (value) {
-        //moment.locale("sr");
         return dayjs(String(value)).format("DD MMM YYYY dddd");
       }
     },
-    /*     formatDate1: function (value) {
-      if (value) {
-        //moment.locale("sr");
-        return dayjs(String(value)).format("DD MMM YYYY");
-      }
-    }, */
   },
 
   async mounted() {

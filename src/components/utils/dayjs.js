@@ -5,7 +5,7 @@ import srb from "dayjs/locale/sr";
 dayjs.locale(srb);
 
 // Add any plugins you want to use with Day.js
-import advancedFormat from 'dayjs/plugin/advancedFormat'
+/* import advancedFormat from 'dayjs/plugin/advancedFormat'
 import weekday from 'dayjs/plugin/weekday'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -21,6 +21,6 @@ dayjs.extend(relativeTime)
 dayjs.extend(customParseFormat)
 dayjs.extend(quarterOfYear)
 dayjs.extend(localizedFormat)
-dayjs.extend(isoWeek)
+dayjs.extend(isoWeek) */
 
 export default dayjs

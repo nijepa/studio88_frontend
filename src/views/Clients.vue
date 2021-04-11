@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <transition name="slide" mode="out-in">
+    <!-- <transition name="slide" mode="out-in"> -->
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
@@ -115,7 +115,7 @@
           </div>
         </div>
       </div>
-    </transition>
+    <!-- </transition> -->
 
     <jw-pagination
       :items="filteredClients"
@@ -134,9 +134,10 @@
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import navigation from "../mixins/navigation";
-import navigationSearch from "../mixins/navigationSearch";
 import SearchBar from "@/components/utils/SearchBar.vue";
+import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
+import searchClients from "@/mixins/searchClients";
 
 export default {
   name: "Clients",
@@ -153,7 +154,11 @@ export default {
     };
   },
 
-  mixins: [navigation, navigationSearch],
+  mixins: [
+    navigation, 
+    navigationSearch, 
+    searchClients
+  ],
 
   computed: {
     ...mapGetters([
@@ -163,14 +168,9 @@ export default {
       "getClientsPageSize",
       "loadingState",
     ]),
+    
     activeClients: function () {
       return this.getAllClients.filter((a) => a.active === true);
-    },
-  },
-
-  watch: {
-    pageSize() {
-      this.searchClients();
     },
   },
 
@@ -185,11 +185,6 @@ export default {
       "fetchSchedules",
       "setLoadingState",
     ]),
-
-    setPageSize(val) {
-      this.pageSize = val;
-      this.fetchClientsPageSize(val);
-    },
 
     async searchClients(val = "") {
       await this.initClients();
@@ -207,11 +202,6 @@ export default {
       this.setLoadingState(true);
       this.$router.push("/client");
       await this.clientClear();
-    },
-
-    setPageNr() {
-      const element = document.querySelector("ul.pagination > li.active");
-      if (element) this.fetchClientsPage(Number(element.innerText));
     },
 
     async selectClient(client) {

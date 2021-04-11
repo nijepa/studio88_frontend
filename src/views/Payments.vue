@@ -1,9 +1,10 @@
 <template>
   <div class="">
-    <transition name="slide" mode="out-in">
+    <!-- <transition name="slide" mode="out-in"> -->
       <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
+        <div class="clients__manipulate">
         <button
           type="submit"
           @click="newPayment()"
@@ -106,6 +107,14 @@
           <p>Novo plaćanje</p>
         </button>
 
+        <search-bar
+          :searchStr="search"
+          :pageSizeNr="pageSize"
+          :searchType="'traži (mjesec, godina)'"
+          @changed="setPageSize"
+          @typed="searchClients"
+        />
+
         <div class="">
           <div class="days__list payment__heading">
             <span>Godina</span>
@@ -125,11 +134,14 @@
           </div>
         </div>
       </div>
-    </transition>
+      </div>
+    <!-- </transition> -->
 
     <jw-pagination
-      :items="getAllPayments"
+      :items="filteredClients"
       @changePage="onChangePage"
+      :initialPage="initialPage"
+      :pageSize="pageSize"
       :labels="customLabels"
       :styles="customStyles"
       class="pagine"
@@ -142,16 +154,20 @@
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import navigation from "../mixins/navigation";
+import SearchBar from "@/components/utils/SearchBar.vue";
+import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
+import searchClients from "@/mixins/searchClients";
 
 export default {
   name: "Payments",
 
   components: {
     Loading,
+    SearchBar
   },
 
-  mixins: [navigation],
+  mixins: [navigation, navigationSearch, searchClients],
 
   data() {
     return {
@@ -161,16 +177,33 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getAllPayments", "loadingState"]),
+    ...mapGetters([
+      "getAllPayments",
+      "getClientsPage",
+      "getClientsPageSize",
+      "loadingState"]),
   },
 
   methods: {
     ...mapActions([
       "fetchPayments",
       "fetchPayment",
+      "fetchClientsPage",
+      "fetchClientsPageSize",
       "paymentClear",
       "setLoadingState",
     ]),
+
+    async searchClients(val = "") {
+      await this.initClients();
+      let mu = this.getAllPayments.filter((post) => {
+        return (
+          post.payment_year.toString().includes(val) ||
+          post.payment_month.toLowerCase().includes(val.toLowerCase())
+        );
+      });
+      this.filteredClients = mu;
+    },
 
     async newPayment() {
       this.setLoadingState(true);
@@ -190,10 +223,18 @@ export default {
         0
       );
     },
+
+    async initClients() {
+      if (!this.getAllPayments.length) await this.fetchPayments();
+      this.filteredClients = this.getAllPayments; 
+      if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
+      if (this.getClientsPageSize !== 10)
+        this.pageSize = this.getClientsPageSize;
+    },
   },
 
   async mounted() {
-    if (!this.getAllPayments.length) await this.fetchPayments();
+    this.initClients();
     this.setLoadingState(false);
   },
 };

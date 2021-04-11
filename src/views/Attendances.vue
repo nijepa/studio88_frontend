@@ -1,9 +1,10 @@
 <template>
   <div class="">
-    <transition name="slide" mode="out-in">
+    <!-- <transition name="slide" mode="out-in"> -->
       <loading pic="loading" v-if="loadingState" key="1" />
 
       <div v-else class="client__wrapper" key="2">
+        <div class="clients__manipulate">
         <button
           type="submit"
           @click="newAttendance()"
@@ -119,6 +120,14 @@
           <p>Nova prisustva</p>
         </button>
 
+        <search-bar
+          :searchStr="search"
+          :pageSizeNr="pageSize"
+          :searchType="'traži (dan, mjesec, godina)'"
+          @changed="setPageSize"
+          @typed="searchClients"
+        />
+
         <div class="">
           <div class="days__list attend__heading">
             <span>Datum</span>
@@ -139,11 +148,14 @@
           </div>
         </div>
       </div>
-    </transition>
+      </div>
+    <!-- </transition> -->
 
     <jw-pagination
-      :items="getAllAttendances"
+      :items="filteredClients"
       @changePage="onChangePage"
+      :initialPage="initialPage"
+      :pageSize="pageSize"
       :labels="customLabels"
       :styles="customStyles"
       class="pagine"
@@ -153,11 +165,13 @@
 </template>
 
 <script>
-//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import navigation from "../mixins/navigation";
+import SearchBar from "@/components/utils/SearchBar.vue";
+import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
+import searchClients from "@/mixins/searchClients";
 import dayjs from "dayjs";
 import sr from "dayjs/locale/sr";
 
@@ -168,25 +182,37 @@ export default {
 
   components: {
     Loading,
+    SearchBar
   },
 
-  mixins: [navigation],
+  mixins: [
+    navigation, 
+    navigationSearch, 
+    searchClients
+  ],
 
   data() {
     return {
       customLabels,
-      customStyles,
+      customStyles
     };
   },
 
   computed: {
-    ...mapGetters(["getAllAttendances", "loadingState"]),
+    ...mapGetters([
+      "getAllAttendances",
+      "getClientsPage",
+      "getClientsPageSize",
+      "loadingState"
+    ]),
   },
 
   methods: {
     ...mapActions([
       "fetchAttendances",
       "fetchAttendance",
+      "fetchClientsPage",
+      "fetchClientsPageSize",
       "attendanceClear",
       "setLoadingState",
     ]),
@@ -200,25 +226,44 @@ export default {
     async selectAttendance(attendance) {
       this.setLoadingState(true);
       await this.fetchAttendance(attendance);
+      this.setPageNr();
       this.$router.push("/attendance");
     },
 
     mapAttendances(attendance) {
       return attendance.members.reduce((a, { present }) => a + present, 0);
     },
+
+    async searchClients(val = "") {
+      await this.initClients();
+      let mu = this.getAllAttendances.filter((post) => {
+        return (
+          this.$options.filters.formatDate(post.attend_date).toLowerCase().includes(val.toLowerCase()) ||
+          post.notes.includes(val.toLowerCase())
+        );
+      });
+      this.filteredClients = mu;
+    },
+
+    async initClients() {
+      if (!this.getAllAttendances.length) await this.fetchAttendances();
+      this.filteredClients = this.getAllAttendances;
+      if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
+      if (this.getClientsPageSize !== 10)
+        this.pageSize = this.getClientsPageSize;
+    },
   },
 
   filters: {
     formatDate: function (value) {
       if (value) {
-        //moment.locale("sr");
         return dayjs(String(value)).format("dddd, DD. MMM YYYY");
       }
     },
   },
 
   async mounted() {
-    if (!this.getAllAttendances.length) await this.fetchAttendances();
+    this.initClients();
     this.setLoadingState(false);
   },
 };

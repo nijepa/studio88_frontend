@@ -193,7 +193,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["loggedUser", "getGeneral", "getFormType"]),
+    ...mapGetters([
+      "loggedUser", 
+      "getGeneral", 
+      "getFormType"
+    ]),
   },
 
   methods: {

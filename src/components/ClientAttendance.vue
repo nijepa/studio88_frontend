@@ -67,13 +67,12 @@
 </template>
 
 <script>
-//import moment from "moment";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
+import { mapGetters, mapActions } from "vuex";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
-import { mapGetters, mapActions } from "vuex";
-import actionsNotify from "../mixins/actionsNotify";
+import actionsNotify from "@/mixins/actionsNotify";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 
@@ -93,7 +92,11 @@ export default {
   mixins: [actionsNotify],
 
   computed: {
-    ...mapGetters(["getAllAttendances", "getAllPayments", "getErrors"]),
+    ...mapGetters([
+      "getAllAttendances", 
+      "getAllPayments", 
+      "getErrors"
+    ]),
   },
 
   data() {
@@ -235,14 +238,6 @@ export default {
     },
   },
 
-  /*   filters: {
-    formatDate: function (value) {
-      if (value) {
-        return dayjs(value).format("dddd");
-      }
-    },
-  }, */
-
   watch: {
     clientAtt: function () {
       this.checkUpdate();
@@ -271,9 +266,5 @@ export default {
   justify-self: stretch;
   justify-content: center;
   row-gap: 1em;
-}
-
-.new_item {
-  text-transform: uppercase;
 }
 </style>

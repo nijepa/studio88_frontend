@@ -68,11 +68,21 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getInputType", "loggedUser", "getErrors", "isLogged"]),
+    ...mapGetters([
+      "getInputType", 
+      "loggedUser", 
+      "getErrors", 
+      "isLogged"
+    ]),
   },
 
   methods: {
-    ...mapActions(["login", "logout", "signType", "clearErrors"]),
+    ...mapActions([
+      "login", 
+      "logout", 
+      "signType", 
+      "clearErrors"
+    ]),
 
     async logIn() {
       this.isLog = true;

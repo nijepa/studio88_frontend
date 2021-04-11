@@ -45,7 +45,7 @@
         @keyup="typed()"
         v-model="search"
         class="login_input search_input"
-        placeholder="traži (ime, prezime, tel.)"
+        :placeholder="typeS"
       />
     </div>
 
@@ -78,12 +78,14 @@ export default {
   props: {
     searchStr: String,
     pageSizeNr: Number,
+    searchType: {type: String, default: ""}
   },
 
   data() {
     return {
       search: "",
       pageSize: 10,
+      typeS: ""
     };
   },
 
@@ -95,11 +97,20 @@ export default {
     typed() {
       this.$emit("typed", this.search);
     },
+
+    handleSearchType() {
+      if(!this.searchType) {
+        this.typeS = "traži (ime, prezime, tel.)";
+      } else {
+        this.typeS = this.searchType;
+      }
+    }
   },
 
   created() {
     this.search = this.searchStr;
     this.pageSize = this.pageSizeNr;
+    this.handleSearchType()
   },
 };
 </script>

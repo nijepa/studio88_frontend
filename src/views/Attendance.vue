@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" mode="out-in">
+  <!-- <transition name="slide" mode="out-in"> -->
     <loading pic="loading" v-if="loadingState" key="1" />
 
     <div v-else class="lists__wrapper" key="2">
@@ -184,23 +184,23 @@
         </div>
       </form>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
-//import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
+import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import Loading from "@/components/utils/Loading.vue";
 import SearchBar from "@/components/utils/SearchBar.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
-import actionsNotify from "../mixins/actionsNotify";
-import navigation from "../mixins/navigation";
-import navigationSearch from "../mixins/navigationSearch";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
+import actionsNotify from "@/mixins/actionsNotify";
+import navigation from "@/mixins/navigation";
+import navigationSearch from "@/mixins/navigationSearch";
+import searchClients from "@/mixins/searchClients";
+import Datepicker from "vuejs-datepicker";
+import { sr } from "vuejs-datepicker/dist/locale";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 //import '@trevoreyre/autocomplete-vue/dist/style.css';
 import dayjs from "dayjs";
@@ -221,7 +221,12 @@ export default {
     Autocomplete,
   },
 
-  mixins: [actionsNotify, navigation, navigationSearch],
+  mixins: [
+    actionsNotify, 
+    navigation, 
+    navigationSearch, 
+    searchClients
+  ],
 
   data() {
     return {
@@ -243,12 +248,6 @@ export default {
       },
       btn_title: "dodatne opcije",
     };
-  },
-
-  watch: {
-    pageSize() {
-      this.searchClients();
-    },
   },
 
   computed: {
@@ -276,11 +275,6 @@ export default {
       "setLoadingState",
     ]),
 
-    setPageSize(val) {
-      this.pageSize = val;
-      this.fetchClientsPageSize(val);
-    },
-
     async searchClients(val = "") {
       await this.initClients();
       let mu = this.attendanceInput.members.filter((post) => {
@@ -291,7 +285,7 @@ export default {
         );
       });
       this.filteredClients = mu;
-    },
+    }, 
 
     toggleActions() {
       this.actions = !this.actions;
@@ -464,14 +458,6 @@ export default {
     },
   },
 
-  /*   filters: {
-    formatDate: function (value) {
-      if (value) {
-        return dayjs(value).format("dddd");
-      }
-    },
-  }, */
-
   async mounted() {
     let currentYear = new Date();
     currentYear = dayjs().format("YYYY");
@@ -495,10 +481,6 @@ export default {
 
 .attendance__list_header {
   grid-template-columns: repeat(3, auto);
-}
-
-.memeber__date {
-  margin: 0;
 }
 
 .all__clients_btn {
