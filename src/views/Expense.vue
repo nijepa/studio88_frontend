@@ -57,6 +57,7 @@
             <label for="title">Naziv troška</label>
             <input
               type="text"
+              id="title"
               name="title"
               placeholder="naziv troška"
               required

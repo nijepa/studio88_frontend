@@ -5,6 +5,7 @@
         src="../assets/img/studio881.png"
         alt="studio 88"
         class="responsive"
+        rel="preload"
       />
       <!--       <h1 class="club">{{ msg }} </h1>
       <p class="club__type">p i l a t e s</p> -->

@@ -255,11 +255,11 @@ export default {
   },
 
   async mounted() {
-    this.setLoadingState(false);
     if (!this.getAllClients.length) await this.fetchClients();
     if (!this.getAllPayments.length) await this.fetchPayments();
     if (!this.getAllAttendances.length) await this.fetchAttendances();
     if (!this.getAllExpenses.length) await this.fetchExpenses();
+    this.setLoadingState(false);
     this.activeClients = this.getAllClients.filter(function (e) {
       return e.active == true;
     });
