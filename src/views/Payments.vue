@@ -247,6 +247,7 @@ export default {
 <style>
 .payment__list {
   grid-template-columns: repeat(3, 1fr) !important;
+  justify-items: center;
 }
 
 .payment__heading {

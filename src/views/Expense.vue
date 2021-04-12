@@ -215,6 +215,7 @@ export default {
     if (this.getOneExpense._id) {
       this.expenseInput = this.getOneExpense;
     }
+    console.log('xxxxxxxxxx')
     this.setLoadingState(false);
   },
 };

@@ -55,15 +55,23 @@
           </div>
 
           <div class="input__field dani">
-            <label for="day">Dani treninga</label>
-            <div v-for="day in days" :key="day.id">
-              <label :for="'dan' + day" class="dan">{{ day }}</label>
+            <!-- <label for="day">Dani treninga</label> -->
+            <div v-for="day in days" :key="day.id"> 
+              <!-- <label :for="'dan' + day" class="dan">{{ day }}</label>
               <input
                 :id="'dan' + day"
                 type="checkbox"
                 class="dan_input"
                 v-model="scheduleInput.weekday"
                 :value="day"
+              /> -->
+              <CheckboxCustom 
+                :checkClass="'dan'"
+                :label="day"
+                :modelValue="scheduleInput.weekday"
+                :value="day"
+                :checkId="'dan' + day" 
+                v-model="scheduleInput.weekday"
               />
             </div>
           </div>
@@ -188,6 +196,7 @@ import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import SearchBar from "@/components/utils/SearchBar.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import navigation from "@/mixins/navigation";
@@ -210,6 +219,7 @@ export default {
     ActionButtons,
     DeleteButton,
     Tooltip,
+    CheckboxCustom
   },
 
   mixins: [actionsNotify, navigation, navigationSearch, searchClients],

@@ -112,7 +112,7 @@
                 </transition>
               </div>
 
-              <div class="days__list attendance__list_header">
+              <div class="days__list">
                 <span>Vježbačica</span>
                 <span>Prisutna</span>
                 <span>Napomena</span>
@@ -132,11 +132,17 @@
                   }}
                   {{ member.client.last_name }}, {{ member.client.first_name }}
                 </div>
-                <input
+                <CheckboxCustom 
+                  :class="'user_input payment__price check'"
+                  :modelValue="member.present"
+                  :checkId="member._id" 
+                  v-model="member.present"
+                />
+                <!-- <input
                   type="checkbox"
                   v-model="member.present"
                   class="login_input user_input payment__price check"
-                />
+                /> -->
                 <input
                   type="text"
                   v-model="member.note"
@@ -195,6 +201,7 @@ import SearchBar from "@/components/utils/SearchBar.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
@@ -219,6 +226,7 @@ export default {
     DeleteButton,
     Tooltip,
     Autocomplete,
+    CheckboxCustom
   },
 
   mixins: [
@@ -477,10 +485,6 @@ export default {
   border: none;
   height: 140px;
   font-family: "Itim", cursive;
-}
-
-.attendance__list_header {
-  grid-template-columns: repeat(3, auto);
 }
 
 .all__clients_btn {

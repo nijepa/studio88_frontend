@@ -240,13 +240,20 @@
           @click="handleUpdate(client, false)"
         >
           <p class="activities__item">{{ client.date | formatDateLong }}</p>
-          <input
+          <CheckboxCustom 
+            :checkClass="'input__field'"
+            :modelValue="client.present"
+            v-model="client.present"
+            :value="client.present.toString()"
+            :checkId="client.date.toString()" 
+          />
+<!--           <input
             type="checkbox"
             class="activities__item activities__check"
             v-model="client.present"
             onclick="return false;"
             readonly="readonly"
-          />
+          /> -->
           <p class="activities__item">{{ client.note }}</p>
         </div>
 
@@ -273,6 +280,7 @@ import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import ClientAttendance from "@/components/ClientAttendance";
 import ClientPayment from "@/components/ClientPayment";
 import Tooltip from "@/components/utils/Tooltip.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
 import Datepicker from "vuejs-datepicker";
@@ -291,6 +299,7 @@ export default {
     ClientAttendance,
     ClientPayment,
     Tooltip,
+    CheckboxCustom
   },
 
   mixins: [navigation, navigationSearch],

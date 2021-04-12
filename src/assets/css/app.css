@@ -224,9 +224,9 @@ label {
   border-radius: .5em;
 }
 
-.payment__list {
+/* .payment__list {
   justify-items: left;
-}
+} */
 
 .pagine {
   margin: .5em auto !important;
@@ -656,7 +656,8 @@ div.activities__list:nth-child(even):hover {
   grid-template-columns: repeat(5, 1fr);
   grid-column-gap: 1em;
   justify-content: center;
-  justify-items: center;
+  /* justify-items: center; */
+  align-items: center;
   margin-top: .2em;
   border-radius: 1em;
   transition: ease .5s all;
@@ -778,7 +779,7 @@ div.clients__list:nth-child(odd) {
 }
 
 .dan {
-  font-size: 1.3em;
+  font-size: 1.1em;
   color: var(--black);
   cursor: pointer;
 }
@@ -1158,17 +1159,15 @@ hr {
     grid-template-columns: repeat(2, auto) !important;
   }
 
-  .expenses__header,
+/*   .expenses__header,
   .expense__list {
     grid-template-columns: repeat(3, auto) !important;
-  }
+  } */
 
   .activities__list {
     grid-template-columns: 2fr 1fr !important;
   }
 
-  .attend__heading,
-  .attend__list,
   .payment__heading {
     grid-template-columns: repeat(3, 1fr) !important;
   }

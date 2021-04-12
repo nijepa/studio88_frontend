@@ -27,7 +27,7 @@
       {{ title }}
     </h3>
     <div class="input__att">
-      <div class="input__field">
+      <div class="input__field att__date">
         <label for="">Datuma</label>
         <datepicker
           v-model="attend_date"
@@ -37,9 +37,17 @@
           :format="customFormatter"
         >
         </datepicker>
-        <h3 class="weekday">{{ attend_date | formatDay }}</h3>
+        <h3 class="weekday att__day">{{ attend_date | formatDay }}</h3>
       </div>
-      <div class="input__field">
+  
+      <CheckboxCustom 
+        :checkClass="'att__check input__field'"
+        :label="'Prisutna'"
+        :modelValue="attData.present"
+        v-model="attData.present"
+      />
+    
+      <!-- <div class="input__field">
         <label for="att">Prisutna</label>
         <input
           type="checkbox"
@@ -47,7 +55,7 @@
           id="att"
           class="login_input user_input"
         />
-      </div>
+      </div> -->
       <div class="input__field">
         <label for="napomena">Napomena</label>
         <input
@@ -70,6 +78,7 @@
 import { mapGetters, mapActions } from "vuex";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -87,6 +96,7 @@ export default {
     Datepicker,
     ActionButtons,
     DeleteButton,
+    CheckboxCustom
   },
 
   mixins: [actionsNotify],
@@ -266,5 +276,15 @@ export default {
   justify-self: stretch;
   justify-content: center;
   row-gap: 1em;
+}
+.att__date {
+  display: flex;
+  align-items: center;
+}
+.att__day {
+  margin: 0;
+}
+.att__check {
+  display: flex;
 }
 </style>

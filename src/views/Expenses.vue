@@ -190,7 +190,7 @@ export default {
   },
 
   async mounted() {
-    this.initItems();
+    await this.initItems();
     this.setLoadingState(false);
   },
 };
@@ -199,6 +199,7 @@ export default {
 <style>
 .expense__list {
   grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
 }
 
 .expenses__header {

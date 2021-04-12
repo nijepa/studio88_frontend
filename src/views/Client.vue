@@ -137,7 +137,13 @@
           </h3>
 
           <div class="input__group active__date">
-            <div class="input__field">
+            <CheckboxCustom 
+              :checkClass="'custom__check input__field'"
+              :label="'Aktivna'"
+              :modelValue="clientInput.active"
+              v-model="clientInput.active"
+            />
+            <!-- <div class="input__field">
               <label for="active">Aktivna</label>
               <input
                 type="checkbox"
@@ -148,7 +154,7 @@
                 class="login_input user_input check_active"
                 v-model="clientInput.active"
               />
-            </div>
+            </div> -->
             <div class="input__field">
               <label for="date_start">Datum upisa</label>
               <datepicker
@@ -312,6 +318,7 @@ import Loading from "@/components/utils/Loading.vue";
 import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
@@ -325,6 +332,7 @@ export default {
     ActionButtons,
     DeleteButton,
     Tooltip,
+    CheckboxCustom
   },
 
   mixins: [actionsNotify],

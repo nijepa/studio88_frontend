@@ -58,11 +58,11 @@ export default {
 }
 
 .slide-enter-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .slide-leave-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .slide-enter {

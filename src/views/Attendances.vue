@@ -143,7 +143,7 @@
             <p class="client__item">
               {{ attendance.attend_date | formatDate }}
             </p>
-            <p class="client__item">{{ mapAttendances(attendance) }}</p>
+            <p class="client__item attend__check">{{ mapAttendances(attendance) }}</p>
             <p class="client__item">{{ attendance.notes }}</p>
           </div>
         </div>
@@ -270,4 +270,7 @@ export default {
 </script>
 
 <style>
+.attend__check {
+  text-align: center;
+}
 </style>

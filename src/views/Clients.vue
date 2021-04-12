@@ -84,10 +84,16 @@
             <p class="client__item" @click="selectClient(client)">
               {{ client.mobile }}
             </p>
-            <label class="client__item" @click="selectClient(client)"
+            <div class="" @click="selectClient(client)">
+            <CheckboxCustom 
+              :checkClass="'custom__check'"
+              v-model="client.active"
+            />
+            </div>
+<!--             <label class="client__item client__active_check" @click="selectClient(client)"
               >.
               <input type="checkbox" class="" v-model="client.active" />
-            </label>
+            </label> -->
 
             <button
               type="submit"
@@ -135,6 +141,7 @@ import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import SearchBar from "@/components/utils/SearchBar.vue";
+import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
 import searchClients from "@/mixins/searchClients";
@@ -145,6 +152,7 @@ export default {
   components: {
     Loading,
     SearchBar,
+    CheckboxCustom
   },
 
   data() {
@@ -263,4 +271,7 @@ export default {
 </script>
 
 <style>
+.client__active_check {
+  text-align: center;
+}
 </style>

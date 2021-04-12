@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <transition name="slide" mode="out-in">
+    <!-- <transition name="slide" mode="out-in"> -->
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <div v-else class="dash__wrapper" key="2">
@@ -80,7 +80,7 @@
           </ChartAttendances>
         </div>
       </div>
-    </transition>
+    <!-- </transition> -->
   </div>
 </template>
 
