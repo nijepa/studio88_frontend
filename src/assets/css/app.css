@@ -655,7 +655,7 @@ div.activities__list:nth-child(even):hover {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-column-gap: 1em;
-  justify-content: center;
+  /* justify-content: center; */
   /* justify-items: center; */
   align-items: center;
   margin-top: .2em;
@@ -1138,7 +1138,7 @@ hr {
 
   nav,
   .clients__list {
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, auto) !important;
   }
 
   .nav-toggle,
@@ -1158,11 +1158,6 @@ hr {
   .days__list {
     grid-template-columns: repeat(2, auto) !important;
   }
-
-/*   .expenses__header,
-  .expense__list {
-    grid-template-columns: repeat(3, auto) !important;
-  } */
 
   .activities__list {
     grid-template-columns: 2fr 1fr !important;

@@ -36,15 +36,17 @@ export default {
     prop: 'modelValue',
     event: 'change'
   },
+
   props: {
     "value": { type: String, default: "" },
     "modelValue": { default: "" },
-    "label": { type: String},
+    "label": { type: String },
     "trueValue": { default: true },
     "falseValue": { default: false },
     "checkId": { type: String, default: "cbx" },
     "checkClass": { type: String, default: "" }
   },
+
   computed: {
     isChecked() {
       if (this.modelValue instanceof Array) {
@@ -54,6 +56,7 @@ export default {
       return this.modelValue === this.trueValue
     }
   },
+
   methods: {
     updateInput(event) {
       let isChecked = event.target.checked
@@ -70,7 +73,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 
