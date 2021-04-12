@@ -1,85 +1,85 @@
 <template>
   <div class="">
     <!-- <transition name="slide" mode="out-in"> -->
-      <loading pic="loading1" v-if="loadingState" key="1" />
+    <loading pic="loading1" v-if="loadingState" key="1" />
 
-      <div v-else class="dash__wrapper" key="2">
-        <div class="dash__items">
-          <img
-            src="../assets/img/studio881.png"
-            alt="studio 88"
-            class="logo responsive"
-            rel="preload"
-          />
-        </div>
-
-        <loading pic="loading1" v-if="!activeClients.length" key="7" />
-        <div v-else class="dash__items active__clients" key="3">
-          <p class="dash__text">Aktivnih klijenata</p>
-          <h1 class="active__nr">{{ activeClients.length }}</h1>
-        </div>
-
-        <loading pic="loading1" v-if="!loadedPayment" key="8" />
-        <div class="dash__items" v-else key="4">
-          <div class="dash__text">
-            Plaćeno u
-            <select
-              name="years"
-              id="years"
-              v-model="yearSelected"
-              @change="selectYear(yearSelected)"
-            >
-              <option :value="year" v-for="year in createYears()" :key="year">
-                {{ year }}
-              </option>
-            </select>
-            godini
-          </div>
-
-          <ChartPayments
-            v-if="loadedPayment"
-            :chartdata="totalPayments"
-            :chartdata2="totalExpenses"
-            :chartlabel="paymentLabels"
-            class="charts"
-          >
-          </ChartPayments>
-        </div>
-
-        <loading pic="loading1" v-if="!loadedAttend" key="6" />
-        <div class="dash__items" v-else key="5">
-          <div class="dash__text">
-            Dolasci od
-            <datepicker
-              v-model="dateFrom"
-              placeholder="datum upisa"
-              class="login_input user_input datepicker"
-              :language="sr"
-              :format="customFormatter"
-              @input="selectAttendances()"
-            >
-            </datepicker>
-            do
-            <datepicker
-              v-model="dateTill"
-              placeholder="datum upisa"
-              class="login_input user_input datepicker"
-              :language="sr"
-              :format="customFormatter"
-              @input="selectAttendances()"
-            >
-            </datepicker>
-          </div>
-
-          <ChartAttendances
-            v-if="loadedAttend"
-            :chartdata="totalAttendances"
-            :chartlabel="attendanceLabels"
-            class="charts"
-          >
-          </ChartAttendances>
-        </div>
+    <div v-else class="dash__wrapper" key="2">
+      <div class="dash__items">
+        <img
+          src="../assets/img/studio881.png"
+          alt="studio 88"
+          class="logo responsive"
+          rel="preload"
+        />
       </div>
+
+      <loading pic="loading1" v-if="!activeClients.length" key="7" />
+      <div v-else class="dash__items active__clients" key="3">
+        <p class="dash__text">Aktivnih klijenata</p>
+        <h1 class="active__nr">{{ activeClients.length }}</h1>
+      </div>
+
+      <loading pic="loading1" v-if="!loadedPayment" key="8" />
+      <div class="dash__items" v-else key="4">
+        <div class="dash__text">
+          Plaćeno u
+          <select
+            name="years"
+            id="years"
+            v-model="yearSelected"
+            @change="selectYear(yearSelected)"
+          >
+            <option :value="year" v-for="year in createYears()" :key="year">
+              {{ year }}
+            </option>
+          </select>
+          godini
+        </div>
+
+        <ChartPayments
+          v-if="loadedPayment"
+          :chartdata="totalPayments"
+          :chartdata2="totalExpenses"
+          :chartlabel="paymentLabels"
+          class="charts"
+        >
+        </ChartPayments>
+      </div>
+
+      <loading pic="loading1" v-if="!loadedAttend" key="6" />
+      <div class="dash__items" v-else key="5">
+        <div class="dash__text">
+          Dolasci od
+          <datepicker
+            v-model="dateFrom"
+            placeholder="datum upisa"
+            class="login_input user_input datepicker"
+            :language="sr"
+            :format="customFormatter"
+            @input="selectAttendances()"
+          >
+          </datepicker>
+          do
+          <datepicker
+            v-model="dateTill"
+            placeholder="datum upisa"
+            class="login_input user_input datepicker"
+            :language="sr"
+            :format="customFormatter"
+            @input="selectAttendances()"
+          >
+          </datepicker>
+        </div>
+
+        <ChartAttendances
+          v-if="loadedAttend"
+          :chartdata="totalAttendances"
+          :chartlabel="attendanceLabels"
+          class="charts"
+        >
+        </ChartAttendances>
+      </div>
+    </div>
     <!-- </transition> -->
   </div>
 </template>
@@ -120,7 +120,7 @@ export default {
     Loading,
     ChartPayments,
     ChartAttendances,
-    Datepicker
+    Datepicker,
   },
 
   computed: {
@@ -129,7 +129,7 @@ export default {
       "getAllPayments",
       "getAllAttendances",
       "getAllExpenses",
-      "loadingState"
+      "loadingState",
     ]),
   },
 
@@ -141,7 +141,7 @@ export default {
       "fetchAttendances",
       "fetchExpenses",
       "clientClear",
-      "setLoadingState"
+      "setLoadingState",
     ]),
 
     customFormatter(date) {
@@ -267,12 +267,11 @@ export default {
     this.selectPayments();
     this.selectAttendances(this.dateTill);
     this.selectExpenses();
-    
+
     this.loadedPayment = true;
     this.loadedAttend = true;
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

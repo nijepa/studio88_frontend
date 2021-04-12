@@ -26,7 +26,9 @@
 
         <button type="submit" class="login_btn">Log In</button>
       </form>
-      <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
+      <p class="err" v-if="getErrors.length != 0">
+        {{ getErrors }}
+      </p>
     </div>
   </div>
 </template>
@@ -68,21 +70,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      "getInputType", 
-      "loggedUser", 
-      "getErrors", 
-      "isLogged"
-    ]),
+    ...mapGetters(["getInputType", "loggedUser", "getErrors", "isLogged"]),
   },
 
   methods: {
-    ...mapActions([
-      "login", 
-      "logout", 
-      "signType", 
-      "clearErrors"
-    ]),
+    ...mapActions(["login", "logout", "signType", "clearErrors"]),
 
     async logIn() {
       this.isLog = true;

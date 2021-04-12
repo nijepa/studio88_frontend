@@ -1,28 +1,24 @@
 <template>
   <!-- <transition name="slide" mode="out-in"> -->
-    <loading pic="loading" v-if="loadingState" key="1" />
+  <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="client__wrapper schedule_mobile" key="2">
-      <button
-        type="submit"
-        @click="newSchedule()"
-        class="action_btn client__add"
+  <div v-else class="client__wrapper schedule_mobile" key="2">
+    <button type="submit" @click="newSchedule()" class="action_btn client__add">
+      <svg
+        version="1.0"
+        fill="var(--purple)"
+        width="50px"
+        height="50px"
+        viewBox="0 0 1280.000000 640.000000"
+        preserveAspectRatio="xMidYMid meet"
       >
-        <svg
-          version="1.0"
+        <g
+          transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
           fill="var(--purple)"
-          width="50px"
-          height="50px"
-          viewBox="0 0 1280.000000 640.000000"
-          preserveAspectRatio="xMidYMid meet"
+          stroke="none"
         >
-          <g
-            transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
-            fill="var(--purple)"
-            stroke="none"
-          >
-            <path
-              d="M3153 6340 c-103 -14 -203 -69 -203 -110 0 -10 -24 -32 -58 -53 -123
+          <path
+            d="M3153 6340 c-103 -14 -203 -69 -203 -110 0 -10 -24 -32 -58 -53 -123
           -76 -198 -184 -248 -358 -14 -52 -33 -106 -40 -120 -13 -27 -122 -121 -221
           -193 -31 -22 -53 -45 -53 -56 0 -10 27 -41 60 -70 33 -29 60 -59 60 -67 0 -8
           -10 -29 -22 -45 -18 -26 -20 -35 -10 -61 10 -25 8 -34 -8 -55 -15 -18 -20 -40
@@ -75,63 +71,63 @@
           -257 -311 -445 -367 -71 -21 -71 -21 -71 12 0 25 6 29 78 55 151 53 256 145
           304 267 18 47 22 80 26 223 4 150 6 167 21 163 9 -3 23 -1 31 4 22 14 23 14
           52 -33z"
-            />
-          </g>
-        </svg>
-        <p>Novi termin</p>
-      </button>
+          />
+        </g>
+      </svg>
+      <p>Novi termin</p>
+    </button>
 
-      <div class="schedule__card">
-        <div
-          v-for="schedule in getAllSchedules"
-          :key="schedule._id"
-          class="schedule__items"
-          @click="selectSchedule(schedule)"
-        >
-          <div class="">
-            <span class="item__desc">Grupa</span>
-            <p class="client__item">{{ schedule.title }}</p>
+    <div class="schedule__card">
+      <div
+        v-for="schedule in getAllSchedules"
+        :key="schedule._id"
+        class="schedule__items"
+        @click="selectSchedule(schedule)"
+      >
+        <div class="">
+          <span class="item__desc">Grupa</span>
+          <p class="client__item">{{ schedule.title }}</p>
+        </div>
+
+        <div class="">
+          <span class="item__desc">Dani treninga</span>
+          <div class="client__item">
+            <p
+              v-for="termin in schedule.weekday"
+              :key="termin.id"
+              class="week__day"
+            >
+              {{ termin }}
+            </p>
           </div>
+        </div>
 
-          <div class="">
-            <span class="item__desc">Dani treninga</span>
-            <div class="client__item">
-              <p
-                v-for="termin in schedule.weekday"
-                :key="termin.id"
-                class="week__day"
-              >
-                {{ termin }}
-              </p>
-            </div>
-          </div>
+        <div class="">
+          <span class="item__desc">Vrijeme početka</span>
+          <p class="client__item">{{ schedule.startTime }}</p>
+        </div>
 
-          <div class="">
-            <span class="item__desc">Vrijeme početka</span>
-            <p class="client__item">{{ schedule.startTime }}</p>
-          </div>
-
-          <div class="">
-            <span class="item__desc">Polaznice</span>
-            <div class="client__item">
-              <p
-                v-for="polaznik in schedule.members"
-                :key="polaznik.id"
-                class="week__day"
-              >
-                {{
-                  schedule.members
-                    .map((item) => item.client._id)
-                    .indexOf(polaznik.client._id) + 1
-                }}
-                {{ polaznik.client.last_name }},
-                {{ polaznik.client.first_name }}
-              </p>
-            </div>
+        <div class="">
+          <span class="item__desc">Polaznice</span>
+          <div class="client__item">
+            <p
+              v-for="polaznik in schedule.members"
+              :key="polaznik.id"
+              class="week__day"
+            >
+              {{
+                schedule.members
+                  .map((item) => item.client._id)
+                  .indexOf(polaznik.client._id) + 1
+              }}
+              {{ polaznik.client.last_name }},
+              {{ polaznik.client.first_name }}
+            </p>
           </div>
         </div>
       </div>
     </div>
+  </div>
   <!-- </transition> -->
 </template>
 
@@ -147,10 +143,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      "getAllSchedules", 
-      "loadingState"
-    ]),
+    ...mapGetters(["getAllSchedules", "loadingState"]),
   },
 
   methods: {
@@ -181,5 +174,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -78,14 +78,14 @@ export default {
   props: {
     searchStr: String,
     pageSizeNr: Number,
-    searchType: {type: String, default: ""}
+    searchType: { type: String, default: "" },
   },
 
   data() {
     return {
       search: "",
       pageSize: 10,
-      typeS: ""
+      typeS: "",
     };
   },
 
@@ -99,18 +99,18 @@ export default {
     },
 
     handleSearchType() {
-      if(!this.searchType) {
+      if (!this.searchType) {
         this.typeS = "traži (ime, prezime, tel.)";
       } else {
         this.typeS = this.searchType;
       }
-    }
+    },
   },
 
   created() {
     this.search = this.searchStr;
     this.pageSize = this.pageSizeNr;
-    this.handleSearchType()
+    this.handleSearchType();
   },
 };
 </script>

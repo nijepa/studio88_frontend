@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 import srb from "dayjs/locale/sr";
 
@@ -23,4 +23,4 @@ dayjs.extend(quarterOfYear)
 dayjs.extend(localizedFormat)
 dayjs.extend(isoWeek) */
 
-export default dayjs
+export default dayjs;

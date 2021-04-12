@@ -98,7 +98,12 @@
               activeLink === 'clients' ? 'active__link' : 'dashboard__btn_hover'
             "
           >
-            <img src="../assets/img/1.png" alt="vježbačice" class="nav__img" rel="preload" />
+            <img
+              src="../assets/img/1.png"
+              alt="vježbačice"
+              class="nav__img"
+              rel="preload"
+            />
             <p>Vježbačice</p>
           </router-link>
           <router-link
@@ -112,7 +117,12 @@
                 : 'dashboard__btn_hover'
             "
           >
-            <img src="../assets/img/2.png" alt="termini" class="nav__img" rel="preload" />
+            <img
+              src="../assets/img/2.png"
+              alt="termini"
+              class="nav__img"
+              rel="preload"
+            />
             <p>Termini</p>
           </router-link>
           <router-link
@@ -126,7 +136,12 @@
                 : 'dashboard__btn_hover'
             "
           >
-            <img src="../assets/img/3.png" alt="evidencije" class="nav__img" rel="preload" />
+            <img
+              src="../assets/img/3.png"
+              alt="evidencije"
+              class="nav__img"
+              rel="preload"
+            />
             <p>Evidencije</p>
           </router-link>
           <router-link
@@ -140,7 +155,12 @@
                 : 'dashboard__btn_hover'
             "
           >
-            <img src="../assets/img/4.png" alt="plaćanja" class="nav__img" rel="preload" />
+            <img
+              src="../assets/img/4.png"
+              alt="plaćanja"
+              class="nav__img"
+              rel="preload"
+            />
             <p>Plaćanja</p>
           </router-link>
           <router-link
@@ -154,7 +174,12 @@
                 : 'dashboard__btn_hover'
             "
           >
-            <img src="../assets/img/5.png" alt="troškovi" class="nav__img" rel="preload" />
+            <img
+              src="../assets/img/5.png"
+              alt="troškovi"
+              class="nav__img"
+              rel="preload"
+            />
             <p>Troškovi</p>
           </router-link>
         </nav>
@@ -195,11 +220,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      "loggedUser", 
-      "getGeneral", 
-      "getFormType"
-    ]),
+    ...mapGetters(["loggedUser", "getGeneral", "getFormType"]),
   },
 
   methods: {
@@ -246,6 +267,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

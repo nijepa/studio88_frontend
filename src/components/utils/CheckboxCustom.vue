@@ -1,24 +1,18 @@
 <template>
   <div :class="checkClass">
-    <label 
-      :for="checkId" 
-      class="dan"
-    >
+    <label :for="checkId" class="dan">
       {{ label }}
     </label>
-    <input 
-      class="inp-cbx" 
-      :id="checkId" 
-      type="checkbox" 
-      style="display: none" 
-      :checked="isChecked" 
-      :value="value" 
+    <input
+      class="inp-cbx"
+      :id="checkId"
+      type="checkbox"
+      style="display: none"
+      :checked="isChecked"
+      :value="value"
       @change="updateInput"
     />
-    <label 
-      class="cbx" 
-      :for="checkId"
-    >
+    <label class="cbx" :for="checkId">
       <span>
         <svg width="12px" height="9px" viewbox="0 0 12 9">
           <polyline points="1 5 4 8 11 1"></polyline>
@@ -33,52 +27,52 @@ export default {
   name: "CheckboxCustom",
 
   model: {
-    prop: 'modelValue',
-    event: 'change'
+    prop: "modelValue",
+    event: "change",
   },
 
   props: {
-    "value": { type: String, default: "" },
-    "modelValue": { default: "" },
-    "label": { type: String },
-    "trueValue": { default: true },
-    "falseValue": { default: false },
-    "checkId": { type: String, default: "cbx" },
-    "checkClass": { type: String, default: "" }
+    value: { type: String, default: "" },
+    modelValue: { default: "" },
+    label: { type: String },
+    trueValue: { default: true },
+    falseValue: { default: false },
+    checkId: { type: String, default: "cbx" },
+    checkClass: { type: String, default: "" },
   },
 
   computed: {
     isChecked() {
       if (this.modelValue instanceof Array) {
-        return this.modelValue.includes(this.value)
+        return this.modelValue.includes(this.value);
       }
       // Note that `true-value` and `false-value` are camelCase in the JS
-      return this.modelValue === this.trueValue
-    }
+      return this.modelValue === this.trueValue;
+    },
   },
 
   methods: {
     updateInput(event) {
-      let isChecked = event.target.checked
+      let isChecked = event.target.checked;
       if (this.modelValue instanceof Array) {
-        let newValue = [...this.modelValue]
+        let newValue = [...this.modelValue];
         if (isChecked) {
-          newValue.push(this.value)
+          newValue.push(this.value);
         } else {
-          newValue.splice(newValue.indexOf(this.value), 1)
+          newValue.splice(newValue.indexOf(this.value), 1);
         }
-        this.$emit('change', newValue)
+        this.$emit("change", newValue);
       } else {
-        this.$emit('change', isChecked ? this.trueValue : this.falseValue)
+        this.$emit("change", isChecked ? this.trueValue : this.falseValue);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
 .custom__check {
-  row-gap: .5em;
+  row-gap: 0.5em;
 }
 .cbx {
   -webkit-user-select: none;
@@ -98,7 +92,7 @@ export default {
   border-radius: 50%;
   transform: scale(1);
   vertical-align: middle;
-  border: 1px solid #B9B8C3;
+  border: 1px solid #b9b8c3;
   transition: all 0.2s ease;
 }
 .cbx span:first-child svg {
@@ -121,7 +115,7 @@ export default {
   content: "";
   width: 100%;
   height: 100%;
-  background: #506EEC;
+  background: #506eec;
   display: block;
   transform: scale(0);
   opacity: 1;
@@ -138,7 +132,7 @@ export default {
   left: 0;
   height: 1px;
   width: 100%;
-  background: #B9B8C3;
+  background: #b9b8c3;
   transform-origin: 0 0;
   transform: scaleX(0);
 }
@@ -160,7 +154,7 @@ export default {
   transition: all 0.6s ease;
 }
 .inp-cbx:checked + .cbx span:last-child {
-  color: #B9B8C3;
+  color: #b9b8c3;
   transition: all 0.3s ease;
 }
 .inp-cbx:checked + .cbx span:last-child:after {

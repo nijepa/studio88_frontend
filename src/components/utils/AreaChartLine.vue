@@ -135,7 +135,7 @@ export default {
 };
 </script>
 
-<style >
+<style>
 .kk {
   color: rgba(59, 5, 109, 0.5);
   color: rgba(59, 5, 109, 0.25);

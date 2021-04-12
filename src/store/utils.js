@@ -1,13 +1,13 @@
 const state = {
   loading: true,
-  inputType: '',
-  errors: []
+  inputType: "",
+  errors: [],
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
-  loadingState: state => state.loading,
-  getErrors: state => state.errors
+  loadingState: (state) => state.loading,
+  getErrors: (state) => state.errors,
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -23,22 +23,18 @@ const mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  setLoadingState({
-    commit
-  }, loading) {
-    commit('changeLoadingState', loading);
+  setLoadingState({ commit }, loading) {
+    commit("changeLoadingState", loading);
   },
 
-  clearErrors({
-    commit
-  }) {
-    commit('setErrors', [])
-  }
+  clearErrors({ commit }) {
+    commit("setErrors", []);
+  },
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

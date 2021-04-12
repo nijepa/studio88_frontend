@@ -1,30 +1,30 @@
 <template>
   <div class="">
     <!-- <transition name="slide" mode="out-in"> -->
-      <loading pic="loading" v-if="loadingState" key="1" />
+    <loading pic="loading" v-if="loadingState" key="1" />
 
-      <div v-else class="client__wrapper" key="2">
-        <div class="clients__manipulate">
-          <button
-            type="submit"
-            @click="newPayment()"
-            class="action_btn client__add"
+    <div v-else class="client__wrapper" key="2">
+      <div class="clients__manipulate">
+        <button
+          type="submit"
+          @click="newPayment()"
+          class="action_btn client__add"
+        >
+          <svg
+            version="1.1"
+            id="Layer_1"
+            x="0px"
+            y="0px"
+            fill="var(--purple)"
+            width="50px"
+            height="50px"
+            viewBox="0 0 1718.107 1659.385"
+            enable-background="new 0 0 1718.107 1659.385"
+            xml:space="preserve"
           >
-            <svg
-              version="1.1"
-              id="Layer_1"
-              x="0px"
-              y="0px"
-              fill="var(--purple)"
-              width="50px"
-              height="50px"
-              viewBox="0 0 1718.107 1659.385"
-              enable-background="new 0 0 1718.107 1659.385"
-              xml:space="preserve"
-            >
-              <g>
-                <path
-                  d="M1678.085,1404.443c-2.942-1.281-6.436-1.743-8.503-4.458c-7.395-9.709-19.912-15.579-28.978-23.396
+            <g>
+              <path
+                d="M1678.085,1404.443c-2.942-1.281-6.436-1.743-8.503-4.458c-7.395-9.709-19.912-15.579-28.978-23.396
                 c-6.481-5.588-3.711-4.664-24.96-19.847c-4.349-2.845-6.314-12.022-14.582-8.566c-1.909,1.509-2.901,3.866-4.741,5.437
                 c-15.227,0.075-80.589-33.218-116.006-54.574c-58.888-35.509-27.97-16.459-59.962-32.318
                 c-112.914-64.49-113.05-64.136-210.18-82.383c-15.367-2.887-31.103-3.375-46.305-7.741c-9.567-2.747-17.817-8.159-26.741-12.345
@@ -101,40 +101,40 @@
                 c-0.055,1.978-0.303,3.956-0.531,5.94c-4.16,2.011-6.068,2.072-7.897,10.702c-8.479,3.363-1.271,2.202-17.228,7.711
                 c-1.599-2.867-1.964-6.147-3.073-9.186c-7.761-22.664-3.323-23.744,17.083-40.383c2.24-1.812,3.659-4.948,6.871-5.161
                 c0.076,1.585,0.165,3.184,0.331,4.796c2.384,0.675,4.831,1.151,7.325,1.399C1488.9,1464.534,1486.392,1472.425,1486.53,1480.598z"
-                />
-              </g>
-            </svg>
-            <p>Novo plaćanje</p>
-          </button>
+              />
+            </g>
+          </svg>
+          <p>Novo plaćanje</p>
+        </button>
 
-          <search-bar
-            :searchStr="search"
-            :pageSizeNr="pageSize"
-            :searchType="'traži (mjesec, godina)'"
-            @changed="setPageSize"
-            @typed="searchItems"
-          />
+        <search-bar
+          :searchStr="search"
+          :pageSizeNr="pageSize"
+          :searchType="'traži (mjesec, godina)'"
+          @changed="setPageSize"
+          @typed="searchItems"
+        />
 
-          <div class="">
-            <div class="days__list payment__heading">
-              <span>Godina</span>
-              <span>Mjesec</span>
-              <span>Iznos</span>
-            </div>
+        <div class="">
+          <div class="days__list payment__heading">
+            <span>Godina</span>
+            <span>Mjesec</span>
+            <span>Iznos</span>
+          </div>
 
-            <div
-              v-for="payment in pageOfItems"
-              :key="payment._id"
-              @click="selectPayment(payment)"
-              class="clients__list payment__list"
-            >
-              <p class="client__item">{{ payment.payment_year }}</p>
-              <p class="client__item">{{ payment.payment_month }}</p>
-              <p class="client__item">{{ mapPayments(payment) }}</p>
-            </div>
+          <div
+            v-for="payment in pageOfItems"
+            :key="payment._id"
+            @click="selectPayment(payment)"
+            class="clients__list payment__list"
+          >
+            <p class="client__item">{{ payment.payment_year }}</p>
+            <p class="client__item">{{ payment.payment_month }}</p>
+            <p class="client__item">{{ mapPayments(payment) }}</p>
           </div>
         </div>
       </div>
+    </div>
     <!-- </transition> -->
 
     <jw-pagination
@@ -164,14 +164,10 @@ export default {
 
   components: {
     Loading,
-    SearchBar
+    SearchBar,
   },
 
-  mixins: [
-    navigation, 
-    navigationSearch, 
-    searchClients
-  ],
+  mixins: [navigation, navigationSearch, searchClients],
 
   data() {
     return {
@@ -185,7 +181,8 @@ export default {
       "getAllPayments",
       "getClientsPage",
       "getClientsPageSize",
-      "loadingState"]),
+      "loadingState",
+    ]),
   },
 
   methods: {
@@ -230,7 +227,7 @@ export default {
 
     async initItems() {
       if (!this.getAllPayments.length) await this.fetchPayments();
-      this.filteredClients = this.getAllPayments; 
+      this.filteredClients = this.getAllPayments;
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;

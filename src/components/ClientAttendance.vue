@@ -39,14 +39,14 @@
         </datepicker>
         <h3 class="weekday att__day">{{ attend_date | formatDay }}</h3>
       </div>
-  
-      <CheckboxCustom 
+
+      <CheckboxCustom
         :checkClass="'att__check input__field'"
         :label="'Prisutna'"
         :modelValue="attData.present"
         v-model="attData.present"
       />
-    
+
       <!-- <div class="input__field">
         <label for="att">Prisutna</label>
         <input
@@ -96,17 +96,13 @@ export default {
     Datepicker,
     ActionButtons,
     DeleteButton,
-    CheckboxCustom
+    CheckboxCustom,
   },
 
   mixins: [actionsNotify],
 
   computed: {
-    ...mapGetters([
-      "getAllAttendances", 
-      "getAllPayments", 
-      "getErrors"
-    ]),
+    ...mapGetters(["getAllAttendances", "getAllPayments", "getErrors"]),
   },
 
   data() {

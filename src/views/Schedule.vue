@@ -1,24 +1,24 @@
 <template>
   <!-- <transition name="fall" mode="out-in"> -->
-    <loading pic="loading" v-if="loadingState" key="1" />
+  <loading pic="loading" v-if="loadingState" key="1" />
 
-    <div v-else class="lists__wrapper" key="2">
-      <form @submit.prevent="addSchedule()" method="post" class="user__form">
-        <h3 v-if="!getOneSchedule._id" class="new_item item__header">
-          <svg
-            version="1.1"
-            id="Capa_1"
-            x="0px"
-            y="0px"
-            width="30px"
-            height="30px"
-            fill="var(--gold)"
-            viewBox="0 0 489.2 489.2"
-            style="enable-background: new 0 0 489.2 489.2"
-            xml:space="preserve"
-          >
-            <path
-              d="M177.8,238.1c0,4.5-3.6,8.1-8.1,8.1h-30.4c-4.5,0-8.1-3.6-8.1-8.1v-30.4c0-4.5,3.6-8.1,8.1-8.1h30.4
+  <div v-else class="lists__wrapper" key="2">
+    <form @submit.prevent="addSchedule()" method="post" class="user__form">
+      <h3 v-if="!getOneSchedule._id" class="new_item item__header">
+        <svg
+          version="1.1"
+          id="Capa_1"
+          x="0px"
+          y="0px"
+          width="30px"
+          height="30px"
+          fill="var(--gold)"
+          viewBox="0 0 489.2 489.2"
+          style="enable-background: new 0 0 489.2 489.2"
+          xml:space="preserve"
+        >
+          <path
+            d="M177.8,238.1c0,4.5-3.6,8.1-8.1,8.1h-30.4c-4.5,0-8.1-3.6-8.1-8.1v-30.4c0-4.5,3.6-8.1,8.1-8.1h30.4
               c4.5,0,8.1,3.6,8.1,8.1V238.1z M241.3,207.8c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1v30.4c0,4.5,3.6,8.1,8.1,8.1h30.4
               c4.5,0,8.1-3.6,8.1-8.1V207.8z M304.8,207.8c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1v30.4c0,4.5,3.6,8.1,8.1,8.1h30.4
               c4.5,0,8.1-3.6,8.1-8.1V207.8z M177.8,269.6c0-4.5-3.6-8.1-8.1-8.1h-30.4c-4.5,0-8.1,3.6-8.1,8.1V300c0,4.5,3.6,8.1,8.1,8.1h30.4
@@ -36,28 +36,28 @@
               z M489.2,397.7c0,50.3-40.8,91.1-91.1,91.1S307,448,307,397.7s40.8-91.1,91.1-91.1S489.2,347.4,489.2,397.7z M444.1,374.1
               c0-2.9-1.1-5.7-3.2-7.7c-4.3-4.3-11.2-4.3-15.5,0L385.8,406l-15.2-15.2c-4.3-4.3-11.2-4.3-15.5,0c-2.1,2.1-3.2,4.8-3.2,7.7
               c0,2.9,1.1,5.7,3.2,7.7l22.9,22.9c4.3,4.3,11.2,4.3,15.5,0l47.3-47.3C443,379.8,444.1,377,444.1,374.1z"
-            />
-          </svg>
-          NOVI TERMIN/GRUPA
-        </h3>
+          />
+        </svg>
+        NOVI TERMIN/GRUPA
+      </h3>
 
-        <div class="input__group">
-          <div class="input__field">
-            <label for="name">Naziv</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="ime termina (npr. I)"
-              required
-              class="login_input user_input"
-              v-model="scheduleInput.title"
-            />
-          </div>
+      <div class="input__group">
+        <div class="input__field">
+          <label for="name">Naziv</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="ime termina (npr. I)"
+            required
+            class="login_input user_input"
+            v-model="scheduleInput.title"
+          />
+        </div>
 
-          <div class="input__field dani">
-            <!-- <label for="day">Dani treninga</label> -->
-            <div v-for="day in days" :key="day.id"> 
-              <!-- <label :for="'dan' + day" class="dan">{{ day }}</label>
+        <div class="input__field dani">
+          <!-- <label for="day">Dani treninga</label> -->
+          <div v-for="day in days" :key="day.id">
+            <!-- <label :for="'dan' + day" class="dan">{{ day }}</label>
               <input
                 :id="'dan' + day"
                 type="checkbox"
@@ -65,127 +65,127 @@
                 v-model="scheduleInput.weekday"
                 :value="day"
               /> -->
-              <CheckboxCustom 
-                :checkClass="'dan'"
-                :label="day"
-                :modelValue="scheduleInput.weekday"
-                :value="day"
-                :checkId="'dan' + day" 
-                v-model="scheduleInput.weekday"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="input__group">
-          <div class="input__field">
-            <label for="time">Vrijeme početka</label>
-            <input
-              type="time"
-              name="time"
-              placeholder="vreme održavanja termina (npr. 10:00:AM)"
-              class="login_input user_input"
-              v-model="scheduleInput.startTime"
-              required
-            />
-          </div>
-
-          <div class="input__field">
-            <label for="duration">Trajanje u minutima</label>
-            <input
-              type="number"
-              name="duration"
-              placeholder="trajanje termina u min. (npr. 60)"
-              class="login_input user_input"
-              v-model="scheduleInput.duration"
-              value="60"
+            <CheckboxCustom
+              :checkClass="'dan'"
+              :label="day"
+              :modelValue="scheduleInput.weekday"
+              :value="day"
+              :checkId="'dan' + day"
+              v-model="scheduleInput.weekday"
             />
           </div>
         </div>
+      </div>
 
-        <div class="members__list">
-          <div class="members__items">
-            <label for="members">Vježbačice u grupi</label>
-            <p
-              v-for="member in scheduleInput.members"
-              :key="member._id"
-              name="member"
-              class="login_input user_input members_input"
-              @click="removeMember(member.client)"
+      <div class="input__group">
+        <div class="input__field">
+          <label for="time">Vrijeme početka</label>
+          <input
+            type="time"
+            name="time"
+            placeholder="vreme održavanja termina (npr. 10:00:AM)"
+            class="login_input user_input"
+            v-model="scheduleInput.startTime"
+            required
+          />
+        </div>
+
+        <div class="input__field">
+          <label for="duration">Trajanje u minutima</label>
+          <input
+            type="number"
+            name="duration"
+            placeholder="trajanje termina u min. (npr. 60)"
+            class="login_input user_input"
+            v-model="scheduleInput.duration"
+            value="60"
+          />
+        </div>
+      </div>
+
+      <div class="members__list">
+        <div class="members__items">
+          <label for="members">Vježbačice u grupi</label>
+          <p
+            v-for="member in scheduleInput.members"
+            :key="member._id"
+            name="member"
+            class="login_input user_input members_input"
+            @click="removeMember(member.client)"
+          >
+            {{
+              scheduleInput.members
+                .map((item) => item.client._id)
+                .indexOf(member.client._id) + 1
+            }}
+            {{ member.client.last_name }}, {{ member.client.first_name }}
+            <span class="members__span">
+              - {{ member.start_date | formatDate }}</span
             >
-              {{
-                scheduleInput.members
-                  .map((item) => item.client._id)
-                  .indexOf(member.client._id) + 1
-              }}
-              {{ member.client.last_name }}, {{ member.client.first_name }}
-              <span class="members__span">
-                - {{ member.start_date | formatDate }}</span
-              >
+          </p>
+        </div>
+
+        <div class="members__items notclients__container">
+          <div class="input__field clients__add_list">
+            <label for="date_start">
+              Datum pristupa
+              <tooltip
+                tip="Izaberi datum dodavanja vježbačice u grupu, zatim je dodaj iz liste"
+              />
+            </label>
+            <datepicker
+              v-model="selectedDate"
+              placeholder="datum pristupa"
+              class="login_input user_input"
+              :language="sr"
+            >
+            </datepicker>
+          </div>
+
+          <div class="input__field notclients__list">
+            <label for="">Dodaj vježbačicu</label>
+
+            <search-bar
+              :searchStr="search"
+              :pageSizeNr="pageSize"
+              @changed="setPageSize"
+              @typed="searchItems"
+              class="schedule__search"
+            />
+
+            <p
+              v-for="client in pageOfItems"
+              :key="client._id"
+              name="clients"
+              class="login_input user_input members_input members__not"
+              @click="addMember(client)"
+            >
+              {{ client.last_name }}, {{ client.first_name }}
+              <span class="members__span"> - {{ client.mobile }}</span>
             </p>
           </div>
 
-          <div class="members__items notclients__container">
-            <div class="input__field clients__add_list">
-              <label for="date_start">
-                Datum pristupa
-                <tooltip
-                  tip="Izaberi datum dodavanja vježbačice u grupu, zatim je dodaj iz liste"
-                />
-              </label>
-              <datepicker
-                v-model="selectedDate"
-                placeholder="datum pristupa"
-                class="login_input user_input"
-                :language="sr"
-              >
-              </datepicker>
-            </div>
-
-            <div class="input__field notclients__list">
-              <label for="">Dodaj vježbačicu</label>
-
-              <search-bar
-                :searchStr="search"
-                :pageSizeNr="pageSize"
-                @changed="setPageSize"
-                @typed="searchItems"
-                class="schedule__search"
-              />
-
-              <p
-                v-for="client in pageOfItems"
-                :key="client._id"
-                name="clients"
-                class="login_input user_input members_input members__not"
-                @click="addMember(client)"
-              >
-                {{ client.last_name }}, {{ client.first_name }}
-                <span class="members__span"> - {{ client.mobile }}</span>
-              </p>
-            </div>
-
-            <jw-pagination
-              :items="filteredClients"
-              @changePage="onChangePage"
-              :initialPage="initialPage"
-              :pageSize="pageSize"
-              :labels="customLabels"
-              :styles="customStyles"
-              class="pagine"
-            >
-            </jw-pagination>
-          </div>
+          <jw-pagination
+            :items="filteredClients"
+            @changePage="onChangePage"
+            :initialPage="initialPage"
+            :pageSize="pageSize"
+            :labels="customLabels"
+            :styles="customStyles"
+            class="pagine"
+          >
+          </jw-pagination>
         </div>
+      </div>
 
-        <hr />
+      <hr />
 
-        <div class="modify_btns">
-          <action-buttons toForm="schedules" />
-          <delete-button @clicked="delClient()" />
-        </div>
-      </form>
-    </div>
+      <div class="modify_btns">
+        <action-buttons toForm="schedules" />
+        <delete-button @clicked="delClient()" />
+      </div>
+    </form>
+  </div>
   <!-- </transition> -->
 </template>
 
@@ -219,7 +219,7 @@ export default {
     ActionButtons,
     DeleteButton,
     Tooltip,
-    CheckboxCustom
+    CheckboxCustom,
   },
 
   mixins: [actionsNotify, navigation, navigationSearch, searchClients],
@@ -345,7 +345,7 @@ export default {
         );
       });
       this.filteredClients = mu;
-    }, 
+    },
 
     async initItems() {
       if (this.getOneSchedule._id) {
@@ -370,5 +370,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

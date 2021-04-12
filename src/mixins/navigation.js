@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       pageOfItems: [],
-    }
+    };
   },
 
   methods: {
@@ -10,4 +10,4 @@ export default {
       this.pageOfItems = pageOfItems;
     },
   },
-}
+};

@@ -4,9 +4,9 @@ export default {
       filteredClients: [],
       initialPage: 1,
       pageSize: 10,
-      search: '',
+      search: "",
       appeared: false,
-    }
+    };
   },
 
   methods: {
@@ -14,4 +14,4 @@ export default {
       this.appeared = true;
     },
   },
-}
+};

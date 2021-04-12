@@ -136,10 +136,7 @@ export default {
   mixins: [actionsNotify, findMonth],
 
   computed: {
-    ...mapGetters([
-      "getAllPayments", 
-      "getErrors"
-    ]),
+    ...mapGetters(["getAllPayments", "getErrors"]),
   },
 
   data() {

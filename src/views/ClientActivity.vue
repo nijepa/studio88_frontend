@@ -240,14 +240,14 @@
           @click="handleUpdate(client, false)"
         >
           <p class="activities__item">{{ client.date | formatDateLong }}</p>
-          <CheckboxCustom 
+          <CheckboxCustom
             :checkClass="'input__field'"
             :modelValue="client.present"
             v-model="client.present"
             :value="client.present.toString()"
-            :checkId="client.date.toString()" 
+            :checkId="client.date.toString()"
           />
-<!--           <input
+          <!--           <input
             type="checkbox"
             class="activities__item activities__check"
             v-model="client.present"
@@ -299,7 +299,7 @@ export default {
     ClientAttendance,
     ClientPayment,
     Tooltip,
-    CheckboxCustom
+    CheckboxCustom,
   },
 
   mixins: [navigation, navigationSearch],
@@ -488,5 +488,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,16 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
 
-
 const state = {
-  general: {}
+  general: {},
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
-  getGeneral: state => state.general
+  getGeneral: (state) => state.general,
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -23,16 +22,18 @@ const mutations = {
 
   updateGeneral(state, general) {
     state.general = {
-      ...general
-    }
+      ...general,
+    };
   },
 
   addPrice(state, price) {
-    const objIndex = state.general.map(function (x) {
-      return x._id;
-    }).indexOf(price._id);
+    const objIndex = state.general
+      .map(function (x) {
+        return x._id;
+      })
+      .indexOf(price._id);
     Object.assign(state.general[objIndex], {
-      prices: price.prices
+      prices: price.prices,
     });
   },
 
@@ -45,45 +46,40 @@ const mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
-  async fetchGenerals({
-    commit
-  }) {
+  async fetchGenerals({ commit }) {
     const response = await axios.get(URL + "generals");
-    commit('setGeneral', response.data);
+    commit("setGeneral", response.data);
   },
 
-  async generalAdd({
-    commit
-  }, generalData) {
-    await axios.post(URL + 'generals', generalData)
+  async generalAdd({ commit }, generalData) {
+    await axios
+      .post(URL + "generals", generalData)
       .then((response) => {
-        commit('addGeneral', response.data.general);
+        commit("addGeneral", response.data.general);
       })
       .catch((error) => {
         if (error.response) {
-          commit('setErrors', error.response.data.error);
+          commit("setErrors", error.response.data.error);
         } else {
-          commit('setErrors', error);
+          commit("setErrors", error);
         }
-      })
+      });
   },
 
-  async generalUpdate({
-    commit
-  }, generalData) {
-    await axios.put(URL + 'generals/' + generalData._id, generalData)
+  async generalUpdate({ commit }, generalData) {
+    await axios
+      .put(URL + "generals/" + generalData._id, generalData)
       .then((response) => {
-        commit('updateGeneral', response.data);
+        commit("updateGeneral", response.data);
       })
       .catch((error) => {
         if (error.response) {
-          commit('setErrors', error.response.data.error);
+          commit("setErrors", error.response.data.error);
         } else {
-          commit('setErrors', error);
+          commit("setErrors", error);
         }
-      })
+      });
   },
-
 
   /*   async expenseDelete({commit}, expenseData) {
       await axios.delete(URL + 'expenses/' + expenseData._id, expenseData)
@@ -98,12 +94,11 @@ const actions = {
           }
         })
     }, */
-
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

@@ -1,21 +1,18 @@
 const customLabels = {
-  first: '<<',
-  last: '>>',
-  previous: '<',
-  next: '>'
+  first: "<<",
+  last: ">>",
+  previous: "<",
+  next: ">",
 };
 
 const customStyles = {
   ul: {},
   li: {
-    display: 'inline-block',
+    display: "inline-block",
   },
   a: {
-    color: 'var(--purple-dark)'
-  }
+    color: "var(--purple-dark)",
+  },
 };
 
-export {
-  customLabels,
-  customStyles
-}
+export { customLabels, customStyles };

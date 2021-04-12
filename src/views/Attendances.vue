@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <!-- <transition name="slide" mode="out-in"> -->
-      <loading pic="loading" v-if="loadingState" key="1" />
+    <loading pic="loading" v-if="loadingState" key="1" />
 
-      <div v-else class="client__wrapper" key="2">
-        <div class="clients__manipulate">
+    <div v-else class="client__wrapper" key="2">
+      <div class="clients__manipulate">
         <button
           type="submit"
           @click="newAttendance()"
@@ -143,12 +143,14 @@
             <p class="client__item">
               {{ attendance.attend_date | formatDate }}
             </p>
-            <p class="client__item attend__check">{{ mapAttendances(attendance) }}</p>
+            <p class="client__item attend__check">
+              {{ mapAttendances(attendance) }}
+            </p>
             <p class="client__item">{{ attendance.notes }}</p>
           </div>
         </div>
       </div>
-      </div>
+    </div>
     <!-- </transition> -->
 
     <jw-pagination
@@ -182,19 +184,15 @@ export default {
 
   components: {
     Loading,
-    SearchBar
+    SearchBar,
   },
 
-  mixins: [
-    navigation, 
-    navigationSearch, 
-    searchClients
-  ],
+  mixins: [navigation, navigationSearch, searchClients],
 
   data() {
     return {
       customLabels,
-      customStyles
+      customStyles,
     };
   },
 
@@ -203,7 +201,7 @@ export default {
       "getAllAttendances",
       "getClientsPage",
       "getClientsPageSize",
-      "loadingState"
+      "loadingState",
     ]),
   },
 
@@ -238,7 +236,10 @@ export default {
       await this.initItems();
       let mu = this.getAllAttendances.filter((post) => {
         return (
-          this.$options.filters.formatDate(post.attend_date).toLowerCase().includes(val.toLowerCase()) ||
+          this.$options.filters
+            .formatDate(post.attend_date)
+            .toLowerCase()
+            .includes(val.toLowerCase()) ||
           post.notes.includes(val.toLowerCase())
         );
       });

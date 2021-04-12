@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <!-- <transition name="slide" mode="out-in"> -->
-      <loading pic="loading" v-if="loadingState" key="1" />
+    <loading pic="loading" v-if="loadingState" key="1" />
 
-      <div v-else class="client__wrapper" key="2">
-        <div class="clients__manipulate">
+    <div v-else class="client__wrapper" key="2">
+      <div class="clients__manipulate">
         <button
           type="submit"
           @click="newExpense()"
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
     <!-- </transition> -->
 
     <jw-pagination
@@ -116,14 +116,10 @@ export default {
 
   components: {
     Loading,
-    SearchBar
+    SearchBar,
   },
 
-  mixins: [
-    navigation, 
-    navigationSearch, 
-    searchClients
-  ],
+  mixins: [navigation, navigationSearch, searchClients],
 
   data() {
     return {
@@ -134,10 +130,10 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllExpenses", 
+      "getAllExpenses",
       "getClientsPage",
       "getClientsPageSize",
-      "loadingState"
+      "loadingState",
     ]),
   },
 
@@ -182,7 +178,7 @@ export default {
 
     async initItems() {
       if (!this.getAllExpenses.length) await this.fetchExpenses();
-      this.filteredClients = this.getAllExpenses; 
+      this.filteredClients = this.getAllExpenses;
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;

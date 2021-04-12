@@ -89,7 +89,7 @@ export default {
   name: "Profile",
 
   components: {
-    ActionButtons
+    ActionButtons,
   },
 
   data() {
@@ -110,20 +110,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      "loggedUser", 
-      "getSelectedUser", 
-      "getErrors"
-    ]),
+    ...mapGetters(["loggedUser", "getSelectedUser", "getErrors"]),
   },
 
   methods: {
-    ...mapActions([
-      "signup", 
-      "fetchSelectedUser", 
-      "userUpdate", 
-      "clearErrors"
-    ]),
+    ...mapActions(["signup", "fetchSelectedUser", "userUpdate", "clearErrors"]),
 
     selectFriends(selectedUser) {
       this.fetchSelectedUser(selectedUser);
