@@ -267,4 +267,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.active__link .svg__color {
+  fill: var(--gold);
+}
+.dashboard__btn_hover:hover .svg__color {
+  fill: var(--gold);
+  color: var(--gold);
+}
+</style>

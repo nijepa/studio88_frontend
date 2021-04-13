@@ -1,7 +1,7 @@
 export default {
   watch: {
     pageSize() {
-      this.searchClients();
+      this.searchItems();
     },
   },
   methods: {

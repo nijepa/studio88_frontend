@@ -1,3 +1,5 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Itim&display=swap'); */
+
 :root {
   /* --yellow: #ffc600; */
   --black: #272727;
@@ -412,7 +414,7 @@ li:hover {
   margin: 1em 0;
 }
 
-.termin > p {
+.termin>p {
   margin: 0.3em 0;
   color: var(--black);
   font-size: 1.3em;
@@ -830,7 +832,7 @@ div.clients__list:nth-child(odd) {
   border-radius: 1em;
   padding: 1em;
   cursor: pointer;
-  transition: ease 0.7s all;
+  transition: ease 0.5s all;
 }
 
 .schedule__items:hover {
@@ -929,11 +931,9 @@ canvas {
 
 .active__link {
   color: var(--gold-light) !important;
-  background-image: linear-gradient(
-    to bottom,
-    white,
-    var(--purple) 80%
-  ) !important;
+  background-image: linear-gradient(to bottom,
+      white,
+      var(--purple) 80%) !important;
   cursor: none !important;
   transform: scale(1.05);
 }
@@ -979,12 +979,12 @@ nav {
   background-image: linear-gradient(to bottom, white, var(--purple-light) 80%);
   border: 2px solid transparent;
   border-radius: 1em;
-  transition: ease 0.8s all;
+  transition: ease 0.5s all;
   text-decoration: none;
 }
 
 .dashboard__btn_hover:hover {
-  color: var(--purple-dark);
+  color: var(--gold);
   border: 2px solid var(--purple-dark);
   transform: scale(0.95);
   text-decoration: underline;
@@ -994,12 +994,10 @@ hr {
   margin: 0.4em;
   border: 0;
   height: 2px;
-  background-image: linear-gradient(
-    to right,
-    rgba(98, 18, 105, 0),
-    rgba(116, 21, 153, 0.75),
-    rgba(98, 19, 134, 0)
-  );
+  background-image: linear-gradient(to right,
+      rgba(98, 18, 105, 0),
+      rgba(116, 21, 153, 0.75),
+      rgba(98, 19, 134, 0));
 }
 
 .user__logged {
@@ -1114,7 +1112,7 @@ hr {
 
 .fall-enter-active,
 .fall-leave-active {
-  transition: all 1s ease-in-out;
+  transition: all .5s ease-in-out;
 }
 
 .fall-enter,
@@ -1134,6 +1132,7 @@ hr {
 }
 
 @media only screen and (max-width: 799px) {
+
   .activities__wrapper,
   .dash__wrapper {
     grid-template-columns: auto !important;
@@ -1141,6 +1140,7 @@ hr {
 }
 
 @media (max-width: 599px) {
+
   nav,
   .clients__list {
     grid-template-columns: repeat(2, auto) !important;

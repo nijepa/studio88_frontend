@@ -6,6 +6,7 @@
         class="scrolling"
         src="@/assets/img/top.png"
         alt="top"
+        id="scroll"
       />
     </div>
   </div>
@@ -28,8 +29,12 @@ export default {
   mounted() {
     document.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > 100)
+      let scrollSpeed = window.pageYOffset / 2;
+      let scrollObject = document.getElementById("scroll");
+      if (scrollTop > 100) {
         document.querySelector(".scrol").style.display = "block";
+        scrollObject.style.transform="rotate("+`${scrollSpeed}`+"deg)";
+      }
       else document.querySelector(".scrol").style.display = "none";
     });
   },
