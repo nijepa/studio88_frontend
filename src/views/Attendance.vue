@@ -43,7 +43,7 @@
             @input="selectDate()"
           >
           </datepicker>
-          <h3 class="weekday">
+          <h3 class="weekday__att">
             {{ attendanceInput.attend_date | formatDay }}
           </h3>
         </div>
@@ -495,5 +495,9 @@ export default {
 
 .att_date {
   align-items: baseline;
+}
+
+.weekday__att {
+  margin: 0 0 .5em 0;
 }
 </style>

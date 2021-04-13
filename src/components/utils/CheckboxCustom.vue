@@ -98,11 +98,11 @@ export default {
 .cbx span:first-child svg {
   position: absolute;
   z-index: 1;
-  top: 8px;
-  left: 6px;
+  top: 6px;
+  left: 5px;
   fill: none;
   stroke: white;
-  stroke-width: 2;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 16px;
@@ -138,6 +138,9 @@ export default {
 }
 .cbx:hover span:first-child {
   border-color: var(--purple);
+}
+.cbx:hover span:first-child svg {
+  stroke: var(--gold);
 }
 
 .inp-cbx:checked + .cbx span:first-child {

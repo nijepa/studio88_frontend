@@ -452,7 +452,7 @@ li:hover {
 .vdp-datepicker,
 input {
   font-family: "Itim", cursive;
-  font-size: 1.1em;
+  font-size: 1em;
   border: none;
   border-bottom: 1px solid transparent;
   box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
@@ -471,18 +471,21 @@ input {
   border-bottom: 1px solid transparent;
 }
 
-.user__form {
-  display: grid;
-  justify-content: center;
-  justify-items: baseline;
-  margin: 1em;
-  border: 2px solid var(--purple);
-  border-radius: 1em;
+.vdp-datepicker__calendar {
+  color: var(--black);
 }
 
-.user_input {
-  font-size: 1.3em;
-  padding: 0.3em;
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border: 1px solid var(--gold) !important;
+  border-radius: 20%;
+}
+
+.vdp-datepicker__calendar .cell.selected {
+  background: var(--purple) !important;
+  color: var(--gold-light);
+  border-radius: 20%;
 }
 
 .client__tooltip {
@@ -515,6 +518,7 @@ input {
 }
 
 .activities__title {
+  font-size: 1.3em;
   font-variant: small-caps;
   color: var(--gold);
   letter-spacing: 0.1em;
@@ -753,9 +757,9 @@ div.clients__list:nth-child(odd) {
   margin: 0 0 0.5em 0;
   padding: 0.2em 0;
   color: var(--gold);
-  border-top-left-radius: 0.7em;
-  border-top-right-radius: 0.7em;
-  border: 1px solid var(--purple-light);
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  border-bottom: 1px solid var(--purple-light);
   background: var(--purple-lightest);
   text-transform: uppercase;
   display: flex;
@@ -767,9 +771,9 @@ div.clients__list:nth-child(odd) {
   justify-self: stretch;
   margin: 0.5em 0 0 0;
   padding: 0.2em;
-  border-bottom-left-radius: 0.9em;
-  border-bottom-right-radius: 0.9em;
-  border: 1px solid var(--purple-light);
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  border-top: 1px solid var(--purple-light);
   display: grid;
   background: var(--purple-lightest);
 }
@@ -921,12 +925,12 @@ canvas {
 
 .datepicker {
   font-size: 0.6em !important;
-  margin: 0 0.5em;
-  width: 110px;
+  margin: 0 0.9em 0 0;
+  width: 120px;
 }
 
 .datepicker input {
-  width: 110px;
+  width: 120px;
 }
 
 .active__link {
@@ -998,6 +1002,11 @@ hr {
       rgba(98, 18, 105, 0),
       rgba(116, 21, 153, 0.75),
       rgba(98, 19, 134, 0));
+}
+
+.user__form {
+  border-radius: 1em;
+  border: 2px solid var(--purple);
 }
 
 .user__logged {

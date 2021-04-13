@@ -162,7 +162,7 @@
         <datepicker
           v-model="dateFrom"
           placeholder="datum upisa"
-          class="login_input user_input datepicker"
+          class="datepicker noborder"
           :language="sr"
           :format="customFormatter"
           @input="selectPeriod()"
@@ -172,7 +172,7 @@
         <datepicker
           v-model="dateTill"
           placeholder="datum upisa"
-          class="login_input user_input datepicker"
+          class="datepicker noborder"
           :language="sr"
           :format="customFormatter"
           @input="selectPeriod()"

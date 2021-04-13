@@ -28,6 +28,7 @@
             id="years"
             v-model="yearSelected"
             @change="selectYear(yearSelected)"
+            class="no_border"
           >
             <option :value="year" v-for="year in createYears()" :key="year">
               {{ year }}
@@ -53,7 +54,7 @@
           <datepicker
             v-model="dateFrom"
             placeholder="datum upisa"
-            class="login_input user_input datepicker"
+            class="datepicker noborder"
             :language="sr"
             :format="customFormatter"
             @input="selectAttendances()"
@@ -63,7 +64,7 @@
           <datepicker
             v-model="dateTill"
             placeholder="datum upisa"
-            class="login_input user_input datepicker"
+            class="datepicker noborder"
             :language="sr"
             :format="customFormatter"
             @input="selectAttendances()"
@@ -274,4 +275,33 @@ export default {
 };
 </script>
 
-<style></style>
+<style >
+.noborder input {
+  border-bottom: 1px solid transparent;
+  font-size: 1.5em;
+  transition: ease .5s all;
+  border-radius: .5em;
+}
+
+.noborder input:hover {
+  background: var(--gold-light);
+}
+.noborder input:focus {
+  background: transparent;
+}
+.no_border {
+  transition: ease .5s all;
+  border-radius: .5em;
+}
+.no_border:hover {
+  background: var(--gold-light);
+}
+.no_border:focus {
+  background: transparent;
+}
+@media (max-width: 599px) {
+  .datepicker {
+    width: 110px;
+  }
+}
+</style>
