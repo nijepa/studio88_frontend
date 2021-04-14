@@ -158,7 +158,11 @@
           class="tool__act"
           tip="Izaberi datume za prikazivanje svih prisustava / plaćanja u tom periodu"
         />
-        Period od
+        <Period class="cli__period"
+          @dates="startPeriod"
+          @filter-period="selectPeriod"
+        />
+        <!-- Period od
         <datepicker
           v-model="dateFrom"
           placeholder="datum upisa"
@@ -177,7 +181,7 @@
           :format="customFormatter"
           @input="selectPeriod()"
         >
-        </datepicker>
+        </datepicker> -->
       </div>
     </div>
 
@@ -283,8 +287,9 @@ import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
+//import Datepicker from "vuejs-datepicker";
+//import { sr } from "vuejs-datepicker/dist/locale";
+import Period from "@/components/utils/Period.vue";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
 
@@ -295,18 +300,19 @@ export default {
 
   components: {
     Loading,
-    Datepicker,
+    //Datepicker,
     ClientAttendance,
     ClientPayment,
     Tooltip,
     CheckboxCustom,
+    Period,
   },
 
   mixins: [navigation, navigationSearch],
 
   data() {
     return {
-      sr: sr,
+      //sr: sr,
       clientPayments: [],
       clientAttendances: [],
       pageOfItemsA: [],
@@ -347,7 +353,7 @@ export default {
       this.toggleActions = "";
       await this.fetchAttendances();
       await this.fetchPayments();
-      this.selectPeriod();
+      this.startPeriod(this.dateFrom, this.dateTill);
     },
 
     handleUpdate(client, act) {
@@ -379,7 +385,13 @@ export default {
       this.$router.push("/" + this.getFromForm);
     },
 
-    selectPeriod() {
+    startPeriod(dateFrom, dateTill) {
+      this.dateFrom = dateFrom;
+      this.dateTill = dateTill;
+      this.selectPeriod(dateFrom, dateTill);
+    },
+
+    selectPeriod(dateFrom, dateTill) {
       this.clientAttendances = this.mapAttendances()
         .filter((post) => {
           return post.client._id == this.getOneClient._id;
@@ -387,9 +399,9 @@ export default {
         .filter(
           (year) =>
             dayjs(year.date).format("YYYY-MM-DD") >=
-              dayjs(this.dateFrom).format("YYYY-MM-DD") &&
+              dayjs(dateFrom).format("YYYY-MM-DD") &&
             dayjs(year.date).format("YYYY-MM-DD") <=
-              dayjs(this.dateTill).format("YYYY-MM-DD")
+              dayjs(dateTill).format("YYYY-MM-DD")
         );
       this.filteredClientsA = this.clientAttendances;
       this.clientPayments = this.mapPayments()
@@ -399,9 +411,9 @@ export default {
         .filter(
           (year) =>
             dayjs(year.datep).format("YYYY-MM-DD") >=
-              dayjs(this.dateFrom).format("YYYY-MM-DD") &&
+              dayjs(dateFrom).format("YYYY-MM-DD") &&
             dayjs(year.datep).format("YYYY-MM-DD") <=
-              dayjs(this.dateTill).format("YYYY-MM-DD")
+              dayjs(dateTill).format("YYYY-MM-DD")
         );
       this.filteredClients = this.clientPayments;
     },
@@ -488,4 +500,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.cli__period {
+  font-size: 1em;
+}
+
+@media (max-width: 599px) {
+  .cli__period {
+    display: grid;
+  }
+}
+</style>

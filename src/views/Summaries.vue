@@ -276,19 +276,6 @@ export default {
 </script>
 
 <style >
-.noborder input {
-  border-bottom: 1px solid transparent;
-  font-size: 1.5em;
-  transition: ease .5s all;
-  border-radius: .5em;
-}
-
-.noborder input:hover {
-  background: var(--gold-light);
-}
-.noborder input:focus {
-  background: transparent;
-}
 .no_border {
   transition: ease .5s all;
   border-radius: .5em;

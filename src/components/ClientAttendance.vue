@@ -209,8 +209,8 @@ export default {
     async delEx() {
       const attends = this.getAllAttendances.find(
         (el) =>
-          this.$dayjs(el.attend_date).format("YYYY-MM-DD") ===
-          this.$dayjs(this.attend_date).format("YYYY-MM-DD")
+          dayjs(el.attend_date).format("YYYY-MM-DD") ===
+          dayjs(this.attend_date).format("YYYY-MM-DD")
       );
       attends.members.splice(
         attends.members.findIndex((v) => v.client._id === this.client._id),

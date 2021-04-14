@@ -110,7 +110,7 @@ input:-moz-placeholder {
 }
 
 h3 {
-  margin: 40px 0 0;
+  /* margin: 40px 0 0; */
 }
 
 ul {
@@ -427,7 +427,7 @@ li:hover {
   border: 1px solid transparent;
   border-radius: 0.2em;
   border-bottom: 1px solid #d1d1d1;
-  box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
+  /* box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07); */
   font-family: inherit;
   font-size: 1.2em;
   line-height: 1.45;
@@ -453,9 +453,9 @@ li:hover {
 input {
   font-family: "Itim", cursive;
   font-size: 1em;
-  border: none;
+  border: 1px solid transparent;
   border-bottom: 1px solid transparent;
-  box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
+  /* box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07); */
   padding: 0;
   margin: 0.2em;
   background: transparent;
@@ -463,22 +463,44 @@ input {
 
 .vdp-datepicker input {
   cursor: pointer;
-  border-bottom: 1px solid #d1d1d1;
   max-width: 7em;
 }
 
-.vdp-datepicker input:hover {
-  border-bottom: 1px solid transparent;
+.vdp-datepicker__calendar header .prev {
+  border-top-left-radius: 1em;
+}
+
+.vdp-datepicker__calendar header .next {
+  border-top-right-radius: 1em;
+}
+
+.vdp-datepicker__calendar header .prev::after {
+  border-right: 10px solid var(--gold) !important;
+}
+
+.vdp-datepicker__calendar header .prev:hover,
+.vdp-datepicker__calendar header .next:hover {
+  background-color: var(--purple) !important;
+}
+
+.vdp-datepicker__calendar header .next::after {
+  border-left: 10px solid var(--gold) !important;
+}
+
+.vdp-datepicker__calendar header span:hover {
+  background-color: var(--purple) !important;
+  color: var(--gold-light) !important;
 }
 
 .vdp-datepicker__calendar {
   color: var(--black);
+  border-radius: 1em;
 }
 
 .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
 .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
 .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
-  border: 1px solid var(--gold) !important;
+  border: 3px solid var(--gold) !important;
   border-radius: 20%;
 }
 
@@ -630,8 +652,14 @@ div.activities__list:nth-child(even):hover {
 
 .clients__manipulate {
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: grid;
+}
+
+.clients__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .clients__ss {
@@ -786,6 +814,7 @@ div.clients__list:nth-child(odd) {
   font-size: 1.1em;
   color: var(--black);
   cursor: pointer;
+  margin-bottom: .5em;
 }
 
 .dan_input {
@@ -994,6 +1023,22 @@ nav {
   text-decoration: underline;
 }
 
+.noborder input {
+  border-bottom: 1px solid transparent;
+  font-size: 1.5em;
+  transition: ease .5s all;
+  border-radius: .5em;
+  text-align: center;
+}
+
+.noborder input:hover {
+  background: var(--gold-light);
+}
+
+.noborder input:focus {
+  background: transparent;
+}
+
 hr {
   margin: 0.4em;
   border: 0;
@@ -1005,8 +1050,17 @@ hr {
 }
 
 .user__form {
-  border-radius: 1em;
+  display: grid;
+  justify-content: center;
+  justify-items: baseline;
+  margin: 1em;
   border: 2px solid var(--purple);
+  border-radius: 1em;
+}
+
+.user_input {
+  font-size: 1.3em;
+  padding: 0.3em;
 }
 
 .user__logged {
