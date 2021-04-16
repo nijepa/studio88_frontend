@@ -392,6 +392,8 @@ export default {
     },
 
     selectPeriod(dateFrom, dateTill) {
+      this.dateFrom = dateFrom;
+      this.dateTill = dateTill;
       this.clientAttendances = this.mapAttendances()
         .filter((post) => {
           return post.client._id == this.getOneClient._id;

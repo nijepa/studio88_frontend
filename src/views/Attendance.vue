@@ -26,7 +26,7 @@
         NOVA PRISUSTVA
       </h3>
 
-      <div class="input__group">
+      <div class="input__group att__header">
         <div class="input__field att_date">
           <label for="datePicker"
             >Datum
@@ -48,11 +48,30 @@
           </h3>
         </div>
 
-        <div class="att_totals">
+        <div class="att_totals totals__att">
           <h4>Ukupno: {{ filteredClients.length }}</h4>
           <h4>Prisustvovalo: {{ presentClients() }}</h4>
         </div>
       </div>
+
+      <ul
+        class="shedule__groups"
+        v-if="!attendanceInput._id || existingMembers.length"
+      >
+        <h3>Izaberi grupu :</h3>
+        <div class="">
+          <li
+            v-for="schedule in schedules"
+            :key="schedule"
+            @click="checkSchedule(schedule)"
+            :class="
+              selectedSchedules.includes(schedule) ? 'schedule__selected' : ''
+            "
+          >
+            {{ schedule }}
+          </li>
+        </div>
+      </ul>
 
       <div class="members__list">
         <div class="members__items">
@@ -116,6 +135,7 @@
               <span>Vježbačica</span>
               <span>Prisutna</span>
               <span>Napomena</span>
+              <span>Grupa</span>
             </div>
 
             <div
@@ -138,17 +158,12 @@
                 :checkId="member._id"
                 v-model="member.present"
               />
-              <!-- <input
-                  type="checkbox"
-                  v-model="member.present"
-                  class="login_input user_input payment__price check"
-                /> -->
               <input
                 type="text"
                 v-model="member.note"
                 class="login_input user_input payment__note"
               />
-
+              <p>{{ setClientSchedule(member.client._id) }}</p>
               <svg
                 v-if="actions"
                 @click="removeClient(member)"
@@ -249,6 +264,11 @@ export default {
         note: "",
         present: true,
       },
+      schedules: [],
+      selectedSchedules: [],
+      attendanceExist: false,
+      attendanceMembers: [],
+      existingMembers: [],
       btn_title: "dodatne opcije",
     };
   },
@@ -341,6 +361,7 @@ export default {
     },
 
     async selectDate() {
+      this.attendanceInput._id = null;
       if (!this.getOneAttendance._id) {
         await this.fetchSchedules();
         const selDate = this.attendanceInput.attend_date.getDay();
@@ -354,25 +375,183 @@ export default {
           "Subota",
         ];
         const cgDay = cgDays[selDate];
-        const filteredSchedules = await this.getAllSchedules
+        const filteredSchedules = await this.getAllSchedules.filter((a) => {
+          return a.weekday.includes(cgDay);
+        });
+
+        this.checkAttendance(cgDay);
+
+        this.selectSchedules(filteredSchedules);
+
+        const constructSchedules = filteredSchedules
+          .filter(function (e) {
+            return this.indexOf(e.title) >= 0;
+          }, this.selectedSchedules)
+          .map((item) => {
+            let container = {};
+            container = { members: item.members, group: item.title };
+            return container;
+          })
+          .map((i) => {
+            let con = {};
+            con = i.members;
+            return con;
+          });
+
+        const preparedSchedules = await [].concat.apply([], constructSchedules);
+        this.attendanceInput.members = [];
+        this.filteredClients = [];
+
+        //let me;
+        //if (this.existingMembers) {
+        preparedSchedules.filter(function (e) {
+          return this.indexOf(e.client._id) < 0;
+        }, this.existingMembers);
+        /*         } else {
+          me = merged;
+        } */
+        //console.log(me)
+        this.addAllmembers(preparedSchedules);
+      }
+    },
+
+    selectSchedules(filteredSchedules) {
+      this.schedules = filteredSchedules
+        .map((item) => {
+          let container = {};
+          container = { members: item.members, group: item.title };
+          return container;
+        })
+        .map((item) => {
+          let group = item.group;
+          return group;
+        });
+    },
+
+    checkSchedule(schedule) {
+      if (this.selectedSchedules.includes(schedule)) {
+        this.selectedSchedules.splice(
+          this.selectedSchedules.indexOf(schedule),
+          1
+        );
+      } else {
+        this.selectedSchedules.push(schedule);
+      }
+      this.selectDate();
+    },
+
+    mapSchedules() {
+      let obj,
+        arr = [];
+      for (let i = 0; i < this.getAllSchedules.length; i++) {
+        for (let j = 0; j < this.getAllSchedules[i].members.length; j++) {
+          obj = {
+            title: this.getAllSchedules[i].title,
+            startTime: this.getAllSchedules[i].startTime,
+            client: this.getAllSchedules[i].members[j].client,
+          };
+          arr.push(obj);
+        }
+      }
+      return arr;
+    },
+
+    setClientSchedule(id) {
+      let sche = "";
+      sche = this.mapSchedules().filter((post) => {
+        return post.client._id == id;
+      });
+      return sche[0] ? sche[0].title : "";
+    },
+
+    async checkAttendance(cgDay) {
+      this.attendanceExist = false;
+      this.attendanceMembers = [];
+      this.existingMembers = [];
+
+      let attMembers = await this.getAllAttendances.filter((e) => {
+        return (
+          dayjs(e.attend_date).format("YYYY-MM-DD") ===
+          dayjs(this.attendanceInput.attend_date).format("YYYY-MM-DD")
+        );
+      });
+
+      if (attMembers.length) {
+        this.attendanceInput._id = attMembers[0]._id;
+        this.attendanceMembers = attMembers[0].members;
+
+        let attMembersIds = attMembers[0].members.map((item) => {
+          let group = item.client._id;
+          return group;
+        });
+        this.existingMembers = attMembersIds;
+
+        let attMembersGroups = [];
+        for (let i = 0; i < attMembersIds.length; i++) {
+          attMembersGroups.push(this.setClientSchedule(attMembersIds[i]));
+        }
+
+        let current = null;
+        let cnt = 0;
+        let attGroups = [];
+        attMembersGroups.sort();
+        for (let i = 0; i <= attMembersGroups.length; i++) {
+          if (attMembersGroups[i] != current) {
+            if (cnt > 0) {
+              let obj = {};
+              obj.group = current;
+              obj.mems = cnt;
+              attGroups.push(obj);
+              //document.write(current + ' comes --> ' + cnt + ' times<br>');
+            }
+            current = attMembersGroups[i];
+            cnt = 1;
+          } else {
+            cnt++;
+          }
+        }
+
+        this.schedules = await this.getAllSchedules
           .filter((a) => {
             return a.weekday.includes(cgDay);
           })
           .map((item) => {
             let container = {};
-            container = item.members;
+            container = { group: item.title, mems: item.members.length };
             return container;
           });
-        const merged = await [].concat.apply([], filteredSchedules);
-        this.attendanceInput.members = [];
-        this.filteredClients = [];
-        this.addAllmembers(merged);
+
+        let result = this.schedules
+          .filter(function (o1) {
+            // filter out (!) items in result2
+            return !attGroups.some(function (o2) {
+              return o1.group === o2.group && o1.mems === o2.mems; // assumes unique id
+            });
+          })
+          .map((o) => {
+            return o.group;
+          });
+        this.schedules = result;
+
+        /*           .map((item) => {
+            let container = item.title;
+            return container;
+          }) */
+        /*           .filter(function (e) {
+            return this.indexOf(e) < 0;
+          }, buu); */
+
+        this.attendanceExist = true;
       }
     },
 
     async addAttendance() {
       this.setLoadingState(true);
-      if (this.getOneAttendance._id) {
+      if (this.getOneAttendance._id || this.attendanceExist) {
+        this.attendanceInput.members = [
+          ...this.attendanceInput.members,
+          ...this.attendanceMembers,
+        ];
         await this.attendanceUpdate(this.attendanceInput);
         await this.fetchAttendances();
       } else {
@@ -498,6 +677,53 @@ export default {
 }
 
 .weekday__att {
-  margin: 0 0 .5em 0;
+  margin: 0 0 0.5em 0;
+}
+
+.att__header {
+  /* grid-template-columns: repeat(3, auto); */
+  justify-self: stretch;
+  justify-items: center;
+  grid-gap: 0.2em;
+  align-items: center;
+}
+
+.totals__att {
+  justify-self: center;
+}
+
+.shedule__groups {
+  display: grid;
+  justify-content: center;
+  /*   border: 1px solid var(--purple-light);
+  border-radius: 0.5em; */
+  justify-self: center;
+  padding: 0.2em;
+  /* background: var(--purple-lightest); */
+  font-size: 1.1em;
+  margin: 0 0.5em;
+  align-self: end;
+  flex-wrap: wrap;
+  max-width: 360px;
+  row-gap: 0.2em;
+}
+
+.shedule__groups li {
+  padding: 0.2em;
+  cursor: pointer;
+  border-bottom: 1px solid var(--purple-light);
+  border-radius: 0.5em;
+  transition: all 0.4s ease;
+}
+
+.shedule__groups li:hover {
+  background: var(--purple-light);
+  color: var(--gold);
+}
+
+.schedule__selected {
+  border-radius: 1em;
+  background: var(--purple);
+  color: var(--gold-light);
 }
 </style>

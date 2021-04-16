@@ -281,10 +281,12 @@ export default {
   border-radius: .5em;
 }
 .no_border:hover {
-  background: var(--gold-light);
+  background: var(--gold);
+  color: var(--purple-lightest);
 }
 .no_border:focus {
   background: transparent;
+  color: var(--black);
 }
 @media (max-width: 599px) {
   .datepicker {

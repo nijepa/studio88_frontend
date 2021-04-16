@@ -238,6 +238,7 @@ label {
 
 .att_members {
   cursor: default;
+  padding: .2em;
 }
 
 .att_member {
@@ -1032,11 +1033,13 @@ nav {
 }
 
 .noborder input:hover {
-  background: var(--gold-light);
+  background: var(--gold);
+  color: var(--purple-lightest);
 }
 
 .noborder input:focus {
   background: transparent;
+  color: var(--black);
 }
 
 hr {
