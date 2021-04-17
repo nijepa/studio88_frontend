@@ -1042,6 +1042,31 @@ nav {
   color: var(--black);
 }
 
+.sortable {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  column-gap: 0.2em;
+}
+
+.sortable:hover {
+  color: var(--gold-lighter);
+}
+
+.sortable:hover svg {
+  fill: var(--gold-lighter);
+}
+
+.sort__asc {
+  transform: rotate(180deg);
+  transition: all 0.4s ease;
+}
+
+.sort__desc {
+  transform: rotate(0deg);
+  transition: all 0.4s ease;
+}
+
 hr {
   margin: 0.4em;
   border: 0;

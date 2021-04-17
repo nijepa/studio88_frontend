@@ -32,7 +32,7 @@
             >Datum
             <tooltip
               v-if="!getOneAttendance._id"
-              tip="Kad izabereš datum izlistaju se svi aktivni klijenti čije se grupe održavaju tog dana."
+              tip="Kad izabereš datum izlistaju se sve grupe koje se održavaju tog dana."
             />
           </label>
           <datepicker
@@ -58,7 +58,7 @@
         class="shedule__groups"
         v-if="!attendanceInput._id || existingMembers.length"
       >
-        <h3>Izaberi grupu :</h3>
+        <h3 class="att_schedule">Grupe/Termini :</h3>
         <div class="">
           <li
             v-for="schedule in schedules"
@@ -85,7 +85,7 @@
           <div class="">
             <div class="akcije">
               <tooltip
-                tip="Omogućava dodavanje vježbačica koje nisu u listi, kao i brisanje postojećih iz liste"
+                tip="Dodavanje vježbačica koje nisu u listi, kao i brisanje postojećih iz liste"
               />
 
               <button
@@ -132,13 +132,75 @@
             </div>
 
             <div class="days__list">
-              <span>Vježbačica</span>
-              <span>Prisutna</span>
+              <span class="sortable" @click="sortItems('last_name', true)">
+                Vježbačica
+                <svg
+                  fill="var(--gold-light)"
+                  :class="sortOrder ? 'sort__asc' : 'sort__desc'"
+                  height="20px"
+                  width="20px"
+                  viewBox="0 0 512 512"
+                  style="enable-background: new 0 0 512 512"
+                  xml:space="preserve"
+                >
+                  <path
+                    d="M497.552,318.828L284.686,128.883c-16.353-14.591-41.019-14.592-57.372,0.001L14.448,318.829
+                    C0.994,330.833-3.548,349.477,2.876,366.326c6.425,16.848,22.227,27.735,40.258,27.735h425.731
+                    c18.031,0,33.833-10.886,40.258-27.736C515.547,349.477,511.004,330.833,497.552,318.828z M490.062,359.057
+                    c-2.692,7.059-9.674,14.603-21.196,14.603H43.133c-11.523,0-18.504-7.543-21.196-14.603c-2.691-7.059-2.505-17.338,6.093-25.009
+                    l212.866-189.944c4.305-3.842,9.704-5.763,15.104-5.763c5.399,0,10.8,1.922,15.103,5.762l212.866,189.945
+                    C492.567,341.721,492.754,351.998,490.062,359.057z"
+                  />
+                </svg>
+              </span>
+              <span class="sortable" @click="sortItems('present', false)">
+                Prisutna
+                <svg
+                  fill="var(--gold-light)"
+                  :class="sortOrder ? 'sort__asc' : 'sort__desc'"
+                  height="20px"
+                  width="20px"
+                  viewBox="0 0 512 512"
+                  style="enable-background: new 0 0 512 512"
+                  xml:space="preserve"
+                >
+                  <path
+                    d="M497.552,318.828L284.686,128.883c-16.353-14.591-41.019-14.592-57.372,0.001L14.448,318.829
+                    C0.994,330.833-3.548,349.477,2.876,366.326c6.425,16.848,22.227,27.735,40.258,27.735h425.731
+                    c18.031,0,33.833-10.886,40.258-27.736C515.547,349.477,511.004,330.833,497.552,318.828z M490.062,359.057
+                    c-2.692,7.059-9.674,14.603-21.196,14.603H43.133c-11.523,0-18.504-7.543-21.196-14.603c-2.691-7.059-2.505-17.338,6.093-25.009
+                    l212.866-189.944c4.305-3.842,9.704-5.763,15.104-5.763c5.399,0,10.8,1.922,15.103,5.762l212.866,189.945
+                    C492.567,341.721,492.754,351.998,490.062,359.057z"
+                  />
+                </svg>
+              </span>
               <span>Napomena</span>
-              <span>Grupa</span>
+              <span class="sortable" @click="sortItems('group', false)">
+                Grupa/Termin
+                <svg
+                  fill="var(--gold-light)"
+                  :class="sortOrder ? 'sort__asc' : 'sort__desc'"
+                  height="20px"
+                  width="20px"
+                  viewBox="0 0 512 512"
+                  style="enable-background: new 0 0 512 512"
+                  xml:space="preserve"
+                >
+                  <path
+                    d="M497.552,318.828L284.686,128.883c-16.353-14.591-41.019-14.592-57.372,0.001L14.448,318.829
+                    C0.994,330.833-3.548,349.477,2.876,366.326c6.425,16.848,22.227,27.735,40.258,27.735h425.731
+                    c18.031,0,33.833-10.886,40.258-27.736C515.547,349.477,511.004,330.833,497.552,318.828z M490.062,359.057
+                    c-2.692,7.059-9.674,14.603-21.196,14.603H43.133c-11.523,0-18.504-7.543-21.196-14.603c-2.691-7.059-2.505-17.338,6.093-25.009
+                    l212.866-189.944c4.305-3.842,9.704-5.763,15.104-5.763c5.399,0,10.8,1.922,15.103,5.762l212.866,189.945
+                    C492.567,341.721,492.754,351.998,490.062,359.057z"
+                  />
+                </svg>
+              </span>
             </div>
 
+            <loading pic="loading" v-if="loadingMembers" />
             <div
+              v-else
               v-for="member in pageOfItems"
               :key="member._id"
               name="member"
@@ -241,7 +303,7 @@ export default {
     DeleteButton,
     Tooltip,
     Autocomplete,
-    CheckboxCustom,
+    CheckboxCustom
   },
 
   mixins: [actionsNotify, navigation, navigationSearch, searchClients],
@@ -269,6 +331,8 @@ export default {
       attendanceExist: false,
       attendanceMembers: [],
       existingMembers: [],
+      sortOrder: true,
+      loadingMembers: false,
       btn_title: "dodatne opcije",
     };
   },
@@ -382,14 +446,14 @@ export default {
         this.checkAttendance(cgDay);
 
         this.selectSchedules(filteredSchedules);
-
+        
         const constructSchedules = filteredSchedules
           .filter(function (e) {
-            return this.indexOf(e.title) >= 0;
+            return this.indexOf(e.title+"/"+e.startTime) >= 0;
           }, this.selectedSchedules)
           .map((item) => {
             let container = {};
-            container = { members: item.members, group: item.title };
+            container = { members: item.members, group: item.title + "/" + item.startTime };
             return container;
           })
           .map((i) => {
@@ -419,7 +483,7 @@ export default {
       this.schedules = filteredSchedules
         .map((item) => {
           let container = {};
-          container = { members: item.members, group: item.title };
+          container = { members: item.members, group: item.title + "/" + item.startTime };
           return container;
         })
         .map((item) => {
@@ -428,7 +492,8 @@ export default {
         });
     },
 
-    checkSchedule(schedule) {
+    async checkSchedule(schedule) {
+      this.loadingMembers = true;
       if (this.selectedSchedules.includes(schedule)) {
         this.selectedSchedules.splice(
           this.selectedSchedules.indexOf(schedule),
@@ -437,7 +502,8 @@ export default {
       } else {
         this.selectedSchedules.push(schedule);
       }
-      this.selectDate();
+      await this.selectDate();
+      this.loadingMembers = false;
     },
 
     mapSchedules() {
@@ -461,7 +527,7 @@ export default {
       sche = this.mapSchedules().filter((post) => {
         return post.client._id == id;
       });
-      return sche[0] ? sche[0].title : "";
+      return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
     },
 
     async checkAttendance(cgDay) {
@@ -517,7 +583,7 @@ export default {
           })
           .map((item) => {
             let container = {};
-            container = { group: item.title, mems: item.members.length };
+            container = { group: item.title + "/" + item.startTime, mems: item.members.length };
             return container;
           });
 
@@ -610,6 +676,21 @@ export default {
       this.$router.push("/attendances");
     },
 
+    sortItems(field, type) {
+      this.sortOrder = !this.sortOrder;
+      this.attendanceInput.members.sort((a, b) => {
+        let x, y;
+        if (!type) {
+          x = a[field];
+          y = b[field];
+        } else {
+          x = a.client[field].toLowerCase();
+          y = b.client[field].toLowerCase();
+        }
+        return this.sortOrder ? x > y : x < y;
+      });
+    },
+
     async searchItems(val = "") {
       await this.initItems();
       let mu = this.attendanceInput.members.filter((post) => {
@@ -625,6 +706,11 @@ export default {
     async initItems() {
       if (this.getOneAttendance._id) {
         this.attendanceInput = this.getOneAttendance;
+        for (let i = 0; i < this.attendanceInput.members.length; i++) {
+          this.attendanceInput.members[i].group = this.setClientSchedule(
+            this.attendanceInput.members[i].client._id
+          );
+        }
         this.notClients = this.getAllClients.filter(
           (elem) => !this.mapMembers().find(({ _id }) => elem._id === _id)
         );
@@ -676,6 +762,11 @@ export default {
   align-items: baseline;
 }
 
+.att_schedule {
+  color: var(--grey);
+  font-weight: 100;
+}
+
 .weekday__att {
   margin: 0 0 0.5em 0;
 }
@@ -711,6 +802,7 @@ export default {
 .shedule__groups li {
   padding: 0.2em;
   cursor: pointer;
+  font-weight: 600;
   border-bottom: 1px solid var(--purple-light);
   border-radius: 0.5em;
   transition: all 0.4s ease;
