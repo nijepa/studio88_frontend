@@ -983,8 +983,9 @@ nav {
 }
 
 .nav__img {
-  max-width: 30px;
-  height: auto;
+  width: 30px;
+  height: 94px;
+  /* height: auto; */
 }
 
 .nav__img_home {
@@ -1105,7 +1106,8 @@ hr {
 
 .logo__small {
   height: 70px;
-  width: auto;
+  width: 128px;
+  /* width: auto; */
 }
 
 .home__btn {
