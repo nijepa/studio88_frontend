@@ -199,53 +199,54 @@
             </div>
 
             <loading pic="loading" v-if="loadingMembers" />
-            <div
-              v-else
-              v-for="member in pageOfItems"
-              :key="member._id"
-              name="member"
-              class="members_input att_members"
-            >
-              <div class="att_member">
-                {{
-                  attendanceInput.members
-                    .map((item) => item.client._id)
-                    .indexOf(member.client._id) + 1
-                }}
-                {{ member.client.last_name }}, {{ member.client.first_name }}
-              </div>
-              <CheckboxCustom
-                :class="'user_input payment__price check'"
-                :modelValue="member.present"
-                :checkId="member._id"
-                v-model="member.present"
-              />
-              <input
-                type="text"
-                v-model="member.note"
-                class="login_input user_input payment__note"
-              />
-              <p>{{ setClientSchedule(member.client._id) }}</p>
-              <svg
-                v-if="actions"
-                @click="removeClient(member)"
-                class="btn_minus"
-                version="1.1"
-                id="Layer_1"
-                x="0px"
-                y="0px"
-                height="20px"
-                viewBox="0 0 300.003 300.003"
-                style="fill: var(--purple)"
-                xml:space="preserve"
+            <transition-group name="slide-fade" mode="out-in" v-else>
+              <div
+                v-for="member in pageOfItems"
+                :key="member._id"
+                name="member"
+                class="members_input att_members"
               >
-                <path
-                  d="M150.001,0c-82.843,0-150,67.159-150,150c0,82.838,67.157,150.003,150,150.003c82.838,0,150-67.165,150-150.003
-                        C300.001,67.159,232.838,0,150.001,0z M197.218,166.283H92.41c-8.416,0-15.238-6.821-15.238-15.238s6.821-15.238,15.238-15.238
-                        H197.22c8.416,0,15.238,6.821,15.238,15.238S205.634,166.283,197.218,166.283z"
+                <div class="att_member">
+                  {{
+                    attendanceInput.members
+                      .map((item) => item.client._id)
+                      .indexOf(member.client._id) + 1
+                  }}
+                  {{ member.client.last_name }}, {{ member.client.first_name }}
+                </div>
+                <CheckboxCustom
+                  :class="'user_input payment__price check'"
+                  :modelValue="member.present"
+                  :checkId="member._id"
+                  v-model="member.present"
                 />
-              </svg>
-            </div>
+                <input
+                  type="text"
+                  v-model="member.note"
+                  class="login_input user_input payment__note"
+                />
+                <p>{{ setClientSchedule(member.client._id) }}</p>
+                <svg
+                  v-if="actions"
+                  @click="removeClient(member)"
+                  class="btn_minus"
+                  version="1.1"
+                  id="Layer_1"
+                  x="0px"
+                  y="0px"
+                  height="20px"
+                  viewBox="0 0 300.003 300.003"
+                  style="fill: var(--purple)"
+                  xml:space="preserve"
+                >
+                  <path
+                    d="M150.001,0c-82.843,0-150,67.159-150,150c0,82.838,67.157,150.003,150,150.003c82.838,0,150-67.165,150-150.003
+                          C300.001,67.159,232.838,0,150.001,0z M197.218,166.283H92.41c-8.416,0-15.238-6.821-15.238-15.238s6.821-15.238,15.238-15.238
+                          H197.22c8.416,0,15.238,6.821,15.238,15.238S205.634,166.283,197.218,166.283z"
+                  />
+                </svg>
+              </div>
+            </transition-group>
           </div>
         </div>
       </div>
@@ -283,6 +284,7 @@ import actionsNotify from "@/mixins/actionsNotify";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
 import searchClients from "@/mixins/searchClients";
+import mapSchedules from "@/mixins/mapSchedules";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
@@ -303,10 +305,16 @@ export default {
     DeleteButton,
     Tooltip,
     Autocomplete,
-    CheckboxCustom
+    CheckboxCustom,
   },
 
-  mixins: [actionsNotify, navigation, navigationSearch, searchClients],
+  mixins: [
+    actionsNotify,
+    navigation,
+    navigationSearch,
+    searchClients,
+    mapSchedules,
+  ],
 
   data() {
     return {
@@ -446,14 +454,17 @@ export default {
         this.checkAttendance(cgDay);
 
         this.selectSchedules(filteredSchedules);
-        
+
         const constructSchedules = filteredSchedules
           .filter(function (e) {
-            return this.indexOf(e.title+"/"+e.startTime) >= 0;
+            return this.indexOf(e.title + "/" + e.startTime) >= 0;
           }, this.selectedSchedules)
           .map((item) => {
             let container = {};
-            container = { members: item.members, group: item.title + "/" + item.startTime };
+            container = {
+              members: item.members,
+              group: item.title + "/" + item.startTime,
+            };
             return container;
           })
           .map((i) => {
@@ -466,16 +477,16 @@ export default {
         this.attendanceInput.members = [];
         this.filteredClients = [];
 
-        //let me;
-        //if (this.existingMembers) {
-        preparedSchedules.filter(function (e) {
-          return this.indexOf(e.client._id) < 0;
-        }, this.existingMembers);
-        /*         } else {
-          me = merged;
-        } */
-        //console.log(me)
-        this.addAllmembers(preparedSchedules);
+        let remainingMembers;
+        if (this.existingMembers) {
+          remainingMembers = preparedSchedules.filter(function (e) {
+            return this.indexOf(e.client._id) < 0;
+          }, this.existingMembers);
+        } else {
+          remainingMembers = preparedSchedules;
+        } 
+
+        this.addAllmembers(remainingMembers);
       }
     },
 
@@ -483,7 +494,10 @@ export default {
       this.schedules = filteredSchedules
         .map((item) => {
           let container = {};
-          container = { members: item.members, group: item.title + "/" + item.startTime };
+          container = {
+            members: item.members,
+            group: item.title + "/" + item.startTime,
+          };
           return container;
         })
         .map((item) => {
@@ -506,7 +520,7 @@ export default {
       this.loadingMembers = false;
     },
 
-    mapSchedules() {
+/*     mapSchedules() {
       let obj,
         arr = [];
       for (let i = 0; i < this.getAllSchedules.length; i++) {
@@ -520,15 +534,15 @@ export default {
         }
       }
       return arr;
-    },
+    }, */
 
-    setClientSchedule(id) {
+    /* setClientSchedule(id) {
       let sche = "";
       sche = this.mapSchedules().filter((post) => {
         return post.client._id == id;
       });
       return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
-    },
+    }, */
 
     async checkAttendance(cgDay) {
       this.attendanceExist = false;
@@ -583,7 +597,10 @@ export default {
           })
           .map((item) => {
             let container = {};
-            container = { group: item.title + "/" + item.startTime, mems: item.members.length };
+            container = {
+              group: item.title + "/" + item.startTime,
+              mems: item.members.length,
+            };
             return container;
           });
 
@@ -622,6 +639,7 @@ export default {
         await this.fetchAttendances();
       } else {
         await this.attendanceAdd(this.attendanceInput);
+        await this.fetchAttendances();
       }
       this.setLoadingState(false);
       if (this.getErrors.length) {
@@ -673,6 +691,11 @@ export default {
 
     async delEx() {
       await this.attendanceDelete(this.getOneAttendance);
+      this.$toast.success(
+        "Uspješno obrisano!",
+        "OK",
+        this.notificationSystem.options.success
+      );
       this.$router.push("/attendances");
     },
 
@@ -809,8 +832,8 @@ export default {
 }
 
 .shedule__groups li:hover {
-  background: var(--purple-light);
-  color: var(--gold);
+  background: var(--gold);
+  color: var(--purple-lightest);
 }
 
 .schedule__selected {

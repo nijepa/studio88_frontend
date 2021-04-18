@@ -320,6 +320,7 @@ import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import actionsNotify from "@/mixins/actionsNotify";
+import mapSchedules from "@/mixins/mapSchedules";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
 
@@ -335,7 +336,7 @@ export default {
     CheckboxCustom,
   },
 
-  mixins: [actionsNotify],
+  mixins: [actionsNotify, mapSchedules],
 
   data() {
     return {
@@ -415,6 +416,11 @@ export default {
 
     async delEx() {
       await this.clientDelete(this.getOneClient);
+      this.$toast.success(
+        "Uspješno obrisano!",
+        "OK",
+        this.notificationSystem.options.success
+      );
       this.$router.push("/clients");
     },
 
@@ -446,7 +452,7 @@ export default {
       return arr;
     },
 
-    mapSchedules() {
+/*     mapSchedules() {
       let obj,
         arr = [];
       for (let i = 0; i < this.getAllSchedules.length; i++) {
@@ -460,7 +466,7 @@ export default {
         }
       }
       return arr;
-    },
+    }, */
 
     async newClient() {
       this.setLoadingState(true);

@@ -455,6 +455,11 @@ export default {
 
     async delEx() {
       await this.paymentDelete(this.getOnePayment);
+      this.$toast.success(
+        "Uspješno obrisano!",
+        "OK",
+        this.notificationSystem.options.success
+      );
       this.$router.push("/payments");
     },
 

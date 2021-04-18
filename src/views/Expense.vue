@@ -204,6 +204,11 @@ export default {
 
     async delEx() {
       await this.expenseDelete(this.getOneExpense);
+      this.$toast.success(
+        "Uspješno obrisano!",
+        "OK",
+        this.notificationSystem.options.success
+      );
       this.$router.push("/expenses");
     },
   },
@@ -215,7 +220,6 @@ export default {
     if (this.getOneExpense._id) {
       this.expenseInput = this.getOneExpense;
     }
-    console.log("xxxxxxxxxx");
     this.setLoadingState(false);
   },
 };

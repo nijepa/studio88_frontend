@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import Datepicker from "vuejs-datepicker";
 import { sr } from "vuejs-datepicker/dist/locale";
 import dayjs from "dayjs";
@@ -47,7 +48,17 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters([
+      "getPeriod",
+    ]),
+  },
+
   methods: {
+    ...mapActions([
+      "fetchPeriod",
+    ]),
+
     customFormatter(date) {
       return dayjs(date).format("DD MMM YYYY");
     },
@@ -58,12 +69,26 @@ export default {
       return new Date(firstDay).toISOString().slice(0, 10);
     },
 
-    selectPeriod() {
+    async selectPeriod() {
+      const period = {
+        dateFrom: this.dateFrom,
+        dateTill: this.dateTill
+      }
+      await this.fetchPeriod(period);
       this.$emit('filter-period', this.dateFrom, this.dateTill);
+    },
+
+    isEmpty(obj) {
+      for(var i in obj) return false; 
+      return true;
     }
   },
 
   mounted() {
+    if (!this.isEmpty(this.getPeriod)) {
+      this.dateFrom = this.getPeriod.dateFrom;
+      this.dateTill = this.getPeriod.dateTill;
+    }
     this.$emit('dates', this.dateFrom, this.dateTill)
   },
 };

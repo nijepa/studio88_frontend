@@ -247,10 +247,15 @@ export default {
         ? (this.showMenu = false)
         : (this.showMenu = true);
     },
+
+    isEmpty(obj) {
+      for(var i in obj) return false; 
+      return true;
+    }
   },
 
   async created() {
-    await this.fetchGenerals();
+    if (this.isEmpty(this.getGeneral)) await this.fetchGenerals();
     let price;
     if (this.getGeneral) {
       price = this.getGeneral.prices[0].price_amount;

@@ -191,6 +191,8 @@ export default {
     return {
       customLabels,
       customStyles,
+      dateFrom: new Date().toISOString().slice(0, 10),
+      dateTill: new Date().toISOString().slice(0, 10),
     };
   },
 
@@ -254,6 +256,8 @@ export default {
     },
 
     filterItems(dateFrom, dateTill) {
+      this.dateFrom = dateFrom;
+      this.dateTill = dateTill;
       let mu = this.getAllPayments.filter(
         (year) =>
           dayjs(year.payment_date).format("YYYY-MM-DD") >=
@@ -267,6 +271,7 @@ export default {
     async initItems() {
       if (!this.getAllPayments.length) await this.fetchPayments();
       this.filteredClients = this.getAllPayments;
+      this.startPeriod(this.dateFrom, this.dateTill)
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;

@@ -130,6 +130,7 @@ const actions = {
         commit("setToken", response.data.token);
         commit("setLogged", false);
         ls.removeToken();
+        sessionStorage.clear();
         router.push("/");
       })
       .catch((error) => {

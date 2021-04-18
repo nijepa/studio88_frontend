@@ -6,12 +6,14 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 const state = {
   payment: {},
   payments: [],
+  period: {}
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
   getAllPayments: (state) => state.payments,
   getOnePayment: (state) => state.payment,
+  getPeriod: (state) => state.period,
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
@@ -19,6 +21,8 @@ const mutations = {
   setPayments: (state, payments) => (state.payments = payments),
 
   setPayment: (state, payment) => (state.payment = payment),
+
+  setPeriod: (state, period) => (state.period = period),
 
   clearPayment(state) {
     state.payment = {};
@@ -59,6 +63,10 @@ const actions = {
       paymentData
     );
     commit("setPayment", response.data);
+  },
+
+  async fetchPeriod({ commit }, periodData) {
+    commit("setPeriod", periodData);
   },
 
   async paymentAdd({ commit }, paymentData) {

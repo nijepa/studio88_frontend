@@ -115,7 +115,7 @@
           v-for="client in pageOfItems"
           :key="client._id"
           class="clients__list"
-          :class="setClientSchedule(client._id) === '' ? 'not_schedule' : ''"
+          :class="setClientSchedule(client._id) === 'Nema grupu' ? 'not_schedule' : ''"
         >
           <p class="client__item" @click="selectClient(client)">
             {{ client.last_name }} , {{ client.first_name }}
@@ -189,6 +189,7 @@ import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
 import searchClients from "@/mixins/searchClients";
+import mapSchedules from "@/mixins/mapSchedules";
 
 export default {
   name: "Clients",
@@ -207,7 +208,7 @@ export default {
     };
   },
 
-  mixins: [navigation, navigationSearch, searchClients],
+  mixins: [navigation, navigationSearch, searchClients, mapSchedules],
 
   computed: {
     ...mapGetters([
@@ -236,7 +237,6 @@ export default {
     ]),
 
     async newClient() {
-      console.log("zzzzzzzzzzzzzzzzz");
       this.setLoadingState(true);
       this.$router.push("/client");
       await this.clientClear();
@@ -257,7 +257,7 @@ export default {
       this.$router.push("/clientactivity");
     },
 
-    mapSchedules() {
+/*     mapSchedules() {
       let obj,
         arr = [];
       for (let i = 0; i < this.getAllSchedules.length; i++) {
@@ -271,15 +271,15 @@ export default {
         }
       }
       return arr;
-    },
+    }, */
 
-    setClientSchedule(id) {
+    /* setClientSchedule(id) {
       let sche = "";
       sche = this.mapSchedules().filter((post) => {
         return post.client._id == id;
       });
       return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
-    },
+    }, */
 
     sortItems(field) {
       this.sortOrder = !this.sortOrder;
@@ -322,7 +322,7 @@ export default {
 
   async mounted() {
     await this.initItems();
-    this.setLoadingState(false);
+    await this.setLoadingState(false);
   },
 };
 </script>

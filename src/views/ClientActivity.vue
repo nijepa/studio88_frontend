@@ -471,7 +471,6 @@ export default {
 
     scrollToElement(options) {
       const el = document.getElementById("tops");
-      console.log(el);
       if (el) {
         el.scrollIntoView(options);
       }

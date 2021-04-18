@@ -1212,6 +1212,28 @@ hr {
   opacity: 0;
 }
 
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-fade-leave-active {
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-fade-enter {
+  transform: translateY(-2em);
+  opacity: 0;
+}
+
+.slide-fade-leave-to {
+  transform: translateY(2em);
+  opacity: 0;
+}
+
+
+
 @media only screen and (max-width: 1078px) {
   nav {
     grid-template-columns: repeat(3, auto);

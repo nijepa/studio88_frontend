@@ -26,7 +26,8 @@
     "vue-izitoast": "^1.2.1",
     "vue-router": "^3.4.7",
     "vuejs-datepicker": "^1.6.2",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.8",

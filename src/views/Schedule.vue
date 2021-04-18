@@ -324,6 +324,11 @@ export default {
 
     async delEx() {
       await this.scheduleDelete(this.getOneSchedule);
+      this.$toast.success(
+        "Uspješno obrisano!",
+        "OK",
+        this.notificationSystem.options.success
+      );
       this.$router.push("/schedules");
     },
 

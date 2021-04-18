@@ -125,18 +125,38 @@ export default {
   transform: scale(1.05);
 }
 
-.slide-fade-enter-active,
+/* .slide-fade-enter-active,
 .slide-fade-leave-active {
+  width: inherit;
   transition: all 0.5s ease;
-}
+}*/
 
 /*  .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }  */
 
-.slide-fade-enter,
+/* .slide-fade-enter,
 .slide-fade-leave-to {
-  transform: translateY(20px);
+  transform: translateX(20px);
+  opacity: 0;
+} */
+
+.slide-fade-enter-active {
+  width: inherit;
+  transition: all 0.4s ease-in-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.4s ease-in-out;
+}
+
+.slide-fade-enter {
+  transform: translateX(-2em);
+  opacity: 0;
+}
+
+.slide-fade-leave-to {
+  transform: translateX(2em);
   opacity: 0;
 }
 
