@@ -1,0 +1,1 @@
+.kk{color:rgba(133,103,39,.25);color:#5c4885;color:rgba(59,5,109,.5);color:rgba(59,5,109,.25);color:rgba(255,0,0,0);color:#5c4785}.no_border{transition:all .5s ease;border-radius:.5em}.no_border:hover{background:var(--gold);color:var(--purple-lightest)}.no_border:focus{background:transparent;color:var(--black)}@media (max-width:599px){.datepicker{width:110px}}

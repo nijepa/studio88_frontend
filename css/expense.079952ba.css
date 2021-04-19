@@ -1,0 +1,1 @@
+.is__grid{display:grid;font-size:1.2em}.expense__list{justify-items:center}.expense__list,.expenses__header{grid-template-columns:repeat(6,1fr)}.total__exp{grid-area:1/4/2/5}.page__total_exp{grid-area:1/5/2/6}
