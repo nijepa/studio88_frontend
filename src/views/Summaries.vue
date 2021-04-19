@@ -210,12 +210,12 @@ export default {
       let filteredPayments = this.mapPayments().filter(
         (year) => year.payment_year == this.yearSelected
       );
-      let filteredPaymentsAmounts = filteredPayments.map(
-        (item) => item.total_amount
-      );
-      let filteredPaymentsLabels = filteredPayments.map(
-        (item) => item.payment_month
-      );
+      let filteredPaymentsAmounts = filteredPayments
+        .map((item) => item.total_amount)
+        .sort((a, b) => (a.payment_date > b.payment_date ? -1 : 1));
+      let filteredPaymentsLabels = filteredPayments
+        .map((item) => item.payment_month)
+        .sort((a, b) => (a.payment_date > b.payment_date ? -1 : 1));
       this.totalPayments = filteredPaymentsAmounts;
       this.paymentLabels = filteredPaymentsLabels;
     },
@@ -228,12 +228,12 @@ export default {
           dayjs(year.attend_date).format("YYYY-MM-DD") <=
             dayjs(this.dateTill).format("YYYY-MM-DD")
       );
-      let filteredAttendancesAmounts = filteredAttendances.map(
-        (item) => item.total_amount
-      );
-      let filteredAttendancesLabels = filteredAttendances.map((item) =>
-        dayjs(item.attend_date).format("DD MMM YYYY")
-      );
+      let filteredAttendancesAmounts = filteredAttendances
+        .map((item) => item.total_amount)
+        .sort((a, b) => (a.attend_date > b.attend_date ? -1 : 1));
+      let filteredAttendancesLabels = filteredAttendances
+        .map((item) => dayjs(item.attend_date).format("DD MMM YYYY"))
+        .sort((a, b) => (a.attend_date > b.attend_date ? -1 : 1));
       this.totalAttendances = filteredAttendancesAmounts;
       this.attendanceLabels = filteredAttendancesLabels;
     },
@@ -241,7 +241,8 @@ export default {
     selectExpenses() {
       let expenses = this.mapExpenses()
         .filter((year) => year.expense_year == this.yearSelected)
-        .map((item) => item.expense_amount);
+        .map((item) => item.expense_amount)
+        .sort((a, b) => (a.expense_date > b.expense_date ? -1 : 1));
       this.totalExpenses = expenses;
     },
   },
@@ -275,10 +276,10 @@ export default {
 };
 </script>
 
-<style >
+<style>
 .no_border {
-  transition: ease .5s all;
-  border-radius: .5em;
+  transition: ease 0.5s all;
+  border-radius: 0.5em;
 }
 .no_border:hover {
   background: var(--gold);

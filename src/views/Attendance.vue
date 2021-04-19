@@ -841,6 +841,11 @@ export default {
   color: var(--purple-lightest);
 }
 
+.shedule__groups li:active {
+  background: inherit;
+  color: inherit;
+}
+
 .schedule__selected {
   border-radius: 1em;
   background: var(--purple);

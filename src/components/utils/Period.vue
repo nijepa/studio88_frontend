@@ -97,6 +97,7 @@ export default {
 <style>
   .is__grid  {
     display: grid;
-    font-size: 1.2em
+    font-size: 1.2em;
+    width: auto;
   }
 </style>

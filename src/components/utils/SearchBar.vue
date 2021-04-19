@@ -122,6 +122,7 @@ export default {
   padding: 0 0.5em;
   margin-top: 0.5em;
   border: 1px solid var(--purple-light);
+  width: 720px;
 }
 
 .search_group label {

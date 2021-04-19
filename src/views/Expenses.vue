@@ -211,7 +211,12 @@ export default {
 
     async initItems() {
       if (!this.getAllExpenses.length) await this.fetchExpenses();
-      this.filteredClients = this.getAllExpenses;
+      this.filteredClients = this.getAllExpenses.sort();
+      this.filteredClients.sort((a, b) =>
+        a.expense_date > b.expense_date
+          ? -1
+          : 1
+      );
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;
