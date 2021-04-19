@@ -710,7 +710,12 @@ export default {
           x = a.client[field].toLowerCase();
           y = b.client[field].toLowerCase();
         }
-        return this.sortOrder ? x > y : x < y;
+        //return this.sortOrder ? x > y : x < y;
+        if(this.sortOrder) {
+          return x > y ? -1 : 1;
+        } else {
+          return x > y ? 1 : -1;
+        }
       });
     },
 

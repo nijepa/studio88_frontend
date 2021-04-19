@@ -131,6 +131,7 @@
             <CheckboxCustom
               class="client__check"
               :checkClass="'custom__check'"
+              :checkId="client._id"
               v-model="client.active"
             />
           </div>
@@ -287,7 +288,12 @@ export default {
         let x, y;
         x = a[field].toLowerCase();
         y = b[field].toLowerCase();
-        return this.sortOrder ? x > y : x < y;
+        //return this.sortOrder ? x > y : x < y;
+        if(this.sortOrder) {
+          return x > y ? -1 : 1;
+        } else {
+          return x > y ? 1 : -1;
+        }
       });
     },
 
