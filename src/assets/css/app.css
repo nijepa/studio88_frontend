@@ -814,7 +814,7 @@ div.clients__list:nth-child(odd) {
 }
 
 .dani {
-  margin-bottom: 1em;
+  margin: .5em 0;
 }
 
 .dan {
@@ -1039,6 +1039,10 @@ nav {
   border: 2px solid var(--purple-dark);
   transform: scale(0.95);
   text-decoration: underline;
+}
+
+.noborder {
+  border-bottom: 1px solid transparent;
 }
 
 .noborder input {

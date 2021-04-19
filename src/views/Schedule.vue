@@ -77,7 +77,7 @@
         </div>
       </div>
 
-      <div class="input__group">
+      <div class="input__group schedule__times">
         <div class="input__field">
           <label for="time">Vrijeme početka</label>
           <input
@@ -104,9 +104,11 @@
       </div>
 
       <div class="members__list">
-        <div class="members__items">
+        <div class="members__items members__selected">
           <label for="members">Vježbačice u grupi</label>
+          <p v-if="!scheduleInput.members.length">NEMA. Dodaj iz liste</p>
           <p
+            v-else
             v-for="member in scheduleInput.members"
             :key="member._id"
             name="member"
@@ -375,4 +377,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.schedule__times {
+  margin: 0.5em 0;
+}
+
+.members__selected {
+  min-width: 15em;
+}
+</style>
