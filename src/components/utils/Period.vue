@@ -98,6 +98,6 @@ export default {
   .is__grid  {
     display: grid;
     font-size: 1.2em;
-    width: auto;
+    width: auto !important;
   }
 </style>

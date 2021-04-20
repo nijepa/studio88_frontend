@@ -192,8 +192,8 @@
           <span class="activities__title_val"> {{ totalPayments() }}</span>
         </h3>
         <div class="payments__head days__list">
-          <span>Godina</span>
-          <span>Mjesec</span>
+          <span>Za Period</span>
+          <!-- <span>Mjesec</span> -->
           <span>Datum</span>
           <span>Iznos</span>
           <span>Napomena</span>
@@ -204,8 +204,8 @@
           class="activities__list payments"
           @click="handleUpdate(client, true)"
         >
-          <p class="activities__item">{{ client.year }}</p>
-          <p class="activities__item">{{ client.month }}</p>
+          <p class="activities__item">{{ client.year }} / {{ client.month }}</p>
+          <!-- <p class="activities__item">{{ client.month }} </p> -->
           <p class="activities__item">{{ client.date | formatDate }}</p>
           <p class="activities__item">{{ client.amount }}</p>
           <p class="activities__item">{{ client.note }}</p>
@@ -504,6 +504,7 @@ export default {
 <style>
 .cli__period {
   font-size: 1em;
+  width: auto !important;
 }
 
 @media (max-width: 599px) {

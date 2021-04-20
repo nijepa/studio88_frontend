@@ -309,10 +309,10 @@ export default {
           this.notClients.findIndex((v) => v._id === client._id),
           1
         );
-        this.filteredClients.splice(
+        /* this.filteredClients.splice(
           this.notClients.findIndex((v) => v._id === client._id),
           1
-        );
+        ); */
       }
     },
 
@@ -374,6 +374,10 @@ export default {
     await this.initItems();
     this.setLoadingState(false);
   },
+
+  async destroyed() {
+    await this.fetchClients()
+  }
 };
 </script>
 

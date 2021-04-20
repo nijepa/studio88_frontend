@@ -67,8 +67,8 @@
 
         <div class="">
           <div class="days__list expenses__header">
-            <span>Godina</span>
-            <span>Mjesec</span>
+            <span>Za Period</span>
+            <!-- <span>Mjesec</span> -->
             <span>Trošak</span>
             <span>Datum</span>
             <span>Iznos</span>
@@ -81,8 +81,8 @@
             @click="selectExpense(expense)"
             class="clients__list expense__list"
           >
-            <p class="client__item">{{ expense.expense_year }}</p>
-            <p class="client__item">{{ expense.expense_month }}</p>
+            <p class="client__item">{{ expense.expense_year }} / {{ expense.expense_month }}</p>
+            <!-- <p class="client__item">{{ expense.expense_month }}</p> -->
             <p class="client__item">{{ expense.expense_title }}</p>
             <p class="client__item">{{ expense.expense_date | formatDate }}</p>
             <p class="client__item">{{ expense.expense_amount }}</p>
@@ -232,12 +232,12 @@ export default {
 
 <style>
 .expense__list {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   justify-items: center;
 }
 
 .expenses__header {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .total__exp {

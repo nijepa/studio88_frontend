@@ -19,6 +19,7 @@ import srb from "dayjs/locale/sr";
 
 dayjs.locale(srb);
 
+// global filters
 Vue.filter("formatDay", function (value) {
   if (!value) return "";
   if (value) {

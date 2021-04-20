@@ -114,7 +114,7 @@
         <div
           v-for="client in pageOfItems"
           :key="client._id"
-          class="clients__list"
+          class="clients__list clients__list_item"
           :class="setClientSchedule(client._id) === 'Nema grupu' ? 'not_schedule' : ''"
         >
           <p class="client__item" @click="selectClient(client)">
@@ -340,5 +340,8 @@ export default {
 .client__check {
   pointer-events: none;
   /* opacity: 0.4; */
+}
+.clients__list_item {
+  grid-template-columns: 1.5fr 1.2fr repeat(3, 1fr) !important;
 }
 </style>
