@@ -702,6 +702,10 @@ div.activities__list:nth-child(even):hover {
   width: 720px;
 }
 
+.clients__list_item {
+  grid-template-columns: 1.5fr 1.2fr repeat(3, 1fr) !important;
+}
+
 div.clients__list:nth-child(odd) {
   border: 2px solid var(--purple-light);
 }
@@ -907,6 +911,7 @@ div.clients__list:nth-child(odd) {
   }
 
   .clients__list,
+  .clients__list_item,
   .search_group {
     width: auto !important;
   }
@@ -1283,7 +1288,8 @@ hr {
 @media (max-width: 599px) {
 
   nav,
-  .clients__list {
+  .clients__list,
+  .clients__list_item {
     grid-template-columns: repeat(2, auto) !important;
   }
 

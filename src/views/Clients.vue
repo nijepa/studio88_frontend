@@ -341,7 +341,4 @@ export default {
   pointer-events: none;
   /* opacity: 0.4; */
 }
-.clients__list_item {
-  grid-template-columns: 1.5fr 1.2fr repeat(3, 1fr) !important;
-}
 </style>
