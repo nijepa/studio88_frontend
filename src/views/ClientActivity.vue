@@ -107,7 +107,7 @@
           Plaćanje
         </button>
         <Tooltip
-          tip="Klikni na plaćanje / prisustvo za dodavanje istog ili selektuj klijenta iz liste za izmjenu / brisanje"
+          tip="Klikni na plaćanje / prisustvo za dodavanje istog ili selektuj plaćanje / prisustvo iz liste za izmjenu / brisanje"
         />
         <button
           class="action_btn client__add for_mobile"

@@ -5,25 +5,26 @@
 
     <div v-else class="client__wrapper" key="2">
       <div class="clients__manipulate">
-        <button
-          type="submit"
-          @click="newAttendance()"
-          class="action_btn client__add"
-        >
-          <svg
-            fill="var(--purple)"
-            width="50px"
-            height="50px"
-            viewBox="0 0 1106.000000 1280.000000"
-            preserveAspectRatio="xMidYMid meet"
+        <div class="clients__actions">
+          <button
+            type="submit"
+            @click="newAttendance()"
+            class="action_btn client__add"
           >
-            <g
-              transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+            <svg
               fill="var(--purple)"
-              stroke="none"
+              width="50px"
+              height="50px"
+              viewBox="0 0 1106.000000 1280.000000"
+              preserveAspectRatio="xMidYMid meet"
             >
-              <path
-                d="M1975 12688 c-61 -121 -60 -116 -39 -245 9 -57 0 -87 -41 -132 -33
+              <g
+                transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                fill="var(--purple)"
+                stroke="none"
+              >
+                <path
+                  d="M1975 12688 c-61 -121 -60 -116 -39 -245 9 -57 0 -87 -41 -132 -33
             -36 -38 -38 -78 -34 -56 7 -133 -31 -178 -87 -18 -22 -38 -40 -45 -40 -31 0
             -55 -36 -64 -98 -7 -48 -16 -71 -39 -98 -17 -19 -33 -44 -35 -57 -2 -12 -9
             -49 -16 -82 -7 -33 -15 -98 -19 -145 -6 -59 -16 -103 -35 -145 -16 -33 -46
@@ -114,11 +115,18 @@
             145 6 18 15 73 22 122 7 50 18 122 25 160 7 39 16 104 20 145 3 41 13 98 20
             125 8 28 19 81 25 119 19 117 74 194 132 182 43 -9 184 11 230 33 24 10 46 20
             49 20 3 1 41 -43 85 -96z"
-              />
-            </g>
-          </svg>
-          <p>Nova prisustva</p>
-        </button>
+                />
+              </g>
+            </svg>
+            <p>Nova prisustva</p>
+          </button>
+
+          <Period
+            @dates="startPeriod"
+            @filter-period="filterItems"
+            :isGrid="true"
+          />
+        </div>
 
         <search-bar
           :searchStr="search"
@@ -171,6 +179,7 @@ import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/utils/Loading.vue";
 import { customLabels, customStyles } from "@/components/utils/pageNav.js";
 import SearchBar from "@/components/utils/SearchBar.vue";
+import Period from "@/components/utils/Period.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
 import searchClients from "@/mixins/searchClients";
@@ -185,6 +194,7 @@ export default {
   components: {
     Loading,
     SearchBar,
+    Period,
   },
 
   mixins: [navigation, navigationSearch, searchClients],
@@ -246,9 +256,27 @@ export default {
       this.filteredClients = mu;
     },
 
+    startPeriod(dateFrom, dateTill) {
+      this.filterItems(dateFrom, dateTill);
+    },
+
+    filterItems(dateFrom, dateTill) {
+      this.dateFrom = dateFrom;
+      this.dateTill = dateTill;
+      let mu = this.getAllAttendances.filter(
+        (year) =>
+          dayjs(year.attend_date).format("YYYY-MM-DD") >=
+            dayjs(dateFrom).format("YYYY-MM-DD") &&
+          dayjs(year.attend_date).format("YYYY-MM-DD") <=
+            dayjs(dateTill).format("YYYY-MM-DD")
+      );
+      this.filteredClients = mu;
+    },
+
     async initItems() {
       if (!this.getAllAttendances.length) await this.fetchAttendances();
       this.filteredClients = this.getAllAttendances;
+      this.startPeriod(this.dateFrom, this.dateTill);
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;

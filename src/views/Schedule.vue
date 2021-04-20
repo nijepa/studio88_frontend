@@ -106,7 +106,7 @@
       <div class="members__list">
         <div class="members__items members__selected">
           <label for="members">Vježbačice u grupi</label>
-          <p v-if="!scheduleInput.members.length">NEMA. Dodaj iz liste</p>
+          <p v-if="!scheduleInput.members.length" class="no__members">NEMA. Dodaj iz liste</p>
           <p
             v-else
             v-for="member in scheduleInput.members"
@@ -388,5 +388,9 @@ export default {
 
 .members__selected {
   min-width: 15em;
+}
+
+.no__members {
+  color: var(--red);
 }
 </style>

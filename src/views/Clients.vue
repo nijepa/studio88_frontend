@@ -107,7 +107,27 @@
           </span>
           <!-- <span>Grupa/Termin</span> -->
           <span>Mobilni</span>
-          <span>Aktivna</span>
+          <span class="sortable" @click="sortItems('active', false)">
+            Aktivna
+            <svg
+              fill="var(--gold-light)"
+              :class="sortOrder ? 'sort__asc' : 'sort__desc'"
+              height="20px"
+              width="20px"
+              viewBox="0 0 512 512"
+              style="enable-background: new 0 0 512 512"
+              xml:space="preserve"
+            >
+              <path
+                d="M497.552,318.828L284.686,128.883c-16.353-14.591-41.019-14.592-57.372,0.001L14.448,318.829
+                C0.994,330.833-3.548,349.477,2.876,366.326c6.425,16.848,22.227,27.735,40.258,27.735h425.731
+                c18.031,0,33.833-10.886,40.258-27.736C515.547,349.477,511.004,330.833,497.552,318.828z M490.062,359.057
+                c-2.692,7.059-9.674,14.603-21.196,14.603H43.133c-11.523,0-18.504-7.543-21.196-14.603c-2.691-7.059-2.505-17.338,6.093-25.009
+                l212.866-189.944c4.305-3.842,9.704-5.763,15.104-5.763c5.399,0,10.8,1.922,15.103,5.762l212.866,189.945
+                C492.567,341.721,492.754,351.998,490.062,359.057z"
+              />
+            </svg>
+          </span>
           <span>Aktivnosti</span>
         </div>
 
@@ -115,7 +135,9 @@
           v-for="client in pageOfItems"
           :key="client._id"
           class="clients__list clients__list_item"
-          :class="setClientSchedule(client._id) === 'Nema grupu' ? 'not_schedule' : ''"
+          :class="
+            setClientSchedule(client._id) === 'Nema grupu' ? 'not_schedule' : ''
+          "
         >
           <p class="client__item" @click="selectClient(client)">
             {{ client.last_name }} , {{ client.first_name }}
@@ -258,7 +280,7 @@ export default {
       this.$router.push("/clientactivity");
     },
 
-/*     mapSchedules() {
+    /*     mapSchedules() {
       let obj,
         arr = [];
       for (let i = 0; i < this.getAllSchedules.length; i++) {
@@ -282,14 +304,19 @@ export default {
       return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
     }, */
 
-    sortItems(field) {
+    sortItems(field, type) {
       this.sortOrder = !this.sortOrder;
       this.filteredClients.sort((a, b) => {
         let x, y;
-        x = a[field].toLowerCase();
-        y = b[field].toLowerCase();
+        if (!type) {
+          x = a[field];
+          y = b[field];
+        } else {
+          x = a[field].toLowerCase();
+          y = b[field].toLowerCase();
+        }
         //return this.sortOrder ? x > y : x < y;
-        if(this.sortOrder) {
+        if (this.sortOrder) {
           return x > y ? -1 : 1;
         } else {
           return x > y ? 1 : -1;
@@ -314,6 +341,7 @@ export default {
       this.filteredClients = this.getAllClients.sort((a, b) =>
         a.last_name.toLowerCase() > b.last_name.toLowerCase() ? 1 : -1
       );
+      if (!this.getAllSchedules.length) await this.fetchSchedules();
       for (let i = 0; i < this.filteredClients.length; i++) {
         this.filteredClients[i].group = this.setClientSchedule(
           this.filteredClients[i]._id
@@ -322,7 +350,6 @@ export default {
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;
-      if (!this.getAllSchedules.length) await this.fetchSchedules();
     },
   },
 

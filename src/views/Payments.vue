@@ -271,7 +271,7 @@ export default {
     async initItems() {
       if (!this.getAllPayments.length) await this.fetchPayments();
       this.filteredClients = this.getAllPayments;
-      this.startPeriod(this.dateFrom, this.dateTill)
+      this.startPeriod(this.dateFrom, this.dateTill);
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)
         this.pageSize = this.getClientsPageSize;

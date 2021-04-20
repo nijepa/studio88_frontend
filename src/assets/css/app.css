@@ -203,9 +203,8 @@ label {
   margin: 0 0.5em;
 }
 
-.members_input {
-  grid-template-columns: auto 1fr;
-  align-items: baseline;
+.members__att {
+  grid-template-columns: 1fr .5fr repeat(2, auto) !important;
 }
 
 .members_input {
@@ -583,6 +582,7 @@ input {
   grid-template-columns: 1fr auto auto 1fr;
   min-width: 350px;
   cursor: pointer;
+  text-align: left;
 }
 
 .payments__head {

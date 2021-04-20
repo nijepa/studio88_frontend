@@ -204,7 +204,7 @@
                 v-for="member in pageOfItems"
                 :key="member._id"
                 name="member"
-                class="members_input att_members"
+                class="members_input att_members members__att"
               >
                 <div class="att_member">
                   {{
