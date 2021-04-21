@@ -4,7 +4,12 @@
     <loading pic="loading1" v-if="loadingState" key="1" />
 
     <div v-else class="lists__wrapper" key="2">
-      <form @submit.prevent="addClient()" method="post" class="user__form">
+      <form
+        @submit.prevent="addClient()"
+        method="post"
+        class="user__form"
+        v-if="!isCamera"
+      >
         <h3 v-if="!getOneClient._id" class="new_item item__header">
           <svg
             version="1.0"
@@ -138,7 +143,7 @@
 
         <div class="input__group active__date">
           <CheckboxCustom
-            :checkClass="'custom__check input__field'"
+            :checkClass="'custom__check input__field client__active'"
             :label="'Aktivna'"
             :modelValue="clientInput.active"
             v-model="clientInput.active"
@@ -155,6 +160,43 @@
                 v-model="clientInput.active"
               />
             </div> -->
+          <div class="client__img_wrapper">
+            <img :src="clientInput.picture" alt="slika" class="client__img" />
+            <button
+              @click.prevent="isCamera = true"
+              class="action_btn client__add for_mobile"
+            >
+              <svg
+                x="0px"
+                y="0px"
+                width="30px"
+                height="30px"
+                fill="var(--purple)"
+                viewBox="0 0 569.859 569.858"
+                style="enable-background: new 0 0 569.859 569.858"
+                xml:space="preserve"
+              >
+                <path
+                  d="M155.707,0c-21.239,0-38.422,17.212-38.422,38.441v492.976c0,21.238,17.184,38.441,38.422,38.441h258.427
+                  c21.219,0,38.439-17.203,38.439-38.441V38.441C452.574,17.212,435.353,0,414.134,0H155.707z M284.274,546.392
+                  c-13.368,0-24.203-10.815-24.203-24.184c0-13.359,10.834-24.184,24.203-24.184c13.331,0,24.184,10.824,24.184,24.184
+                  C308.458,535.576,297.605,546.392,284.274,546.392z M400.689,453.521c0,5.843-4.744,10.586-10.586,10.586H179.728
+                  c-5.843,0-10.586-4.743-10.586-10.586V74.004c0-5.843,4.743-10.576,10.586-10.576h210.375c5.842,0,10.586,4.733,10.586,10.576
+                  V453.521z"
+                />
+                <path
+                  d="M336.476,194.511h-55.242v0.966c0,1.711-1.396,3.108-3.089,3.108h-43.242c-1.711,0-3.088-1.396-3.088-3.108v-0.88
+                  c-13.426,0.803-24.088,11.924-24.088,25.551V323.27c0,14.152,11.475,25.628,25.628,25.628h103.131
+                  c14.143,0,25.627-11.476,25.627-25.628V220.138C362.103,205.986,350.619,194.511,336.476,194.511z M227.56,229.223
+                  c-1.702,0-3.079-1.396-3.079-3.099v-9.706c0-1.712,1.386-3.098,3.079-3.098h43.251c1.702,0,3.089,1.396,3.089,3.098v9.706
+                  c0,1.702-1.396,3.099-3.089,3.099H227.56z M284.906,318.689c-20.282,0-36.729-16.438-36.729-36.739
+                  c0-20.282,16.447-36.72,36.729-36.72c20.281,0,36.738,16.438,36.738,36.72C321.644,302.251,305.187,318.689,284.906,318.689z"
+                />
+              </svg>
+              Slikaj
+            </button>
+          </div>
+
           <div class="input__field">
             <label for="date_start">Datum upisa</label>
             <datepicker
@@ -164,6 +206,14 @@
               :language="sr"
             >
             </datepicker>
+          </div>
+
+          <div class="input__field">
+            <div class="termin">
+              <label>Grupa / Termin :</label>
+              <p>{{ schedule.length ? schedule[0].title : "" }}</p>
+              <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
+            </div>
           </div>
         </div>
 
@@ -261,11 +311,11 @@
           </div>
           <div class="">
             <div v-if="getOneClient._id" class="">
-              <div class="termin">
+ <!--              <div class="termin">
                 <label>Grupa / Termin :</label>
                 <p>{{ schedule.length ? schedule[0].title : "" }}</p>
                 <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
-              </div>
+              </div> -->
 
               <button
                 type="submit"
@@ -307,6 +357,7 @@
           />
         </div>
       </form>
+      <Camera v-else @cam-closed="isCamera = false" />
     </div>
     <!-- </transition> -->
   </div>
@@ -319,6 +370,7 @@ import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
+import Camera from "@/components/Camera.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import mapSchedules from "@/mixins/mapSchedules";
 import Datepicker from "vuejs-datepicker";
@@ -334,6 +386,7 @@ export default {
     DeleteButton,
     Tooltip,
     CheckboxCustom,
+    Camera,
   },
 
   mixins: [actionsNotify, mapSchedules],
@@ -359,6 +412,7 @@ export default {
         active: "",
       },
       appeared: false,
+      isCamera: false,
     };
   },
 
@@ -452,7 +506,7 @@ export default {
       return arr;
     },
 
-/*     mapSchedules() {
+    /*     mapSchedules() {
       let obj,
         arr = [];
       for (let i = 0; i < this.getAllSchedules.length; i++) {
@@ -504,4 +558,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.client__img_wrapper {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+  gap: 1em;
+}
+
+.client__img {
+  width: 100px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.client__active {
+  align-self: center;
+}
+</style>
