@@ -5,8 +5,8 @@
 
     <div v-else class="lists__wrapper" key="2">
       <form
-        @submit.prevent="addClient()"
         method="post"
+        @submit.prevent="addClient()"
         class="user__form"
         v-if="!isCamera"
       >
@@ -357,7 +357,7 @@
           />
         </div>
       </form>
-      <Camera v-else @cam-closed="isCamera = false" />
+      <Camera v-else @cam-closed="handleCam" />
     </div>
     <!-- </transition> -->
   </div>
@@ -441,6 +441,10 @@ export default {
       "clearErrors",
       "setLoadingState",
     ]),
+
+    handleCam() {
+      this.isCamera = false;
+    },
 
     async addClient() {
       this.setLoadingState(true);

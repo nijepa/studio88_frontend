@@ -1,7 +1,7 @@
 <template>
   <div class="user__form">
     <div class="camera">
-      <button
+<!--       <button
         type="submit"
         @click.prevent="closeCamera"
         class="action_btn client__add for_mobile"
@@ -65,14 +65,21 @@
           </g>
         </svg>
         <p>Nazad</p>
-      </button>
+      </button> -->
       <video id="video" autoplay class="video"></video>
       <loading pic="loading1" v-if="loadingState" key="1" />
-      <div v-else class="" key="2">
+
+      <form
+        method="post"
+        @submit.prevent="savePicture(pic)"
+        v-else
+        class=""
+        key="2"
+      >
         <button
           id="snap"
           class="action_btn client__add for_mobile for__camera"
-          @click="takePicture"
+          @click.prevent="takePicture"
         >
           <svg
             x="0px"
@@ -101,7 +108,7 @@
           Slikaj
         </button>
         <canvas id="canvas" width="350" height="200" class="snap"></canvas>
-        <button
+        <!--         <button
           type="submit"
           class="action_btn save__btn for__camera"
           @click.prevent="savePicture(pic)"
@@ -185,16 +192,19 @@
             </g>
           </svg>
           <p>Sačuvaj</p>
-        </button>
-      </div>
+        </button> -->
+      </form>
     </div>
-    
+    <div class="modify_btns">
+      <action-buttons @canceled="handleCancel" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
+import ActionButtons from "@/components/utils/ActionButtons.vue";
 import Loading from "@/components/utils/Loading.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 
@@ -203,13 +213,13 @@ export default {
 
   components: {
     Loading,
+    ActionButtons,
   },
 
   mixins: [actionsNotify],
 
   data() {
     return {
-      //url: "https://api.cloudinary.com/v1_1/nijepa/image/upload",
       url: process.env.VUE_APP_CLOUDINARY,
       pic: null,
       clientInput: {
@@ -226,11 +236,14 @@ export default {
   methods: {
     ...mapActions(["clientUpdate", "clearErrors", "setLoadingState"]),
 
+    handleCancel() {
+      this.closeCamera();
+    },
+
     async updateClientPhoto() {
       //this.setLoadingState(true);
       await this.clientUpdate(this.clientInput);
       //await this.fetchClients();
-      this.setLoadingState(false);
       if (this.getErrors.length) {
         this.$toast.error(
           "Greška! " + this.getErrors,
@@ -244,7 +257,6 @@ export default {
           "OK",
           this.notificationSystem.options.success
         );
-        this.closeCamera();
       }
     },
 
@@ -253,13 +265,13 @@ export default {
       const context = canvas.getContext("2d");
       const video = document.getElementById("video");
 
-/*       const ratio = this.calculateProportionalAspectRatio(
+      /*       const ratio = this.calculateProportionalAspectRatio(
         video.scrollWidth,
         video.scrollHeight,
         canvas.width,
         canvas.height
       ); */
-      //context.drawImage(video,0,0,video.scrollWidth*ratio,video.scrollHeight*ratio); 
+      //context.drawImage(video,0,0,video.scrollWidth*ratio,video.scrollHeight*ratio);
 
       context.drawImage(video, 0, 0, 350, 200);
       this.pic = canvas;
@@ -282,7 +294,9 @@ export default {
       formData.append("file", image.src);
       formData.append("upload_preset", unsignedUploadPreset);
       await this.saveClientPhoto(formData);
-      this.updateClientPhoto();
+      await this.updateClientPhoto();
+      await this.setLoadingState(false);
+      this.closeCamera();
     },
 
     async saveClientPhoto(clientData) {
@@ -327,7 +341,7 @@ export default {
 <style>
 .camera {
   display: grid;
-  margin: .5em;
+  margin: 0.5em;
 }
 
 .video {
