@@ -67,6 +67,7 @@
         <p>Nazad</p>
       </button> -->
       <video id="video" autoplay class="video"></video>
+
       <loading pic="loading1" v-if="loadingState" key="1" />
 
       <form
@@ -193,11 +194,12 @@
           </svg>
           <p>Sačuvaj</p>
         </button> -->
+        <div class="modify_btns">
+          <action-buttons @canceled="handleCancel" />
+        </div>
       </form>
     </div>
-    <div class="modify_btns">
-      <action-buttons @canceled="handleCancel" />
-    </div>
+    
   </div>
 </template>
 
@@ -341,7 +343,7 @@ export default {
 <style>
 .camera {
   display: grid;
-  margin: 0.5em;
+  /* margin: 0.5em; */
 }
 
 .video {
