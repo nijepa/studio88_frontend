@@ -129,11 +129,7 @@ export default {
         scaledWidth,
         scaledHeight
       );
-      console.log(video)
-console.log(canvasWidth)
-console.log(canvasHeight)
-console.log(scaledWidth)
-console.log(scaledHeight)
+
       //context.drawImage(video, 0, 0, 350, 350);
       this.pic = canvas;
     },
@@ -214,7 +210,9 @@ console.log(scaledHeight)
         .getUserMedia({ video: true })
         .then(function (stream) {
           //video.src = window.URL.createObjectURL(stream);
+          
           video.srcObject = stream;
+          video.facingMode = "environment";
           video.play();
         });
     }

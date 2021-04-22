@@ -716,7 +716,7 @@ div.clients__list:nth-child(odd) {
 
 .clients__list:hover .client__pic {
   transform: scale(1.2);
-} 
+}
 
 .client__item {
   cursor: pointer;
@@ -1348,5 +1348,19 @@ hr {
 
   .prices {
     margin-top: 1em;
+  }
+
+  ::-webkit-input-placeholder {
+    font-size: 0.6em;
+  }
+
+  ::-moz-placeholder {
+    font-size: 0.6em;
+  }
+
+  /* firefox 19+ */
+
+  :-ms-input-placeholder {
+    font-size: 0.6em;
   }
 }
