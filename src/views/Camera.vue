@@ -45,7 +45,12 @@
             Slikaj
           </button>
 
-          <canvas id="canvas" width="115px" height="150px"  class="snap"></canvas>
+          <canvas
+            id="canvas"
+            width="115px"
+            height="150px"
+            class="snap"
+          ></canvas>
 
           <div class="modify_btns">
             <action-buttons @canceled="handleCancel" />
@@ -205,10 +210,9 @@ export default {
     const video = document.getElementById("video");
     // Get access to the camera!
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      video.facingMode = { exact: 'environment' };
       // Not adding `{ audio: true }` since we only want video now
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ video: { facingMode: { exact: "environment" } } })
         .then(function (stream) {
           //video.src = window.URL.createObjectURL(stream);
           video.srcObject = stream;
