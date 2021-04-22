@@ -1,7 +1,7 @@
 <template>
   <div class="user__form">
     <div class="camera">
-<!--       <button
+      <!--       <button
         type="submit"
         @click.prevent="closeCamera"
         class="action_btn client__add for_mobile"
@@ -108,7 +108,7 @@
           </svg>
           Slikaj
         </button>
-        <canvas id="canvas" width="350" height="200" class="snap"></canvas>
+        <canvas id="canvas" width="350" height="350" class="snap"></canvas>
         <!--         <button
           type="submit"
           class="action_btn save__btn for__camera"
@@ -199,7 +199,6 @@
         </div>
       </form>
     </div>
-    
   </div>
 </template>
 
@@ -267,23 +266,34 @@ export default {
       const context = canvas.getContext("2d");
       const video = document.getElementById("video");
 
-      /*       const ratio = this.calculateProportionalAspectRatio(
-        video.scrollWidth,
-        video.scrollHeight,
-        canvas.width,
-        canvas.height
-      ); */
-      //context.drawImage(video,0,0,video.scrollWidth*ratio,video.scrollHeight*ratio);
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
 
-      context.drawImage(video, 0, 0, 350, 200);
+      // Set image size, must use image.naturalWidth and image.naturalHeight -- not image.width and image.height.
+      const imageWidth = video.videoWidth;
+      const imageHeight = video.videoHeight;
+
+      // Set scale to fit image to canvas,
+      const scale = Math.min(
+        canvasWidth / imageWidth,
+        canvasHeight / imageHeight
+      );
+
+      // Set new image dimensions.
+      const scaledWidth = imageWidth * scale;
+      const scaledHeight = imageHeight * scale;
+
+      // Draw image in center of canvas.
+      context.drawImage(
+        video,
+        (canvasWidth - scaledWidth) / 2,
+        (canvasHeight - scaledHeight) / 2,
+        scaledWidth,
+        scaledHeight
+      );
+
+      //context.drawImage(video, 0, 0, 350, 350);
       this.pic = canvas;
-    },
-
-    // Calculate the ratio that fills the canvas
-    // but doesn't stretch the image pixels
-    // (This may cause some pixels to be clipped)
-    calculateProportionalAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
-      return Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
     },
 
     async savePicture(canvas) {
@@ -348,10 +358,19 @@ export default {
 
 .video {
   width: 350px;
-  height: 200px;
+  height: 350px;
+  object-fit: cover;
 }
 
 .for__camera {
   justify-self: center;
+}
+
+@media (max-width: 599px) {
+  .video {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
 }
 </style>

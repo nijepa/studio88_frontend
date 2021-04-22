@@ -506,6 +506,7 @@ export default {
 }
 .client__pic {
   height: 40px;
+  width: 40px;
   border-radius: 50%;
   justify-self: center;
 }

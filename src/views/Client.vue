@@ -196,25 +196,6 @@
               Slikaj
             </button>
           </div>
-
-          <div class="input__field">
-            <label for="date_start">Datum upisa</label>
-            <datepicker
-              v-model="clientInput.date_started"
-              placeholder="datum upisa"
-              class="login_input user_input"
-              :language="sr"
-            >
-            </datepicker>
-          </div>
-
-          <div class="input__field">
-            <div class="termin">
-              <label>Grupa / Termin :</label>
-              <p>{{ schedule.length ? schedule[0].title : "" }}</p>
-              <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
-            </div>
-          </div>
         </div>
 
         <div class="input__group">
@@ -241,6 +222,27 @@
               class="login_input user_input"
               v-model="clientInput.last_name"
             />
+          </div>
+        </div>
+
+        <div class="input__group">
+          <div class="input__field">
+            <label for="date_start">Datum upisa</label>
+            <datepicker
+              v-model="clientInput.date_started"
+              placeholder="datum upisa"
+              class="login_input user_input"
+              :language="sr"
+            >
+            </datepicker>
+          </div>
+
+          <div class="input__field">
+            <div class="termin">
+              <label>Grupa / Termin :</label>
+              <p>{{ schedule.length ? schedule[0].title : "" }}</p>
+              <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
+            </div>
           </div>
         </div>
 
@@ -572,7 +574,7 @@ export default {
 
 .client__img {
   width: 100px;
-  height: 70px;
+  height: 100px;
   border-radius: 50%;
 }
 

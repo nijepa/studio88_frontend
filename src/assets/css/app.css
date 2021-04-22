@@ -703,7 +703,7 @@ div.activities__list:nth-child(even):hover {
 }
 
 .clients__list_item {
-  grid-template-columns: .7fr 1.5fr 1.3fr repeat(3, 1fr) !important;
+  grid-template-columns: .5fr 1.5fr 1.3fr repeat(3, 1fr) !important;
 }
 
 div.clients__list:nth-child(odd) {
@@ -717,7 +717,7 @@ div.clients__list:nth-child(odd) {
 .client__item {
   cursor: pointer;
   border-radius: 1em;
-  padding: 1em;
+  padding: .5em;
   margin: 0;
   text-align: left;
 }
