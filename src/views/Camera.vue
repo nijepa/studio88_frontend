@@ -45,7 +45,7 @@
             Slikaj
           </button>
 
-          <canvas id="canvas" class="snap"></canvas>
+          <canvas id="canvas" width="115px" height="150px"  class="snap"></canvas>
 
           <div class="modify_btns">
             <action-buttons @canceled="handleCancel" />
@@ -108,8 +108,8 @@ export default {
       const canvasHeight = canvas.height;
 
       // Set image size, must use image.naturalWidth and image.naturalHeight -- not image.width and image.height.
-      const imageWidth = video.videoWidth;
-      const imageHeight = video.videoHeight;
+      const imageWidth = video.clientWidth;
+      const imageHeight = video.clientHeight;
 
       // Set scale to fit image to canvas,
       const scale = Math.min(
@@ -129,7 +129,11 @@ export default {
         scaledWidth,
         scaledHeight
       );
-
+      console.log(video)
+console.log(canvasWidth)
+console.log(canvasHeight)
+console.log(scaledWidth)
+console.log(scaledHeight)
       //context.drawImage(video, 0, 0, 350, 350);
       this.pic = canvas;
     },
@@ -226,12 +230,12 @@ export default {
 }
 
 .video {
-  width: 100%;
-  /* width: 350px;
-  height: 350px; */
+  /* width: 100%; */
+  width: 350px;
+  /* height: 350px; */
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 .for__camera {
