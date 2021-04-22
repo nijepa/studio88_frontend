@@ -714,6 +714,10 @@ div.clients__list:nth-child(odd) {
   background: var(--purple-light);
 }
 
+.clients__list:hover .client__pic {
+  transform: scale(1.2);
+} 
+
 .client__item {
   cursor: pointer;
   border-radius: 1em;

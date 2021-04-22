@@ -419,30 +419,6 @@ export default {
       this.$router.push("/clientactivity");
     },
 
-    /*     mapSchedules() {
-      let obj,
-        arr = [];
-      for (let i = 0; i < this.getAllSchedules.length; i++) {
-        for (let j = 0; j < this.getAllSchedules[i].members.length; j++) {
-          obj = {
-            title: this.getAllSchedules[i].title,
-            startTime: this.getAllSchedules[i].startTime,
-            client: this.getAllSchedules[i].members[j].client,
-          };
-          arr.push(obj);
-        }
-      }
-      return arr;
-    }, */
-
-    /* setClientSchedule(id) {
-      let sche = "";
-      sche = this.mapSchedules().filter((post) => {
-        return post.client._id == id;
-      });
-      return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
-    }, */
-
     sortItems(field, type) {
       this.sortOrder = !this.sortOrder;
       this.filteredClients.sort((a, b) => {
@@ -512,7 +488,6 @@ export default {
 }
 .client__pic {
   height: 50px;
-  /* width: 80px; */
   border-radius: 50%;
   justify-self: center;
   transition: all .4s ease;

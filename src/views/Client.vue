@@ -441,12 +441,6 @@
           </div>
           <div class="">
             <div v-if="getOneClient._id" class="">
- <!--              <div class="termin">
-                <label>Grupa / Termin :</label>
-                <p>{{ schedule.length ? schedule[0].title : "" }}</p>
-                <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
-              </div> -->
-
               <button
                 type="submit"
                 @click.prevent="newClient()"
@@ -487,7 +481,6 @@
           />
         </div>
       </form>
-      <!-- <Camera v-else @cam-closed="handleCam" /> -->
     </div>
     <!-- </transition> -->
   </div>
@@ -500,7 +493,6 @@ import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-//import Camera from "@/components/Camera.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import mapSchedules from "@/mixins/mapSchedules";
 import Datepicker from "vuejs-datepicker";
@@ -516,7 +508,6 @@ export default {
     DeleteButton,
     Tooltip,
     CheckboxCustom,
-    //Camera,
   },
 
   mixins: [actionsNotify, mapSchedules],
@@ -640,22 +631,6 @@ export default {
       return arr;
     },
 
-    /*     mapSchedules() {
-      let obj,
-        arr = [];
-      for (let i = 0; i < this.getAllSchedules.length; i++) {
-        for (let j = 0; j < this.getAllSchedules[i].members.length; j++) {
-          obj = {
-            title: this.getAllSchedules[i].title,
-            startTime: this.getAllSchedules[i].startTime,
-            client: this.getAllSchedules[i].members[j].client,
-          };
-          arr.push(obj);
-        }
-      }
-      return arr;
-    }, */
-
     async newClient() {
       this.setLoadingState(true);
       this.fetchFromForm("client");
@@ -708,9 +683,17 @@ export default {
 }
 
 .client__img {
-  /* width: 100px; */
   height: 100px;
-  /*  */border-radius: 50%;
+  width: auto;
+  border-radius: 50%;
+  transition: all .4s ease;
+}
+
+.client__img:hover {
+  transform: scale(1.5);
+}
+.client__img:active {
+  transform: scale(1.5);
 }
 
 .client__active {
