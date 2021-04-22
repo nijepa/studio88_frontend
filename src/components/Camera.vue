@@ -296,7 +296,7 @@ export default {
       
       await this.saveClientPhoto(formData);
       await this.updateClientPhoto();
-      
+
       await this.setLoadingState(false);
       this.closeCamera();
     },
@@ -380,7 +380,7 @@ export default {
 @media (max-width: 599px) {
   .video {
     width: 100%;
-    height: 80%;
+    height: 60%;
     margin: 0;
   }
 }
