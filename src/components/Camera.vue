@@ -108,7 +108,7 @@
           </svg>
           Slikaj
         </button>
-        <canvas id="canvas" width="350" height="350" class="snap"></canvas>
+        <canvas id="canvas" class="snap"></canvas>
         <!--         <button
           type="submit"
           class="action_btn save__btn for__camera"
@@ -226,7 +226,6 @@ export default {
       clientInput: {
         picture: "",
       },
-      picData: {},
     };
   },
 
@@ -239,26 +238,6 @@ export default {
 
     handleCancel() {
       this.closeCamera();
-    },
-
-    async updateClientPhoto() {
-      //this.setLoadingState(true);
-      await this.clientUpdate(this.clientInput);
-      //await this.fetchClients();
-      if (this.getErrors.length) {
-        this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
-          this.notificationSystem.options.error
-        );
-        this.clearErrors();
-      } else {
-        this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
-          this.notificationSystem.options.success
-        );
-      }
     },
 
     takePicture() {
@@ -297,6 +276,15 @@ export default {
     },
 
     async savePicture(canvas) {
+      this.setLoadingState(true);
+      if (!canvas) {
+        this.$toast.error(
+          " ",
+          "Prvo slikaj!",
+          this.notificationSystem.options.error
+        );
+        return
+      }
       // Converts canvas to an image
       let image = new Image();
       image.src = canvas.toDataURL("image/png");
@@ -305,14 +293,15 @@ export default {
       const formData = new FormData();
       formData.append("file", image.src);
       formData.append("upload_preset", unsignedUploadPreset);
+      
       await this.saveClientPhoto(formData);
       await this.updateClientPhoto();
+      
       await this.setLoadingState(false);
       this.closeCamera();
     },
 
     async saveClientPhoto(clientData) {
-      this.setLoadingState(true);
       await axios
         .post(this.url, clientData)
         .then((response) => {
@@ -325,6 +314,26 @@ export default {
             console.log = error;
           }
         });
+    },
+
+    async updateClientPhoto() {
+      //this.setLoadingState(true);
+      await this.clientUpdate(this.clientInput);
+      //await this.fetchClients();
+      if (this.getErrors.length) {
+        this.$toast.error(
+          "Greška! " + this.getErrors,
+          "OK",
+          this.notificationSystem.options.error
+        );
+        this.clearErrors();
+      } else {
+        this.$toast.success(
+          "Uspješno sačuvano!",
+          "OK",
+          this.notificationSystem.options.success
+        );
+      }
     },
 
     closeCamera() {
@@ -359,6 +368,8 @@ export default {
 .video {
   width: 350px;
   height: 350px;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
   object-fit: cover;
 }
 
@@ -369,7 +380,7 @@ export default {
 @media (max-width: 599px) {
   .video {
     width: 100%;
-    height: 100%;
+    height: 80%;
     margin: 0;
   }
 }

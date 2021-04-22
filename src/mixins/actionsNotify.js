@@ -7,7 +7,7 @@ export default {
             theme: "dark",
             icon: "icon-person",
             position: "topCenter",
-            progressBarColor: "rgb(0, 255, 184)",
+            progressBarColor: "var(--purple-dark)",
             /* buttons: [
 						  [
 						    "<button>Ok</button>",
@@ -55,6 +55,7 @@ export default {
           },
           error: {
             position: "center",
+            timeout: 2000,
           },
           question: {
             timeout: 0,
