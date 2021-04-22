@@ -8,7 +8,6 @@
         method="post"
         @submit.prevent="addClient()"
         class="user__form"
-        v-if="!isCamera"
       >
         <h3 v-if="!getOneClient._id" class="new_item item__header">
           <svg
@@ -292,7 +291,7 @@
             </svg>
           </div>
             <button
-              @click.prevent="isCamera = true"
+              @click.prevent="openCamera"
               class="action_btn client__add"
             >
               <svg
@@ -488,7 +487,7 @@
           />
         </div>
       </form>
-      <Camera v-else @cam-closed="handleCam" />
+      <!-- <Camera v-else @cam-closed="handleCam" /> -->
     </div>
     <!-- </transition> -->
   </div>
@@ -501,7 +500,7 @@ import ActionButtons from "@/components/utils/ActionButtons.vue";
 import DeleteButton from "@/components/utils/DeleteButton.vue";
 import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import Camera from "@/components/Camera.vue";
+//import Camera from "@/components/Camera.vue";
 import actionsNotify from "@/mixins/actionsNotify";
 import mapSchedules from "@/mixins/mapSchedules";
 import Datepicker from "vuejs-datepicker";
@@ -517,7 +516,7 @@ export default {
     DeleteButton,
     Tooltip,
     CheckboxCustom,
-    Camera,
+    //Camera,
   },
 
   mixins: [actionsNotify, mapSchedules],
@@ -664,6 +663,13 @@ export default {
       this.$router.push("/clientactivity");
     },
 
+    async openCamera() {
+      this.setLoadingState(true);
+      this.fetchFromForm("client");
+      //await this.clientClear();
+      this.$router.push("/camera");
+    },
+
     onAppeared() {
       this.appeared = true;
     },
@@ -702,8 +708,8 @@ export default {
 }
 
 .client__img {
-  width: 100px;
-  height: 60px;
+  /* width: 100px; */
+  height: 100px;
   /*  */border-radius: 50%;
 }
 

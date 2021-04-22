@@ -38,6 +38,12 @@ const routes = [
           import(/* webpackChunkName: "client" */ "../views/Client.vue"),
       },
       {
+        path: "/camera",
+        name: "Camera",
+        component: () =>
+          import(/* webpackChunkName: "client" */ "../views/Camera.vue"),
+      },
+      {
         path: "/clientactivity",
         name: "ClientActivity",
         component: () =>
