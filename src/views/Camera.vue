@@ -236,7 +236,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["clientUpdate", "clearErrors", "setLoadingState"]),
+    ...mapActions(["fetchClients", "clientUpdate", "clearErrors", "setLoadingState"]),
 
     handleCancel() {
       this.closeCamera();
@@ -299,6 +299,7 @@ export default {
       
       await this.saveClientPhoto(formData);
       await this.updateClientPhoto();
+      await this.fetchClients();
 
       await this.setLoadingState(false);
       this.closeCamera();
