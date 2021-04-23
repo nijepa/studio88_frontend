@@ -189,8 +189,9 @@ export default {
 
     getPreviousMonday() {
       let date = new Date();
-      let firstDay = new Date(date.getFullYear(), date.getMonth(), 2);
-      return new Date(firstDay).toISOString().slice(0, 10);
+      return new Date(date.getFullYear(), date.getMonth(), 2)
+        .toISOString()
+        .slice(0, 10);
     },
 
     async selectYear() {
