@@ -41,14 +41,14 @@ const routes = [
         path: "/camera",
         name: "Camera",
         component: () =>
-          import(/* webpackChunkName: "client" */ "../views/Camera.vue"),
+          import(/* webpackChunkName: "camera" */ "../views/Camera.vue"),
       },
       {
         path: "/clientactivity",
         name: "ClientActivity",
         component: () =>
           import(
-            /* webpackChunkName: "client" */ "../views/ClientActivity.vue"
+            /* webpackChunkName: "activity" */ "../views/ClientActivity.vue"
           ),
       },
       {
