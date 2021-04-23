@@ -6,7 +6,7 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 const state = {
   payment: {},
   payments: [],
-  period: {}
+  period: {},
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */

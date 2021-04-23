@@ -29,10 +29,10 @@ import dayjs from "dayjs";
 //import srb from "dayjs/locale/sr";
 
 export default {
-  name: 'Period',
+  name: "Period",
 
   components: {
-    Datepicker
+    Datepicker,
   },
 
   props: {
@@ -44,20 +44,16 @@ export default {
       sr: sr,
       yearSelected: new Date().getFullYear(),
       dateFrom: this.getPreviousMonday(),
-      dateTill: new Date().toISOString().slice(0, 10)
+      dateTill: new Date().toISOString().slice(0, 10),
     };
   },
 
   computed: {
-    ...mapGetters([
-      "getPeriod",
-    ]),
+    ...mapGetters(["getPeriod"]),
   },
 
   methods: {
-    ...mapActions([
-      "fetchPeriod",
-    ]),
+    ...mapActions(["fetchPeriod"]),
 
     customFormatter(date) {
       return dayjs(date).format("DD MMM YYYY");
@@ -72,16 +68,16 @@ export default {
     async selectPeriod() {
       const period = {
         dateFrom: this.dateFrom,
-        dateTill: this.dateTill
-      }
+        dateTill: this.dateTill,
+      };
       await this.fetchPeriod(period);
-      this.$emit('filter-period', this.dateFrom, this.dateTill);
+      this.$emit("filter-period", this.dateFrom, this.dateTill);
     },
 
     isEmpty(obj) {
-      for(var i in obj) return false; 
+      for (var i in obj) return false;
       return true;
-    }
+    },
   },
 
   mounted() {
@@ -89,15 +85,15 @@ export default {
       this.dateFrom = this.getPeriod.dateFrom;
       this.dateTill = this.getPeriod.dateTill;
     }
-    this.$emit('dates', this.dateFrom, this.dateTill)
+    this.$emit("dates", this.dateFrom, this.dateTill);
   },
 };
 </script>
 
 <style>
-  .is__grid  {
-    display: grid;
-    font-size: 1.2em;
-    width: auto !important;
-  }
+.is__grid {
+  display: grid;
+  font-size: 1.2em;
+  width: auto !important;
+}
 </style>

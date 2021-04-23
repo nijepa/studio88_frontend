@@ -55,16 +55,7 @@
         </div>
 
         <div class="input__field dani">
-          <!-- <label for="day">Dani treninga</label> -->
           <div v-for="day in days" :key="day.id">
-            <!-- <label :for="'dan' + day" class="dan">{{ day }}</label>
-              <input
-                :id="'dan' + day"
-                type="checkbox"
-                class="dan_input"
-                v-model="scheduleInput.weekday"
-                :value="day"
-              /> -->
             <CheckboxCustom
               :checkClass="'dan'"
               :label="day"
@@ -106,7 +97,9 @@
       <div class="members__list">
         <div class="members__items members__selected">
           <label for="members">Vježbačice u grupi</label>
-          <p v-if="!scheduleInput.members.length" class="no__members">NEMA. Dodaj iz liste</p>
+          <p v-if="!scheduleInput.members.length" class="no__members">
+            NEMA. Dodaj iz liste
+          </p>
           <p
             v-else
             v-for="member in scheduleInput.members"
@@ -376,8 +369,8 @@ export default {
   },
 
   async destroyed() {
-    await this.fetchClients()
-  }
+    await this.fetchClients();
+  },
 };
 </script>
 

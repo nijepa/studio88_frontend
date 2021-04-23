@@ -33,9 +33,8 @@ export default {
       let scrollObject = document.getElementById("scroll");
       if (scrollTop > 100) {
         document.querySelector(".scrol").style.display = "block";
-        scrollObject.style.transform="rotate("+`${scrollSpeed}`+"deg)";
-      }
-      else document.querySelector(".scrol").style.display = "none";
+        scrollObject.style.transform = "rotate(" + `${scrollSpeed}` + "deg)";
+      } else document.querySelector(".scrol").style.display = "none";
     });
   },
   /* 

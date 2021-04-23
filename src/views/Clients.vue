@@ -277,7 +277,7 @@
               </svg>
             </div>
           </div>
-          
+
           <p class="client__item" @click="selectClient(client)">
             {{ client.last_name }} , {{ client.first_name }}
           </p>
@@ -296,10 +296,6 @@
               v-model="client.active"
             />
           </div>
-          <!--             <label class="client__item client__active_check" @click="selectClient(client)"
-              >.
-              <input type="checkbox" class="" v-model="client.active" />
-            </label> -->
 
           <button
             type="submit"
@@ -479,19 +475,23 @@ export default {
 .client__active_check {
   text-align: center;
 }
+
 .client__check {
   pointer-events: none;
   /* opacity: 0.4; */
 }
+
 .client__pic_wrapper {
   cursor: pointer;
 }
+
 .client__pic {
   height: 50px;
   border-radius: 50%;
   justify-self: center;
-  transition: all .4s ease;
+  transition: all 0.4s ease;
 }
+
 .client__pic:hover {
   transform: scale(1.3);
 }

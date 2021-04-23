@@ -81,7 +81,9 @@
             @click="selectExpense(expense)"
             class="clients__list expense__list"
           >
-            <p class="client__item">{{ expense.expense_year }} / {{ expense.expense_month }}</p>
+            <p class="client__item">
+              {{ expense.expense_year }} / {{ expense.expense_month }}
+            </p>
             <!-- <p class="client__item">{{ expense.expense_month }}</p> -->
             <p class="client__item">{{ expense.expense_title }}</p>
             <p class="client__item">{{ expense.expense_date | formatDate }}</p>
@@ -213,9 +215,7 @@ export default {
       if (!this.getAllExpenses.length) await this.fetchExpenses();
       this.filteredClients = this.getAllExpenses.sort();
       this.filteredClients.sort((a, b) =>
-        a.expense_date > b.expense_date
-          ? -1
-          : 1
+        a.expense_date > b.expense_date ? -1 : 1
       );
       if (this.getClientsPage !== 1) this.initialPage = this.getClientsPage;
       if (this.getClientsPageSize !== 10)

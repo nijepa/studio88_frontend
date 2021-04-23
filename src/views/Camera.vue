@@ -56,10 +56,7 @@
                 id=""
                 style="display: none"
               />
-              <button
-                @click.prevent="browsePicture"
-                class="browse__btn"
-              >
+              <button @click.prevent="browsePicture" class="browse__btn">
                 <svg
                   x="0px"
                   y="0px"
@@ -123,7 +120,7 @@ export default {
       clientInput: {
         picture: "",
       },
-      ima: null
+      ima: null,
     };
   },
 
@@ -173,7 +170,6 @@ export default {
         scaledWidth,
         scaledHeight
       );
-
       //context.drawImage(video, 0, 0, 350, 350);
       this.pic = canvas;
     },
@@ -249,9 +245,9 @@ export default {
       const context = canvas.getContext("2d");
       let base_image = new Image();
       base_image.src = URL.createObjectURL(event.target.files[0]);
-      base_image.onload = function(){
+      base_image.onload = function () {
         context.drawImage(base_image, 0, 0, 115, 150);
-      }
+      };
       this.pic = canvas;
     },
 
@@ -279,16 +275,16 @@ export default {
                 //video.src = window.URL.createObjectURL(stream);
                 video.srcObject = stream;
                 video.play();
-              })
-            console.log(error)
-/*             this.$toast.error(
+              });
+            console.log(error);
+            /*             this.$toast.error(
               "Nema kamere! " + error,
               "Greška",
               this.notificationSystem.options.error
             ); */
           });
       }
-    }
+    },
   },
 
   mounted() {

@@ -158,7 +158,8 @@
           class="tool__act"
           tip="Izaberi datume za prikazivanje svih prisustava / plaćanja u tom periodu"
         />
-        <Period class="cli__period"
+        <Period
+          class="cli__period"
           @dates="startPeriod"
           @filter-period="selectPeriod"
         />
@@ -251,13 +252,6 @@
             :value="client.present.toString()"
             :checkId="client.date.toString()"
           />
-          <!--           <input
-            type="checkbox"
-            class="activities__item activities__check"
-            v-model="client.present"
-            onclick="return false;"
-            readonly="readonly"
-          /> -->
           <p class="activities__item">{{ client.note }}</p>
         </div>
 
@@ -287,8 +281,6 @@ import Tooltip from "@/components/utils/Tooltip.vue";
 import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
 import navigation from "@/mixins/navigation";
 import navigationSearch from "@/mixins/navigationSearch";
-//import Datepicker from "vuejs-datepicker";
-//import { sr } from "vuejs-datepicker/dist/locale";
 import Period from "@/components/utils/Period.vue";
 import dayjs from "dayjs";
 import srb from "dayjs/locale/sr";
@@ -300,7 +292,6 @@ export default {
 
   components: {
     Loading,
-    //Datepicker,
     ClientAttendance,
     ClientPayment,
     Tooltip,
@@ -312,7 +303,6 @@ export default {
 
   data() {
     return {
-      //sr: sr,
       clientPayments: [],
       clientAttendances: [],
       pageOfItemsA: [],

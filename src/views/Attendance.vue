@@ -55,7 +55,7 @@
       </div>
 
       <ul
-        class="shedule__groups"
+        class="schedule__groups"
         v-if="!attendanceInput._id || existingMembers.length"
       >
         <h3 class="att_schedule">Grupe/Termini :</h3>
@@ -486,7 +486,7 @@ export default {
           remainingMembers = preparedSchedules;
         } 
 
-        this.addAllmembers(remainingMembers);
+        this.addAllMembers(remainingMembers);
       }
     },
 
@@ -519,30 +519,6 @@ export default {
       await this.selectDate();
       this.loadingMembers = false;
     },
-
-/*     mapSchedules() {
-      let obj,
-        arr = [];
-      for (let i = 0; i < this.getAllSchedules.length; i++) {
-        for (let j = 0; j < this.getAllSchedules[i].members.length; j++) {
-          obj = {
-            title: this.getAllSchedules[i].title,
-            startTime: this.getAllSchedules[i].startTime,
-            client: this.getAllSchedules[i].members[j].client,
-          };
-          arr.push(obj);
-        }
-      }
-      return arr;
-    }, */
-
-    /* setClientSchedule(id) {
-      let sche = "";
-      sche = this.mapSchedules().filter((post) => {
-        return post.client._id == id;
-      });
-      return sche[0] ? sche[0].title + "/" + sche[0].startTime : "";
-    }, */
 
     async checkAttendance(cgDay) {
       this.attendanceExist = false;
@@ -659,7 +635,7 @@ export default {
       }
     },
 
-    async addAllmembers(cli) {
+    async addAllMembers(cli) {
       for (
         let i = 0;
         i < cli.filter((active) => active.client.active !== false).length;
@@ -811,7 +787,7 @@ export default {
   justify-self: center;
 }
 
-.shedule__groups {
+.schedule__groups {
   display: grid;
   justify-content: center;
   /*   border: 1px solid var(--purple-light);
@@ -827,7 +803,7 @@ export default {
   row-gap: 0.2em;
 }
 
-.shedule__groups li {
+.schedule__groups li {
   padding: 0.2em;
   cursor: pointer;
   font-weight: 600;
@@ -836,12 +812,12 @@ export default {
   transition: all 0.4s ease;
 }
 
-.shedule__groups li:hover {
+.schedule__groups li:hover {
   background: var(--gold);
   color: var(--purple-lightest);
 }
 
-.shedule__groups li:active {
+.schedule__groups li:active {
   background: inherit;
   color: inherit;
 }
