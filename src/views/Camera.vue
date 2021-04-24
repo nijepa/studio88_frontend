@@ -15,6 +15,7 @@
         >
           <div class="picture__actions">
             <button
+              v-if="!error"
               id="snap"
               class="action_btn client__add for__camera"
               @click.prevent="takePicture"
@@ -46,7 +47,7 @@
               Slikaj
             </button>
 
-            <h4>ili</h4>
+            <h4 v-if="!error">ili</h4>
 
             <div class="action_btn client__add for__camera">
               <input
@@ -97,14 +98,14 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapGetters, mapActions } from "vuex";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import Loading from "@/components/utils/Loading.vue";
-import actionsNotify from "@/mixins/actionsNotify";
+import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import Loading from '@/components/utils/Loading.vue';
+import actionsNotify from '@/mixins/actionsNotify';
 
 export default {
-  name: "Camera",
+  name: 'Camera',
 
   components: {
     Loading,
@@ -118,22 +119,23 @@ export default {
       url: process.env.VUE_APP_CLOUDINARY,
       pic: null,
       clientInput: {
-        picture: "",
+        picture: '',
       },
       ima: null,
+      error: null,
     };
   },
 
   computed: {
-    ...mapGetters(["getOneClient", "getErrors", "loadingState"]),
+    ...mapGetters(['getOneClient', 'getErrors', 'loadingState']),
   },
 
   methods: {
     ...mapActions([
-      "fetchClients",
-      "clientUpdate",
-      "clearErrors",
-      "setLoadingState",
+      'fetchClients',
+      'clientUpdate',
+      'clearErrors',
+      'setLoadingState',
     ]),
 
     handleCancel() {
@@ -141,9 +143,9 @@ export default {
     },
 
     takePicture() {
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      const video = document.getElementById("video");
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      const video = document.getElementById('video');
 
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
@@ -178,8 +180,8 @@ export default {
       this.setLoadingState(true);
       if (!canvas) {
         this.$toast.error(
-          " ",
-          "Prvo slikaj!",
+          ' ',
+          'Prvo slikaj!',
           this.notificationSystem.options.error
         );
         this.setLoadingState(false);
@@ -187,12 +189,12 @@ export default {
       }
       // Converts canvas to an image
       let image = new Image();
-      image.src = canvas.toDataURL("image/png");
+      image.src = canvas.toDataURL('image/png');
       //return image;
       const unsignedUploadPreset = process.env.VUE_APP_UNSIGNED_UPLOAD_PRESET;
       const formData = new FormData();
-      formData.append("file", image.src);
-      formData.append("upload_preset", unsignedUploadPreset);
+      formData.append('file', image.src);
+      formData.append('upload_preset', unsignedUploadPreset);
 
       await this.saveClientPhoto(formData);
       await this.updateClientPhoto();
@@ -221,15 +223,15 @@ export default {
       await this.clientUpdate(this.clientInput);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
       }
@@ -241,8 +243,8 @@ export default {
 
     selectFile() {
       //this.progressInfos = [];
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
       let base_image = new Image();
       base_image.src = URL.createObjectURL(event.target.files[0]);
       base_image.onload = function () {
@@ -253,16 +255,16 @@ export default {
 
     closeCamera() {
       this.setLoadingState(true);
-      this.$router.push("/client");
+      this.$router.push('/client');
     },
 
     initCamera() {
-      const video = document.getElementById("video");
+      const video = document.getElementById('video');
       // Get access to the camera!
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         // Not adding `{ audio: true }` since we only want video now
         navigator.mediaDevices
-          .getUserMedia({ video: { facingMode: { exact: "environment" } } })
+          .getUserMedia({ video: { facingMode: { exact: 'environment' } } })
           .then((stream) => {
             //video.src = window.URL.createObjectURL(stream);
             video.srcObject = stream;
@@ -275,6 +277,14 @@ export default {
                 //video.src = window.URL.createObjectURL(stream);
                 video.srcObject = stream;
                 video.play();
+              })
+              .catch((error) => {
+                this.error = error;
+                this.$toast.error(
+                  'Nema kamere! ',
+                  'Greška',
+                  this.notificationSystem.options.error
+                );
               });
             console.log(error);
             /*             this.$toast.error(
@@ -327,7 +337,7 @@ export default {
   align-items: center;
   background: transparent;
   cursor: pointer;
-  font-family: "Baloo Tamma 2", cursive;
+  font-family: 'Baloo Tamma 2', cursive;
   font-size: 1em;
   font-weight: 800;
   border: 2px solid transparent;

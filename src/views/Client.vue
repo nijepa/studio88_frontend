@@ -356,8 +356,8 @@
           <div class="input__field">
             <div class="termin">
               <label>Grupa / Termin :</label>
-              <p>{{ schedule.length ? schedule[0].title : "" }}</p>
-              <p>{{ schedule.length ? schedule[0].startTime : "" }}</p>
+              <p class="client__schedule">{{ schedule.length ? schedule[0].title : "" }}</p>
+              <p class="client__schedule">{{ schedule.length ? schedule[0].startTime : "" }}</p>
             </div>
           </div>
         </div>
@@ -427,7 +427,7 @@
             >
             </textarea>
           </div>
-          <div class="">
+          <!-- <div class=""> -->
             <div v-if="getOneClient._id" class="">
               <button
                 type="submit"
@@ -453,7 +453,7 @@
                 <p>Aktivnosti</p>
               </button>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
 
         <div class="modify_btns">
@@ -685,5 +685,9 @@ export default {
 
 .client__active {
   align-self: center;
+}
+
+.client__schedule {
+  margin-left: .5em !important;
 }
 </style>
