@@ -185,27 +185,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import DeleteButton from "@/components/utils/DeleteButton.vue";
-import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import Tooltip from "@/components/utils/Tooltip.vue";
-import actionsNotify from "@/mixins/actionsNotify";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import DeleteButton from '@/components/utils/DeleteButton.vue';
+import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
+import Tooltip from '@/components/utils/Tooltip.vue';
+import actionsNotify from '@/mixins/actionsNotify';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "Schedule",
+  name: 'Schedule',
 
   components: {
     Loading,
@@ -226,14 +226,14 @@ export default {
       customLabels,
       customStyles,
       scheduleInput: {
-        title: "",
+        title: '',
         weekday: [],
-        startTime: "",
+        startTime: '',
         duration: 60,
-        notes: "",
+        notes: '',
         members: [],
       },
-      days: ["Poneđeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
+      days: ['Poneđeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'],
       notClients: [],
       selectedDate: new Date().toISOString().slice(0, 10),
       appeared: false,
@@ -242,25 +242,25 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllSchedules",
-      "getOneSchedule",
-      "getAllClients",
-      "getClientsPageSize",
-      "getErrors",
-      "loadingState",
+      'getAllSchedules',
+      'getOneSchedule',
+      'getAllClients',
+      'getClientsPageSize',
+      'getErrors',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "scheduleAdd",
-      "scheduleUpdate",
-      "scheduleDelete",
-      "fetchClients",
-      "fetchClientsPageSize",
-      "fetchSchedules",
-      "clearErrors",
-      "setLoadingState",
+      'scheduleAdd',
+      'scheduleUpdate',
+      'scheduleDelete',
+      'fetchClients',
+      'fetchClientsPageSize',
+      'fetchSchedules',
+      'clearErrors',
+      'setLoadingState',
     ]),
 
     async addSchedule() {
@@ -274,18 +274,18 @@ export default {
       this.setLoadingState(false);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
-        this.$router.push("/schedules");
+        this.$router.push('/schedules');
       }
     },
 
@@ -320,11 +320,11 @@ export default {
     async delEx() {
       await this.scheduleDelete(this.getOneSchedule);
       this.$toast.success(
-        "Uspješno obrisano!",
-        "OK",
+        'Uspješno obrisano!',
+        'OK',
         this.notificationSystem.options.success
       );
-      this.$router.push("/schedules");
+      this.$router.push('/schedules');
     },
 
     mapMembers() {
@@ -335,7 +335,7 @@ export default {
       });
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.notClients.filter((post) => {
         return (

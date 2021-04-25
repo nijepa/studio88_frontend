@@ -70,7 +70,11 @@
         </svg>
         <p>Nazad</p>
       </button>
-      <h1 class="client__name">{{ getOneClient.name }}</h1>
+
+      <div class="client__info">
+        <ClientPicture :picture="getOneClient.picture" imgSize="5em" />
+        <h1 class="client__name">{{ getOneClient.name }}</h1>
+      </div>
     </div>
 
     <transition name="rise" mode="out-in">
@@ -163,26 +167,6 @@
           @dates="startPeriod"
           @filter-period="selectPeriod"
         />
-        <!-- Period od
-        <datepicker
-          v-model="dateFrom"
-          placeholder="datum upisa"
-          class="datepicker noborder"
-          :language="sr"
-          :format="customFormatter"
-          @input="selectPeriod()"
-        >
-        </datepicker>
-        do
-        <datepicker
-          v-model="dateTill"
-          placeholder="datum upisa"
-          class="datepicker noborder"
-          :language="sr"
-          :format="customFormatter"
-          @input="selectPeriod()"
-        >
-        </datepicker> -->
       </div>
     </div>
 
@@ -272,28 +256,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import ClientAttendance from "@/components/ClientAttendance";
-import ClientPayment from "@/components/ClientPayment";
-import Tooltip from "@/components/utils/Tooltip.vue";
-import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import Period from "@/components/utils/Period.vue";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import ClientAttendance from '@/components/ClientAttendance';
+import ClientPayment from '@/components/ClientPayment';
+import ClientPicture from '@/components/utils/ClientPicture.vue';
+import Tooltip from '@/components/utils/Tooltip.vue';
+import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import Period from '@/components/utils/Period.vue';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "ClientActivity",
+  name: 'ClientActivity',
 
   components: {
     Loading,
     ClientAttendance,
     ClientPayment,
+    ClientPicture,
     Tooltip,
     CheckboxCustom,
     Period,
@@ -309,38 +295,38 @@ export default {
       filteredClientsA: [],
       customLabels,
       customStyles,
-      search: "",
+      search: '',
       dateFrom: this.getPreviousMonday(),
       dateTill: new Date().toISOString().slice(0, 10),
       appeared: false,
-      toggleActions: "",
+      toggleActions: '',
       clientAct: {},
     };
   },
 
   computed: {
     ...mapGetters([
-      "getOneClient",
-      "getAllAttendances",
-      "getAllPayments",
-      "getFromForm",
-      "loadingState",
+      'getOneClient',
+      'getAllAttendances',
+      'getAllPayments',
+      'getFromForm',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "fetchClient",
-      "fetchPayments",
-      "fetchAttendances",
-      "clientClear",
-      "fetchClientsPageSize",
-      "setLoadingState",
+      'fetchClient',
+      'fetchPayments',
+      'fetchAttendances',
+      'clientClear',
+      'fetchClientsPageSize',
+      'setLoadingState',
     ]),
 
     async handleCanceled() {
       this.clientAct = {};
-      this.toggleActions = "";
+      this.toggleActions = '';
       await this.fetchAttendances();
       await this.fetchPayments();
       this.startPeriod(this.dateFrom, this.dateTill);
@@ -348,8 +334,8 @@ export default {
 
     handleUpdate(client, act) {
       this.clientAct = client;
-      act ? (this.toggleActions = "p") : (this.toggleActions = "a");
-      this.scrollToElement({ behavior: "smooth" });
+      act ? (this.toggleActions = 'p') : (this.toggleActions = 'a');
+      this.scrollToElement({ behavior: 'smooth' });
     },
 
     setPageSize(val) {
@@ -362,7 +348,7 @@ export default {
     },
 
     customFormatter(date) {
-      return dayjs(date).format("DD MMM YYYY");
+      return dayjs(date).format('DD MMM YYYY');
     },
 
     getPreviousMonday() {
@@ -372,7 +358,7 @@ export default {
 
     async selectClient() {
       this.setLoadingState(true);
-      this.$router.push("/" + this.getFromForm);
+      this.$router.push('/' + this.getFromForm);
     },
 
     startPeriod(dateFrom, dateTill) {
@@ -390,10 +376,10 @@ export default {
         })
         .filter(
           (year) =>
-            dayjs(year.date).format("YYYY-MM-DD") >=
-              dayjs(dateFrom).format("YYYY-MM-DD") &&
-            dayjs(year.date).format("YYYY-MM-DD") <=
-              dayjs(dateTill).format("YYYY-MM-DD")
+            dayjs(year.date).format('YYYY-MM-DD') >=
+              dayjs(dateFrom).format('YYYY-MM-DD') &&
+            dayjs(year.date).format('YYYY-MM-DD') <=
+              dayjs(dateTill).format('YYYY-MM-DD')
         );
       this.filteredClientsA = this.clientAttendances;
       this.clientPayments = this.mapPayments()
@@ -402,10 +388,10 @@ export default {
         })
         .filter(
           (year) =>
-            dayjs(year.datep).format("YYYY-MM-DD") >=
-              dayjs(dateFrom).format("YYYY-MM-DD") &&
-            dayjs(year.datep).format("YYYY-MM-DD") <=
-              dayjs(dateTill).format("YYYY-MM-DD")
+            dayjs(year.datep).format('YYYY-MM-DD') >=
+              dayjs(dateFrom).format('YYYY-MM-DD') &&
+            dayjs(year.datep).format('YYYY-MM-DD') <=
+              dayjs(dateTill).format('YYYY-MM-DD')
         );
       this.filteredClients = this.clientPayments;
     },
@@ -460,7 +446,7 @@ export default {
     },
 
     scrollToElement(options) {
-      const el = document.getElementById("tops");
+      const el = document.getElementById('tops');
       if (el) {
         el.scrollIntoView(options);
       }
@@ -470,7 +456,7 @@ export default {
   filters: {
     formatDateLong: function (value) {
       if (value) {
-        return dayjs(String(value)).format("DD MMM YYYY dddd");
+        return dayjs(String(value)).format('DD MMM YYYY dddd');
       }
     },
   },
@@ -492,6 +478,19 @@ export default {
 </script>
 
 <style>
+.client__info {
+  display: flex;
+  justify-self: center;
+  justify-items: center;
+  align-items: center;
+  column-gap: 0.5em;
+}
+
+.cli__pic {
+  border-radius: 50%;
+  height: 5em;
+}
+
 .cli__period {
   font-size: 1em;
   width: auto !important;
@@ -499,6 +498,9 @@ export default {
 
 @media (max-width: 599px) {
   .cli__period {
+    display: grid;
+  }
+  .client__info {
     display: grid;
   }
 }
