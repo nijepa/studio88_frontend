@@ -2,7 +2,7 @@
   <div class="hello">
     <div class="club__title">
       <img
-        src="../assets/img/studio88.png"
+        src="../assets/img/studio88.webp"
         alt="studio 88"
         class="responsive"
         rel="preload"

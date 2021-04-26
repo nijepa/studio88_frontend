@@ -6,7 +6,7 @@
     <div v-else class="dash__wrapper" key="2">
       <div class="dash__items">
         <img
-          src="../assets/img/studio881.png"
+          src="../assets/img/studio881.webp"
           alt="studio 88"
           class="logo responsive"
           rel="preload"

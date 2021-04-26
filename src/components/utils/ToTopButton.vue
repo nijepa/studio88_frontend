@@ -4,7 +4,7 @@
       <img
         @click="animateToTop()"
         class="scrolling"
-        src="@/assets/img/top.png"
+        src="@/assets/img/top.webp"
         alt="top"
         id="scroll"
       />

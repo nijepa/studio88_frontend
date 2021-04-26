@@ -30,7 +30,7 @@
       <div class="nav-mobile">
         <img
           v-if="!showMenu"
-          src="../assets/img/studio881.png"
+          src="../assets/img/studio881.webp"
           alt="studio88"
           class="logo-nav"
           rel="preload"
@@ -83,7 +83,7 @@
             "
           >
             <img
-              src="../assets/img/studio881.png"
+              src="../assets/img/studio881.webp"
               alt="studio88 logo"
               class="logo__small"
               rel="preload"
@@ -99,7 +99,7 @@
             "
           >
             <img
-              src="../assets/img/1.png"
+              src="../assets/img/1.webp"
               alt="vježbačice"
               class="nav__img"
               rel="preload"
@@ -118,7 +118,7 @@
             "
           >
             <img
-              src="../assets/img/2.png"
+              src="../assets/img/2.webp"
               alt="termini"
               class="nav__img"
               rel="preload"
@@ -137,7 +137,7 @@
             "
           >
             <img
-              src="../assets/img/3.png"
+              src="../assets/img/3.webp"
               alt="evidencije"
               class="nav__img"
               rel="preload"
@@ -156,7 +156,7 @@
             "
           >
             <img
-              src="../assets/img/4.png"
+              src="../assets/img/4.webp"
               alt="plaćanja"
               class="nav__img"
               rel="preload"
@@ -175,7 +175,7 @@
             "
           >
             <img
-              src="../assets/img/5.png"
+              src="../assets/img/5.webp"
               alt="troškovi"
               class="nav__img"
               rel="preload"
