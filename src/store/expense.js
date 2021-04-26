@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -49,67 +49,67 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchExpenses({ commit }) {
-    const response = await axios.get(URL + "expenses");
-    commit("setExpenses", response.data);
+    const response = await axios.get(URL + 'expenses');
+    commit('setExpenses', response.data);
   },
 
   async fetchExpense({ commit }, expenseData) {
     const response = await axios.get(
-      URL + "expenses/" + expenseData._id,
+      URL + 'expenses/' + expenseData._id,
       expenseData
     );
-    commit("setExpense", response.data);
+    commit('setExpense', response.data);
   },
 
   async expenseAdd({ commit }, expenseData) {
     await axios
-      .post(URL + "expenses", expenseData)
+      .post(URL + 'expenses', expenseData)
       .then((response) => {
-        commit("addExpense", response.data.expense);
+        commit('addExpense', response.data.expense);
         //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async expenseUpdate({ commit }, expenseData) {
     await axios
-      .put(URL + "expenses/" + expenseData._id, expenseData)
+      .put(URL + 'expenses/' + expenseData._id, expenseData)
       .then((response) => {
-        commit("updateExpense", response.data);
+        commit('updateExpense', response.data);
         //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async expenseDelete({ commit }, expenseData) {
     await axios
-      .delete(URL + "expenses/" + expenseData._id, expenseData)
+      .delete(URL + 'expenses/' + expenseData._id, expenseData)
       .then((response) => {
-        commit("deleteExpense", response.data._id);
+        commit('deleteExpense', response.data._id);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async expenseClear({ commit }) {
-    commit("clearExpense");
+    commit('clearExpense');
   },
 };
 

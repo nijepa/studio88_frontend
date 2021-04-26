@@ -82,11 +82,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
+import { mapGetters, mapActions } from 'vuex';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
 
 export default {
-  name: "Profile",
+  name: 'Profile',
 
   components: {
     ActionButtons,
@@ -95,14 +95,14 @@ export default {
   data() {
     return {
       signupInput: {
-        _id: "",
-        email: "",
-        password: "",
-        username: "",
-        first_name: "",
-        last_name: "",
-        user_about: "",
-        picture: "",
+        _id: '',
+        email: '',
+        password: '',
+        username: '',
+        first_name: '',
+        last_name: '',
+        user_about: '',
+        picture: '',
       },
       user: {},
       appeared: false,
@@ -110,15 +110,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["loggedUser", "getSelectedUser", "getErrors"]),
+    ...mapGetters(['loggedUser', 'getSelectedUser', 'getErrors']),
   },
 
   methods: {
-    ...mapActions(["signup", "fetchSelectedUser", "userUpdate", "clearErrors"]),
+    ...mapActions(['signup', 'fetchSelectedUser', 'userUpdate', 'clearErrors']),
 
     selectFriends(selectedUser) {
       this.fetchSelectedUser(selectedUser);
-      this.$router.push({ name: "UsersFriends" });
+      this.$router.push({ name: 'UsersFriends' });
     },
 
     nrOfFriends(friends) {

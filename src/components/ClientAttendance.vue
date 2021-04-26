@@ -75,22 +75,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import DeleteButton from "@/components/utils/DeleteButton.vue";
-import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import actionsNotify from "@/mixins/actionsNotify";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import DeleteButton from '@/components/utils/DeleteButton.vue';
+import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
+import actionsNotify from '@/mixins/actionsNotify';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "ClientAttendance",
+  name: 'ClientAttendance',
 
-  props: ["client", "clientAtt"],
+  props: ['client', 'clientAtt'],
 
   components: {
     Datepicker,
@@ -102,16 +102,16 @@ export default {
   mixins: [actionsNotify],
 
   computed: {
-    ...mapGetters(["getAllAttendances", "getAllPayments", "getErrors"]),
+    ...mapGetters(['getAllAttendances', 'getAllPayments', 'getErrors']),
   },
 
   data() {
     return {
-      title: "Novo prisustvo",
+      title: 'Novo prisustvo',
       sr: sr,
       attData: {
         present: true,
-        note: "",
+        note: '',
       },
       attend_date: new Date().toISOString().slice(0, 10),
     };
@@ -119,34 +119,34 @@ export default {
 
   methods: {
     ...mapActions([
-      "fetchAttendances",
-      "fetchPayments",
-      "clearErrors",
-      "attendanceAdd",
-      "attendanceUpdate",
-      "attendanceDelete",
+      'fetchAttendances',
+      'fetchPayments',
+      'clearErrors',
+      'attendanceAdd',
+      'attendanceUpdate',
+      'attendanceDelete',
     ]),
 
     customFormatter(date) {
-      return dayjs(date).format("DD MMM YYYY");
+      return dayjs(date).format('DD MMM YYYY');
     },
 
     handleCancel() {
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     async addAttendance() {
       //await this.fetchAttendances()
       const attends = this.getAllAttendances.find(
         (el) =>
-          dayjs(el.attend_date).format("YYYY-MM-DD") ===
-          dayjs(this.attend_date).format("YYYY-MM-DD")
+          dayjs(el.attend_date).format('YYYY-MM-DD') ===
+          dayjs(this.attend_date).format('YYYY-MM-DD')
       );
 
       if (!attends) {
         let attendanceInput = {
           attend_date: this.attend_date,
-          notes: "",
+          notes: '',
           members: [
             {
               client: this.client._id,
@@ -191,26 +191,26 @@ export default {
       }
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
       }
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     async delEx() {
       const attends = this.getAllAttendances.find(
         (el) =>
-          dayjs(el.attend_date).format("YYYY-MM-DD") ===
-          dayjs(this.attend_date).format("YYYY-MM-DD")
+          dayjs(el.attend_date).format('YYYY-MM-DD') ===
+          dayjs(this.attend_date).format('YYYY-MM-DD')
       );
       attends.members.splice(
         attends.members.findIndex((v) => v.client._id === this.client._id),
@@ -220,26 +220,26 @@ export default {
       await this.attendanceUpdate(attendanceInput);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno obrisano!",
-          "OK",
+          'Uspješno obrisano!',
+          'OK',
           this.notificationSystem.options.success
         );
       }
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     checkUpdate() {
       if (this.clientAtt.date) {
         this.attData = this.clientAtt;
         this.attend_date = this.clientAtt.date;
-        this.title = "Izmijeni prisustvo";
+        this.title = 'Izmijeni prisustvo';
       }
     },
   },

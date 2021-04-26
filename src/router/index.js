@@ -1,132 +1,132 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
+    path: '/about',
+    name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: '/dashboard',
+    name: 'Dashboard',
     component: () =>
-      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+      import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
     children: [
       {
-        path: "/clients",
-        name: "Clients",
+        path: '/clients',
+        name: 'Clients',
         component: () =>
-          import(/* webpackChunkName: "client" */ "../views/Clients.vue"),
+          import(/* webpackChunkName: "client" */ '../views/Clients.vue'),
       },
       {
-        path: "/client",
-        name: "Client",
+        path: '/client',
+        name: 'Client',
         component: () =>
-          import(/* webpackChunkName: "client" */ "../views/Client.vue"),
+          import(/* webpackChunkName: "client" */ '../views/Client.vue'),
       },
       {
-        path: "/camera",
-        name: "Camera",
+        path: '/camera',
+        name: 'Camera',
         component: () =>
-          import(/* webpackChunkName: "camera" */ "../views/Camera.vue"),
+          import(/* webpackChunkName: "camera" */ '../views/Camera.vue'),
       },
       {
-        path: "/clientactivity",
-        name: "ClientActivity",
+        path: '/clientactivity',
+        name: 'ClientActivity',
         component: () =>
           import(
-            /* webpackChunkName: "activity" */ "../views/ClientActivity.vue"
+            /* webpackChunkName: "activity" */ '../views/ClientActivity.vue'
           ),
       },
       {
-        path: "/expenses",
-        name: "Expenses",
+        path: '/expenses',
+        name: 'Expenses',
         component: () =>
-          import(/* webpackChunkName: "expense" */ "../views/Expenses.vue"),
+          import(/* webpackChunkName: "expense" */ '../views/Expenses.vue'),
       },
       {
-        path: "/expense",
-        name: "Expense",
+        path: '/expense',
+        name: 'Expense',
         component: () =>
-          import(/* webpackChunkName: "expense" */ "../views/Expense.vue"),
+          import(/* webpackChunkName: "expense" */ '../views/Expense.vue'),
       },
       {
-        path: "/payments",
-        name: "Payments",
+        path: '/payments',
+        name: 'Payments',
         component: () =>
-          import(/* webpackChunkName: "payment" */ "../views/Payments.vue"),
+          import(/* webpackChunkName: "payment" */ '../views/Payments.vue'),
       },
       {
-        path: "/payment",
-        name: "Payment",
+        path: '/payment',
+        name: 'Payment',
         component: () =>
-          import(/* webpackChunkName: "payment" */ "../views/Payment.vue"),
+          import(/* webpackChunkName: "payment" */ '../views/Payment.vue'),
       },
       {
-        path: "/attendances",
-        name: "Attendances",
+        path: '/attendances',
+        name: 'Attendances',
         component: () =>
           import(
-            /* webpackChunkName: "attendance" */ "../views/Attendances.vue"
+            /* webpackChunkName: "attendance" */ '../views/Attendances.vue'
           ),
       },
       {
-        path: "/attendance",
-        name: "Attendance",
+        path: '/attendance',
+        name: 'Attendance',
         component: () =>
           import(
-            /* webpackChunkName: "attendance" */ "../views/Attendance.vue"
+            /* webpackChunkName: "attendance" */ '../views/Attendance.vue'
           ),
       },
       {
-        path: "/schedules",
-        name: "Schedules",
+        path: '/schedules',
+        name: 'Schedules',
         component: () =>
-          import(/* webpackChunkName: "schedule" */ "../views/Schedules.vue"),
+          import(/* webpackChunkName: "schedule" */ '../views/Schedules.vue'),
       },
       {
-        path: "/schedule",
-        name: "Schedule",
+        path: '/schedule',
+        name: 'Schedule',
         component: () =>
-          import(/* webpackChunkName: "schedule" */ "../views/Schedule.vue"),
+          import(/* webpackChunkName: "schedule" */ '../views/Schedule.vue'),
       },
       {
-        path: "/summaries",
-        name: "Summaries",
+        path: '/summaries',
+        name: 'Summaries',
         component: () =>
-          import(/* webpackChunkName: "summaries" */ "../views/Summaries.vue"),
+          import(/* webpackChunkName: "summaries" */ '../views/Summaries.vue'),
       },
       {
-        path: "/general",
-        name: "General",
+        path: '/general',
+        name: 'General',
         component: () =>
-          import(/* webpackChunkName: "general" */ "../views/General.vue"),
+          import(/* webpackChunkName: "general" */ '../views/General.vue'),
       },
       {
-        path: "/signup",
-        name: "SignUp",
+        path: '/signup',
+        name: 'SignUp',
         component: () =>
-          import(/* webpackChunkName: "general" */ "../views/SignUp.vue"),
+          import(/* webpackChunkName: "general" */ '../views/SignUp.vue'),
       },
     ],
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });

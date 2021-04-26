@@ -76,7 +76,7 @@
 
 <script>
 export default {
-  name: "Footer",
+  name: 'Footer',
 };
 </script>
 
@@ -92,7 +92,7 @@ export default {
 }
 
 .footer__text {
-  font-family: "Baloo Tamma 2", cursive;
+  font-family: 'Baloo Tamma 2', cursive;
   font-weight: 800;
   color: var(--purple);
   margin-right: 1em;

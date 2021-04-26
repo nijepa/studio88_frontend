@@ -108,7 +108,7 @@
 
 <script>
 export default {
-  name: "DeleteButton",
+  name: 'DeleteButton',
 
   data() {
     return {
@@ -118,7 +118,7 @@ export default {
 
   methods: {
     clicked() {
-      this.$emit("clicked");
+      this.$emit('clicked');
     },
   },
 };

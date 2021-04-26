@@ -14,27 +14,27 @@
 
 <script>
 export default {
-  name: "TopButton",
+  name: 'TopButton',
 
   methods: {
     animateToTop() {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     },
   },
 
   mounted() {
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       let scrollSpeed = window.pageYOffset / 2;
-      let scrollObject = document.getElementById("scroll");
+      let scrollObject = document.getElementById('scroll');
       if (scrollTop > 100) {
-        document.querySelector(".scrol").style.display = "block";
-        scrollObject.style.transform = "rotate(" + `${scrollSpeed}` + "deg)";
-      } else document.querySelector(".scrol").style.display = "none";
+        document.querySelector('.scrol').style.display = 'block';
+        scrollObject.style.transform = 'rotate(' + `${scrollSpeed}` + 'deg)';
+      } else document.querySelector('.scrol').style.display = 'none';
     });
   },
   /* 

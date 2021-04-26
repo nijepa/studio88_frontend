@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -51,67 +51,67 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchAttendances({ commit }) {
-    const response = await axios.get(URL + "attendances");
-    commit("setAttendances", response.data);
+    const response = await axios.get(URL + 'attendances');
+    commit('setAttendances', response.data);
   },
 
   async fetchAttendance({ commit }, attendanceData) {
     const response = await axios.get(
-      URL + "attendances/" + attendanceData._id,
+      URL + 'attendances/' + attendanceData._id,
       attendanceData
     );
-    commit("setAttendance", response.data);
+    commit('setAttendance', response.data);
   },
 
   async attendanceAdd({ commit }, attendanceData) {
     await axios
-      .post(URL + "attendances", attendanceData)
+      .post(URL + 'attendances', attendanceData)
       .then((response) => {
-        commit("addAttendance", response.data.attendance);
+        commit('addAttendance', response.data.attendance);
         //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async attendanceUpdate({ commit }, attendanceData) {
     await axios
-      .put(URL + "attendances/" + attendanceData._id, attendanceData)
+      .put(URL + 'attendances/' + attendanceData._id, attendanceData)
       .then((response) => {
-        commit("updateAttendance", response.data);
+        commit('updateAttendance', response.data);
         //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async attendanceDelete({ commit }, attendanceData) {
     await axios
-      .delete(URL + "attendances/" + attendanceData._id, attendanceData)
+      .delete(URL + 'attendances/' + attendanceData._id, attendanceData)
       .then((response) => {
-        commit("deleteAttendance", response.data._id);
+        commit('deleteAttendance', response.data._id);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async attendanceClear({ commit }) {
-    commit("clearAttendance");
+    commit('clearAttendance');
   },
 };
 

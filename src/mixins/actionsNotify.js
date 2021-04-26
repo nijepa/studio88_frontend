@@ -4,10 +4,10 @@ export default {
       notificationSystem: {
         options: {
           show: {
-            theme: "dark",
-            icon: "icon-person",
-            position: "topCenter",
-            progressBarColor: "var(--purple-dark)",
+            theme: 'dark',
+            icon: 'icon-person',
+            position: 'topCenter',
+            progressBarColor: 'var(--purple-dark)',
             /* buttons: [
 						  [
 						    "<button>Ok</button>",
@@ -41,20 +41,20 @@ export default {
           },
           ballon: {
             balloon: true,
-            position: "bottomCenter",
+            position: 'bottomCenter',
           },
           info: {
-            position: "bottomLeft",
+            position: 'bottomLeft',
           },
           success: {
-            position: "center",
+            position: 'center',
             timeout: 1500,
           },
           warning: {
-            position: "topLeft",
+            position: 'topLeft',
           },
           error: {
-            position: "center",
+            position: 'center',
             timeout: 2000,
           },
           question: {
@@ -62,18 +62,18 @@ export default {
             close: false,
             overlay: true,
             toastOnce: true,
-            id: "question",
+            id: 'question',
             zindex: 999,
-            position: "center",
+            position: 'center',
             buttons: [
               [
                 `<button><b>DA</b></button>`,
                 (instance, toast) => {
                   instance.hide(
                     {
-                      transitionOut: "fadeOut",
+                      transitionOut: 'fadeOut',
                       onClosing: async (instance, toast, closedBy) => {
-                        console.info("closedBy: " + closedBy);
+                        console.info('closedBy: ' + closedBy);
                         await this.delEx();
                       },
                     },
@@ -83,13 +83,13 @@ export default {
                 },
               ],
               [
-                "<button>NE</button>",
+                '<button>NE</button>',
                 (instance, toast) => {
                   instance.hide(
                     {
-                      transitionOut: "fadeOutUp",
+                      transitionOut: 'fadeOutUp',
                       onClosed: function (instance, toast, closedBy) {
-                        console.info("closedBy: " + closedBy);
+                        console.info('closedBy: ' + closedBy);
                       },
                     },
                     toast,
@@ -99,10 +99,10 @@ export default {
               ],
             ],
             onClosing: function (instance, toast, closedBy) {
-              console.info("Closing | closedBy: " + closedBy);
+              console.info('Closing | closedBy: ' + closedBy);
             },
             onClosed: function (instance, toast, closedBy) {
-              console.info("Closed | closedBy: " + closedBy);
+              console.info('Closed | closedBy: ' + closedBy);
             },
           },
         },
@@ -113,8 +113,8 @@ export default {
   methods: {
     delClient() {
       this.$toast.warning(
-        "Sigurna ?",
-        "Brisanje",
+        'Sigurna ?',
+        'Brisanje',
         this.notificationSystem.options.question
       );
     },

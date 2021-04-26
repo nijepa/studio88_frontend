@@ -1,6 +1,6 @@
 const state = {
   loading: true,
-  inputType: "",
+  inputType: '',
   errors: [],
 };
 
@@ -24,11 +24,11 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   setLoadingState({ commit }, loading) {
-    commit("changeLoadingState", loading);
+    commit('changeLoadingState', loading);
   },
 
   clearErrors({ commit }) {
-    commit("setErrors", []);
+    commit('setErrors', []);
   },
 };
 

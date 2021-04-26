@@ -243,28 +243,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import DeleteButton from "@/components/utils/DeleteButton.vue";
-import Tooltip from "@/components/utils/Tooltip.vue";
-import actionsNotify from "@/mixins/actionsNotify";
-import findMonth from "@/mixins/findMonth";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import Autocomplete from "@trevoreyre/autocomplete-vue";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import DeleteButton from '@/components/utils/DeleteButton.vue';
+import Tooltip from '@/components/utils/Tooltip.vue';
+import actionsNotify from '@/mixins/actionsNotify';
+import findMonth from '@/mixins/findMonth';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import Autocomplete from '@trevoreyre/autocomplete-vue';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "Payment",
+  name: 'Payment',
 
   components: {
     Loading,
@@ -290,56 +290,56 @@ export default {
       customLabels,
       customStyles,
       paymentInput: {
-        payment_year: dayjs(new Date()).format("YYYY"),
+        payment_year: dayjs(new Date()).format('YYYY'),
         payment_month: this.checkMonth(),
         payment_date: new Date(),
         price: 35,
-        notes: "",
+        notes: '',
         members: [],
       },
       year: 0,
       notClients: [],
       selectedDate: new Date(),
       actions: false,
-      input: "",
+      input: '',
       foundClient: {
-        _id: "",
-        note: "",
+        _id: '',
+        note: '',
         present: true,
       },
-      btn_title: "dodatne opcije",
+      btn_title: 'dodatne opcije',
     };
   },
 
   computed: {
     ...mapGetters([
-      "getAllPayments",
-      "getOnePayment",
-      "getAllClients",
-      "getClientsPageSize",
-      "getErrors",
-      "getPrice",
-      "loadingState",
+      'getAllPayments',
+      'getOnePayment',
+      'getAllClients',
+      'getClientsPageSize',
+      'getErrors',
+      'getPrice',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "paymentAdd",
-      "paymentUpdate",
-      "paymentDelete",
-      "fetchClients",
-      "fetchClientsPageSize",
-      "fetchPayments",
-      "clearErrors",
-      "setLoadingState",
+      'paymentAdd',
+      'paymentUpdate',
+      'paymentDelete',
+      'fetchClients',
+      'fetchClientsPageSize',
+      'fetchPayments',
+      'clearErrors',
+      'setLoadingState',
     ]),
 
     toggleActions() {
       this.actions = !this.actions;
-      this.btn_title === "dodatne opcije"
-        ? (this.btn_title = "sakrij")
-        : (this.btn_title = "dodatne opcije");
+      this.btn_title === 'dodatne opcije'
+        ? (this.btn_title = 'sakrij')
+        : (this.btn_title = 'dodatne opcije');
     },
 
     searchClientsAdd(input) {
@@ -352,7 +352,7 @@ export default {
 
     getResultValue(result) {
       return (
-        result.last_name + ", " + result.first_name + " - " + result.mobile
+        result.last_name + ', ' + result.first_name + ' - ' + result.mobile
       );
     },
 
@@ -371,13 +371,13 @@ export default {
           1
         );
         this.foundClient = {
-          _id: "",
-          note: "",
+          _id: '',
+          note: '',
           present: true,
         };
-        this.input = "";
-        this.value = "";
-        this.$refs.autocomplete.value = "";
+        this.input = '';
+        this.value = '';
+        this.$refs.autocomplete.value = '';
       }
     },
 
@@ -411,18 +411,18 @@ export default {
       this.setLoadingState(false);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
-        this.$router.push("/payments");
+        this.$router.push('/payments');
       }
     },
 
@@ -439,7 +439,7 @@ export default {
           )[i],
           payment_date: this.selectedDate,
           payment_amount: this.paymentInput.price,
-          note: "",
+          note: '',
         });
       }
       this.notClients = [];
@@ -456,14 +456,14 @@ export default {
     async delEx() {
       await this.paymentDelete(this.getOnePayment);
       this.$toast.success(
-        "Uspješno obrisano!",
-        "OK",
+        'Uspješno obrisano!',
+        'OK',
         this.notificationSystem.options.success
       );
-      this.$router.push("/payments");
+      this.$router.push('/payments');
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.paymentInput.members.filter((post) => {
         return (
@@ -496,7 +496,7 @@ export default {
 
   async mounted() {
     let currentYear = new Date();
-    currentYear = dayjs().format("YYYY");
+    currentYear = dayjs().format('YYYY');
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
     this.initItems();
@@ -517,7 +517,7 @@ export default {
 }
 
 .select__month {
-  font-family: "Itim", cursive;
+  font-family: 'Itim', cursive;
 }
 
 .payment__price {

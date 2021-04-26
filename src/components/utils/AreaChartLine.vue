@@ -1,37 +1,37 @@
 <script>
-import { Line } from "vue-chartjs";
+import { Line } from 'vue-chartjs';
 
-import { _adapters } from "chart.js";
-import dayjs from "./dayjs";
+import { _adapters } from 'chart.js';
+import dayjs from './dayjs';
 
 // chartjs dayjs adapter adapted from here:
 // https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/blob/master/src/index.js
 const FORMATS = {
-  datetime: "MMM D, YYYY, h:mm:ss a",
-  millisecond: "h:mm:ss.SSS a",
-  second: "h:mm:ss a",
-  minute: "h:mm a",
-  hour: "hA",
-  day: "MMM D",
-  week: "ll",
-  month: "MMM YYYY",
-  quarter: "[Q]Q - YYYY",
-  year: "YYYY",
+  datetime: 'MMM D, YYYY, h:mm:ss a',
+  millisecond: 'h:mm:ss.SSS a',
+  second: 'h:mm:ss a',
+  minute: 'h:mm a',
+  hour: 'hA',
+  day: 'MMM D',
+  week: 'll',
+  month: 'MMM YYYY',
+  quarter: '[Q]Q - YYYY',
+  year: 'YYYY',
 };
 
 _adapters._date.override({
-  _id: "dayjs",
+  _id: 'dayjs',
   formats: () => FORMATS,
   parse: (value, format) => {
     const valueType = typeof value;
 
-    if (value === null || valueType === "undefined") {
+    if (value === null || valueType === 'undefined') {
       return null;
     }
 
     let parsedValue = null;
 
-    if (valueType === "string" && typeof format === "string") {
+    if (valueType === 'string' && typeof format === 'string') {
       parsedValue = dayjs(value, format);
     } else if (!(value instanceof dayjs)) {
       parsedValue = dayjs(value);
@@ -43,8 +43,8 @@ _adapters._date.override({
   add: (time, amount, unit) => dayjs(time).add(amount, unit).valueOf(),
   diff: (max, min, unit) => dayjs(max).diff(dayjs(min), unit),
   startOf: (time, unit, weekday) => {
-    if (unit === "isoWeek") {
-      return dayjs(time).isoWeekday(weekday).startOf("day").valueOf();
+    if (unit === 'isoWeek') {
+      return dayjs(time).isoWeekday(weekday).startOf('day').valueOf();
     }
 
     return dayjs(time).startOf(unit).valueOf();
@@ -74,12 +74,12 @@ export default {
 
   mounted() {
     this.gradient = this.$refs.canvas
-      .getContext("2d")
+      .getContext('2d')
       .createLinearGradient(0, 0, 0, 450);
 
-    this.gradient.addColorStop(0, "rgba(92, 72, 133, 0.75)");
-    this.gradient.addColorStop(0.5, "rgba(92, 72, 133, 0.25)");
-    this.gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+    this.gradient.addColorStop(0, 'rgba(92, 72, 133, 0.75)');
+    this.gradient.addColorStop(0.5, 'rgba(92, 72, 133, 0.25)');
+    this.gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
 
     this.renderChart(
       {
@@ -94,11 +94,11 @@ export default {
             "July"
           ] */ datasets: [
           {
-            label: "Dolazaka",
-            borderColor: "#856727",
-            pointBackgroundColor: "#5c4885",
+            label: 'Dolazaka',
+            borderColor: '#856727',
+            pointBackgroundColor: '#5c4885',
             borderWidth: 1,
-            pointBorderColor: "#856727",
+            pointBorderColor: '#856727',
             backgroundColor: this.gradient,
             data: this.chartdata,
           },

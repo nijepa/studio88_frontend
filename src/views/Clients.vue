@@ -141,7 +141,11 @@
           "
         >
           <div class="client__pic_wrapper" @click="selectClient(client)">
-            <ClientPicture :picture="client.picture" imgSize="3em" class="client__pic" />
+            <ClientPicture
+              :picture="client.picture"
+              imgSize="3em"
+              class="client__pic"
+            />
           </div>
 
           <p class="client__item" @click="selectClient(client)">
@@ -205,19 +209,19 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
 import ClientPicture from '@/components/utils/ClientPicture.vue';
-import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import mapSchedules from "@/mixins/mapSchedules";
+import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import mapSchedules from '@/mixins/mapSchedules';
 
 export default {
-  name: "Clients",
+  name: 'Clients',
 
   components: {
     Loading,
@@ -238,11 +242,11 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllClients",
-      "getAllSchedules",
-      "getClientsPage",
-      "getClientsPageSize",
-      "loadingState",
+      'getAllClients',
+      'getAllSchedules',
+      'getClientsPage',
+      'getClientsPageSize',
+      'loadingState',
     ]),
 
     activeClients: function () {
@@ -252,19 +256,19 @@ export default {
 
   methods: {
     ...mapActions([
-      "fetchClients",
-      "fetchClient",
-      "fetchClientsPage",
-      "fetchClientsPageSize",
-      "fetchFromForm",
-      "clientClear",
-      "fetchSchedules",
-      "setLoadingState",
+      'fetchClients',
+      'fetchClient',
+      'fetchClientsPage',
+      'fetchClientsPageSize',
+      'fetchFromForm',
+      'clientClear',
+      'fetchSchedules',
+      'setLoadingState',
     ]),
 
     async newClient() {
       this.setLoadingState(true);
-      this.$router.push("/client");
+      this.$router.push('/client');
       await this.clientClear();
     },
 
@@ -272,15 +276,15 @@ export default {
       this.setLoadingState(true);
       await this.fetchClient(client);
       this.setPageNr();
-      this.$router.push("/client");
+      this.$router.push('/client');
     },
 
     async clientActivities(client) {
       this.setLoadingState(true);
       await this.fetchClient(client);
-      this.fetchFromForm("clients");
+      this.fetchFromForm('clients');
       this.setPageNr();
-      this.$router.push("/clientactivity");
+      this.$router.push('/clientactivity');
     },
 
     sortItems(field, type) {
@@ -303,7 +307,7 @@ export default {
       });
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.getAllClients.filter((post) => {
         return (
@@ -346,7 +350,6 @@ export default {
 
 .client__check {
   pointer-events: none;
-  /* opacity: 0.4; */
 }
 
 .client__pic_wrapper {

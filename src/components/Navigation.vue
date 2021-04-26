@@ -190,10 +190,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: "Navigation",
+  name: 'Navigation',
 
   props: {
     method: { type: Function },
@@ -205,30 +205,30 @@ export default {
       window: {
         width: 0,
       },
-      activeLink: "home",
+      activeLink: 'home',
       menuItems: [
-        { id: "home", title: "home" },
-        { id: "signup", title: "signup" },
-        { id: "clients", title: "clients" },
-        { id: "schedules", title: "schedules" },
-        { id: "attendance", title: "attendance" },
-        { id: "payments", title: "payments" },
-        { id: "expenses", title: "expenses" },
-        { id: "general", title: "general" },
+        { id: 'home', title: 'home' },
+        { id: 'signup', title: 'signup' },
+        { id: 'clients', title: 'clients' },
+        { id: 'schedules', title: 'schedules' },
+        { id: 'attendance', title: 'attendance' },
+        { id: 'payments', title: 'payments' },
+        { id: 'expenses', title: 'expenses' },
+        { id: 'general', title: 'general' },
       ],
     };
   },
 
   computed: {
-    ...mapGetters(["loggedUser", "getGeneral", "getFormType"]),
+    ...mapGetters(['loggedUser', 'getGeneral', 'getFormType']),
   },
 
   methods: {
     ...mapActions([
-      "initialState",
-      "logout",
-      "fetchGenerals",
-      "setLoadingState",
+      'initialState',
+      'logout',
+      'fetchGenerals',
+      'setLoadingState',
     ]),
 
     navClick(type) {
@@ -238,7 +238,7 @@ export default {
     },
 
     toggleUser(type) {
-      this.$emit("toggled-form", type);
+      this.$emit('toggled-form', type);
     },
 
     handleResize() {
@@ -261,13 +261,13 @@ export default {
       price = this.getGeneral.prices[0].price_amount;
     }
     this.initialState(price);
-    this.navClick("home");
-    window.addEventListener("resize", this.handleResize);
+    this.navClick('home');
+    window.addEventListener('resize', this.handleResize);
     this.handleResize();
   },
 
   destroyed() {
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   },
 };
 </script>

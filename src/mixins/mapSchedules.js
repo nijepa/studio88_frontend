@@ -17,11 +17,11 @@ export default {
     },
 
     setClientSchedule(id) {
-      let sche = "";
+      let sche = '';
       sche = this.mapSchedules().filter((post) => {
         return post.client._id == id;
       });
-      return sche[0] ? sche[0].title + "/" + sche[0].startTime : "Nema grupu";
+      return sche[0] ? sche[0].title + '/' + sche[0].startTime : 'Nema grupu';
     },
   },
 };

@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-import srb from "dayjs/locale/sr";
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 

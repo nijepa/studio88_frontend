@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Loading",
+  name: 'Loading',
 
   props: {
     pic: String,
@@ -20,13 +20,13 @@ export default {
   data() {
     return {
       spinners: [
-        "nb-spinner",
-        "reverse-spinner",
-        "hm-spinner",
-        "bt-spinner",
-        "db-spinner",
-        "triple-spinner",
-        "cm-spinner",
+        'nb-spinner',
+        'reverse-spinner',
+        'hm-spinner',
+        'bt-spinner',
+        'db-spinner',
+        'triple-spinner',
+        'cm-spinner',
       ],
     };
   },
@@ -108,7 +108,7 @@ export default {
   left: 15px;
   right: 15px;
   bottom: 15px;
-  content: "";
+  content: '';
   border: 4px solid transparent;
   border-top-color: var(--purple);
   border-left-color: var(--purple);
@@ -174,7 +174,7 @@ export default {
 }
 
 .hm-spinner::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 20px;
   right: 20px;
@@ -291,7 +291,7 @@ export default {
 
 .triple-spinner::before,
 .triple-spinner::after {
-  content: "";
+  content: '';
   position: absolute;
   border-radius: 50%;
   border: 4px solid transparent;
@@ -350,7 +350,7 @@ export default {
 
 .cm-spinner::before,
 .cm-spinner::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 6px;
   bottom: 6px;

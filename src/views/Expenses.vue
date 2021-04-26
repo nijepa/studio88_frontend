@@ -113,21 +113,21 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import Period from "@/components/utils/Period.vue";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import dayjs from "dayjs";
-import sr from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import Period from '@/components/utils/Period.vue';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import dayjs from 'dayjs';
+import sr from 'dayjs/locale/sr';
 
 dayjs.locale(sr);
 
 export default {
-  name: "Expenses",
+  name: 'Expenses',
 
   components: {
     Loading,
@@ -146,10 +146,10 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllExpenses",
-      "getClientsPage",
-      "getClientsPageSize",
-      "loadingState",
+      'getAllExpenses',
+      'getClientsPage',
+      'getClientsPageSize',
+      'loadingState',
     ]),
 
     pageTotalAmount: function () {
@@ -159,31 +159,31 @@ export default {
 
   methods: {
     ...mapActions([
-      "fetchExpenses",
-      "fetchExpense",
-      "fetchClientsPage",
-      "fetchClientsPageSize",
-      "expenseClear",
-      "setLoadingState",
+      'fetchExpenses',
+      'fetchExpense',
+      'fetchClientsPage',
+      'fetchClientsPageSize',
+      'expenseClear',
+      'setLoadingState',
     ]),
 
     async newExpense() {
       this.setLoadingState(true);
-      this.$router.push("/expense");
+      this.$router.push('/expense');
       await this.expenseClear();
     },
 
     async selectExpense(expense) {
       this.setLoadingState(true);
       await this.fetchExpense(expense);
-      this.$router.push("/expense");
+      this.$router.push('/expense');
     },
 
     mapExpenses(expense) {
       return expense.reduce((a, expense_amount) => a + expense_amount, 0);
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.getAllExpenses.filter((post) => {
         return (
@@ -203,10 +203,10 @@ export default {
     filterItems(dateFrom, dateTill) {
       let mu = this.getAllExpenses.filter(
         (year) =>
-          dayjs(year.expense_date).format("YYYY-MM-DD") >=
-            dayjs(dateFrom).format("YYYY-MM-DD") &&
-          dayjs(year.expense_date).format("YYYY-MM-DD") <=
-            dayjs(dateTill).format("YYYY-MM-DD")
+          dayjs(year.expense_date).format('YYYY-MM-DD') >=
+            dayjs(dateFrom).format('YYYY-MM-DD') &&
+          dayjs(year.expense_date).format('YYYY-MM-DD') <=
+            dayjs(dateTill).format('YYYY-MM-DD')
       );
       this.filteredClients = mu;
     },

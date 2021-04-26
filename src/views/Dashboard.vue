@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
-import ToTopButton from "@/components/utils/ToTopButton.vue";
-import { mapActions } from "vuex";
+import Navigation from '@/components/Navigation.vue';
+import Footer from '@/components/Footer.vue';
+import ToTopButton from '@/components/utils/ToTopButton.vue';
+import { mapActions } from 'vuex';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
 
   components: {
     Navigation,
@@ -33,7 +33,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["initialState"]),
+    ...mapActions(['initialState']),
   },
 
   created() {

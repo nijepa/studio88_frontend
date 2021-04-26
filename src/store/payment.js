@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -53,71 +53,71 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchPayments({ commit }) {
-    const response = await axios.get(URL + "payments");
-    commit("setPayments", response.data);
+    const response = await axios.get(URL + 'payments');
+    commit('setPayments', response.data);
   },
 
   async fetchPayment({ commit }, paymentData) {
     const response = await axios.get(
-      URL + "payments/" + paymentData._id,
+      URL + 'payments/' + paymentData._id,
       paymentData
     );
-    commit("setPayment", response.data);
+    commit('setPayment', response.data);
   },
 
   async fetchPeriod({ commit }, periodData) {
-    commit("setPeriod", periodData);
+    commit('setPeriod', periodData);
   },
 
   async paymentAdd({ commit }, paymentData) {
     await axios
-      .post(URL + "payments", paymentData)
+      .post(URL + 'payments', paymentData)
       .then((response) => {
-        commit("addPayment", response.data.payment);
+        commit('addPayment', response.data.payment);
         //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async paymentUpdate({ commit }, paymentData) {
     await axios
-      .put(URL + "payments/" + paymentData._id, paymentData)
+      .put(URL + 'payments/' + paymentData._id, paymentData)
       .then((response) => {
-        commit("updatePayment", response.data);
+        commit('updatePayment', response.data);
         //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async paymentDelete({ commit }, paymentData) {
     await axios
-      .delete(URL + "payments/" + paymentData._id, paymentData)
+      .delete(URL + 'payments/' + paymentData._id, paymentData)
       .then((response) => {
-        commit("deletePayment", response.data._id);
+        commit('deletePayment', response.data._id);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async paymentClear({ commit }) {
-    commit("clearPayment");
+    commit('clearPayment');
   },
 };
 

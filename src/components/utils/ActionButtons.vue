@@ -153,7 +153,7 @@
 
 <script>
 export default {
-  name: "ActionButtons",
+  name: 'ActionButtons',
 
   props: {
     toForm: String,
@@ -162,9 +162,9 @@ export default {
   methods: {
     handleCancel() {
       if (this.toForm) {
-        this.$router.push("/" + this.toForm);
+        this.$router.push('/' + this.toForm);
       } else {
-        this.$emit("canceled", true);
+        this.$emit('canceled', true);
       }
     },
   },

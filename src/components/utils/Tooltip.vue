@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "Tooltip",
+  name: 'Tooltip',
 
   props: {
     tip: String,
@@ -70,7 +70,7 @@ export default {
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;

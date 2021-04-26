@@ -272,30 +272,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import Loading from "@/components/utils/Loading.vue";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import DeleteButton from "@/components/utils/DeleteButton.vue";
-import Tooltip from "@/components/utils/Tooltip.vue";
-import CheckboxCustom from "@/components/utils/CheckboxCustom.vue";
-import actionsNotify from "@/mixins/actionsNotify";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import mapSchedules from "@/mixins/mapSchedules";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import Autocomplete from "@trevoreyre/autocomplete-vue";
+import { mapGetters, mapActions } from 'vuex';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import Loading from '@/components/utils/Loading.vue';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import DeleteButton from '@/components/utils/DeleteButton.vue';
+import Tooltip from '@/components/utils/Tooltip.vue';
+import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
+import actionsNotify from '@/mixins/actionsNotify';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import mapSchedules from '@/mixins/mapSchedules';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import Autocomplete from '@trevoreyre/autocomplete-vue';
 //import '@trevoreyre/autocomplete-vue/dist/style.css';
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "Attendance",
+  name: 'Attendance',
 
   components: {
     Loading,
@@ -323,15 +323,15 @@ export default {
       customStyles,
       attendanceInput: {
         attend_date: new Date(),
-        notes: "",
+        notes: '',
         members: [],
       },
       notClients: [],
       actions: false,
-      input: "",
+      input: '',
       foundClient: {
-        _id: "",
-        note: "",
+        _id: '',
+        note: '',
         present: true,
       },
       schedules: [],
@@ -341,40 +341,40 @@ export default {
       existingMembers: [],
       sortOrder: true,
       loadingMembers: false,
-      btn_title: "dodatne opcije",
+      btn_title: 'dodatne opcije',
     };
   },
 
   computed: {
     ...mapGetters([
-      "getAllAttendances",
-      "getOneAttendance",
-      "getAllClients",
-      "getAllSchedules",
-      "getClientsPageSize",
-      "getErrors",
-      "loadingState",
+      'getAllAttendances',
+      'getOneAttendance',
+      'getAllClients',
+      'getAllSchedules',
+      'getClientsPageSize',
+      'getErrors',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "attendanceAdd",
-      "attendanceUpdate",
-      "attendanceDelete",
-      "fetchClients",
-      "fetchSchedules",
-      "fetchClientsPageSize",
-      "fetchAttendances",
-      "clearErrors",
-      "setLoadingState",
+      'attendanceAdd',
+      'attendanceUpdate',
+      'attendanceDelete',
+      'fetchClients',
+      'fetchSchedules',
+      'fetchClientsPageSize',
+      'fetchAttendances',
+      'clearErrors',
+      'setLoadingState',
     ]),
 
     toggleActions() {
       this.actions = !this.actions;
-      this.btn_title === "dodatne opcije"
-        ? (this.btn_title = "sakrij")
-        : (this.btn_title = "dodatne opcije");
+      this.btn_title === 'dodatne opcije'
+        ? (this.btn_title = 'sakrij')
+        : (this.btn_title = 'dodatne opcije');
     },
 
     searchClientsAdd(input) {
@@ -388,7 +388,7 @@ export default {
 
     getResultValue(result) {
       return (
-        result.last_name + ", " + result.first_name + " - " + result.mobile
+        result.last_name + ', ' + result.first_name + ' - ' + result.mobile
       );
     },
 
@@ -408,13 +408,13 @@ export default {
           1
         );
         this.foundClient = {
-          _id: "",
-          note: "",
+          _id: '',
+          note: '',
           present: true,
         };
-        this.input = "";
-        this.value = "";
-        this.$refs.autocomplete.value = "";
+        this.input = '';
+        this.value = '';
+        this.$refs.autocomplete.value = '';
       }
     },
 
@@ -438,13 +438,13 @@ export default {
         await this.fetchSchedules();
         const selDate = this.attendanceInput.attend_date.getDay();
         const cgDays = [
-          "Neđelja",
-          "Poneđeljak",
-          "Utorak",
-          "Srijeda",
-          "Četvrtak",
-          "Petak",
-          "Subota",
+          'Neđelja',
+          'Poneđeljak',
+          'Utorak',
+          'Srijeda',
+          'Četvrtak',
+          'Petak',
+          'Subota',
         ];
         const cgDay = cgDays[selDate];
         const filteredSchedules = await this.getAllSchedules.filter((a) => {
@@ -457,13 +457,13 @@ export default {
 
         const constructSchedules = filteredSchedules
           .filter(function (e) {
-            return this.indexOf(e.title + "/" + e.startTime) >= 0;
+            return this.indexOf(e.title + '/' + e.startTime) >= 0;
           }, this.selectedSchedules)
           .map((item) => {
             let container = {};
             container = {
               members: item.members,
-              group: item.title + "/" + item.startTime,
+              group: item.title + '/' + item.startTime,
             };
             return container;
           })
@@ -484,7 +484,7 @@ export default {
           }, this.existingMembers);
         } else {
           remainingMembers = preparedSchedules;
-        } 
+        }
 
         this.addAllMembers(remainingMembers);
       }
@@ -496,7 +496,7 @@ export default {
           let container = {};
           container = {
             members: item.members,
-            group: item.title + "/" + item.startTime,
+            group: item.title + '/' + item.startTime,
           };
           return container;
         })
@@ -527,8 +527,8 @@ export default {
 
       let attMembers = await this.getAllAttendances.filter((e) => {
         return (
-          dayjs(e.attend_date).format("YYYY-MM-DD") ===
-          dayjs(this.attendanceInput.attend_date).format("YYYY-MM-DD")
+          dayjs(e.attend_date).format('YYYY-MM-DD') ===
+          dayjs(this.attendanceInput.attend_date).format('YYYY-MM-DD')
         );
       });
 
@@ -558,7 +558,6 @@ export default {
               obj.group = current;
               obj.mems = cnt;
               attGroups.push(obj);
-              //document.write(current + ' comes --> ' + cnt + ' times<br>');
             }
             current = attMembersGroups[i];
             cnt = 1;
@@ -574,7 +573,7 @@ export default {
           .map((item) => {
             let container = {};
             container = {
-              group: item.title + "/" + item.startTime,
+              group: item.title + '/' + item.startTime,
               mems: item.members.length,
             };
             return container;
@@ -582,7 +581,6 @@ export default {
 
         let result = this.schedules
           .filter(function (o1) {
-            // filter out (!) items in result2
             return !attGroups.some(function (o2) {
               return o1.group === o2.group && o1.mems === o2.mems; // assumes unique id
             });
@@ -591,15 +589,6 @@ export default {
             return o.group;
           });
         this.schedules = result;
-
-        /*           .map((item) => {
-            let container = item.title;
-            return container;
-          }) */
-        /*           .filter(function (e) {
-            return this.indexOf(e) < 0;
-          }, buu); */
-
         this.attendanceExist = true;
       }
     },
@@ -620,18 +609,18 @@ export default {
       this.setLoadingState(false);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
-        this.$router.push("/attendances");
+        this.$router.push('/attendances');
       }
     },
 
@@ -645,7 +634,7 @@ export default {
           //'client':this.getAllClients.filter(active => active.active !== false)[i],
           client: cli[i].client,
           present: true,
-          note: "",
+          note: '',
           _id: cli[i]._id,
         });
       }
@@ -668,11 +657,11 @@ export default {
     async delEx() {
       await this.attendanceDelete(this.getOneAttendance);
       this.$toast.success(
-        "Uspješno obrisano!",
-        "OK",
+        'Uspješno obrisano!',
+        'OK',
         this.notificationSystem.options.success
       );
-      this.$router.push("/attendances");
+      this.$router.push('/attendances');
     },
 
     sortItems(field, type) {
@@ -687,7 +676,7 @@ export default {
           y = b.client[field].toLowerCase();
         }
         //return this.sortOrder ? x > y : x < y;
-        if(this.sortOrder) {
+        if (this.sortOrder) {
           return x > y ? -1 : 1;
         } else {
           return x > y ? 1 : -1;
@@ -695,7 +684,7 @@ export default {
       });
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.attendanceInput.members.filter((post) => {
         return (
@@ -732,7 +721,7 @@ export default {
 
   async mounted() {
     let currentYear = new Date();
-    currentYear = dayjs().format("YYYY");
+    currentYear = dayjs().format('YYYY');
     this.year = currentYear;
     if (!this.getAllClients.length) await this.fetchClients();
     await this.initItems();
@@ -748,7 +737,7 @@ export default {
 .day__select {
   border: none;
   height: 140px;
-  font-family: "Itim", cursive;
+  font-family: 'Itim', cursive;
 }
 
 .all__clients_btn {
@@ -776,7 +765,6 @@ export default {
 }
 
 .att__header {
-  /* grid-template-columns: repeat(3, auto); */
   justify-self: stretch;
   justify-items: center;
   grid-gap: 0.2em;
@@ -790,11 +778,8 @@ export default {
 .schedule__groups {
   display: grid;
   justify-content: center;
-  /*   border: 1px solid var(--purple-light);
-  border-radius: 0.5em; */
   justify-self: center;
   padding: 0.2em;
-  /* background: var(--purple-lightest); */
   font-size: 1.1em;
   margin: 0 0.5em;
   align-self: end;

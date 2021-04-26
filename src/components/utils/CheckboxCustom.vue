@@ -24,21 +24,21 @@
 
 <script>
 export default {
-  name: "CheckboxCustom",
+  name: 'CheckboxCustom',
 
   model: {
-    prop: "modelValue",
-    event: "change",
+    prop: 'modelValue',
+    event: 'change',
   },
 
   props: {
-    value: { type: String, default: "" },
-    modelValue: { default: "" },
+    value: { type: String, default: '' },
+    modelValue: { default: '' },
     label: { type: String },
     trueValue: { default: true },
     falseValue: { default: false },
-    checkId: { type: String, default: "cbx" },
-    checkClass: { type: String, default: "" },
+    checkId: { type: String, default: 'cbx' },
+    checkClass: { type: String, default: '' },
   },
 
   computed: {
@@ -61,9 +61,9 @@ export default {
         } else {
           newValue.splice(newValue.indexOf(this.value), 1);
         }
-        this.$emit("change", newValue);
+        this.$emit('change', newValue);
       } else {
-        this.$emit("change", isChecked ? this.trueValue : this.falseValue);
+        this.$emit('change', isChecked ? this.trueValue : this.falseValue);
       }
     },
   },
@@ -112,7 +112,7 @@ export default {
   transform: translate3d(0, 0, 0);
 }
 .cbx span:first-child:before {
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   background: #506eec;
@@ -126,7 +126,7 @@ export default {
   margin-left: 8px;
 }
 .cbx span:last-child:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 8px;
   left: 0;

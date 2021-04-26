@@ -22,14 +22,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
+import { mapGetters, mapActions } from 'vuex';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
 //import srb from "dayjs/locale/sr";
 
 export default {
-  name: "Period",
+  name: 'Period',
 
   components: {
     Datepicker,
@@ -49,14 +49,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getPeriod"]),
+    ...mapGetters(['getPeriod']),
   },
 
   methods: {
-    ...mapActions(["fetchPeriod"]),
+    ...mapActions(['fetchPeriod']),
 
     customFormatter(date) {
-      return dayjs(date).format("DD MMM YYYY");
+      return dayjs(date).format('DD MMM YYYY');
     },
 
     getPreviousMonday() {
@@ -71,7 +71,7 @@ export default {
         dateTill: this.dateTill,
       };
       await this.fetchPeriod(period);
-      this.$emit("filter-period", this.dateFrom, this.dateTill);
+      this.$emit('filter-period', this.dateFrom, this.dateTill);
     },
 
     isEmpty(obj) {
@@ -85,7 +85,7 @@ export default {
       this.dateFrom = this.getPeriod.dateFrom;
       this.dateTill = this.getPeriod.dateTill;
     }
-    this.$emit("dates", this.dateFrom, this.dateTill);
+    this.$emit('dates', this.dateFrom, this.dateTill);
   },
 };
 </script>

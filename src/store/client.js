@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -6,10 +6,10 @@ const URL = process.env.VUE_APP_BACKEND_URL;
 const state = {
   client: {},
   clients: [],
-  formType: "",
+  formType: '',
   clientsPage: 1,
   clientsPageSize: 10,
-  fromForm: "clients",
+  fromForm: 'clients',
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
@@ -66,79 +66,79 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchClients({ commit }) {
-    const response = await axios.get(URL + "clients");
-    commit("setClients", response.data);
+    const response = await axios.get(URL + 'clients');
+    commit('setClients', response.data);
   },
 
   async fetchClient({ commit }, clientData) {
     const response = await axios.get(
-      URL + "clients/" + clientData._id,
+      URL + 'clients/' + clientData._id,
       clientData
     );
-    commit("setClient", response.data);
+    commit('setClient', response.data);
   },
 
   async fetchClientsPage({ commit }, page) {
-    commit("setClientsPage", page);
+    commit('setClientsPage', page);
   },
 
   async fetchClientsPageSize({ commit }, page) {
-    commit("setClientsPageSize", page);
+    commit('setClientsPageSize', page);
   },
 
   async fetchFromForm({ commit }, form) {
-    commit("setFromForm", form);
+    commit('setFromForm', form);
   },
 
   async clientAdd({ commit }, clientData) {
     await axios
-      .post(URL + "clients", clientData)
+      .post(URL + 'clients', clientData)
       .then((response) => {
-        commit("addClient", response.data.client);
+        commit('addClient', response.data.client);
         //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async clientUpdate({ commit }, clientData) {
     await axios
-      .put(URL + "clients/" + clientData._id, clientData)
+      .put(URL + 'clients/' + clientData._id, clientData)
       .then((response) => {
-        commit("updateClient", response.data);
+        commit('updateClient', response.data);
         //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async clientDelete({ commit }, clientData) {
     await axios
-      .delete(URL + "clients/" + clientData._id, clientData)
+      .delete(URL + 'clients/' + clientData._id, clientData)
       .then((response) => {
-        commit("deleteClient", response.data._id);
+        commit('deleteClient', response.data._id);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async clientClear({ commit }) {
-    commit("clearClient");
+    commit('clearClient');
   },
 };
 

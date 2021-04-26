@@ -73,34 +73,34 @@
 
 <script>
 export default {
-  name: "SearchBar",
+  name: 'SearchBar',
 
   props: {
     searchStr: String,
     pageSizeNr: Number,
-    searchType: { type: String, default: "" },
+    searchType: { type: String, default: '' },
   },
 
   data() {
     return {
-      search: "",
+      search: '',
       pageSize: 10,
-      typeS: "",
+      typeS: '',
     };
   },
 
   methods: {
     changed() {
-      this.$emit("changed", this.pageSize);
+      this.$emit('changed', this.pageSize);
     },
 
     typed() {
-      this.$emit("typed", this.search);
+      this.$emit('typed', this.search);
     },
 
     handleSearchType() {
       if (!this.searchType) {
-        this.typeS = "traži (ime, prezime, tel.)";
+        this.typeS = 'traži (ime, prezime, tel.)';
       } else {
         this.typeS = this.searchType;
       }

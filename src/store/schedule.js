@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -53,75 +53,75 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchSchedules({ commit }) {
-    const response = await axios.get(URL + "schedules");
-    commit("setSchedules", response.data);
+    const response = await axios.get(URL + 'schedules');
+    commit('setSchedules', response.data);
   },
 
   async fetchSchedule({ commit }, scheduleData) {
     const response = await axios.get(
-      URL + "schedules/" + scheduleData._id,
+      URL + 'schedules/' + scheduleData._id,
       scheduleData
     );
-    commit("setSchedule", response.data);
+    commit('setSchedule', response.data);
   },
 
   async fetchNotClients({ commit }, scheduleData) {
     const response = await axios.get(
-      URL + "schedules/clientsnot/" + scheduleData._id,
+      URL + 'schedules/clientsnot/' + scheduleData._id,
       scheduleData
     );
-    commit("setNotClients", response.data);
+    commit('setNotClients', response.data);
   },
 
   async scheduleAdd({ commit }, scheduleData) {
     await axios
-      .post(URL + "schedules", scheduleData)
+      .post(URL + 'schedules', scheduleData)
       .then((response) => {
-        commit("addSchedule", response.data.schedule);
+        commit('addSchedule', response.data.schedule);
         //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async scheduleUpdate({ commit }, scheduleData) {
     await axios
-      .put(URL + "schedules/" + scheduleData._id, scheduleData)
+      .put(URL + 'schedules/' + scheduleData._id, scheduleData)
       .then((response) => {
-        commit("updateSchedule", response.data);
+        commit('updateSchedule', response.data);
         //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async scheduleDelete({ commit }, scheduleData) {
     await axios
-      .delete(URL + "schedules/" + scheduleData._id, scheduleData)
+      .delete(URL + 'schedules/' + scheduleData._id, scheduleData)
       .then((response) => {
-        commit("deleteSchedule", response.data._id);
+        commit('deleteSchedule', response.data._id);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async scheduleClear({ commit }) {
-    commit("clearSchedule");
+    commit('clearSchedule');
   },
 };
 

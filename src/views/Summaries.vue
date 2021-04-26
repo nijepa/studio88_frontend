@@ -86,19 +86,19 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ChartPayments from "@/components/utils/AreaChart";
-import ChartAttendances from "@/components/utils/AreaChartLine";
-import Loading from "@/components/utils/Loading.vue";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import ChartPayments from '@/components/utils/AreaChart';
+import ChartAttendances from '@/components/utils/AreaChartLine';
+import Loading from '@/components/utils/Loading.vue';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "Summaries",
+  name: 'Summaries',
 
   data() {
     return {
@@ -126,27 +126,27 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllClients",
-      "getAllPayments",
-      "getAllAttendances",
-      "getAllExpenses",
-      "loadingState",
+      'getAllClients',
+      'getAllPayments',
+      'getAllAttendances',
+      'getAllExpenses',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "fetchClients",
-      "fetchClient",
-      "fetchPayments",
-      "fetchAttendances",
-      "fetchExpenses",
-      "clientClear",
-      "setLoadingState",
+      'fetchClients',
+      'fetchClient',
+      'fetchPayments',
+      'fetchAttendances',
+      'fetchExpenses',
+      'clientClear',
+      'setLoadingState',
     ]),
 
     customFormatter(date) {
-      return dayjs(date).format("DD MMM YYYY");
+      return dayjs(date).format('DD MMM YYYY');
     },
 
     mapPayments() {
@@ -167,7 +167,7 @@ export default {
     mapExpenses() {
       let helper = {};
       return this.getAllExpenses.reduce(function (r, o) {
-        let key = o.expense_month + "-" + o.expense_year;
+        let key = o.expense_month + '-' + o.expense_year;
 
         if (!helper[key]) {
           helper[key] = Object.assign({}, o); // create a copy of o
@@ -224,16 +224,16 @@ export default {
     selectAttendances() {
       let filteredAttendances = this.mapAttendances().filter(
         (year) =>
-          dayjs(year.attend_date).format("YYYY-MM-DD") >=
-            dayjs(this.dateFrom).format("YYYY-MM-DD") &&
-          dayjs(year.attend_date).format("YYYY-MM-DD") <=
-            dayjs(this.dateTill).format("YYYY-MM-DD")
+          dayjs(year.attend_date).format('YYYY-MM-DD') >=
+            dayjs(this.dateFrom).format('YYYY-MM-DD') &&
+          dayjs(year.attend_date).format('YYYY-MM-DD') <=
+            dayjs(this.dateTill).format('YYYY-MM-DD')
       );
       let filteredAttendancesAmounts = filteredAttendances
         .map((item) => item.total_amount)
         .sort((a, b) => (a.attend_date > b.attend_date ? -1 : 1));
       let filteredAttendancesLabels = filteredAttendances
-        .map((item) => dayjs(item.attend_date).format("DD MMM YYYY"))
+        .map((item) => dayjs(item.attend_date).format('DD MMM YYYY'))
         .sort((a, b) => (a.attend_date > b.attend_date ? -1 : 1));
       this.totalAttendances = filteredAttendancesAmounts;
       this.attendanceLabels = filteredAttendancesLabels;

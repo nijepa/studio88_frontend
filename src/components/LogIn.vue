@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
 
 export default {
-  name: "LogIn",
+  name: 'LogIn',
 
   components: {
     Loading,
@@ -46,23 +46,23 @@ export default {
 
   data() {
     return {
-      type: "login",
+      type: 'login',
       isLog: false,
       loginInput: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
       user: {},
       notificationSystem: {
         options: {
           show: {
-            theme: "dark",
-            icon: "icon-person",
-            position: "topCenter",
-            progressBarColor: "rgb(0, 255, 184)",
+            theme: 'dark',
+            icon: 'icon-person',
+            position: 'topCenter',
+            progressBarColor: 'rgb(0, 255, 184)',
           },
           error: {
-            position: "center",
+            position: 'center',
           },
         },
       },
@@ -70,19 +70,19 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getInputType", "loggedUser", "getErrors", "isLogged"]),
+    ...mapGetters(['getInputType', 'loggedUser', 'getErrors', 'isLogged']),
   },
 
   methods: {
-    ...mapActions(["login", "logout", "signType", "clearErrors"]),
+    ...mapActions(['login', 'logout', 'signType', 'clearErrors']),
 
     async logIn() {
       this.isLog = true;
       await this.login(this.loginInput);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! Pogrešan e-mail ili password " + this.getErrors,
-          "OK",
+          'Greška! Pogrešan e-mail ili password ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();

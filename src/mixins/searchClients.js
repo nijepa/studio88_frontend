@@ -11,7 +11,7 @@ export default {
     },
 
     setPageNr() {
-      const element = document.querySelector("ul.pagination > li.active");
+      const element = document.querySelector('ul.pagination > li.active');
       if (element) this.fetchClientsPage(Number(element.innerText));
     },
   },

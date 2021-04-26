@@ -132,38 +132,38 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
 
 export default {
-  name: "Schedules",
+  name: 'Schedules',
 
   components: {
     Loading,
   },
 
   computed: {
-    ...mapGetters(["getAllSchedules", "loadingState"]),
+    ...mapGetters(['getAllSchedules', 'loadingState']),
   },
 
   methods: {
     ...mapActions([
-      "fetchSchedules",
-      "fetchSchedule",
-      "scheduleClear",
-      "setLoadingState",
+      'fetchSchedules',
+      'fetchSchedule',
+      'scheduleClear',
+      'setLoadingState',
     ]),
 
     async newSchedule() {
       this.setLoadingState(true);
-      this.$router.push("/schedule");
+      this.$router.push('/schedule');
       await this.scheduleClear();
     },
 
     async selectSchedule(schedule) {
       this.setLoadingState(true);
       await this.fetchSchedule(schedule);
-      this.$router.push("/schedule");
+      this.$router.push('/schedule');
     },
   },
 

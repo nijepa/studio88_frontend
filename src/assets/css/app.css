@@ -36,8 +36,8 @@ html {
   /* border-box box model allows us to add padding and border to our elements without increasing their size */
   box-sizing: border-box;
   /* A system font stack so things load nice and quick! */
-  font-family: "Baloo Tamma 2", cursive;
-  font-family: "Itim", cursive;
+  font-family: 'Baloo Tamma 2', cursive;
+  font-family: 'Itim', cursive;
   /* -webkit-font-smoothing: antialiased; */
   /* -moz-osx-font-smoothing: grayscale; */
   /* font-weight: 900; */
@@ -132,7 +132,7 @@ a:hover {
 }
 
 select {
-  font-family: "Itim", cursive;
+  font-family: 'Itim', cursive;
   font-size: 1em;
   margin: 0 0.5em;
   border: none;
@@ -161,7 +161,7 @@ label {
   margin-top: .3em; */
   cursor: pointer;
   color: var(--green);
-  font-family: "Baloo Tamma 2", cursive;
+  font-family: 'Baloo Tamma 2', cursive;
   font-size: 1.2em;
   font-weight: 800;
   border: 2px solid transparent;
@@ -204,7 +204,7 @@ label {
 }
 
 .members__att {
-  grid-template-columns: 1fr .5fr repeat(2, auto) !important;
+  grid-template-columns: 1fr 0.5fr repeat(2, auto) !important;
 }
 
 .members_input {
@@ -237,7 +237,7 @@ label {
 
 .att_members {
   cursor: default;
-  padding: .2em;
+  padding: 0.2em;
 }
 
 .att_member {
@@ -414,7 +414,7 @@ li:hover {
   margin: 1em 0;
 }
 
-.termin>p {
+.termin > p {
   margin: 0.3em 0;
   color: var(--black);
   font-size: 1.3em;
@@ -451,7 +451,7 @@ li:hover {
 
 .vdp-datepicker,
 input {
-  font-family: "Itim", cursive;
+  font-family: 'Itim', cursive;
   font-size: 1em;
   border: 1px solid transparent;
   border-bottom: 1px solid #d1d1d1;
@@ -703,7 +703,7 @@ div.activities__list:nth-child(even):hover {
 }
 
 .clients__list_item {
-  grid-template-columns: .5fr 1.5fr 1.3fr repeat(3, 1fr) !important;
+  grid-template-columns: 0.5fr 1.5fr 1.3fr repeat(3, 1fr) !important;
 }
 
 div.clients__list:nth-child(odd) {
@@ -721,7 +721,7 @@ div.clients__list:nth-child(odd) {
 .client__item {
   cursor: pointer;
   border-radius: 1em;
-  padding: .5em;
+  padding: 0.5em;
   margin: 0;
   text-align: left;
 }
@@ -823,14 +823,14 @@ div.clients__list:nth-child(odd) {
 }
 
 .dani {
-  margin: .5em 0;
+  margin: 0.5em 0;
 }
 
 .dan {
   font-size: 1.1em;
   color: var(--black);
   cursor: pointer;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 .dan_input {
@@ -992,9 +992,11 @@ canvas {
 
 .active__link {
   color: var(--gold-light) !important;
-  background-image: linear-gradient(to bottom,
-      white,
-      var(--purple) 80%) !important;
+  background-image: linear-gradient(
+    to bottom,
+    white,
+    var(--purple) 80%
+  ) !important;
   cursor: none !important;
   transform: scale(1.05);
 }
@@ -1034,7 +1036,7 @@ nav {
   margin-top: 1em;
   cursor: pointer;
   color: var(--purple);
-  font-family: "Itim", cursive;
+  font-family: 'Itim', cursive;
   font-variant: small-caps;
   font-size: 1.2em;
   font-weight: 800;
@@ -1059,8 +1061,8 @@ nav {
 .noborder input {
   border-bottom: 1px solid transparent;
   font-size: 1.5em;
-  transition: ease .5s all;
-  border-radius: .5em;
+  transition: ease 0.5s all;
+  border-radius: 0.5em;
   text-align: center;
 }
 
@@ -1103,10 +1105,12 @@ hr {
   margin: 0.4em;
   border: 0;
   height: 2px;
-  background-image: linear-gradient(to right,
-      rgba(98, 18, 105, 0),
-      rgba(116, 21, 153, 0.75),
-      rgba(98, 19, 134, 0));
+  background-image: linear-gradient(
+    to right,
+    rgba(98, 18, 105, 0),
+    rgba(116, 21, 153, 0.75),
+    rgba(98, 19, 134, 0)
+  );
 }
 
 .user__form {
@@ -1236,7 +1240,7 @@ hr {
 
 .fall-enter-active,
 .fall-leave-active {
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .fall-enter,
@@ -1244,7 +1248,6 @@ hr {
   transform: translateY(-2em);
   opacity: 0;
 }
-
 
 .slide-fade-enter-active {
   transition: all 0.3s ease-in-out;
@@ -1265,8 +1268,6 @@ hr {
   opacity: 0;
 }
 
-
-
 @media only screen and (max-width: 1078px) {
   nav {
     grid-template-columns: repeat(3, auto);
@@ -1278,7 +1279,6 @@ hr {
 }
 
 @media only screen and (max-width: 799px) {
-
   .activities__wrapper,
   .dash__wrapper {
     grid-template-columns: auto !important;
@@ -1290,7 +1290,6 @@ hr {
 }
 
 @media (max-width: 599px) {
-
   nav,
   .clients__list,
   .clients__list_item {

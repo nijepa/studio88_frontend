@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import LogIn from "@/components/LogIn.vue";
+import LogIn from '@/components/LogIn.vue';
 
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
 
   props: {
     msg: String,
@@ -101,7 +101,7 @@ export default {
 }
 
 .club__link {
-  font-family: "Baloo Tamma 2", cursive;
+  font-family: 'Baloo Tamma 2', cursive;
   color: var(--purple);
   justify-self: baseline;
   align-self: baseline;

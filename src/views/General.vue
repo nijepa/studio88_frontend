@@ -242,17 +242,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "General",
+  name: 'General',
 
   components: {
     Datepicker,
@@ -263,15 +263,15 @@ export default {
     return {
       sr: sr,
       generalInput: {
-        general_email: "",
-        general_site: "",
-        general_title: "",
-        general_address: "",
-        general_mobile: "",
-        general_date: "",
-        general_instagram: "",
-        general_facebook: "",
-        logo: "",
+        general_email: '',
+        general_site: '',
+        general_title: '',
+        general_address: '',
+        general_mobile: '',
+        general_date: '',
+        general_instagram: '',
+        general_facebook: '',
+        logo: '',
         prices: [],
       },
       general: {},
@@ -281,23 +281,23 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getGeneral", "getErrors"]),
+    ...mapGetters(['getGeneral', 'getErrors']),
   },
 
   methods: {
     ...mapActions([
-      "fetchGenerals",
-      "generalAdd",
-      "generalUpdate",
-      "createPrice",
-      "clearErrors",
+      'fetchGenerals',
+      'generalAdd',
+      'generalUpdate',
+      'createPrice',
+      'clearErrors',
     ]),
 
     addNewPrice() {
       this.generalInput.prices.unshift({
         price_amount: 0,
         price_date: this.selectedDate,
-        note: "",
+        note: '',
       });
     },
 
@@ -307,7 +307,7 @@ export default {
       } else {
         this.generalAdd(this.generalInput);
       }
-      this.$router.push("/summaries");
+      this.$router.push('/summaries');
     },
 
     savePrice() {
@@ -320,7 +320,7 @@ export default {
     },
 
     makeCorrectDate(str) {
-      return new Date(str).toISOString().split("T")[0];
+      return new Date(str).toISOString().split('T')[0];
     },
 
     onAppeared() {

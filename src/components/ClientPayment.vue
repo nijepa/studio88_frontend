@@ -110,22 +110,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ActionButtons from "@/components/utils/ActionButtons.vue";
-import DeleteButton from "@/components/utils/DeleteButton.vue";
-import actionsNotify from "@/mixins/actionsNotify";
-import findMonth from "@/mixins/findMonth";
-import Datepicker from "vuejs-datepicker";
-import { sr } from "vuejs-datepicker/dist/locale";
-import dayjs from "dayjs";
-import srb from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import ActionButtons from '@/components/utils/ActionButtons.vue';
+import DeleteButton from '@/components/utils/DeleteButton.vue';
+import actionsNotify from '@/mixins/actionsNotify';
+import findMonth from '@/mixins/findMonth';
+import Datepicker from 'vuejs-datepicker';
+import { sr } from 'vuejs-datepicker/dist/locale';
+import dayjs from 'dayjs';
+import srb from 'dayjs/locale/sr';
 
 dayjs.locale(srb);
 
 export default {
-  name: "ClientPayment",
+  name: 'ClientPayment',
 
-  props: ["client", "clientAtt"],
+  props: ['client', 'clientAtt'],
 
   components: {
     Datepicker,
@@ -136,18 +136,18 @@ export default {
   mixins: [actionsNotify, findMonth],
 
   computed: {
-    ...mapGetters(["getAllPayments", "getErrors"]),
+    ...mapGetters(['getAllPayments', 'getErrors']),
   },
 
   data() {
     return {
-      title: "Novo plaćanje",
+      title: 'Novo plaćanje',
       sr: sr,
       attData: {
         payment_amount: 35,
-        note: "",
+        note: '',
       },
-      payment_year: dayjs(new Date()).format("YYYY"),
+      payment_year: dayjs(new Date()).format('YYYY'),
       payment_month: this.checkMonth(),
       payment_date: new Date().toISOString().slice(0, 10),
     };
@@ -155,19 +155,19 @@ export default {
 
   methods: {
     ...mapActions([
-      "fetchPayments",
-      "clearErrors",
-      "paymentAdd",
-      "paymentUpdate",
-      "paymentDelete",
+      'fetchPayments',
+      'clearErrors',
+      'paymentAdd',
+      'paymentUpdate',
+      'paymentDelete',
     ]),
 
     customFormatter(date) {
-      return dayjs(date).format("DD MMM YYYY");
+      return dayjs(date).format('DD MMM YYYY');
     },
 
     handleCancel() {
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     async addAttendance() {
@@ -182,7 +182,7 @@ export default {
           payment_date: this.payment_date,
           payment_year: this.payment_year,
           payment_month: this.payment_month,
-          notes: "",
+          notes: '',
           members: [
             {
               client: this.client._id,
@@ -231,19 +231,19 @@ export default {
       }
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno sačuvano!",
-          "OK",
+          'Uspješno sačuvano!',
+          'OK',
           this.notificationSystem.options.success
         );
       }
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     async delEx() {
@@ -260,19 +260,19 @@ export default {
       await this.paymentUpdate(paymentInput);
       if (this.getErrors.length) {
         this.$toast.error(
-          "Greška! " + this.getErrors,
-          "OK",
+          'Greška! ' + this.getErrors,
+          'OK',
           this.notificationSystem.options.error
         );
         this.clearErrors();
       } else {
         this.$toast.success(
-          "Uspješno obrisano!",
-          "OK",
+          'Uspješno obrisano!',
+          'OK',
           this.notificationSystem.options.success
         );
       }
-      this.$emit("canceled", true);
+      this.$emit('canceled', true);
     },
 
     checkUpdate() {
@@ -282,7 +282,7 @@ export default {
         this.payment_date = this.clientAtt.date;
         this.payment_year = this.clientAtt.year;
         this.payment_month = this.clientAtt.month;
-        this.title = "Izmijeni plaćanje";
+        this.title = 'Izmijeni plaćanje';
       }
     },
   },

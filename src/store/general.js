@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
 //import router from '../router';
@@ -47,36 +47,36 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   async fetchGenerals({ commit }) {
-    const response = await axios.get(URL + "generals");
-    commit("setGeneral", response.data);
+    const response = await axios.get(URL + 'generals');
+    commit('setGeneral', response.data);
   },
 
   async generalAdd({ commit }, generalData) {
     await axios
-      .post(URL + "generals", generalData)
+      .post(URL + 'generals', generalData)
       .then((response) => {
-        commit("addGeneral", response.data.general);
+        commit('addGeneral', response.data.general);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },
 
   async generalUpdate({ commit }, generalData) {
     await axios
-      .put(URL + "generals/" + generalData._id, generalData)
+      .put(URL + 'generals/' + generalData._id, generalData)
       .then((response) => {
-        commit("updateGeneral", response.data);
+        commit('updateGeneral', response.data);
       })
       .catch((error) => {
         if (error.response) {
-          commit("setErrors", error.response.data.error);
+          commit('setErrors', error.response.data.error);
         } else {
-          commit("setErrors", error);
+          commit('setErrors', error);
         }
       });
   },

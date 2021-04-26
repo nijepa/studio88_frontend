@@ -163,21 +163,21 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import Period from "@/components/utils/Period.vue";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import dayjs from "dayjs";
-import sr from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import Period from '@/components/utils/Period.vue';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import dayjs from 'dayjs';
+import sr from 'dayjs/locale/sr';
 
 dayjs.locale(sr);
 
 export default {
-  name: "Payments",
+  name: 'Payments',
 
   components: {
     Loading,
@@ -198,10 +198,10 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllPayments",
-      "getClientsPage",
-      "getClientsPageSize",
-      "loadingState",
+      'getAllPayments',
+      'getClientsPage',
+      'getClientsPageSize',
+      'loadingState',
     ]),
 
     pageTotalAmount: function () {
@@ -213,24 +213,24 @@ export default {
 
   methods: {
     ...mapActions([
-      "fetchPayments",
-      "fetchPayment",
-      "fetchClientsPage",
-      "fetchClientsPageSize",
-      "paymentClear",
-      "setLoadingState",
+      'fetchPayments',
+      'fetchPayment',
+      'fetchClientsPage',
+      'fetchClientsPageSize',
+      'paymentClear',
+      'setLoadingState',
     ]),
 
     async newPayment() {
       this.setLoadingState(true);
-      this.$router.push("/payment");
+      this.$router.push('/payment');
       await this.paymentClear();
     },
 
     async selectPayment(payment) {
       this.setLoadingState(true);
       await this.fetchPayment(payment);
-      this.$router.push("/payment");
+      this.$router.push('/payment');
     },
 
     mapPayments(payment) {
@@ -240,7 +240,7 @@ export default {
       );
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.getAllPayments.filter((post) => {
         return (
@@ -260,10 +260,10 @@ export default {
       this.dateTill = dateTill;
       let mu = this.getAllPayments.filter(
         (year) =>
-          dayjs(year.payment_date).format("YYYY-MM-DD") >=
-            dayjs(dateFrom).format("YYYY-MM-DD") &&
-          dayjs(year.payment_date).format("YYYY-MM-DD") <=
-            dayjs(dateTill).format("YYYY-MM-DD")
+          dayjs(year.payment_date).format('YYYY-MM-DD') >=
+            dayjs(dateFrom).format('YYYY-MM-DD') &&
+          dayjs(year.payment_date).format('YYYY-MM-DD') <=
+            dayjs(dateTill).format('YYYY-MM-DD')
       );
       this.filteredClients = mu;
     },

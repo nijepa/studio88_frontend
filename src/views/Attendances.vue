@@ -175,21 +175,21 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Loading from "@/components/utils/Loading.vue";
-import { customLabels, customStyles } from "@/components/utils/pageNav.js";
-import SearchBar from "@/components/utils/SearchBar.vue";
-import Period from "@/components/utils/Period.vue";
-import navigation from "@/mixins/navigation";
-import navigationSearch from "@/mixins/navigationSearch";
-import searchClients from "@/mixins/searchClients";
-import dayjs from "dayjs";
-import sr from "dayjs/locale/sr";
+import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/utils/Loading.vue';
+import { customLabels, customStyles } from '@/components/utils/pageNav.js';
+import SearchBar from '@/components/utils/SearchBar.vue';
+import Period from '@/components/utils/Period.vue';
+import navigation from '@/mixins/navigation';
+import navigationSearch from '@/mixins/navigationSearch';
+import searchClients from '@/mixins/searchClients';
+import dayjs from 'dayjs';
+import sr from 'dayjs/locale/sr';
 
 dayjs.locale(sr);
 
 export default {
-  name: "Attendances",
+  name: 'Attendances',
 
   components: {
     Loading,
@@ -208,26 +208,26 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getAllAttendances",
-      "getClientsPage",
-      "getClientsPageSize",
-      "loadingState",
+      'getAllAttendances',
+      'getClientsPage',
+      'getClientsPageSize',
+      'loadingState',
     ]),
   },
 
   methods: {
     ...mapActions([
-      "fetchAttendances",
-      "fetchAttendance",
-      "fetchClientsPage",
-      "fetchClientsPageSize",
-      "attendanceClear",
-      "setLoadingState",
+      'fetchAttendances',
+      'fetchAttendance',
+      'fetchClientsPage',
+      'fetchClientsPageSize',
+      'attendanceClear',
+      'setLoadingState',
     ]),
 
     async newAttendance() {
       this.setLoadingState(true);
-      this.$router.push("/attendance");
+      this.$router.push('/attendance');
       await this.attendanceClear();
     },
 
@@ -235,14 +235,14 @@ export default {
       this.setLoadingState(true);
       await this.fetchAttendance(attendance);
       this.setPageNr();
-      this.$router.push("/attendance");
+      this.$router.push('/attendance');
     },
 
     mapAttendances(attendance) {
       return attendance.members.reduce((a, { present }) => a + present, 0);
     },
 
-    async searchItems(val = "") {
+    async searchItems(val = '') {
       await this.initItems();
       let mu = this.getAllAttendances.filter((post) => {
         return (
@@ -265,10 +265,10 @@ export default {
       this.dateTill = dateTill;
       let mu = this.getAllAttendances.filter(
         (year) =>
-          dayjs(year.attend_date).format("YYYY-MM-DD") >=
-            dayjs(dateFrom).format("YYYY-MM-DD") &&
-          dayjs(year.attend_date).format("YYYY-MM-DD") <=
-            dayjs(dateTill).format("YYYY-MM-DD")
+          dayjs(year.attend_date).format('YYYY-MM-DD') >=
+            dayjs(dateFrom).format('YYYY-MM-DD') &&
+          dayjs(year.attend_date).format('YYYY-MM-DD') <=
+            dayjs(dateTill).format('YYYY-MM-DD')
       );
       this.filteredClients = mu;
     },
@@ -286,7 +286,7 @@ export default {
   filters: {
     formatDate: function (value) {
       if (value) {
-        return dayjs(String(value)).format("dddd, DD. MMM YYYY");
+        return dayjs(String(value)).format('dddd, DD. MMM YYYY');
       }
     },
   },
