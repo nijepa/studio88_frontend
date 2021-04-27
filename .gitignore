@@ -3,6 +3,7 @@ node_modules
 /dist
 src/components/old/
 src/assets/old/
+src/assets/s88imgs/
 
 .env
 # local env files
