@@ -2,6 +2,7 @@
 node_modules
 /dist
 src/components/old/
+src/assets/old/
 
 .env
 # local env files
