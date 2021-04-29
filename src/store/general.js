@@ -1,7 +1,6 @@
 import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
-//import router from '../router';
 
 const state = {
   general: {},

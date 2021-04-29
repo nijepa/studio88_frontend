@@ -191,6 +191,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import isObjectEmpty from '@/mixins/isObjectEmpty';
 
 export default {
   name: 'Navigation',
@@ -199,6 +200,8 @@ export default {
     method: { type: Function },
   },
 
+  mixins: [isObjectEmpty],
+
   data() {
     return {
       showMenu: true,
@@ -206,7 +209,7 @@ export default {
         width: 0,
       },
       activeLink: 'home',
-      menuItems: [
+      /* menuItems: [
         { id: 'home', title: 'home' },
         { id: 'signup', title: 'signup' },
         { id: 'clients', title: 'clients' },
@@ -215,7 +218,7 @@ export default {
         { id: 'payments', title: 'payments' },
         { id: 'expenses', title: 'expenses' },
         { id: 'general', title: 'general' },
-      ],
+      ], */
     };
   },
 
@@ -248,10 +251,10 @@ export default {
         : (this.showMenu = true);
     },
 
-    isEmpty(obj) {
+/*     isEmpty(obj) {
       for (var i in obj) return false;
       return true;
-    },
+    }, */
   },
 
   async created() {

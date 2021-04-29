@@ -1,7 +1,6 @@
 import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
-//import router from '../router';
 
 const state = {
   expense: {},
@@ -82,7 +81,6 @@ const actions = {
       .put(URL + 'expenses/' + expenseData._id, expenseData)
       .then((response) => {
         commit('updateExpense', response.data);
-        //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {

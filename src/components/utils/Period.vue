@@ -23,9 +23,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import isObjectEmpty from '@/mixins/isObjectEmpty';
+import customFormateDate from '@/mixins/customFormateDate';
 import Datepicker from 'vuejs-datepicker';
 import { sr } from 'vuejs-datepicker/dist/locale';
-import dayjs from 'dayjs';
+//import dayjs from 'dayjs';
 //import srb from "dayjs/locale/sr";
 
 export default {
@@ -38,6 +40,8 @@ export default {
   props: {
     isGrid: { type: Boolean, default: false },
   },
+
+  mixins: [isObjectEmpty, customFormateDate],
 
   data() {
     return {
@@ -55,9 +59,9 @@ export default {
   methods: {
     ...mapActions(['fetchPeriod']),
 
-    customFormatter(date) {
+/*     customFormatter(date) {
       return dayjs(date).format('DD MMM YYYY');
-    },
+    }, */
 
     getPreviousMonday() {
       let date = new Date();
@@ -74,10 +78,10 @@ export default {
       this.$emit('filter-period', this.dateFrom, this.dateTill);
     },
 
-    isEmpty(obj) {
+/*     isEmpty(obj) {
       for (var i in obj) return false;
       return true;
-    },
+    }, */
   },
 
   mounted() {

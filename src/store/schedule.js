@@ -1,7 +1,6 @@
 import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
-//import router from '../router';
 
 const state = {
   schedule: {},
@@ -78,7 +77,6 @@ const actions = {
       .post(URL + 'schedules', scheduleData)
       .then((response) => {
         commit('addSchedule', response.data.schedule);
-        //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
@@ -94,7 +92,6 @@ const actions = {
       .put(URL + 'schedules/' + scheduleData._id, scheduleData)
       .then((response) => {
         commit('updateSchedule', response.data);
-        //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {

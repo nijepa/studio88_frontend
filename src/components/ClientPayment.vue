@@ -114,6 +114,7 @@ import { mapGetters, mapActions } from 'vuex';
 import ActionButtons from '@/components/utils/ActionButtons.vue';
 import DeleteButton from '@/components/utils/DeleteButton.vue';
 import actionsNotify from '@/mixins/actionsNotify';
+import customFormateDate from '@/mixins/customFormateDate';
 import findMonth from '@/mixins/findMonth';
 import Datepicker from 'vuejs-datepicker';
 import { sr } from 'vuejs-datepicker/dist/locale';
@@ -133,7 +134,7 @@ export default {
     DeleteButton,
   },
 
-  mixins: [actionsNotify, findMonth],
+  mixins: [actionsNotify, findMonth, customFormateDate],
 
   computed: {
     ...mapGetters(['getAllPayments', 'getErrors']),
@@ -162,9 +163,9 @@ export default {
       'paymentDelete',
     ]),
 
-    customFormatter(date) {
+/*     customFormatter(date) {
       return dayjs(date).format('DD MMM YYYY');
-    },
+    }, */
 
     handleCancel() {
       this.$emit('canceled', true);

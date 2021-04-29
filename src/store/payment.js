@@ -1,7 +1,6 @@
 import axios from 'axios';
 const URL = process.env.VUE_APP_BACKEND_URL;
 // import apiClient from './api_client';
-//import router from '../router';
 
 const state = {
   payment: {},
@@ -74,7 +73,6 @@ const actions = {
       .post(URL + 'payments', paymentData)
       .then((response) => {
         commit('addPayment', response.data.payment);
-        //router.push("/dashboard")
       })
       .catch((error) => {
         if (error.response) {
@@ -90,7 +88,6 @@ const actions = {
       .put(URL + 'payments/' + paymentData._id, paymentData)
       .then((response) => {
         commit('updatePayment', response.data);
-        //router.push("/dashboard");
       })
       .catch((error) => {
         if (error.response) {

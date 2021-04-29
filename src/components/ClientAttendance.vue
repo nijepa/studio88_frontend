@@ -80,6 +80,7 @@ import ActionButtons from '@/components/utils/ActionButtons.vue';
 import DeleteButton from '@/components/utils/DeleteButton.vue';
 import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
 import actionsNotify from '@/mixins/actionsNotify';
+import customFormateDate from '@/mixins/customFormateDate';
 import Datepicker from 'vuejs-datepicker';
 import { sr } from 'vuejs-datepicker/dist/locale';
 import dayjs from 'dayjs';
@@ -99,7 +100,7 @@ export default {
     CheckboxCustom,
   },
 
-  mixins: [actionsNotify],
+  mixins: [actionsNotify, customFormateDate],
 
   computed: {
     ...mapGetters(['getAllAttendances', 'getAllPayments', 'getErrors']),
@@ -127,9 +128,9 @@ export default {
       'attendanceDelete',
     ]),
 
-    customFormatter(date) {
+/*     customFormatter(date) {
       return dayjs(date).format('DD MMM YYYY');
-    },
+    }, */
 
     handleCancel() {
       this.$emit('canceled', true);

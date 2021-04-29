@@ -90,6 +90,7 @@ import { mapGetters, mapActions } from 'vuex';
 import ChartPayments from '@/components/utils/AreaChart';
 import ChartAttendances from '@/components/utils/AreaChartLine';
 import Loading from '@/components/utils/Loading.vue';
+import customFormateDate from '@/mixins/customFormateDate';
 import Datepicker from 'vuejs-datepicker';
 import { sr } from 'vuejs-datepicker/dist/locale';
 import dayjs from 'dayjs';
@@ -124,6 +125,8 @@ export default {
     Datepicker,
   },
 
+  mixins: [customFormateDate],
+
   computed: {
     ...mapGetters([
       'getAllClients',
@@ -145,9 +148,9 @@ export default {
       'setLoadingState',
     ]),
 
-    customFormatter(date) {
+/*     customFormatter(date) {
       return dayjs(date).format('DD MMM YYYY');
-    },
+    }, */
 
     mapPayments() {
       return this.getAllPayments.map((d) => ({

@@ -230,7 +230,7 @@
         >
           <p class="activities__item">{{ client.date | formatDateLong }}</p>
           <CheckboxCustom
-            :checkClass="'input__field'"
+            :checkClass="'custom__check'"
             :modelValue="client.present"
             v-model="client.present"
             :value="client.present.toString()"
@@ -267,6 +267,7 @@ import CheckboxCustom from '@/components/utils/CheckboxCustom.vue';
 import navigation from '@/mixins/navigation';
 import navigationSearch from '@/mixins/navigationSearch';
 import Period from '@/components/utils/Period.vue';
+import customFormateDate from '@/mixins/customFormateDate';
 import dayjs from 'dayjs';
 import srb from 'dayjs/locale/sr';
 
@@ -285,7 +286,7 @@ export default {
     Period,
   },
 
-  mixins: [navigation, navigationSearch],
+  mixins: [navigation, navigationSearch, customFormateDate],
 
   data() {
     return {
@@ -347,9 +348,9 @@ export default {
       this.pageOfItemsA = pageOfItems;
     },
 
-    customFormatter(date) {
+/*     customFormatter(date) {
       return dayjs(date).format('DD MMM YYYY');
-    },
+    }, */
 
     getPreviousMonday() {
       let firstDay = new Date(new Date().getFullYear(), 0, 2);
