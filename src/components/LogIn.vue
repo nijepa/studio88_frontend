@@ -49,8 +49,8 @@ export default {
       type: 'login',
       isLog: false,
       loginInput: {
-        email: '',
-        password: '',
+        email: 'demo@demo.com',
+        password: 'demo',
       },
       user: {},
       notificationSystem: {
